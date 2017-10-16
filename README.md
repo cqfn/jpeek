@@ -26,7 +26,7 @@ us increase the quality of code.
 
 ## How to contribute?
 
-Reader [`CONTRIBUTING.md`](...)
+Read [`CONTRIBUTING.md`](https://github.com/yegor256/jpeek/blob/master/CONTRIBUTING.md)
 
 ## Contributors
 
