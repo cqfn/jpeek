@@ -12,11 +12,16 @@
 
 jPeek is a static collector of Java code metrics.
 
-**Motivation**.
-There are many metrics invented to measure the quality
-of Java code, but very few of them are implemented by existing
-static analizers, like Checkstyle, PMD. Sonar, etc. We want
-more numbers, to help us understand wh
+**Motivation**:
+Class cohesion is an important metric indicating the quality of code.
+There are
+[over 30](http://www.math.md/files/csjm/v25-n1/v25-n1-(pp44-74).pdf)
+different cohesion metrics invented so far.
+Unfortunately, there are almost no tools on the market that would make
+it possible to collect them from Java classes. We believe that having such
+a tool and applying it existing and new Java code can motivate programmers
+to make it better, just like Checkstyle, FindBugs, PMD and others help
+us increase the quality of code.
 
 ## How to contribute?
 
