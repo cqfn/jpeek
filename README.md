@@ -13,7 +13,8 @@
 jPeek is a static collector of Java code metrics.
 
 **Motivation**:
-Class cohesion is an important metric indicating the quality of code.
+[Class cohesion](http://www.jot.fm/issues/issue_2008_07/article1.pdf)
+is considered as one of most important object-oriented software attributes.
 There are
 [over 30](http://www.math.md/files/csjm/v25-n1/v25-n1-(pp44-74).pdf)
 different cohesion metrics invented so far.
