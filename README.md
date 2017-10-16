@@ -1,6 +1,6 @@
 <img src="http://www.jpeek.org/logo.svg" height="92px"/>
 
-[![Managed by Zerocracy](http://www.0crat.com/badge/C63314D6Z.svg)](http://www.0crat.com/p/C63314D6Z)
+[![Managed by Zerocracy](http://www.0crat.com/badge/.svg)](http://www.0crat.com/p/C63314D6Z)
 [![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/jpeek)](http://www.rultor.com/p/yegor256/jpeek)
 
 [![Build Status](https://travis-ci.org/yegor256/jpeek.svg?branch=master)](https://travis-ci.org/yegor256/jpeek)
@@ -15,13 +15,14 @@
 jPeek is a static collector of Java code metrics.
 
 **Motivation**:
-[Class cohesion](http://www.jot.fm/issues/issue_2008_07/article1.pdf)
+[Class cohesion](http://www.jot.fm/issues/issue_2008_07/article1.pdf), for example,
 is considered as one of most important object-oriented software attributes.
 There are
 [over 30](http://www.math.md/files/csjm/v25-n1/v25-n1-(pp44-74).pdf)
 different cohesion metrics invented so far, but almost none of them
-have calculators available. We want to create such a tool that will make it
-possible to analyze code quality more or less formally. Then, we will
+have calculators available. The situation with other metrics is very similar.
+We want to create such a tool that will make it
+possible to analyze code quality more or less formally (with hundreds of metrics). Then, we will
 apply this analysis to different Java libraries with an intent to prove
 that the ideas from [Elegant Objects](http://www.yegor256.com/elegant-objects.html)
 book series make sense.
