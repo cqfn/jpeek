@@ -27,6 +27,17 @@ apply this analysis to different Java libraries with an intent to prove
 that the ideas from [Elegant Objects](http://www.yegor256.com/elegant-objects.html)
 book series make sense.
 
+## How to use?
+
+Load [this JAR file](...) and then:
+
+```bash
+$ java -jar jpeek.jar . ./jpeek
+```
+
+jPeek will analyze Java files in the current directory.
+XML reports will be generated in the `./jpeek` directory. Enjoy.
+
 ## Cohesion
 
 Cohesion Among Methods of Classes (**CAMC**).
