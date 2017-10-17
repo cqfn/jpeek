@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Default base.
@@ -59,7 +60,9 @@ public final class DefaultBase implements Base {
 
     @Override
     public Iterable<Path> files() throws IOException {
-        return Files.walk(this.dir).collect(Collectors.toList());
+        try (Stream<Path> stream = Files.walk(this.dir)) {
+            return stream.collect(Collectors.toList());
+        }
     }
 
 }

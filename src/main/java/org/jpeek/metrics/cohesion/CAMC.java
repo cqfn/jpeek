@@ -36,6 +36,7 @@ import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtConstructor;
 import javassist.CtMethod;
+import javassist.Modifier;
 import javassist.NotFoundException;
 import org.cactoos.iterable.Filtered;
 import org.cactoos.iterable.Joined;
@@ -192,6 +193,9 @@ public final class CAMC implements Metric {
         throws NotFoundException {
         final Collection<Collection<String>> methods = new LinkedList<>();
         for (final CtMethod mtd : ctc.getDeclaredMethods()) {
+            if (Modifier.isPrivate(mtd.getModifiers())) {
+                continue;
+            }
             final Collection<String> args = new LinkedList<>();
             for (final CtClass arg : mtd.getParameterTypes()) {
                 args.add(arg.getName());
@@ -199,6 +203,9 @@ public final class CAMC implements Metric {
             methods.add(args);
         }
         for (final CtConstructor ctor : ctc.getConstructors()) {
+            if (Modifier.isPrivate(ctor.getModifiers())) {
+                continue;
+            }
             final Collection<String> args = new LinkedList<>();
             for (final CtClass arg : ctor.getParameterTypes()) {
                 args.add(arg.getName());
