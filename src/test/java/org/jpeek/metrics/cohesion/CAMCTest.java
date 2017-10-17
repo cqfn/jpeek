@@ -42,7 +42,7 @@ import org.xembly.Xembler;
 public final class CAMCTest {
 
     @Test
-    public void createsXmlReport() throws IOException {
+    public void createsBigXmlReport() throws IOException {
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
                 new Xembler(
@@ -51,7 +51,10 @@ public final class CAMCTest {
                     ).xembly()
                 ).xmlQuietly()
             ),
-            XhtmlMatchers.hasXPaths("/app/package/class[@id = 'CAMCTest']")
+            XhtmlMatchers.hasXPaths(
+                "/app/package/class[@id='CAMCTest']",
+                "//class[@id='Base' and @value='1.0000']"
+            )
         );
     }
 

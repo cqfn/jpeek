@@ -27,10 +27,16 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Map;
 import javassist.ClassPool;
 import javassist.CtClass;
+import javassist.CtConstructor;
+import javassist.CtMethod;
+import javassist.NotFoundException;
 import org.cactoos.iterable.Filtered;
 import org.cactoos.iterable.Joined;
 import org.cactoos.iterable.Mapped;
@@ -50,7 +56,9 @@ import org.xembly.Directives;
  * @see <a href="https://pdfs.semanticscholar.org/2709/1005bacefaee0242cf2643ba5efa20fa7c47.pdf">A class cohesion metric for object-oriented designs</a>
  * @since 0.1
  * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
+@SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
 public final class CAMC implements Metric {
 
     /**
@@ -96,7 +104,6 @@ public final class CAMC implements Metric {
      * @return Metrics
      * @throws IOException If fails
      */
-    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
     private Iterable<Map.Entry<String, Directives>> metrics()
         throws IOException {
         final Map<String, Directives> map = new HashMap<>(0);
@@ -126,13 +133,78 @@ public final class CAMC implements Metric {
         final CtClass ctc = this.pool.makeClass(
             new FileInputStream(file.toFile())
         );
-        return new MapEntry<>(
-            ctc.getPackageName(),
-            new Directives()
-                .add("class")
-                .attr("id", ctc.getSimpleName())
-                .attr("value", "0")
-                .up()
+        try {
+            return new MapEntry<>(
+                ctc.getPackageName(),
+                new Directives()
+                    .add("class")
+                    .attr("id", ctc.getSimpleName())
+                    .attr("value", String.format("%.4f", CAMC.cohesion(ctc)))
+                    .up()
+            );
+        } catch (final NotFoundException ex) {
+            throw new IllegalStateException(ex);
+        }
+    }
+
+    /**
+     * Calculate CAMC metric for a single Java class.
+     * @param ctc The .class file
+     * @return Metrics
+     * @throws NotFoundException If fails
+     */
+    private static double cohesion(final CtClass ctc) throws NotFoundException {
+        final Collection<Collection<String>> methods = CAMC.methods(ctc);
+        final Collection<String> types = new HashSet<>(
+            new org.cactoos.collection.Joined<String>(
+                () -> new org.cactoos.iterator.Mapped<>(
+                    methods.iterator(),
+                    strings -> strings
+                )
+            )
         );
+        int sum = 0;
+        for (final Collection<String> mtd : methods) {
+            int mine = 0;
+            for (final String arg : mtd) {
+                if (types.contains(arg)) {
+                    ++mine;
+                }
+            }
+            sum += mine;
+        }
+        final double cohesion;
+        if (types.isEmpty() || methods.isEmpty()) {
+            cohesion = 1.0d;
+        } else {
+            cohesion = (double) sum / (double) (types.size() * methods.size());
+        }
+        return cohesion;
+    }
+
+    /**
+     * Get all method signatures.
+     * @param ctc The .class file
+     * @return Method signatures
+     * @throws NotFoundException If fails
+     */
+    private static Collection<Collection<String>> methods(final CtClass ctc)
+        throws NotFoundException {
+        final Collection<Collection<String>> methods = new LinkedList<>();
+        for (final CtMethod mtd : ctc.getDeclaredMethods()) {
+            final Collection<String> args = new LinkedList<>();
+            for (final CtClass arg : mtd.getParameterTypes()) {
+                args.add(arg.getName());
+            }
+            methods.add(args);
+        }
+        for (final CtConstructor ctor : ctc.getConstructors()) {
+            final Collection<String> args = new LinkedList<>();
+            for (final CtClass arg : ctor.getParameterTypes()) {
+                args.add(arg.getName());
+            }
+            methods.add(args);
+        }
+        return methods;
     }
 }
