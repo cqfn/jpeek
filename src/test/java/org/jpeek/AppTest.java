@@ -26,40 +26,29 @@ package org.jpeek;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.stream.Collectors;
+import java.nio.file.Paths;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Default base.
- *
- * <p>There is no thread-safety guarantee.
- *
+ * Test case for {@link App}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class DefaultBase implements Base {
+public final class AppTest {
 
-    /**
-     * Directory.
-     */
-    private final Path dir;
-
-    /**
-     * Ctor.
-     * @param path Path of the directory with files
-     */
-    public DefaultBase(final Path path) {
-        this.dir = path;
-    }
-
-    @Override
-    public String toString() {
-        return this.dir.toAbsolutePath().toString();
-    }
-
-    @Override
-    public Iterable<Path> files() throws IOException {
-        return Files.walk(this.dir).collect(Collectors.toList());
+    @Test
+    public void createsXmlReports() throws IOException {
+        final Path output = Files.createTempDirectory("");
+        final Path input = Paths.get(".");
+        new App(input, output).analyze();
+        MatcherAssert.assertThat(
+            Files.exists(output.resolve("TotalFiles.xml")),
+            Matchers.equalTo(true)
+        );
     }
 
 }

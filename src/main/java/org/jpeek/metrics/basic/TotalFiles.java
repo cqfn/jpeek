@@ -21,15 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.jpeek;
+package org.jpeek.metrics.basic;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.stream.Collectors;
+import org.cactoos.iterable.Filtered;
+import org.cactoos.iterable.LengthOf;
+import org.jpeek.Base;
+import org.jpeek.Metric;
+import org.xembly.Directive;
+import org.xembly.Directives;
 
 /**
- * Default base.
+ * Total files.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -37,29 +41,34 @@ import java.util.stream.Collectors;
  * @version $Id$
  * @since 0.1
  */
-public final class DefaultBase implements Base {
+public final class TotalFiles implements Metric {
 
     /**
-     * Directory.
+     * The base.
      */
-    private final Path dir;
+    private final Base base;
 
     /**
      * Ctor.
-     * @param path Path of the directory with files
+     * @param bse The base
      */
-    public DefaultBase(final Path path) {
-        this.dir = path;
+    public TotalFiles(final Base bse) {
+        this.base = bse;
     }
 
     @Override
-    public String toString() {
-        return this.dir.toAbsolutePath().toString();
+    public Iterable<Directive> xembly() throws IOException {
+        return new Directives()
+            .add("app")
+            .attr("id", this.base.toString())
+            .attr(
+                "value",
+                new LengthOf(
+                    new Filtered<>(
+                        this.base.files(),
+                        path -> Files.isRegularFile(path)
+                    )
+                ).value()
+            );
     }
-
-    @Override
-    public Iterable<Path> files() throws IOException {
-        return Files.walk(this.dir).collect(Collectors.toList());
-    }
-
 }

@@ -24,12 +24,10 @@
 package org.jpeek;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.stream.Collectors;
+import java.nio.file.Paths;
 
 /**
- * Default base.
+ * Main entry point.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -37,29 +35,30 @@ import java.util.stream.Collectors;
  * @version $Id$
  * @since 0.1
  */
-public final class DefaultBase implements Base {
-
-    /**
-     * Directory.
-     */
-    private final Path dir;
+public final class Main {
 
     /**
      * Ctor.
-     * @param path Path of the directory with files
      */
-    public DefaultBase(final Path path) {
-        this.dir = path;
+    private Main() {
+        // intentionally
     }
 
-    @Override
-    public String toString() {
-        return this.dir.toAbsolutePath().toString();
-    }
-
-    @Override
-    public Iterable<Path> files() throws IOException {
-        return Files.walk(this.dir).collect(Collectors.toList());
+    /**
+     * Main Java entry point.
+     * @param args Command line args
+     * @throws IOException If fails
+     */
+    public static void main(final String... args) throws IOException {
+        if (args.length != 2) {
+            throw new IllegalArgumentException(
+                "Exactly two arguments required: source and output directory"
+            );
+        }
+        new App(
+            Paths.get(args[0]),
+            Paths.get(args[1])
+        ).analyze();
     }
 
 }

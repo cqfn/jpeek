@@ -24,39 +24,36 @@
 package org.jpeek;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
-import org.cactoos.iterable.Filtered;
+import java.nio.file.Paths;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Base with files only.
- *
- * <p>There is no thread-safety guarantee.
- *
+ * Test case for {@link Main}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-final class FilesOnlyBase implements Base {
+public final class MainTest {
 
-    /**
-     * Base.
-     */
-    private final Base base;
-
-    /**
-     * Ctor.
-     * @param bse Original base
-     */
-    FilesOnlyBase(final Base bse) {
-        this.base = bse;
+    @Test
+    public void createsXmlReports() throws IOException {
+        final Path output = Files.createTempDirectory("");
+        final Path input = Paths.get(".");
+        Main.main(input.toString(), output.toString());
+        MatcherAssert.assertThat(
+            Files.exists(output.resolve("TotalFiles.xml")),
+            Matchers.equalTo(true)
+        );
     }
 
-    @Override
-    public Iterable<Path> files() throws IOException {
-        return new Filtered<>(
-            this.base.files(),
-            path -> path.toFile().isFile()
-        );
+    @Test(expected = IllegalArgumentException.class)
+    public void crashesIfInvalidInput() throws IOException {
+        Main.main("hello");
     }
 
 }

@@ -24,12 +24,10 @@
 package org.jpeek;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.stream.Collectors;
+import org.xembly.Directive;
 
 /**
- * Default base.
+ * Single metric.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -37,29 +35,13 @@ import java.util.stream.Collectors;
  * @version $Id$
  * @since 0.1
  */
-public final class DefaultBase implements Base {
+public interface Metric {
 
     /**
-     * Directory.
+     * Present it in XML format.
+     * @return XML report
+     * @throws IOException If fails
      */
-    private final Path dir;
-
-    /**
-     * Ctor.
-     * @param path Path of the directory with files
-     */
-    public DefaultBase(final Path path) {
-        this.dir = path;
-    }
-
-    @Override
-    public String toString() {
-        return this.dir.toAbsolutePath().toString();
-    }
-
-    @Override
-    public Iterable<Path> files() throws IOException {
-        return Files.walk(this.dir).collect(Collectors.toList());
-    }
+    Iterable<Directive> xembly() throws IOException;
 
 }

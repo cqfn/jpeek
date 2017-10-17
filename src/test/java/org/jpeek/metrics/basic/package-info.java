@@ -21,41 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.jpeek;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
 
 /**
- * Test case for {@link FilesOnlyBase}.
+ * Basic metrics, tests.
+ *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class FilesOnlyBaseTest {
-
-    @Test
-    public void listsFiles() throws IOException {
-        final Path temp = Files.createTempDirectory("");
-        temp.resolve("a/b/c").toFile().mkdirs();
-        Files.write(
-            temp.resolve("a/b/c/x.java"), "Hello".getBytes(),
-            StandardOpenOption.CREATE_NEW
-        );
-        Files.write(
-            temp.resolve("a/z.class"), "".getBytes(),
-            StandardOpenOption.CREATE_NEW
-        );
-        MatcherAssert.assertThat(
-            new FilesOnlyBase(new DefaultBase(temp)).files(),
-            Matchers.iterableWithSize(2)
-        );
-    }
-
-}
+package org.jpeek.metrics.basic;
