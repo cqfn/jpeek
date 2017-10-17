@@ -4,7 +4,7 @@
 [![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/jpeek)](http://www.rultor.com/p/yegor256/jpeek)
 
 [![Build Status](https://travis-ci.org/yegor256/jpeek.svg?branch=master)](https://travis-ci.org/yegor256/jpeek)
-[![Javadoc](https://javadoc-emblem.rhcloud.com/doc/org.jpeek/jpeek/badge.svg?color=blue&prefix=v)](http://www.javadoc.io/doc/)
+[![Javadoc](https://javadoc-emblem.rhcloud.com/doc/org.jpeek/jpeek/badge.svg?color=blue&prefix=v)](http://www.javadoc.io/doc/org.jpeek/jpeek)
 [![PDD status](http://www.0pdd.com/svg?name=yegor256/jpeek)](http://www.0pdd.com/p?name=yegor256/jpeek)
 [![Maven Central](https://img.shields.io/maven-central/v/org.jpeek/jpeek.svg)](https://maven-badges.herokuapp.com/maven-central/org.jpeek/jpeek)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/yegor256/jpeek/blob/master/LICENSE.txt)
