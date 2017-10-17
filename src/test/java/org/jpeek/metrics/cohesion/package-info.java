@@ -21,45 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.jpeek;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.stream.Collectors;
 
 /**
- * Default base.
- *
- * <p>There is no thread-safety guarantee.
+ * Cohesion metrics, tests.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-public final class DefaultBase implements Base {
-
-    /**
-     * Directory.
-     */
-    private final Path dir;
-
-    /**
-     * Ctor.
-     * @param path Path of the directory with files
-     */
-    public DefaultBase(final Path path) {
-        this.dir = path;
-    }
-
-    @Override
-    public String toString() {
-        return this.dir.normalize().toAbsolutePath().toString();
-    }
-
-    @Override
-    public Iterable<Path> files() throws IOException {
-        return Files.walk(this.dir).collect(Collectors.toList());
-    }
-
-}
+package org.jpeek.metrics.cohesion;

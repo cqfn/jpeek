@@ -21,45 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.jpeek;
+package org.jpeek.metrics.cohesion;
 
+import com.jcabi.matchers.XhtmlMatchers;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.stream.Collectors;
+import java.nio.file.Paths;
+import org.hamcrest.MatcherAssert;
+import org.jpeek.DefaultBase;
+import org.junit.Test;
+import org.xembly.Xembler;
 
 /**
- * Default base.
- *
- * <p>There is no thread-safety guarantee.
- *
+ * Test case for {@link CAMC}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
+ * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class DefaultBase implements Base {
+public final class CAMCTest {
 
-    /**
-     * Directory.
-     */
-    private final Path dir;
-
-    /**
-     * Ctor.
-     * @param path Path of the directory with files
-     */
-    public DefaultBase(final Path path) {
-        this.dir = path;
-    }
-
-    @Override
-    public String toString() {
-        return this.dir.normalize().toAbsolutePath().toString();
-    }
-
-    @Override
-    public Iterable<Path> files() throws IOException {
-        return Files.walk(this.dir).collect(Collectors.toList());
+    @Test
+    public void createsXmlReport() throws IOException {
+        MatcherAssert.assertThat(
+            XhtmlMatchers.xhtml(
+                new Xembler(
+                    new CAMC(
+                        new DefaultBase(Paths.get("."))
+                    ).xembly()
+                ).xmlQuietly()
+            ),
+            XhtmlMatchers.hasXPaths("/app/package/class[@id = 'CAMCTest']")
+        );
     }
 
 }

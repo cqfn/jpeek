@@ -27,6 +27,14 @@ apply this analysis to different Java libraries with an intent to prove
 that the ideas from [Elegant Objects](http://www.yegor256.com/elegant-objects.html)
 book series make sense.
 
+## Cohesion
+
+Cohesion Among Methods of Classes (**CAMC**).
+Jagdish Bansiya et al.,
+_A class cohesion metric for object-oriented designs_,
+Journal of Object-Oriented Programming, vol. 11, no. 8, 1999,
+[PDF](https://pdfs.semanticscholar.org/2709/1005bacefaee0242cf2643ba5efa20fa7c47.pdf).
+
 ## How to contribute?
 
 Read [`CONTRIBUTING.md`](https://github.com/yegor256/jpeek/blob/master/CONTRIBUTING.md)
