@@ -23,29 +23,20 @@
  */
 package org.jpeek.metrics.cohesion;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Map;
-import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtConstructor;
 import javassist.CtMethod;
 import javassist.Modifier;
 import javassist.NotFoundException;
-import org.cactoos.iterable.Filtered;
-import org.cactoos.iterable.Joined;
-import org.cactoos.iterable.Mapped;
-import org.cactoos.map.MapEntry;
+import org.cactoos.collection.Joined;
+import org.cactoos.iterator.Mapped;
 import org.jpeek.Base;
 import org.jpeek.Metric;
 import org.xembly.Directive;
-import org.xembly.Directives;
 
 /**
  * Cohesion Among Methods of Classes (CAMC).
@@ -59,7 +50,6 @@ import org.xembly.Directives;
  * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
 public final class CAMC implements Metric {
 
     /**
@@ -68,84 +58,16 @@ public final class CAMC implements Metric {
     private final Base base;
 
     /**
-     * Javassist pool.
-     */
-    private final ClassPool pool;
-
-    /**
      * Ctor.
      * @param bse The base
      */
     public CAMC(final Base bse) {
         this.base = bse;
-        this.pool = ClassPool.getDefault();
     }
 
     @Override
     public Iterable<Directive> xembly() throws IOException {
-        return new Directives()
-            .add("app")
-            .attr("id", this.base.toString())
-            .append(
-                new Joined<>(
-                    new Mapped<>(
-                        this.metrics(),
-                        ent -> new Directives()
-                            .add("package")
-                            .attr("id", ent.getKey())
-                            .append(ent.getValue())
-                            .up()
-                    )
-                )
-            );
-    }
-
-    /**
-     * Calculate metrics for all classes.
-     * @return Metrics
-     * @throws IOException If fails
-     */
-    private Iterable<Map.Entry<String, Directives>> metrics()
-        throws IOException {
-        final Map<String, Directives> map = new HashMap<>(0);
-        final Iterable<Map.Entry<String, Directives>> all = new Mapped<>(
-            new Filtered<>(
-                this.base.files(),
-                path -> Files.isRegularFile(path)
-                    && path.toString().endsWith(".class")
-            ),
-            this::metric
-        );
-        for (final Map.Entry<String, Directives> ent : all) {
-            map.putIfAbsent(ent.getKey(), new Directives());
-            map.get(ent.getKey()).append(ent.getValue());
-        }
-        return map.entrySet();
-    }
-
-    /**
-     * Calculate metrics for a single .class file.
-     * @param file The .class file
-     * @return Metrics
-     * @throws IOException If fails
-     */
-    private Map.Entry<String, Directives> metric(
-        final Path file) throws IOException {
-        final CtClass ctc = this.pool.makeClass(
-            new FileInputStream(file.toFile())
-        );
-        try {
-            return new MapEntry<>(
-                ctc.getPackageName(),
-                new Directives()
-                    .add("class")
-                    .attr("id", ctc.getSimpleName())
-                    .attr("value", String.format("%.4f", CAMC.cohesion(ctc)))
-                    .up()
-            );
-        } catch (final NotFoundException ex) {
-            throw new IllegalStateException(ex);
-        }
+        return new JavassistClasses(this.base, CAMC::cohesion).xembly();
     }
 
     /**
@@ -157,8 +79,8 @@ public final class CAMC implements Metric {
     private static double cohesion(final CtClass ctc) throws NotFoundException {
         final Collection<Collection<String>> methods = CAMC.methods(ctc);
         final Collection<String> types = new HashSet<>(
-            new org.cactoos.collection.Joined<String>(
-                () -> new org.cactoos.iterator.Mapped<>(
+            new Joined<String>(
+                () -> new Mapped<>(
                     methods.iterator(),
                     strings -> strings
                 )
@@ -189,6 +111,7 @@ public final class CAMC implements Metric {
      * @return Method signatures
      * @throws NotFoundException If fails
      */
+    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
     private static Collection<Collection<String>> methods(final CtClass ctc)
         throws NotFoundException {
         final Collection<Collection<String>> methods = new LinkedList<>();

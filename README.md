@@ -46,6 +46,12 @@ _A class cohesion metric for object-oriented designs_,
 Journal of Object-Oriented Programming, vol. 11, no. 8, 1999,
 [PDF](https://pdfs.semanticscholar.org/2709/1005bacefaee0242cf2643ba5efa20fa7c47.pdf).
 
+Lack of Cohesion in Methods (**LCOM**).
+Shyam Chidamber et al.,
+_A metrics suite for object oriented design_,
+IEEE Transactions on Software Engineering, vol.20, no.6, 1994,
+[PDF](http://www.pitt.edu/~ckemerer/CK%20research%20papers/MetricForOOD_ChidamberKemerer94.pdf).
+
 ## How to contribute?
 
 Read [`CONTRIBUTING.md`](https://github.com/yegor256/jpeek/blob/master/CONTRIBUTING.md)
