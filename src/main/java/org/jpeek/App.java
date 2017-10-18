@@ -32,6 +32,7 @@ import org.cactoos.scalar.And;
 import org.cactoos.scalar.IoCheckedScalar;
 import org.jpeek.metrics.basic.TotalFiles;
 import org.jpeek.metrics.cohesion.CAMC;
+import org.jpeek.metrics.cohesion.LCOM;
 import org.xembly.Xembler;
 
 /**
@@ -74,7 +75,8 @@ public final class App {
         final Base base = new DefaultBase(this.input);
         final Iterable<Metric> metrics = new ListOf<>(
             new TotalFiles(base),
-            new CAMC(base)
+            new CAMC(base),
+            new LCOM(base)
         );
         new IoCheckedScalar<>(
             new And(
