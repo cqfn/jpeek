@@ -133,15 +133,17 @@ public final class JavassistClasses implements Metric {
      */
     private Map.Entry<String, Directives> metric(
         final Path file) throws IOException {
-        final CtClass ctc = this.pool.makeClass(
+        final CtClass ctc = this.pool.makeClassIfNew(
             new FileInputStream(file.toFile())
         );
+        final double cohesion = this.func.apply(ctc);
+        ctc.defrost();
         return new MapEntry<>(
             ctc.getPackageName(),
             new Directives()
                 .add("class")
                 .attr("id", ctc.getSimpleName())
-                .attr("value", String.format("%.4f", this.func.apply(ctc)))
+                .attr("value", String.format("%.4f", cohesion))
                 .up()
         );
     }

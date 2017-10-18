@@ -40,21 +40,21 @@ public final class TestClassA {
 
     /**
      * Dummy method.
-     * @param str Dummy Parameter 1.
-     * @param boole Dummy Parameter 2.
+     * @param txt Dummy Parameter 1.
+     * @param opt Dummy Parameter 2.
      */
-    public void methodOne(final String str, final Boolean boole) {
+    public void methodOne(final String txt, final Boolean opt) {
         this.num += 1;
-        this.methodTwo(str, boole);
+        this.methodTwo(txt, opt);
     }
 
     /**
      * Dummy method.
      * @param str Dummy Parameter 1.
-     * @param boole Dummy Parameter 2.
+     * @param opt Dummy Parameter 2.
      */
-    public void methodTwo(final String str, final Boolean boole) {
+    public void methodTwo(final String str, final Boolean opt) {
         this.num += 1;
-        this.methodOne(str, boole);
+        this.methodOne(str, opt);
     }
 }

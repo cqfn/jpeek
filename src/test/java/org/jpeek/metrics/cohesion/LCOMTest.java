@@ -58,4 +58,20 @@ public final class LCOMTest {
         );
     }
 
+    @Test
+    public void createsXmlReportForFixtureClassA() throws IOException {
+        MatcherAssert.assertThat(
+            XhtmlMatchers.xhtml(
+                new Xembler(
+                    new LCOM(
+                        new FakeBase()
+                    ).xembly()
+                ).xmlQuietly()
+            ),
+            XhtmlMatchers.hasXPaths(
+                "/app/package/class[@id='TestClassA']",
+                "//class[@id='TestClassA' and @value='1.0000']"
+            )
+        );
+    }
 }

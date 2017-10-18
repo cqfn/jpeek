@@ -24,9 +24,19 @@
 package org.jpeek.metrics.cohesion;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import javassist.CannotCompileException;
 import javassist.CtClass;
 import org.jpeek.Base;
 import org.jpeek.Metric;
+import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.ClassVisitor;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 import org.xembly.Directive;
 
 /**
@@ -65,10 +75,51 @@ public final class LCOM implements Metric {
      * Calculate LCOM metric for a single Java class.
      * @param ctc The .class file
      * @return Metrics
+     * @checkstyle ParameterNumberCheck (100 lines)
      */
+    @SuppressWarnings({ "PMD.UseObjectForClearerAPI", "PMD.UseVarargs" })
     private static double cohesion(final CtClass ctc) {
-        assert ctc != null;
-        return 0.0d;
+        final ClassReader reader;
+        try {
+            reader = new ClassReader(ctc.toBytecode());
+        } catch (final IOException | CannotCompileException ex) {
+            throw new IllegalStateException(ex);
+        }
+        final List<Collection<String>> methods = new LinkedList<>();
+        reader.accept(
+            new ClassVisitor(Opcodes.ASM6) {
+                @Override
+                public MethodVisitor visitMethod(final int access,
+                    final String mtd, final String desc,
+                    final String signature, final String[] exceptions) {
+                    super.visitMethod(access, mtd, desc, signature, exceptions);
+                    final Collection<String> attrs = new HashSet<>(0);
+                    methods.add(attrs);
+                    return new MethodVisitor(Opcodes.ASM6) {
+                        @Override
+                        public void visitFieldInsn(final int opcode,
+                            final String owner, final String attr,
+                            final String details) {
+                            super.visitFieldInsn(opcode, owner, attr, details);
+                            attrs.add(attr);
+                        }
+                    };
+                }
+            },
+            0
+        );
+        int empty = 0;
+        int nonempty = 0;
+        for (int idx = 0; idx < methods.size(); ++idx) {
+            for (int jdx = idx + 1; jdx < methods.size(); ++jdx) {
+                if (Collections.disjoint(methods.get(idx), methods.get(jdx))) {
+                    ++empty;
+                } else {
+                    ++nonempty;
+                }
+            }
+        }
+        return Math.max(0.0d, (double) (empty - nonempty));
     }
 
 }

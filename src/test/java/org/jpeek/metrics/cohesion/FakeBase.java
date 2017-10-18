@@ -23,54 +23,42 @@
  */
 package org.jpeek.metrics.cohesion;
 
-import com.jcabi.matchers.XhtmlMatchers;
-import java.io.IOException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
-import org.hamcrest.MatcherAssert;
-import org.jpeek.DefaultBase;
-import org.junit.Test;
-import org.xembly.Xembler;
+import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import org.jpeek.Base;
 
 /**
- * Test case for {@link CAMC}.
+ * Fake base for tests.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.2
  * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class CAMCTest {
+public final class FakeBase implements Base {
 
-    @Test
-    public void createsBigXmlReport() throws IOException {
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
-                new Xembler(
-                    new CAMC(
-                        new DefaultBase(Paths.get("."))
-                    ).xembly()
-                ).xmlQuietly()
-            ),
-            XhtmlMatchers.hasXPaths(
-                "/app/package/class[@id='CAMCTest']",
-                "//class[@id='Base' and @value='1.0000']"
-            )
-        );
-    }
-
-    @Test
-    public void createsXmlReportForFixtureClassA() throws IOException {
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
-                new Xembler(
-                    new CAMC(
-                        new FakeBase()
-                    ).xembly()
-                ).xmlQuietly()
-            ),
-            XhtmlMatchers.hasXPaths(
-                "/app/package/class[@id='TestClassA']",
-                "//class[@id='TestClassA' and @value='0.6667']"
+    @Override
+    public Iterable<Path> files() {
+        return Arrays.asList(
+            Paths.get(
+                new StringBuilder(
+                    this.getClass()
+                        .getProtectionDomain()
+                        .getCodeSource()
+                        .getLocation()
+                        .getPath()
+                )
+                    .append(
+                        Pattern.compile(".", Pattern.LITERAL).matcher(
+                            this.getClass().getPackage().getName()
+                        ).replaceAll(Matcher.quoteReplacement("/"))
+                    )
+                    .append("/fixtures/")
+                    .append("TestClassA.class")
+                    .toString()
             )
         );
     }
