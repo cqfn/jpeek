@@ -38,7 +38,21 @@ $ java -jar jpeek-0.1-jar-with-dependencies.jar . ./jpeek
 jPeek will analyze Java files in the current directory.
 XML reports will be generated in the `./jpeek` directory. Enjoy.
 
-## Cohesion
+## Cohesion Metrics
+
+These papers provide a pretty good summary of cohesion metrics:
+
+Habib Izadkhah et al.,
+_Class Cohesion Metrics for Software Engineering: A Critical Review_,
+Computer Science Journal of Moldova, vol.25, no.1(73), 2017,
+[PDF](http://www.math.md/files/csjm/v25-n1/v25-n1-(pp44-74).pdf).
+
+Linda Badri et al.,
+_Revisiting Class Cohesion: An empirical investigation on several systems_,
+Journal of Object Technology, vol.7, no.6, 2008,
+[PDF](http://www.jot.fm/issues/issue_2008_07/article1.pdf).
+
+Here is a list of metrics we already implement:
 
 Cohesion Among Methods of Classes (**CAMC**).<br/>
 Jagdish Bansiya et al.,<br/>
