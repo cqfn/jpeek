@@ -41,14 +41,14 @@ XML reports will be generated in the `./jpeek` directory. Enjoy.
 ## Cohesion
 
 Cohesion Among Methods of Classes (**CAMC**).<br/>
-Jagdish Bansiya et al.,
-_A class cohesion metric for object-oriented designs_,
+Jagdish Bansiya et al.,<br/>
+_A class cohesion metric for object-oriented designs_,<br/>
 Journal of Object-Oriented Programming, vol. 11, no. 8, 1999,
 [PDF](https://pdfs.semanticscholar.org/2709/1005bacefaee0242cf2643ba5efa20fa7c47.pdf).
 
 Lack of Cohesion in Methods (**LCOM**).<br/>
-Shyam Chidamber et al.,
-_A metrics suite for object oriented design_,
+Shyam Chidamber et al.,<br/>
+_A metrics suite for object oriented design_,<br/>
 IEEE Transactions on Software Engineering, vol.20, no.6, 1994,
 [PDF](http://www.pitt.edu/~ckemerer/CK%20research%20papers/MetricForOOD_ChidamberKemerer94.pdf).
 
