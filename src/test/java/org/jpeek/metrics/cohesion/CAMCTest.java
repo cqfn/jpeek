@@ -25,7 +25,10 @@ package org.jpeek.metrics.cohesion;
 
 import com.jcabi.matchers.XhtmlMatchers;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.hamcrest.MatcherAssert;
 import org.jpeek.DefaultBase;
 import org.junit.Test;
@@ -41,6 +44,14 @@ import org.xembly.Xembler;
  */
 public final class CAMCTest {
 
+    /**
+     * Regex pattern intended to convert current package name in path format.
+     */
+    private static final Pattern COMPILE = Pattern.compile(
+        ".",
+        Pattern.LITERAL
+    );
+
     @Test
     public void createsBigXmlReport() throws IOException {
         MatcherAssert.assertThat(
@@ -55,6 +66,40 @@ public final class CAMCTest {
                 "/app/package/class[@id='CAMCTest']",
                 "//class[@id='Base' and @value='1.0000']"
             )
+        );
+    }
+
+    @Test
+    public void createsXmlReportForFixtureClassA() throws IOException {
+        MatcherAssert.assertThat(
+            XhtmlMatchers.xhtml(
+                new Xembler(
+                    new CAMC(
+                        new DefaultBase(this.getPath())
+                    ).xembly()
+                ).xmlQuietly()
+            ),
+            XhtmlMatchers.hasXPaths(
+                "/app/package/class[@id='TestClassA']",
+                "//class[@id='TestClassA' and @value='0.6667']"
+            )
+        );
+    }
+
+    private Path getPath() {
+        return Paths.get(new StringBuilder(
+            this.getClass()
+                .getProtectionDomain()
+                .getCodeSource()
+                .getLocation()
+                .getPath()
+            ).append(CAMCTest.COMPILE.matcher(
+            this.getClass().getPackage().getName()
+            )
+                .replaceAll(Matcher.quoteReplacement("/"))
+            )
+                .append("/fixtures/")
+                .append("TestClassA.class").toString()
         );
     }
 
