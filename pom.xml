@@ -166,6 +166,8 @@ The MIT License (MIT)
             <configuration>
               <excludes combine.children="append">
                 <exclude>checkstyle:/src/site/resources/.*</exclude>
+                <exclude>checkstyle:/src/test/resources/.*</exclude>
+                <exclude>pmd:/src/test/resources/.*</exclude>
                 <exclude>findbugs:.*</exclude>
               </excludes>
             </configuration>

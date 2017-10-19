@@ -138,8 +138,12 @@ public final class JavassistClasses implements Metric {
         );
         final double cohesion = this.func.apply(ctc);
         ctc.defrost();
+        String pkg = ctc.getPackageName();
+        if (pkg == null) {
+            pkg = "";
+        }
         return new MapEntry<>(
-            ctc.getPackageName(),
+            pkg,
             new Directives()
                 .add("class")
                 .attr("id", ctc.getSimpleName())

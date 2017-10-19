@@ -64,13 +64,13 @@ public final class LCOMTest {
             XhtmlMatchers.xhtml(
                 new Xembler(
                     new LCOM(
-                        new FakeBase()
+                        new FakeBase("Foo")
                     ).xembly()
                 ).xmlQuietly()
             ),
             XhtmlMatchers.hasXPaths(
-                "/app/package/class[@id='TestClassA']",
-                "//class[@id='TestClassA' and @value='1.0000']"
+                "/app/package/class[@id='Foo']",
+                "//class[@id='Foo' and @value='1.0000']"
             )
         );
     }

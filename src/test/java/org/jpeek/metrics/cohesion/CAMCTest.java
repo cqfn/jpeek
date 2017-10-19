@@ -64,13 +64,13 @@ public final class CAMCTest {
             XhtmlMatchers.xhtml(
                 new Xembler(
                     new CAMC(
-                        new FakeBase()
+                        new FakeBase("Foo")
                     ).xembly()
                 ).xmlQuietly()
             ),
             XhtmlMatchers.hasXPaths(
-                "/app/package/class[@id='TestClassA']",
-                "//class[@id='TestClassA' and @value='0.6667']"
+                "/app/package[@id='']/class[@id='Foo']",
+                "//class[@id='Foo' and @value='0.6667']"
             )
         );
     }

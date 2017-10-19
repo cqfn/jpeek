@@ -23,12 +23,19 @@
  */
 package org.jpeek.metrics.cohesion;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import org.cactoos.collection.Joined;
+import org.cactoos.io.LengthOf;
+import org.cactoos.io.ResourceOf;
+import org.cactoos.io.TeeInput;
+import org.cactoos.iterable.Mapped;
+import org.cactoos.list.ListOf;
+import org.cactoos.scalar.And;
+import org.cactoos.scalar.IoCheckedScalar;
 import org.jpeek.Base;
+import org.jpeek.DefaultBase;
 
 /**
  * Fake base for tests.
@@ -37,30 +44,72 @@ import org.jpeek.Base;
  * @since 0.2
  * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class FakeBase implements Base {
 
+    /**
+     * Classes to use.
+     */
+    private final Iterable<String> classes;
+
+    /**
+     * Ctor.
+     * @param list List of file names
+     */
+    public FakeBase(final String... list) {
+        this(new ListOf<>(list));
+    }
+
+    /**
+     * Ctor.
+     * @param list List of file names
+     */
+    public FakeBase(final Iterable<String> list) {
+        this.classes = list;
+    }
+
     @Override
-    public Iterable<Path> files() {
-        return Arrays.asList(
-            Paths.get(
-                new StringBuilder(
-                    this.getClass()
-                        .getProtectionDomain()
-                        .getCodeSource()
-                        .getLocation()
-                        .getPath()
-                )
-                    .append(
-                        Pattern.compile(".", Pattern.LITERAL).matcher(
-                            this.getClass().getPackage().getName()
-                        ).replaceAll(Matcher.quoteReplacement("/"))
-                    )
-                    .append("/fixtures/")
-                    .append("TestClassA.class")
-                    .toString()
-            )
+    public Iterable<Path> files() throws IOException {
+        final Path temp = Files.createTempDirectory("jpeek");
+        final Iterable<String> sources = new Mapped<>(
+            this.classes,
+            cls -> String.format("%s.java", cls)
         );
+        new IoCheckedScalar<>(
+            new And(
+                sources,
+                java -> {
+                    new LengthOf(
+                        new TeeInput(
+                            new ResourceOf(String.format("org/jpeek/%s", java)),
+                            temp.resolve(java)
+                        )
+                    ).value();
+                }
+            )
+        ).value();
+        final Process process = new ProcessBuilder()
+            .redirectOutput(ProcessBuilder.Redirect.INHERIT)
+            .redirectInput(ProcessBuilder.Redirect.INHERIT)
+            .redirectError(ProcessBuilder.Redirect.INHERIT)
+            .directory(temp.toFile())
+            .command(
+                new ListOf<>(
+                    new Joined<String>(
+                        new ListOf<>("javac"),
+                        sources
+                    )
+                )
+            )
+            .start();
+        try {
+            assert process.waitFor() == 0;
+        } catch (final InterruptedException ex) {
+            Thread.currentThread().interrupt();
+            throw new IllegalStateException(ex);
+        }
+        return new DefaultBase(temp).files();
     }
 
 }
