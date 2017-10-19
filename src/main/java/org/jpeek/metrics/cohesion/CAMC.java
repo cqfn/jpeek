@@ -36,6 +36,7 @@ import org.cactoos.collection.Joined;
 import org.cactoos.iterator.Mapped;
 import org.jpeek.Base;
 import org.jpeek.Metric;
+import org.jpeek.metrics.Colors;
 import org.jpeek.metrics.JavassistClasses;
 import org.xembly.Directive;
 
@@ -68,7 +69,11 @@ public final class CAMC implements Metric {
 
     @Override
     public Iterable<Directive> xembly() throws IOException {
-        return new JavassistClasses(this.base, CAMC::cohesion).xembly();
+        return new JavassistClasses(
+            this.base, CAMC::cohesion,
+            // @checkstyle MagicNumberCheck (1 line)
+            new Colors(0.35d, 0.75d, true)
+        ).xembly();
     }
 
     /**

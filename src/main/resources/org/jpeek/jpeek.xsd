@@ -26,6 +26,15 @@ The MIT License (MIT)
   <xs:complexType name="class">
     <xs:attribute name="id" use="required" type="xs:string"/>
     <xs:attribute name="value" use="optional" type="xs:float"/>
+    <xs:attribute name="color" use="optional">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="green"/>
+          <xs:enumeration value="yellow"/>
+          <xs:enumeration value="red"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
   </xs:complexType>
   <xs:complexType name="package">
     <xs:complexContent>

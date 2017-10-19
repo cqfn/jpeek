@@ -33,6 +33,7 @@ import javassist.CannotCompileException;
 import javassist.CtClass;
 import org.jpeek.Base;
 import org.jpeek.Metric;
+import org.jpeek.metrics.Colors;
 import org.jpeek.metrics.JavassistClasses;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
@@ -69,7 +70,11 @@ public final class LCOM implements Metric {
 
     @Override
     public Iterable<Directive> xembly() throws IOException {
-        return new JavassistClasses(this.base, LCOM::cohesion).xembly();
+        return new JavassistClasses(
+            this.base, LCOM::cohesion,
+            // @checkstyle MagicNumberCheck (1 line)
+            new Colors(5.0d, 30.0d, true)
+        ).xembly();
     }
 
     /**

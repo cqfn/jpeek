@@ -21,59 +21,50 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.jpeek.metrics.cohesion;
+package org.jpeek.metrics;
 
-import com.jcabi.matchers.XhtmlMatchers;
-import java.io.IOException;
-import java.nio.file.Paths;
+import org.cactoos.Func;
 import org.hamcrest.MatcherAssert;
-import org.jpeek.DefaultBase;
-import org.jpeek.metrics.FakeBase;
+import org.hamcrest.Matchers;
 import org.junit.Test;
-import org.xembly.Xembler;
 
 /**
- * Test case for {@link CAMC}.
+ * Test case for {@link Colors}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.3
  * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class CAMCTest {
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+public final class ColorsTest {
 
     @Test
-    public void createsBigXmlReport() throws IOException {
+    public void mapsCohesionToColors() throws Exception {
+        final Func<Double, String> colors = new Colors(0.5d, 0.7d);
         MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
-                new Xembler(
-                    new CAMC(
-                        new DefaultBase(Paths.get("."))
-                    ).xembly()
-                ).xmlQuietly()
-            ),
-            XhtmlMatchers.hasXPaths(
-                "/app/package/class[@id='CAMCTest']",
-                "//class[@id='Base' and @value='1.0000']"
-            )
+            colors.apply(1.0d), Matchers.equalTo("green")
+        );
+        MatcherAssert.assertThat(
+            colors.apply(0.1d), Matchers.equalTo("red")
+        );
+        MatcherAssert.assertThat(
+            colors.apply(0.6d), Matchers.equalTo("yellow")
         );
     }
 
     @Test
-    public void createsXmlReportForFixtureClassA() throws IOException {
+    public void mapsCohesionToReverseColors() throws Exception {
+        final Func<Double, String> colors = new Colors(0.5d, 0.7d, true);
         MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
-                new Xembler(
-                    new CAMC(
-                        new FakeBase("Foo")
-                    ).xembly()
-                ).xmlQuietly()
-            ),
-            XhtmlMatchers.hasXPaths(
-                "/app/package[@id='']/class[@id='Foo']",
-                "//class[@id='Foo' and @value='0.6667']",
-                "//class[@id='Foo' and @color='yellow']"
-            )
+            colors.apply(1.0d), Matchers.equalTo("red")
+        );
+        MatcherAssert.assertThat(
+            colors.apply(0.1d), Matchers.equalTo("green")
+        );
+        MatcherAssert.assertThat(
+            colors.apply(0.6d), Matchers.equalTo("yellow")
         );
     }
 

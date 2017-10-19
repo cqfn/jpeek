@@ -71,7 +71,8 @@ public final class LCOMTest {
             ),
             XhtmlMatchers.hasXPaths(
                 "/app/package/class[@id='Foo']",
-                "//class[@id='Foo' and @value='1.0000']"
+                "//class[@id='Foo' and @value='1.0000']",
+                "//class[@id='Foo' and @color='green']"
             )
         );
     }

@@ -67,6 +67,11 @@ public final class JavassistClasses implements Metric {
     private final IoCheckedFunc<CtClass, Double> func;
 
     /**
+     * Colors.
+     */
+    private final IoCheckedFunc<Double, String> colors;
+
+    /**
      * Javassist pool.
      */
     private final ClassPool pool;
@@ -75,11 +80,14 @@ public final class JavassistClasses implements Metric {
      * Ctor.
      * @param bse The base
      * @param fnc Func
+     * @param clrs Colors
      */
-    public JavassistClasses(final Base bse, final Func<CtClass, Double> fnc) {
+    public JavassistClasses(final Base bse, final Func<CtClass, Double> fnc,
+        final Func<Double, String> clrs) {
         this.base = bse;
         this.pool = ClassPool.getDefault();
         this.func = new IoCheckedFunc<>(fnc);
+        this.colors = new IoCheckedFunc<>(clrs);
     }
 
     @Override
@@ -148,6 +156,7 @@ public final class JavassistClasses implements Metric {
                 .add("class")
                 .attr("id", ctc.getSimpleName())
                 .attr("value", String.format("%.4f", cohesion))
+                .attr("color", this.colors.apply(cohesion))
                 .up()
         );
     }
