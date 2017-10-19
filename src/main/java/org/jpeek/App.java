@@ -30,6 +30,7 @@ import com.jcabi.xml.XSDDocument;
 import java.io.IOException;
 import java.nio.file.Path;
 import org.cactoos.io.LengthOf;
+import org.cactoos.io.ResourceOf;
 import org.cactoos.io.TeeInput;
 import org.cactoos.list.ListOf;
 import org.cactoos.scalar.And;
@@ -37,6 +38,7 @@ import org.cactoos.scalar.IoCheckedScalar;
 import org.jpeek.metrics.basic.TotalFiles;
 import org.jpeek.metrics.cohesion.CAMC;
 import org.jpeek.metrics.cohesion.LCOM;
+import org.xembly.Directives;
 import org.xembly.Xembler;
 
 /**
@@ -97,7 +99,12 @@ public final class App {
                         new TeeInput(
                             new StrictXML(
                                 new XMLDocument(
-                                    new Xembler(metric.xembly()).xmlQuietly()
+                                    new Xembler(
+                                        new Directives().pi(
+                                            "xml-stylesheet",
+                                            "href='jpeek.xsl' type='text/xsl'"
+                                        ).append(metric.xembly())
+                                    ).xmlQuietly()
                                 ),
                                 App.SCHEMA
                             ).toString(),
@@ -110,6 +117,12 @@ public final class App {
                         )
                     ).value();
                 }
+            )
+        ).value();
+        new LengthOf(
+            new TeeInput(
+                new ResourceOf("org/jpeek/jpeek.xsl"),
+                this.output.resolve("jpeek.xsl")
             )
         ).value();
     }
