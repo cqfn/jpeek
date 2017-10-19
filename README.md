@@ -42,11 +42,13 @@ XML reports will be generated in the `./jpeek` directory. Enjoy.
 
 These papers provide a pretty good summary of cohesion metrics:
 
+[`izadkhah17`]
 Habib Izadkhah et al.,<br/>
 _Class Cohesion Metrics for Software Engineering: A Critical Review_,<br/>
 Computer Science Journal of Moldova, vol.25, no.1(73), 2017,
 [PDF](http://www.math.md/files/csjm/v25-n1/v25-n1-(pp44-74).pdf).
 
+[`badri08`]
 Linda Badri et al.,<br/>
 _Revisiting Class Cohesion: An empirical investigation on several systems_,<br/>
 Journal of Object Technology, vol.7, no.6, 2008,
@@ -54,12 +56,14 @@ Journal of Object Technology, vol.7, no.6, 2008,
 
 Here is a list of metrics we already implement:
 
+[`bansiya99`]
 Cohesion Among Methods of Classes (**CAMC**).<br/>
 Jagdish Bansiya et al.,<br/>
 _A class cohesion metric for object-oriented designs_,<br/>
 Journal of Object-Oriented Programming, vol. 11, no. 8, 1999,
 [PDF](https://pdfs.semanticscholar.org/2709/1005bacefaee0242cf2643ba5efa20fa7c47.pdf).
 
+[`chidamber94`]
 Lack of Cohesion in Methods (**LCOM**).<br/>
 Shyam Chidamber et al.,<br/>
 _A metrics suite for object oriented design_,<br/>
