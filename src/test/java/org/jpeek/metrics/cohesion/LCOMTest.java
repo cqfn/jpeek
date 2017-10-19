@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import org.hamcrest.MatcherAssert;
 import org.jpeek.DefaultBase;
+import org.jpeek.metrics.FakeBase;
 import org.junit.Test;
 import org.xembly.Xembler;
 

@@ -33,6 +33,7 @@ import javassist.CannotCompileException;
 import javassist.CtClass;
 import org.jpeek.Base;
 import org.jpeek.Metric;
+import org.jpeek.metrics.JavassistClasses;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;

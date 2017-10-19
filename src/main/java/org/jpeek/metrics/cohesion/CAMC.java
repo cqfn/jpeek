@@ -36,6 +36,7 @@ import org.cactoos.collection.Joined;
 import org.cactoos.iterator.Mapped;
 import org.jpeek.Base;
 import org.jpeek.Metric;
+import org.jpeek.metrics.JavassistClasses;
 import org.xembly.Directive;
 
 /**

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.jpeek.metrics.cohesion;
+package org.jpeek.metrics;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -76,7 +76,7 @@ public final class JavassistClasses implements Metric {
      * @param bse The base
      * @param fnc Func
      */
-    JavassistClasses(final Base bse, final Func<CtClass, Double> fnc) {
+    public JavassistClasses(final Base bse, final Func<CtClass, Double> fnc) {
         this.base = bse;
         this.pool = ClassPool.getDefault();
         this.func = new IoCheckedFunc<>(fnc);

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.jpeek.metrics.cohesion;
+package org.jpeek.metrics;
 
 import java.io.IOException;
 import java.nio.file.Files;
