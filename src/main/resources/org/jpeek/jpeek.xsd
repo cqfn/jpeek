@@ -28,20 +28,24 @@ The MIT License (MIT)
     <xs:attribute name="value" use="optional" type="xs:float"/>
   </xs:complexType>
   <xs:complexType name="package">
-    <xs:sequence>
-      <xs:element name="class" type="class" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-    <xs:attribute name="id" use="required" type="xs:string"/>
-    <xs:attribute name="value" use="optional" type="xs:float"/>
+    <xs:complexContent>
+      <xs:extension base="class">
+        <xs:sequence>
+          <xs:element name="class" type="class" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
-  <xs:element name="app">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="package" type="package" minOccurs="0" maxOccurs="unbounded"/>
-      </xs:sequence>
-      <xs:attribute name="id" use="required" type="xs:string"/>
-      <xs:attribute name="value" use="optional" type="xs:float"/>
-    </xs:complexType>
+  <xs:complexType name="app">
+    <xs:complexContent>
+      <xs:extension base="class">
+        <xs:sequence>
+          <xs:element name="package" type="package" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="app" type="app">
     <xs:unique name="packageUnique">
       <xs:selector xpath="./package"/>
       <xs:field xpath="@id"/>
