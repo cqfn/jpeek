@@ -24,6 +24,7 @@
 package org.jpeek;
 
 import com.jcabi.xml.StrictXML;
+import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import com.jcabi.xml.XSD;
 import com.jcabi.xml.XSDDocument;
@@ -98,15 +99,7 @@ public final class App {
                     new LengthOf(
                         new TeeInput(
                             new StrictXML(
-                                new XMLDocument(
-                                    new Xembler(
-                                        new Directives().pi(
-                                            "xml-stylesheet",
-                                            "href='jpeek.xsl' type='text/xsl'"
-                                        ).append(metric.xembly())
-                                    ).xmlQuietly()
-                                ),
-                                App.SCHEMA
+                                App.xml(metric), App.SCHEMA
                             ).toString(),
                             this.output.resolve(
                                 String.format(
@@ -125,6 +118,24 @@ public final class App {
                 this.output.resolve("jpeek.xsl")
             )
         ).value();
+    }
+
+    /**
+     * Make XML.
+     * @param metric The metric
+     * @return XML
+     * @throws IOException If fails
+     */
+    private static XML xml(final Metric metric) throws IOException {
+        return new XMLDocument(
+            new Xembler(
+                new Directives()
+                    .pi("xml-stylesheet", "href='jpeek.xsl' type='text/xsl'")
+                    .append(metric.xembly())
+                    .xpath("/app")
+                    .attr("title", metric.getClass().getName())
+            ).xmlQuietly()
+        );
     }
 
 }

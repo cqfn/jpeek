@@ -51,6 +51,7 @@ SOFTWARE.
         <xs:sequence>
           <xs:element name="package" type="package" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
+        <xs:attribute name="title" use="required" type="xs:string"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
