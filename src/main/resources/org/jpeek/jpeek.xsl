@@ -31,7 +31,7 @@ SOFTWARE.
         <meta name="description" content="jpeek metric"/>
         <meta name="keywords" content="code quality metrics"/>
         <meta name="author" content="jpeek.org"/>
-        <link rel="stylesheet" href="//cdn.rawgit.com/yegor256/tacit/gh-pages/tacit-css-1.1.1.min.css"/>
+        <link rel="stylesheet" href="http://cdn.rawgit.com/yegor256/tacit/gh-pages/tacit-css-1.1.1.min.css"/>
         <title>
           <xsl:text>jpeek</xsl:text>
         </title>
@@ -46,7 +46,14 @@ SOFTWARE.
     </html>
   </xsl:template>
   <xsl:template match="app">
-    <h1>Metric</h1>
+    <p>
+      <a href="http://www.jpeek.org">
+        <img src="http://www.jpeek.org/logo.svg" style="height:60px"/>
+      </a>
+    </p>
+    <h1>
+      <xsl:value-of select="@title"/>
+    </h1>
     <table>
       <colgroup>
         <col/>
@@ -57,7 +64,7 @@ SOFTWARE.
           <th>
             <xsl:text>ID</xsl:text>
           </th>
-          <th>
+          <th style="text-align:right">
             <xsl:text>Value</xsl:text>
           </th>
         </tr>
@@ -69,31 +76,50 @@ SOFTWARE.
   </xsl:template>
   <xsl:template match="package">
     <tr>
-      <th>
-        <strong>
-          <xsl:value-of select="@id"/>
-        </strong>
-      </th>
-      <th>
+      <td>
+        <code>
+          <strong>
+            <xsl:value-of select="@id"/>
+          </strong>
+        </code>
+      </td>
+      <td style="text-align:right">
         <xsl:value-of select="@value"/>
-      </th>
+      </td>
     </tr>
     <xsl:apply-templates select="class"/>
   </xsl:template>
   <xsl:template match="class">
     <tr>
-      <th>
-        <xsl:value-of select="@id"/>
-      </th>
-      <th>
+      <td>
+        <code>
+          <xsl:value-of select="@id"/>
+        </code>
+      </td>
+      <td>
         <xsl:if test="@color">
           <xsl:attribute name="style">
+            <xsl:text>text-align:right;</xsl:text>
             <xsl:text>color:</xsl:text>
-            <xsl:value-of select="@color"/>
+            <xsl:choose>
+              <xsl:when test="@color='red'">
+                <xsl:text>red</xsl:text>
+              </xsl:when>
+              <xsl:when test="@color='green'">
+                <xsl:text>green</xsl:text>
+              </xsl:when>
+              <xsl:when test="@color='yellow'">
+                <xsl:text>orange</xsl:text>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:text>inherit</xsl:text>
+              </xsl:otherwise>
+            </xsl:choose>
+            <xsl:text>;</xsl:text>
           </xsl:attribute>
         </xsl:if>
         <xsl:value-of select="@value"/>
-      </th>
+      </td>
     </tr>
   </xsl:template>
 </xsl:stylesheet>

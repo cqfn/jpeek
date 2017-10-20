@@ -23,6 +23,9 @@
  */
 package org.jpeek;
 
+import com.jcabi.matchers.XhtmlMatchers;
+import com.jcabi.xml.XMLDocument;
+import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -48,6 +51,12 @@ public final class AppTest {
         MatcherAssert.assertThat(
             Files.exists(output.resolve("TotalFiles.xml")),
             Matchers.equalTo(true)
+        );
+        MatcherAssert.assertThat(
+            XSLDocument.make(
+                this.getClass().getResourceAsStream("jpeek.xsl")
+            ).applyTo(new XMLDocument(output.resolve("LCOM.xml").toFile())),
+            XhtmlMatchers.hasXPath("//xhtml:body")
         );
     }
 
