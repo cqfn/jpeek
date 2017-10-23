@@ -44,6 +44,20 @@ import org.xembly.Directive;
 /**
  * Lack of Cohesion in Methods (LCOM).
  *
+ * <p>LCOM is calculated as the number of pairs of methods
+ * operating on disjoint sets of instance variables,
+ * reduced by the number of method pairs acting on at
+ * least one shared instance variable.</p>
+ *
+ * <p>Say, there are 5 methods in a class. This means that there are 10
+ * pairs of methods ({@code 5 * 4 / 2}). Now, we need to see how many of these
+ * pairs are using at least one and the same attribute (Nonempty) and how many
+ * of them are not using any similar attributes (Empty). Then, we
+ * just do {@code LCOM = Empty - Nonempty}. The metric can be really big,
+ * starting from zero and up to any possible number. The bigger the
+ * value the least cohesive is the class. A perfect design would have
+ * {@code LCOM=0}.</p>
+ *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
