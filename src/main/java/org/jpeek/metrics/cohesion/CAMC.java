@@ -38,6 +38,9 @@ import org.jpeek.Base;
 import org.jpeek.Metric;
 import org.jpeek.metrics.Colors;
 import org.jpeek.metrics.JavassistClasses;
+import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.signature.SignatureReader;
+import org.objectweb.asm.signature.SignatureVisitor;
 import org.xembly.Directive;
 
 /**
@@ -126,8 +129,8 @@ public final class CAMC implements Metric {
                 continue;
             }
             final Collection<String> args = new LinkedList<>();
-            for (final CtClass arg : mtd.getParameterTypes()) {
-                args.add(arg.getName());
+            for (final String arg : CAMC.types(mtd.getSignature())) {
+                args.add(arg);
             }
             methods.add(args);
         }
@@ -136,11 +139,38 @@ public final class CAMC implements Metric {
                 continue;
             }
             final Collection<String> args = new LinkedList<>();
-            for (final CtClass arg : ctor.getParameterTypes()) {
-                args.add(arg.getName());
+            for (final String arg : CAMC.types(ctor.getSignature())) {
+                args.add(arg);
             }
             methods.add(args);
         }
         return methods;
     }
+
+    /**
+     * Get parameter types from a method/ctor signature.
+     * @param sig Signature
+     * @return Types of params
+     */
+    private static Iterable<String> types(final String sig) {
+        final Collection<String> types = new LinkedList<>();
+        new SignatureReader(sig).accept(
+            new SignatureVisitor(Opcodes.ASM6) {
+                @Override
+                public void visitClassType(final String name) {
+                    super.visitClassType(name);
+                    types.add(name);
+                }
+                @Override
+                public void visitBaseType(final char name) {
+                    super.visitBaseType(name);
+                    if ('V' != name) {
+                        types.add(String.format(".%s", name));
+                    }
+                }
+            }
+        );
+        return types;
+    }
+
 }
