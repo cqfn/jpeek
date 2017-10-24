@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import javassist.ClassPool;
 import javassist.CtClass;
@@ -155,7 +156,7 @@ public final class JavassistClasses implements Metric {
             new Directives()
                 .add("class")
                 .attr("id", ctc.getSimpleName())
-                .attr("value", String.format("%.4f", cohesion))
+                .attr("value", String.format(Locale.ENGLISH, "%.4f", cohesion))
                 .attr("color", this.colors.apply(cohesion))
                 .up()
         );
