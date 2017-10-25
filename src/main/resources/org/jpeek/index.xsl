@@ -31,15 +31,14 @@ SOFTWARE.
         <meta name="description" content="jpeek metrics"/>
         <meta name="keywords" content="code quality metrics"/>
         <meta name="author" content="jpeek.org"/>
+        <link rel="shortcut icon" href="http://www.jpeek.org/logo.png"/>
         <link rel="stylesheet" href="http://cdn.rawgit.com/yegor256/tacit/gh-pages/tacit-css-1.1.1.min.css"/>
         <title>
           <xsl:text>jpeek</xsl:text>
         </title>
       </head>
       <body>
-        <section>
-          <xsl:apply-templates select="metrics"/>
-        </section>
+        <xsl:apply-templates select="metrics"/>
       </body>
     </html>
   </xsl:template>

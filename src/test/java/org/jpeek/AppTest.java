@@ -45,7 +45,7 @@ public final class AppTest {
 
     @Test
     public void createsXmlReports() throws IOException {
-        final Path output = Files.createTempDirectory("");
+        final Path output = Files.createTempDirectory("").resolve("x1");
         final Path input = Paths.get(".");
         new App(input, output).analyze();
         MatcherAssert.assertThat(
@@ -62,7 +62,7 @@ public final class AppTest {
 
     @Test
     public void createsIndexHtml() throws IOException {
-        final Path output = Files.createTempDirectory("");
+        final Path output = Files.createTempDirectory("").resolve("x2");
         final Path input = Paths.get(".");
         new App(input, output).analyze();
         MatcherAssert.assertThat(

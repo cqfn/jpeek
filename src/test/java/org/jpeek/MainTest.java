@@ -42,7 +42,7 @@ public final class MainTest {
 
     @Test
     public void createsXmlReports() throws IOException {
-        final Path output = Files.createTempDirectory("");
+        final Path output = Files.createTempDirectory("").resolve("x3");
         final Path input = Paths.get(".");
         Main.main(input.toString(), output.toString());
         MatcherAssert.assertThat(

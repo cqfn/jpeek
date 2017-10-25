@@ -32,6 +32,8 @@ import com.jcabi.xml.XSL;
 import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import org.cactoos.io.LengthOf;
 import org.cactoos.io.TeeInput;
 import org.xembly.Directives;
@@ -121,6 +123,13 @@ final class Report {
                     .pi("xml-stylesheet", "href='jpeek.xsl' type='text/xsl'")
                     .append(this.metric.xembly())
                     .xpath("/app")
+                    .attr(
+                        "date",
+                        ZonedDateTime.now().format(
+                            DateTimeFormatter.ISO_INSTANT
+                        )
+                    )
+                    .attr("version", "1.0-SNAPSHOT")
                     .attr("title", this.metric.getClass().getSimpleName())
             ).xmlQuietly()
         );

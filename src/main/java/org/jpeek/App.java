@@ -27,6 +27,7 @@ import com.jcabi.xml.XMLDocument;
 import com.jcabi.xml.XSL;
 import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.collection.Joined;
 import org.cactoos.io.LengthOf;
@@ -86,6 +87,14 @@ public final class App {
      * @throws IOException If fails
      */
     public void analyze() throws IOException {
+        if (Files.exists(this.output)) {
+            throw new IllegalStateException(
+                String.format(
+                    "Directory/file already exists: %s",
+                    this.output.normalize().toAbsolutePath()
+                )
+            );
+        }
         final Base base = new DefaultBase(this.input);
         final Iterable<Metric> metrics = new ListOf<>(
             new TotalFiles(base),
