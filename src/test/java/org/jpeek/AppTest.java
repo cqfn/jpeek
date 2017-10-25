@@ -60,4 +60,15 @@ public final class AppTest {
         );
     }
 
+    @Test
+    public void createsIndexHtml() throws IOException {
+        final Path output = Files.createTempDirectory("");
+        final Path input = Paths.get(".");
+        new App(input, output).analyze();
+        MatcherAssert.assertThat(
+            Files.exists(output.resolve("index.html")),
+            Matchers.equalTo(true)
+        );
+    }
+
 }

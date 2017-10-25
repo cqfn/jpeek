@@ -53,14 +53,14 @@ final class Report {
      * XSD schema.
      */
     private static final XSD SCHEMA = XSDDocument.make(
-        App.class.getResourceAsStream("jpeek.xsd")
+        Report.class.getResourceAsStream("jpeek.xsd")
     );
 
     /**
      * XSL stylesheet.
      */
     private static final XSL STYLESHEET = XSLDocument.make(
-        App.class.getResourceAsStream("jpeek.xsl")
+        Report.class.getResourceAsStream("jpeek.xsl")
     );
 
     /**
