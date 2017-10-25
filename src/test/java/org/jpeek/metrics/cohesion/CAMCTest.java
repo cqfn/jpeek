@@ -54,7 +54,7 @@ public final class CAMCTest {
             ),
             XhtmlMatchers.hasXPaths(
                 "/app/package/class[@id='CAMCTest']",
-                "//class[@id='Base' and @value='1.0000']"
+                "//class[@id='DefaultBase' and @value='0.3333']"
             )
         );
     }

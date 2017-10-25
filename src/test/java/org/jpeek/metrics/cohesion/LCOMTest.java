@@ -54,7 +54,7 @@ public final class LCOMTest {
             ),
             XhtmlMatchers.hasXPaths(
                 "/app/package/class[@id='LCOMTest']",
-                "//class[@id='Base' and @value='0.0000']"
+                "//class[@id='DefaultBase' and @value='0.0000']"
             )
         );
     }

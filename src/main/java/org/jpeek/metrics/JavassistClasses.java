@@ -26,7 +26,6 @@ package org.jpeek.metrics;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -44,7 +43,9 @@ import org.xembly.Directive;
 import org.xembly.Directives;
 
 /**
- * Lack of Cohesion in Methods (LCOM).
+ * Classes parsed by Javassist.
+ *
+ * <p>We take into account only classes. Interfaces are ignored.</p>
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -97,7 +98,7 @@ public final class JavassistClasses implements Metric {
             .add("app")
             .attr("id", this.base.toString())
             .append(
-                new Joined<>(
+                new Joined<Directive>(
                     new Mapped<>(
                         this.metrics(),
                         ent -> new Directives()
@@ -121,9 +122,17 @@ public final class JavassistClasses implements Metric {
         final Map<String, Directives> map = new HashMap<>(0);
         final Iterable<Map.Entry<String, Directives>> all = new Mapped<>(
             new Filtered<>(
-                this.base.files(),
-                path -> Files.isRegularFile(path)
-                    && path.toString().endsWith(".class")
+                new Mapped<>(
+                    new Filtered<>(
+                        this.base.files(),
+                        path -> Files.isRegularFile(path)
+                            && path.toString().endsWith(".class")
+                    ),
+                    path -> this.pool.makeClassIfNew(
+                        new FileInputStream(path.toFile())
+                    )
+                ),
+                ctClass -> !ctClass.isInterface()
             ),
             this::metric
         );
@@ -136,15 +145,12 @@ public final class JavassistClasses implements Metric {
 
     /**
      * Calculate metrics for a single .class file.
-     * @param file The .class file
+     * @param ctc The class
      * @return Metrics
      * @throws IOException If fails
      */
     private Map.Entry<String, Directives> metric(
-        final Path file) throws IOException {
-        final CtClass ctc = this.pool.makeClassIfNew(
-            new FileInputStream(file.toFile())
-        );
+        final CtClass ctc) throws IOException {
         final double cohesion = this.func.apply(ctc);
         ctc.defrost();
         String pkg = ctc.getPackageName();
