@@ -36,24 +36,46 @@ SOFTWARE.
           <xsl:text>jpeek</xsl:text>
         </title>
         <style type="text/css">
+          .graph {
+          }
         </style>
       </head>
       <body>
         <section>
+          <p>
+            <a href="http://www.jpeek.org">
+              <img src="http://www.jpeek.org/logo.svg" style="height:60px"/>
+            </a>
+          </p>
+          <p>
+            <a href="index.html">
+              <xsl:text>Back to index</xsl:text>
+            </a>
+          </p>
+          <h1>
+            <xsl:value-of select="app/@title"/>
+          </h1>
+          <xsl:apply-templates select="app/@value"/>
           <xsl:apply-templates select="app"/>
         </section>
       </body>
     </html>
   </xsl:template>
-  <xsl:template match="app">
+  <xsl:template match="app/@value">
     <p>
-      <a href="http://www.jpeek.org">
-        <img src="http://www.jpeek.org/logo.svg" style="height:60px"/>
-      </a>
+      <xsl:text>App measurement: </xsl:text>
+      <code>
+        <xsl:value-of select="."/>
+      </code>
+      <xsl:text>.</xsl:text>
     </p>
-    <h1>
-      <xsl:value-of select="@title"/>
-    </h1>
+  </xsl:template>
+  <xsl:template match="app[not(package)]">
+    <p>
+      <xsl:text>No measurements for packages.</xsl:text>
+    </p>
+  </xsl:template>
+  <xsl:template match="app[package]">
     <table>
       <colgroup>
         <col/>

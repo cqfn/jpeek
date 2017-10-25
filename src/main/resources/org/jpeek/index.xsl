@@ -58,9 +58,14 @@ SOFTWARE.
   </xsl:template>
   <xsl:template match="metric">
     <li>
-      <a href="@html">
+      <a href="{@html}">
         <xsl:value-of select="."/>
       </a>
+      <xsl:text> (</xsl:text>
+      <a href="{@xml}">
+        <xsl:text>XML</xsl:text>
+      </a>
+      <xsl:text>)</xsl:text>
     </li>
     <xsl:apply-templates select="class"/>
   </xsl:template>
