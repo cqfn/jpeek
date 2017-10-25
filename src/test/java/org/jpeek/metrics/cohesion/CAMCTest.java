@@ -72,7 +72,7 @@ public final class CAMCTest {
             XhtmlMatchers.hasXPaths(
                 "/app/package[@id='']/class[@id='Foo']",
                 "//class[@id='Foo' and @value='0.6667']",
-                "//class[@id='Foo' and @color='yellow']"
+                "//class[@id='Foo' and @color='green']"
             )
         );
     }

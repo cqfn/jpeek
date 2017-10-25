@@ -46,6 +46,18 @@ import org.xembly.Directive;
 /**
  * Cohesion Among Methods of Classes (CAMC).
  *
+ * <p>In the CAMC metric, the cohesion in the methods of
+ * a class is determined by the types of objects (parameter
+ * access pattern of methods) that method’s take as input parameters.
+ * The metric determines the overlap in the object types of
+ * the methods parameter lists. The amount of overlap in object
+ * types used by the methods of a class can be used to predict
+ * the cohesion of the class.</p>
+ *
+ * <p>The metric value ranges between 0 and 1.0. A value of
+ * 1.0 represents maximum cohesion and 0 represents
+ * a completely un-cohesive class.</p>
+ *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
@@ -75,7 +87,7 @@ public final class CAMC implements Metric {
         return new JavassistClasses(
             this.base, CAMC::cohesion,
             // @checkstyle MagicNumberCheck (1 line)
-            new Colors(0.35d, 0.75d, true)
+            new Colors(0.15d, 0.35d, false)
         ).xembly();
     }
 
