@@ -23,11 +23,6 @@
  */
 package org.jpeek;
 
-import com.jcabi.xml.StrictXML;
-import com.jcabi.xml.XML;
-import com.jcabi.xml.XMLDocument;
-import com.jcabi.xml.XSD;
-import com.jcabi.xml.XSDDocument;
 import java.io.IOException;
 import java.nio.file.Path;
 import org.cactoos.io.LengthOf;
@@ -39,8 +34,6 @@ import org.cactoos.scalar.IoCheckedScalar;
 import org.jpeek.metrics.basic.TotalFiles;
 import org.jpeek.metrics.cohesion.CAMC;
 import org.jpeek.metrics.cohesion.LCOM;
-import org.xembly.Directives;
-import org.xembly.Xembler;
 
 /**
  * Application.
@@ -53,13 +46,6 @@ import org.xembly.Xembler;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class App {
-
-    /**
-     * XSD schema.
-     */
-    private static final XSD SCHEMA = XSDDocument.make(
-        App.class.getResourceAsStream("jpeek.xsd")
-    );
 
     /**
      * Location of the project to analyze.
@@ -96,19 +82,7 @@ public final class App {
             new And(
                 metrics,
                 metric -> {
-                    new LengthOf(
-                        new TeeInput(
-                            new StrictXML(
-                                App.xml(metric), App.SCHEMA
-                            ).toString(),
-                            this.output.resolve(
-                                String.format(
-                                    "%s.xml",
-                                    metric.getClass().getSimpleName()
-                                )
-                            )
-                        )
-                    ).value();
+                    new Report(metric).save(this.output);
                 }
             )
         ).value();
@@ -118,24 +92,6 @@ public final class App {
                 this.output.resolve("jpeek.xsl")
             )
         ).value();
-    }
-
-    /**
-     * Make XML.
-     * @param metric The metric
-     * @return XML
-     * @throws IOException If fails
-     */
-    private static XML xml(final Metric metric) throws IOException {
-        return new XMLDocument(
-            new Xembler(
-                new Directives()
-                    .pi("xml-stylesheet", "href='jpeek.xsl' type='text/xsl'")
-                    .append(metric.xembly())
-                    .xpath("/app")
-                    .attr("title", metric.getClass().getName())
-            ).xmlQuietly()
-        );
     }
 
 }
