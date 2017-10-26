@@ -48,6 +48,9 @@ import org.xembly.Directive;
 /**
  * Optimistic Class Cohesion (OCC).
  *
+ * Maximum value of percentage of methods to be reachable by some method,
+ * on the weak-connection graph.
+ *
  * <p>There is no thread-safety guarantee.
  *
  * @author Vseslav Sekorin (vssekorin@gmail.com)
