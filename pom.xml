@@ -127,23 +127,9 @@ SOFTWARE.
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>net.sourceforge.saxon</groupId>
-      <artifactId>saxon</artifactId>
-      <version>9.1.0.8</version>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>net.sourceforge.saxon</groupId>
-      <artifactId>saxon</artifactId>
-      <version>9.1.0.8</version>
-      <classifier>dom</classifier>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>net.sourceforge.saxon</groupId>
-      <artifactId>saxon</artifactId>
-      <version>9.1.0.8</version>
-      <classifier>xpath</classifier>
+      <groupId>net.sf.saxon</groupId>
+      <artifactId>Saxon-HE</artifactId>
+      <version>9.8.0-5</version>
       <scope>runtime</scope>
     </dependency>
   </dependencies>
@@ -159,6 +145,7 @@ SOFTWARE.
               <goal>single</goal>
             </goals>
             <configuration>
+              <mergeManifestMode>skip</mergeManifestMode>
               <archive>
                 <manifest>
                   <mainClass>org.jpeek.Main</mainClass>
