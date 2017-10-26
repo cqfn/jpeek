@@ -55,7 +55,7 @@ public final class OCCTest {
             ),
             XhtmlMatchers.hasXPaths(
                 "/app/package/class[@id='OCCTest']",
-                "//class[@id='Base' and @value='0.0000']"
+                "//class[@id='OCCTest' and @value='0.0000']"
             )
         );
     }
