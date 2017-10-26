@@ -53,10 +53,11 @@ import org.xembly.Directive;
  * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
  * @see <a href="https://www.researchgate.net/publication/268046583_A_Proposal_of_Class_Cohesion_Metrics_Using_Sizes_of_Cohesive_Parts">A Proposal of Class Cohesion Metrics Using Sizes of Cohesive Parts</a>
- * @since 0.2
+ * @since 0.4
  * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
  * @checkstyle ParameterNumberCheck (500 lines)
  */
+@SuppressWarnings("PMD.TooManyMethods")
 public final class OCC implements Metric {
 
     /**
@@ -109,9 +110,7 @@ public final class OCC implements Metric {
      * @param ctmethods Methods
      * @return The number
      */
-    @SuppressWarnings({"PMD.UseVarargs", "PMD.CyclomaticComplexity",
-        "PMD.StdCyclomaticComplexity", "PMD.ModifiedCyclomaticComplexity",
-        "PMD.UseObjectForClearerAPI"})
+    @SuppressWarnings({"PMD.UseVarargs", "PMD.UseObjectForClearerAPI"})
     private static double maxRw(
         final CtClass ctc, final List<String> ctmethods) {
         final ClassReader reader;
@@ -169,25 +168,54 @@ public final class OCC implements Metric {
                 item -> vars.get(key).addAll(vars.get(item))
             )
         );
+        final boolean[][] adjacency = adjacencyMatrix(vars, ctmethods);
         final int number = ctmethods.size();
-        final boolean[][] reachability = new boolean[number][number];
-        boolean[][] result = new boolean[number][number];
-        boolean[][] current = new boolean[number][number];
+        final boolean[][] reachabilty = reachabilityMatrix(adjacency, number);
+        return maxWays(reachabilty, number);
+    }
+
+    /**
+     * Adjacency matrix.
+     *
+     * @param vars Variables
+     * @param methods Methods
+     * @return Result
+     */
+    private static boolean[][] adjacencyMatrix(
+        final Map<String, Set<String>> vars, final List<String> methods) {
+        final int number = methods.size();
+        final boolean[][] result = new boolean[number][number];
         for (int row = 0; row < number; ++row) {
             for (int col = 0; col < number; ++col) {
-                reachability[row][col] = hasWeakConnection(
-                    vars.get(ctmethods.get(row)),
-                    vars.get(ctmethods.get(col))
+                result[row][col] = hasWeakConnection(
+                    vars.get(methods.get(row)),
+                    vars.get(methods.get(col))
                 );
-                current[row][col] = reachability[row][col];
-                result[row][col] = reachability[row][col];
             }
         }
+        return result;
+    }
+
+    /**
+     * Reachability matrix.
+     *
+     * @param adjacency Adjacency matrix
+     * @param number Number of methods
+     * @return Result
+     */
+    private static boolean[][] reachabilityMatrix(
+        final boolean[][] adjacency, final int number) {
+        boolean[][] result = new boolean[number][number];
+        boolean[][] current = new boolean[number][number];
+        for (int ind = 0; ind < number; ++ind) {
+            System.arraycopy(adjacency[ind], 0, result[ind], 0, number);
+            System.arraycopy(adjacency[ind], 0, current[ind], 0, number);
+        }
         for (int ind = 2; ind <= number; ++ind) {
-            current = multiply(current, reachability, number);
+            current = multiply(current, adjacency, number);
             result = disjunction(current, result, number);
         }
-        return maxWays(result, number);
+        return result;
     }
 
     /**

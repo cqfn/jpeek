@@ -37,7 +37,7 @@ import org.xembly.Xembler;
  *
  * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.4
  * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
  * @checkstyle JavadocMethodCheck (500 lines)
  */
@@ -66,14 +66,14 @@ public final class OCCTest {
             XhtmlMatchers.xhtml(
                 new Xembler(
                     new OCC(
-                        new FakeBase("Test")
+                        new FakeBase("TwoCommonAttributes")
                     ).xembly()
                 ).xmlQuietly()
             ),
             XhtmlMatchers.hasXPaths(
-                "/app/package/class[@id='Test']",
-                "//class[@id='Test' and @value='0.5000']",
-                "//class[@id='Test' and @color='yellow']"
+                "/app/package/class[@id='TwoCommonAttributes']",
+                "//class[@id='TwoCommonAttributes' and @value='0.5000']",
+                "//class[@id='TwoCommonAttributes' and @color='yellow']"
             )
         );
     }
@@ -84,14 +84,14 @@ public final class OCCTest {
             XhtmlMatchers.xhtml(
                 new Xembler(
                     new OCC(
-                        new FakeBase("C")
+                        new FakeBase("Foo")
                     ).xembly()
                 ).xmlQuietly()
             ),
             XhtmlMatchers.hasXPaths(
-                "/app/package/class[@id='C']",
-                "//class[@id='C' and @value='1.0000']",
-                "//class[@id='C' and @color='red']"
+                "/app/package/class[@id='Foo']",
+                "//class[@id='Foo' and @value='1.0000']",
+                "//class[@id='Foo' and @color='red']"
             )
         );
     }

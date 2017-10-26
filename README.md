@@ -70,6 +70,13 @@ _A metrics suite for object oriented design_,<br/>
 IEEE Transactions on Software Engineering, vol.20, no.6, 1994,
 [PDF](http://www.pitt.edu/~ckemerer/CK%20research%20papers/MetricForOOD_ChidamberKemerer94.pdf).
 
+[`aman04`]
+Optimistic Class Cohesion (**OCC**).<br/>
+Hirohisa Aman et al.,<br/>
+_A proposal of class cohesion metrics using sizes of cohesive parts_,<br/>
+Proc. of Fifth Joint Conference on Knowledge-based Software Engineering, 2002,
+[PDF](https://www.researchgate.net/profile/Hirohisa_Aman/publication/268046583_A_Proposal_of_Class_Cohesion_Metrics_Using_Sizes_of_Cohesive_Parts/links/5729ca4b08ae057b0a060fa6/A-Proposal-of-Class-Cohesion-Metrics-Using-Sizes-of-Cohesive-Parts.pdf).
+
 ## How to contribute?
 
 Read [`CONTRIBUTING.md`](https://github.com/yegor256/jpeek/blob/master/CONTRIBUTING.md)

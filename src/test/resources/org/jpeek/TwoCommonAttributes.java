@@ -1,4 +1,4 @@
-public final class Test {
+public final class TwoCommonAttributes {
     private int first;
     private String second;
     private int third;
