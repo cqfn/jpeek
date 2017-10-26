@@ -145,7 +145,6 @@ SOFTWARE.
               <goal>single</goal>
             </goals>
             <configuration>
-              <mergeManifestMode>skip</mergeManifestMode>
               <archive>
                 <manifest>
                   <mainClass>org.jpeek.Main</mainClass>

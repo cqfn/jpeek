@@ -29,6 +29,8 @@ import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import org.cactoos.collection.Joined;
 import org.cactoos.io.LengthOf;
 import org.cactoos.io.ResourceOf;
@@ -120,33 +122,42 @@ public final class App {
                 App.INDEX.transform(
                     new XMLDocument(
                         new Xembler(
-                            new Directives().add("metrics").append(
-                                new Joined<>(
-                                    new Mapped<>(
-                                        metrics,
-                                        mtc -> {
-                                            final String name =
-                                                mtc.getClass().getSimpleName();
-                                            return new Directives()
-                                                .add("metric")
-                                                .set(name)
-                                                .attr(
-                                                    "html",
-                                                    String.format(
-                                                        "%s.html", name
+                            new Directives()
+                                .add("metrics")
+                                .append(
+                                    new Joined<>(
+                                        new Mapped<>(
+                                            metrics,
+                                            mtc -> {
+                                                final String name = mtc
+                                                    .getClass().getSimpleName();
+                                                return new Directives()
+                                                    .add("metric")
+                                                    .set(name)
+                                                    .attr(
+                                                        "html",
+                                                        String.format(
+                                                            "%s.html", name
+                                                        )
                                                     )
-                                                )
-                                                .attr(
-                                                    "xml",
-                                                    String.format(
-                                                        "%s.xml", name
+                                                    .attr(
+                                                        "xml",
+                                                        String.format(
+                                                            "%s.xml", name
+                                                        )
                                                     )
-                                                )
-                                                .up();
-                                        }
+                                                    .up();
+                                            }
+                                        )
                                     )
                                 )
-                            )
+                                .attr(
+                                    "date",
+                                    ZonedDateTime.now().format(
+                                        DateTimeFormatter.ISO_INSTANT
+                                    )
+                                )
+                                .attr("version", "1.0-SNAPSHOT")
                         ).xmlQuietly()
                     )
                 ).toString(),
