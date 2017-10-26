@@ -4,6 +4,8 @@ assets:
   settings.xml: zerocracy/home#assets/jpeek/settings.xml
   pubring.gpg: zerocracy/home#assets/pubring.gpg
   secring.gpg: zerocracy/home#assets/secring.gpg
+  id_rsa: zerocracy/home#assets/heroku-key
+  id_rsa.pub: zerocracy/home#assets/heroku-key.pub
 env:
   MAVEN_OPTS: -XX:MaxPermSize=256m -Xmx1g
   JAVA_OPTS: -XX:MaxPermSize=256m -Xmx1g
@@ -27,3 +29,14 @@ release:
     mvn versions:set "-DnewVersion=${tag}"
     git commit -am "${tag}"
     mvn clean deploy -Pjpeek -Psonar -Pqulice -Psonatype --errors --settings ../settings.xml
+    cp ../settings.xml settings.xml
+    mvn clean package -Pqulice -Pjpeek --errors --batch-mode
+    git remote add heroku git@heroku.com:jpeek.git
+    mkdir ~/.ssh
+    mv ../id_rsa ../id_rsa.pub ~/.ssh
+    chmod -R 600 ~/.ssh/*
+    echo -e "Host *\n  StrictHostKeyChecking no\n  UserKnownHostsFile=/dev/null" > ~/.ssh/config
+    git add settings.xml
+    git fetch
+    git commit -m 'settings.xml' && git push -f heroku $(git symbolic-ref --short HEAD):master && git reset HEAD~1
+    curl -f --connect-timeout 15 --retry 5 --retry-delay 30 http://www.jpeek.org > /dev/null
