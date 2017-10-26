@@ -24,7 +24,6 @@ SOFTWARE.
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml" version="2.0">
   <xsl:template match="/">
-    <xsl:text disable-output-escaping="yes">&lt;!DOCTYPE html&gt;</xsl:text>
     <html lang="en">
       <head>
         <meta charset="UTF-8"/>
@@ -70,7 +69,14 @@ SOFTWARE.
           <xsl:text>, classes: </xsl:text>
           <xsl:value-of select="count(//class)"/>
           <xsl:text>, average: </xsl:text>
-          <xsl:value-of select="format-number(sum(//class/@value) div count(//class), '#.####')"/>
+          <xsl:choose>
+            <xsl:when test="//class">
+              <xsl:value-of select="format-number(sum(//class/@value) div count(//class), '#.####')"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>0</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
           <xsl:text>.</xsl:text>
         </p>
         <xsl:apply-templates select="app"/>
