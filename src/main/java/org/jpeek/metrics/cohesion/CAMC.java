@@ -100,7 +100,7 @@ public final class CAMC implements Metric {
     private static double cohesion(final CtClass ctc) throws NotFoundException {
         final Collection<Collection<String>> methods = CAMC.methods(ctc);
         final Collection<String> types = new HashSet<>(
-            new Joined<String>(
+            new Joined<>(
                 () -> new Mapped<>(
                     methods.iterator(),
                     strings -> strings
@@ -108,10 +108,10 @@ public final class CAMC implements Metric {
             )
         );
         int sum = 0;
-        for (final Collection<String> mtd : methods) {
+        for (final String type : types) {
             int mine = 0;
-            for (final String arg : mtd) {
-                if (types.contains(arg)) {
+            for (final Collection<String> mtd : methods) {
+                if (mtd.contains(type)) {
                     ++mine;
                 }
             }
