@@ -37,7 +37,7 @@ import org.cactoos.text.TextOf;
 import org.takes.Response;
 import org.takes.facets.fork.RqRegex;
 import org.takes.facets.fork.TkRegex;
-import org.takes.rs.RsText;
+import org.takes.rs.RsHtml;
 
 /**
  * Report page.
@@ -101,7 +101,7 @@ public final class TkReport implements TkRegex {
         } else {
             path = path.substring(1);
         }
-        return new RsText(
+        return new RsHtml(
             new TextOf(
                 this.reports.apply(
                     matcher.group(1),
