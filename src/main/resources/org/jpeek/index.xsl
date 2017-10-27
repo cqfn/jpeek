@@ -74,7 +74,7 @@ SOFTWARE.
       </a>
       <xsl:text> is </xsl:text>
       <strong>
-        <xsl:value-of select="format-number(sum(metric/score) div count(metric),'0.##')"/>
+        <xsl:value-of select="format-number(sum(metric/score) div count(metric),'0.00')"/>
       </strong>
       <xsl:text> out of 10.</xsl:text>
     </p>
@@ -209,13 +209,13 @@ SOFTWARE.
         <xsl:value-of select="classes"/>
       </td>
       <td style="text-align:right">
-        <xsl:value-of select="format-number(average,'0.##')"/>
+        <xsl:value-of select="format-number(average,'0.00')"/>
       </td>
       <td style="text-align:right">
-        <xsl:value-of select="format-number(min,'0.##')"/>
+        <xsl:value-of select="format-number(min,'0.00')"/>
       </td>
       <td style="text-align:right">
-        <xsl:value-of select="format-number(max,'0.##')"/>
+        <xsl:value-of select="format-number(max,'0.00')"/>
       </td>
       <td style="text-align:right">
         <xsl:value-of select="green"/>
@@ -255,7 +255,7 @@ SOFTWARE.
             </xsl:otherwise>
           </xsl:choose>
         </xsl:attribute>
-        <xsl:value-of select="format-number(score,'0.##')"/>
+        <xsl:value-of select="format-number(score,'0.00')"/>
       </td>
       <td>
         <a href="{xml}">

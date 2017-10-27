@@ -82,11 +82,11 @@ SOFTWARE.
         </g>
         <xsl:if test="@style = 'round'">
           <text x="72.5" y="15" fill="#010101" fill-opacity=".3" text-anchor="end">
-            <xsl:value-of select="."/>
+            <xsl:value-of select="format-number(.,'0.0000')"/>
           </text>
         </xsl:if>
         <text x="72.5" y="14" text-anchor="end">
-          <xsl:value-of select="."/>
+          <xsl:value-of select="format-number(.,'0.0000')"/>
         </text>
       </g>
     </svg>
