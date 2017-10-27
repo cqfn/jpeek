@@ -121,7 +121,7 @@ final class Index implements Scalar<Iterable<Directive>> {
         final double yellow = (double) xml.nodes("//*[@color='yellow']").size();
         final double red = (double) xml.nodes("//*[@color='red']").size();
         final double score = 10.0d
-            * (green + yellow * 0.3d + red * 0.05d)
+            * (green + yellow * 0.25d + red * 0.05d)
             / (green + yellow + red);
         return new Directives()
             .add("metric")

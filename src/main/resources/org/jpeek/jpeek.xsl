@@ -37,6 +37,9 @@ SOFTWARE.
           <xsl:value-of select="app/@title"/>
         </title>
         <style type="text/css">
+          body {
+            padding: 1em;
+          }
           td {
             padding-top: 0.25em;
             padding-bottom: 0.25em;
