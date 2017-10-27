@@ -39,6 +39,7 @@ import org.cactoos.scalar.IoCheckedScalar;
 import org.jpeek.metrics.cohesion.CAMC;
 import org.jpeek.metrics.cohesion.LCOM;
 import org.jpeek.metrics.cohesion.OCC;
+import org.xembly.Directives;
 import org.xembly.Xembler;
 
 /**
@@ -58,6 +59,13 @@ public final class App {
      */
     private static final XSL STYLESHEET = XSLDocument.make(
         App.class.getResourceAsStream("index.xsl")
+    );
+
+    /**
+     * XSL stylesheet.
+     */
+    private static final XSL BADGE = XSLDocument.make(
+        App.class.getResourceAsStream("badge.xsl")
     );
 
     /**
@@ -128,6 +136,28 @@ public final class App {
             new TeeInput(
                 App.STYLESHEET.transform(index).toString(),
                 this.output.resolve("index.html")
+            )
+        ).value();
+        new LengthOf(
+            new TeeInput(
+                App.BADGE.transform(
+                    new XMLDocument(
+                        new Xembler(
+                            new Directives().add("score").set(
+                                String.format(
+                                    "%.4f",
+                                    Double.parseDouble(
+                                        index.xpath(
+                                            // @checkstyle LineLength (1 line)
+                                            "sum(//metric/score) div count(//metric)"
+                                        ).get(0)
+                                    )
+                                )
+                            ).attr("style", "round")
+                        ).xmlQuietly()
+                    )
+                ).toString(),
+                this.output.resolve("badge.svg")
             )
         ).value();
     }
