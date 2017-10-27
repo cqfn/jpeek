@@ -32,6 +32,7 @@ import org.cactoos.text.TextOf;
 import org.takes.Response;
 import org.takes.facets.fork.RqRegex;
 import org.takes.facets.fork.TkRegex;
+import org.takes.facets.forward.RsForward;
 import org.takes.rs.RsWithBody;
 import org.takes.rs.RsWithType;
 
@@ -66,10 +67,9 @@ final class TkReport implements TkRegex {
         // @checkstyle MagicNumber (1 line)
         String path = matcher.group(3);
         if (path.isEmpty()) {
-            path = "index.html";
-        } else {
-            path = path.substring(1);
+            throw new RsForward("/index.html");
         }
+        path = path.substring(1);
         return new RsWithType(
             new RsWithBody(
                 new TextOf(

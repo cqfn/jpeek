@@ -56,11 +56,11 @@ public final class TkAppTest {
                 new JdkRequest(String.format("%s/org.jpeek/jpeek/", home))
                     .fetch()
                     .as(RestResponse.class)
-                    .assertStatus(HttpURLConnection.HTTP_OK);
+                    .assertStatus(HttpURLConnection.HTTP_SEE_OTHER);
                 new JdkRequest(String.format("%s/org.jpeek/jpeek", home))
                     .fetch()
                     .as(RestResponse.class)
-                    .assertStatus(HttpURLConnection.HTTP_OK);
+                    .assertStatus(HttpURLConnection.HTTP_SEE_OTHER);
             }
         );
     }

@@ -32,6 +32,7 @@ import org.cactoos.func.SyncBiFunc;
 import org.takes.Take;
 import org.takes.facets.fork.FkRegex;
 import org.takes.facets.fork.TkFork;
+import org.takes.facets.forward.TkForward;
 import org.takes.http.Exit;
 import org.takes.http.FtCli;
 import org.takes.tk.TkWrap;
@@ -80,10 +81,12 @@ public final class TkApp extends TkWrap {
                 new Reports(home)
             )
         );
-        return new TkFork(
-            new FkRegex(
-                "/([^/]+)/([^/]+)(.*)",
-                new TkReport(reports)
+        return new TkForward(
+            new TkFork(
+                new FkRegex(
+                    "/([^/]+)/([^/]+)(.*)",
+                    new TkReport(reports)
+                )
             )
         );
     }
