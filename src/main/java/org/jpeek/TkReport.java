@@ -133,17 +133,27 @@ public final class TkReport implements TkRegex {
             ).asString()
         ).xpath("/metadata/versioning/latest/text()").get(0);
         final Path input = this.sources.resolve(grp).resolve(artifact);
+        final String name = String.format("%s-%s.jar", artifact, version);
         new LengthOf(
             new TeeInput(
                 new URL(
                     String.format(
-                        "http://repo1.maven.org/maven2/%s/%s/%s/%2$s-%3$s.jar",
-                        grp, artifact, version
+                        "http://repo1.maven.org/maven2/%s/%s/%s/%s",
+                        grp, artifact, version, name
                     )
                 ),
-                input
+                input.resolve(name)
             )
         ).value();
+        try {
+            new ProcessBuilder()
+                .directory(input.toFile())
+                .command("unzip", name)
+                .start()
+                .waitFor();
+        } catch (final InterruptedException ex) {
+            throw new IllegalStateException(ex);
+        }
         final Path output = this.target.resolve(grp).resolve(artifact);
         new App(input, output).analyze();
         return output;
