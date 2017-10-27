@@ -26,6 +26,10 @@ package org.jpeek.web;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.cactoos.BiFunc;
+import org.cactoos.func.StickyBiFunc;
+import org.cactoos.func.SyncBiFunc;
+import org.takes.Take;
 import org.takes.facets.fork.FkRegex;
 import org.takes.facets.fork.TkFork;
 import org.takes.http.Exit;
@@ -47,17 +51,10 @@ public final class TkApp extends TkWrap {
 
     /**
      * Ctor.
-     * @param dir Home directory
+     * @param home Home directory
      */
-    public TkApp(final Path dir) {
-        super(
-            new TkFork(
-                new FkRegex(
-                    "/([^/]+)/([^/]+)(.*)",
-                    new TkReport(dir)
-                )
-            )
-        );
+    public TkApp(final Path home) {
+        super(TkApp.make(home));
     }
 
     /**
@@ -70,6 +67,25 @@ public final class TkApp extends TkWrap {
             new TkApp(Files.createTempDirectory("jpeek")),
             args
         ).start(Exit.NEVER);
+    }
+
+    /**
+     * Make it.
+     * @param home Home directory
+     * @return The take
+     */
+    private static Take make(final Path home) {
+        final BiFunc<String, String, Path> reports = new StickyBiFunc<>(
+            new SyncBiFunc<>(
+                new Reports(home)
+            )
+        );
+        return new TkFork(
+            new FkRegex(
+                "/([^/]+)/([^/]+)(.*)",
+                new TkReport(reports)
+            )
+        );
     }
 
 }

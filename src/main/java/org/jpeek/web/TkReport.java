@@ -23,18 +23,12 @@
  */
 package org.jpeek.web;
 
-import com.jcabi.xml.XMLDocument;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Path;
 import java.util.regex.Matcher;
+import org.cactoos.BiFunc;
 import org.cactoos.func.IoCheckedBiFunc;
-import org.cactoos.func.StickyBiFunc;
-import org.cactoos.func.SyncBiFunc;
-import org.cactoos.io.LengthOf;
-import org.cactoos.io.TeeInput;
 import org.cactoos.text.TextOf;
-import org.jpeek.App;
 import org.takes.Response;
 import org.takes.facets.fork.RqRegex;
 import org.takes.facets.fork.TkRegex;
@@ -50,46 +44,19 @@ import org.takes.rs.RsHtml;
  * @since 0.5
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class TkReport implements TkRegex {
-
-    /**
-     * Directory with sources.
-     */
-    private final Path sources;
-
-    /**
-     * Directory with reports.
-     */
-    private final Path target;
+final class TkReport implements TkRegex {
 
     /**
      * Maker or reports.
      */
-    private final IoCheckedBiFunc<String, String, Path> reports;
+    private final BiFunc<String, String, Path> reports;
 
     /**
      * Ctor.
-     * @param home Home dir
+     * @param rpts Reports
      */
-    public TkReport(final Path home) {
-        this(home.resolve("sources"), home.resolve("target"));
-    }
-
-    /**
-     * Ctor.
-     * @param input Dir with sources
-     * @param output Dir with reports
-     */
-    public TkReport(final Path input, final Path output) {
-        this.sources = input;
-        this.target = output;
-        this.reports = new IoCheckedBiFunc<>(
-            new StickyBiFunc<>(
-                new SyncBiFunc<>(
-                    this::home
-                )
-            )
-        );
+    TkReport(final BiFunc<String, String, Path> rpts) {
+        this.reports = rpts;
     }
 
     @Override
@@ -104,60 +71,12 @@ public final class TkReport implements TkRegex {
         }
         return new RsHtml(
             new TextOf(
-                this.reports.apply(
+                new IoCheckedBiFunc<>(this.reports).apply(
                     matcher.group(1),
                     matcher.group(2)
                 ).resolve(path)
             ).asString()
         );
-    }
-
-    /**
-     * Make report and return its path.
-     * @param group Maven group
-     * @param artifact Maven artiface
-     * @return Path to the report files
-     * @throws IOException If fails
-     */
-    private Path home(final String group, final String artifact)
-        throws IOException {
-        final String grp = group.replace(".", "/");
-        final String version = new XMLDocument(
-            new TextOf(
-                new URL(
-                    String.format(
-                        // @checkstyle LineLength (1 line)
-                        "http://repo1.maven.org/maven2/%s/%s/maven-metadata.xml",
-                        grp, artifact
-                    )
-                )
-            ).asString()
-        ).xpath("/metadata/versioning/latest/text()").get(0);
-        final Path input = this.sources.resolve(grp).resolve(artifact);
-        final String name = String.format("%s-%s.jar", artifact, version);
-        new LengthOf(
-            new TeeInput(
-                new URL(
-                    String.format(
-                        "http://repo1.maven.org/maven2/%s/%s/%s/%s",
-                        grp, artifact, version, name
-                    )
-                ),
-                input.resolve(name)
-            )
-        ).value();
-        try {
-            new ProcessBuilder()
-                .directory(input.toFile())
-                .command("unzip", name)
-                .start()
-                .waitFor();
-        } catch (final InterruptedException ex) {
-            throw new IllegalStateException(ex);
-        }
-        final Path output = this.target.resolve(grp).resolve(artifact);
-        new App(input, output).analyze();
-        return output;
     }
 
 }
