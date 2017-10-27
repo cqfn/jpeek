@@ -28,8 +28,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import org.takes.facets.fork.FkRegex;
 import org.takes.facets.fork.TkFork;
+import org.takes.facets.fork.TkRegex;
 import org.takes.http.Exit;
 import org.takes.http.FtCli;
+import org.takes.rs.RsRedirect;
 import org.takes.tk.TkWrap;
 
 /**
@@ -53,7 +55,13 @@ public final class TkApp extends TkWrap {
         super(
             new TkFork(
                 new FkRegex(
-                    "/([^/]+)/([^/]+)(.*)",
+                    "(/[^/]+/[^/]+)",
+                    (TkRegex) req -> new RsRedirect(
+                        String.format("%s/", req.matcher().group(1))
+                    )
+                ),
+                new FkRegex(
+                    "/([^/]+)/([^/]+)/(.*)",
                     new TkReport(dir)
                 )
             )

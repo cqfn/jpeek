@@ -98,8 +98,6 @@ public final class TkReport implements TkRegex {
         String path = matcher.group(3);
         if (path.isEmpty()) {
             path = "index.html";
-        } else {
-            path = path.substring(1);
         }
         return new RsHtml(
             new TextOf(

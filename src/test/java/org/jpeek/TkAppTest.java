@@ -46,7 +46,7 @@ public final class TkAppTest {
         final Take app = new TkApp(Files.createTempDirectory("x"));
         new FtRemote(app).exec(
             home -> new JdkRequest(home)
-                .uri().path("org.jpeek").path("jpeek").back()
+                .uri().path("org.jpeek").path("jpeek").path("index.html").back()
                 .fetch()
                 .as(RestResponse.class)
                 .assertStatus(HttpURLConnection.HTTP_OK)
