@@ -23,8 +23,17 @@
  */
 package org.jpeek;
 
+import com.jcabi.xml.XMLDocument;
+import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Path;
 import java.util.regex.Matcher;
+import org.cactoos.func.IoCheckedBiFunc;
+import org.cactoos.func.StickyBiFunc;
+import org.cactoos.func.SyncBiFunc;
+import org.cactoos.io.LengthOf;
+import org.cactoos.io.TeeInput;
+import org.cactoos.text.TextOf;
 import org.takes.Response;
 import org.takes.facets.fork.RqRegex;
 import org.takes.facets.fork.TkRegex;
@@ -43,28 +52,101 @@ import org.takes.rs.RsText;
 public final class TkReport implements TkRegex {
 
     /**
+     * Directory with sources.
+     */
+    private final Path sources;
+
+    /**
      * Directory with reports.
      */
-    private final Path home;
+    private final Path target;
+
+    /**
+     * Maker or reports.
+     */
+    private final IoCheckedBiFunc<String, String, Path> reports;
 
     /**
      * Ctor.
-     * @param dir Home directory
+     * @param home Home dir
      */
-    public TkReport(final Path dir) {
-        this.home = dir;
+    public TkReport(final Path home) {
+        this(home.resolve("sources"), home.resolve("target"));
     }
 
-    @Override
-    public Response act(final RqRegex req) {
-        final Matcher matcher = req.matcher();
-        final String group = matcher.group(1);
-        final String artifact = matcher.group(2);
-        return new RsText(
-            String.format(
-                "jpeek report for %s/%s will be here soon at %s",
-                group, artifact, this.home
+    /**
+     * Ctor.
+     * @param input Dir with sources
+     * @param output Dir with reports
+     */
+    public TkReport(final Path input, final Path output) {
+        this.sources = input;
+        this.target = output;
+        this.reports = new IoCheckedBiFunc<>(
+            new StickyBiFunc<>(
+                new SyncBiFunc<>(
+                    this::home
+                )
             )
         );
     }
+
+    @Override
+    public Response act(final RqRegex req) throws IOException {
+        final Matcher matcher = req.matcher();
+        // @checkstyle MagicNumber (1 line)
+        String path = matcher.group(3);
+        if (path.isEmpty()) {
+            path = "index.html";
+        } else {
+            path = path.substring(1);
+        }
+        return new RsText(
+            new TextOf(
+                this.reports.apply(
+                    matcher.group(1),
+                    matcher.group(2)
+                ).resolve(path)
+            ).asString()
+        );
+    }
+
+    /**
+     * Make report and return its path.
+     * @param group Maven group
+     * @param artifact Maven artiface
+     * @return Path to the report files
+     * @throws IOException If fails
+     */
+    private Path home(final String group, final String artifact)
+        throws IOException {
+        final String grp = group.replace(".", "/");
+        final String version = new XMLDocument(
+            new TextOf(
+                new URL(
+                    String.format(
+                        // @checkstyle LineLength (1 line)
+                        "http://repo1.maven.org/maven2/%s/%s/maven-metadata.xml",
+                        grp, artifact
+                    )
+                )
+            ).asString()
+        ).xpath("/metadata/versioning/latest/text()").get(0);
+        final Path input = this.sources.resolve(grp).resolve(artifact);
+        new LengthOf(
+            new TeeInput(
+                new URL(
+                    String.format(
+                        "http://repo1.maven.org/maven2/%s/%s/%s/%2$s-%3$s.jar",
+                        grp, artifact, version
+                    )
+                ),
+                input
+            )
+        ).value();
+        final Path output = this.target.resolve(grp).resolve(artifact);
+        new App(input, output).analyze();
+        return output;
+    }
+
 }

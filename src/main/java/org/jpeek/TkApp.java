@@ -53,7 +53,7 @@ public final class TkApp extends TkWrap {
         super(
             new TkFork(
                 new FkRegex(
-                    "/([^/]+)/([^/]+)",
+                    "/([^/]+)/([^/]+)(.*)",
                     new TkReport(dir)
                 )
             )
