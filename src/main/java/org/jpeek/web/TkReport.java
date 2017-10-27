@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.jpeek;
+package org.jpeek.web;
 
 import com.jcabi.xml.XMLDocument;
 import java.io.IOException;
@@ -34,6 +34,7 @@ import org.cactoos.func.SyncBiFunc;
 import org.cactoos.io.LengthOf;
 import org.cactoos.io.TeeInput;
 import org.cactoos.text.TextOf;
+import org.jpeek.App;
 import org.takes.Response;
 import org.takes.facets.fork.RqRegex;
 import org.takes.facets.fork.TkRegex;

@@ -21,55 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.jpeek;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import org.takes.facets.fork.FkRegex;
-import org.takes.facets.fork.TkFork;
-import org.takes.http.Exit;
-import org.takes.http.FtCli;
-import org.takes.tk.TkWrap;
 
 /**
- * Web application.
- *
- * <p>There is no thread-safety guarantee.
+ * JPeek web.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.5
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @since 0.7
  */
-@SuppressWarnings("PMD.UseUtilityClass")
-public final class TkApp extends TkWrap {
-
-    /**
-     * Ctor.
-     * @param dir Home directory
-     */
-    public TkApp(final Path dir) {
-        super(
-            new TkFork(
-                new FkRegex(
-                    "/([^/]+)/([^/]+)(.*)",
-                    new TkReport(dir)
-                )
-            )
-        );
-    }
-
-    /**
-     * Main Java entry point.
-     * @param args Command line args
-     * @throws IOException If fails
-     */
-    public static void main(final String... args) throws IOException {
-        new FtCli(
-            new TkApp(Files.createTempDirectory("jpeek")),
-            args
-        ).start(Exit.NEVER);
-    }
-
-}
+package org.jpeek.web;
