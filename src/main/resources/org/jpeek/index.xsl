@@ -147,7 +147,9 @@ SOFTWARE.
         </tr>
       </thead>
       <tbody>
-        <xsl:apply-templates select="metric"/>
+        <xsl:apply-templates select="metric">
+          <xsl:sort select="@name" order="ascending" data-type="text"/>
+        </xsl:apply-templates>
       </tbody>
     </table>
     <p>
