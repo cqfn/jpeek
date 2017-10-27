@@ -50,10 +50,10 @@ SOFTWARE.
                 <xsl:text>#44cc11</xsl:text>
               </xsl:when>
               <xsl:when test=". &lt; 5">
-                <xsl:text>#dfb317</xsl:text>
+                <xsl:text>#d9644d</xsl:text>
               </xsl:when>
               <xsl:otherwise>
-                <xsl:text>#d9644d</xsl:text>
+                <xsl:text>#dfb317</xsl:text>
               </xsl:otherwise>
             </xsl:choose>
           </xsl:attribute>

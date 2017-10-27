@@ -78,6 +78,9 @@ SOFTWARE.
       </strong>
       <xsl:text> out of 10.</xsl:text>
     </p>
+    <p>
+      <img src="badge.svg" alt="SVG badge"/>
+    </p>
     <table>
       <thead>
         <tr>
