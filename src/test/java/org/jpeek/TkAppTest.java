@@ -45,11 +45,23 @@ public final class TkAppTest {
     public void rendersOneReport() throws IOException {
         final Take app = new TkApp(Files.createTempDirectory("x"));
         new FtRemote(app).exec(
-            home -> new JdkRequest(home)
-                .uri().path("org.jpeek").path("jpeek").path("index.html").back()
-                .fetch()
-                .as(RestResponse.class)
-                .assertStatus(HttpURLConnection.HTTP_OK)
+            home -> {
+                new JdkRequest(home)
+                    .uri().path("org.jpeek")
+                    .path("jpeek")
+                    .path("index.html").back()
+                    .fetch()
+                    .as(RestResponse.class)
+                    .assertStatus(HttpURLConnection.HTTP_OK);
+                new JdkRequest(String.format("%s/org.jpeek/jpeek/", home))
+                    .fetch()
+                    .as(RestResponse.class)
+                    .assertStatus(HttpURLConnection.HTTP_OK);
+                new JdkRequest(String.format("%s/org.jpeek/jpeek", home))
+                    .fetch()
+                    .as(RestResponse.class)
+                    .assertStatus(HttpURLConnection.HTTP_OK);
+            }
         );
     }
 
