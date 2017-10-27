@@ -25,8 +25,6 @@ package org.jpeek;
 
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
-import com.jcabi.xml.XSL;
-import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -42,7 +40,6 @@ import org.cactoos.iterable.Mapped;
 import org.cactoos.iterable.PropertiesOf;
 import org.xembly.Directive;
 import org.xembly.Directives;
-import org.xembly.Xembler;
 
 /**
  * Index.
@@ -54,14 +51,7 @@ import org.xembly.Xembler;
  * @since 0.6
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-final class Index implements Scalar<String> {
-
-    /**
-     * XSL stylesheet.
-     */
-    private static final XSL STYLESHEET = XSLDocument.make(
-        App.class.getResourceAsStream("index.xsl")
-    );
+final class Index implements Scalar<Iterable<Directive>> {
 
     /**
      * Directory to save index to.
@@ -77,41 +67,35 @@ final class Index implements Scalar<String> {
     }
 
     @Override
-    public String value() throws Exception {
-        return Index.STYLESHEET.transform(
-            new XMLDocument(
-                new Xembler(
-                    new Directives()
-                        .add("metrics")
-                        .append(
-                            new Joined<>(
-                                new Mapped<Path, Iterable<Directive>>(
-                                    new Filtered<Path>(
-                                        Files.list(this.output)
-                                            .collect(Collectors.toList()),
-                                        path -> path.toString().endsWith(".xml")
-                                    ),
-                                    Index::metric
-                                )
-                            )
-                        )
-                        .attr(
-                            "date",
-                            ZonedDateTime.now().format(
-                                DateTimeFormatter.ISO_INSTANT
-                            )
-                        )
-                        .attr(
-                            "version",
-                            new PropertiesOf(
-                                new ResourceOf(
-                                    "org/jpeek/jpeek.properties"
-                                )
-                            ).value().getProperty("org.jpeek.version")
-                        )
-                ).xmlQuietly()
+    public Iterable<Directive> value() throws IOException {
+        return new Directives()
+            .add("metrics")
+            .append(
+                new Joined<>(
+                    new Mapped<Path, Iterable<Directive>>(
+                        new Filtered<Path>(
+                            Files.list(this.output)
+                                .collect(Collectors.toList()),
+                            path -> path.toString().endsWith(".xml")
+                        ),
+                        Index::metric
+                    )
+                )
             )
-        ).toString();
+            .attr(
+                "date",
+                ZonedDateTime.now().format(
+                    DateTimeFormatter.ISO_INSTANT
+                )
+            )
+            .attr(
+                "version",
+                new PropertiesOf(
+                    new ResourceOf(
+                        "org/jpeek/jpeek.properties"
+                    )
+                ).value().getProperty("org.jpeek.version")
+            );
     }
 
     /**
@@ -122,7 +106,8 @@ final class Index implements Scalar<String> {
      */
     private static Iterable<Directive> metric(final Path file)
         throws IOException {
-        final String name = file.getFileName().toString();
+        final String name = file.getFileName()
+            .toString().replaceAll("\\.xml$", "");
         final XML xml = new XMLDocument(file.toFile());
         final Collection<Double> values = new org.cactoos.collection.Mapped<>(
             xml.xpath("//class/@value"),
@@ -149,7 +134,7 @@ final class Index implements Scalar<String> {
             sum += val;
         }
         double avg = 0.0d;
-        if (values.isEmpty()) {
+        if (!values.isEmpty()) {
             avg = sum / (double) values.size();
         }
         return avg;

@@ -46,7 +46,7 @@ public final class MainTest {
         final Path input = Paths.get(".");
         Main.main(input.toString(), output.toString());
         MatcherAssert.assertThat(
-            Files.exists(output.resolve("TotalFiles.xml")),
+            Files.exists(output.resolve("LCOM.xml")),
             Matchers.equalTo(true)
         );
     }

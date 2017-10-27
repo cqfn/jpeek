@@ -49,7 +49,7 @@ public final class AppTest {
         final Path input = Paths.get(".");
         new App(input, output).analyze();
         MatcherAssert.assertThat(
-            Files.exists(output.resolve("TotalFiles.xml")),
+            Files.exists(output.resolve("OCC.xml")),
             Matchers.equalTo(true)
         );
         MatcherAssert.assertThat(

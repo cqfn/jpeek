@@ -47,11 +47,12 @@ SOFTWARE.
         <img alt="logo" src="http://www.jpeek.org/logo.svg" style="height:60px"/>
       </a>
     </p>
-    <h1>
-      <xsl:text>jpeek</xsl:text>
-    </h1>
     <p>
-      <xsl:text>This is the full list of reports for the project:</xsl:text>
+      <xsl:text>Overall score: </xsl:text>
+      <strong>
+        <xsl:value-of select="format-number(sum(metric/average) div count(metric),'#.##')"/>
+      </strong>
+      <xsl:text>.</xsl:text>
     </p>
     <table>
       <thead>
@@ -66,7 +67,7 @@ SOFTWARE.
             <xsl:text>Average</xsl:text>
           </th>
           <th>
-            <xsl:text>XML</xsl:text>
+            <xsl:text>Options</xsl:text>
           </th>
         </tr>
       </thead>
@@ -88,17 +89,17 @@ SOFTWARE.
   </xsl:template>
   <xsl:template match="metric">
     <tr>
-      <th>
+      <td>
         <a href="{html}">
           <xsl:value-of select="@name"/>
         </a>
-      </th>
-      <th>
+      </td>
+      <td style="text-align:right">
         <xsl:value-of select="classes"/>
-      </th>
-      <th>
-        <xsl:value-of select="average"/>
-      </th>
+      </td>
+      <td style="text-align:right">
+        <xsl:value-of select="format-number(average,'#.##')"/>
+      </td>
       <th>
         <a href="{xml}">
           <xsl:text>XML</xsl:text>

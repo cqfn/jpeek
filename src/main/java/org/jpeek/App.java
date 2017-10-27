@@ -23,6 +23,10 @@
  */
 package org.jpeek;
 
+import com.jcabi.xml.XML;
+import com.jcabi.xml.XMLDocument;
+import com.jcabi.xml.XSL;
+import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -32,10 +36,10 @@ import org.cactoos.io.TeeInput;
 import org.cactoos.list.ListOf;
 import org.cactoos.scalar.And;
 import org.cactoos.scalar.IoCheckedScalar;
-import org.jpeek.metrics.basic.TotalFiles;
 import org.jpeek.metrics.cohesion.CAMC;
 import org.jpeek.metrics.cohesion.LCOM;
 import org.jpeek.metrics.cohesion.OCC;
+import org.xembly.Xembler;
 
 /**
  * Application.
@@ -48,6 +52,13 @@ import org.jpeek.metrics.cohesion.OCC;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class App {
+
+    /**
+     * XSL stylesheet.
+     */
+    private static final XSL STYLESHEET = XSLDocument.make(
+        App.class.getResourceAsStream("index.xsl")
+    );
 
     /**
      * Location of the project to analyze.
@@ -84,7 +95,6 @@ public final class App {
         }
         final Base base = new DefaultBase(this.input);
         final Iterable<Metric> metrics = new ListOf<>(
-            new TotalFiles(base),
             new CAMC(base),
             new LCOM(base),
             new OCC(base)
@@ -103,9 +113,20 @@ public final class App {
                 this.output.resolve("jpeek.xsl")
             )
         ).value();
+        final XML index = new XMLDocument(
+            new Xembler(
+                new Index(this.output).value()
+            ).xmlQuietly()
+        );
         new LengthOf(
             new TeeInput(
-                new IoCheckedScalar<>(new Index(this.output)).value(),
+                index.toString(),
+                this.output.resolve("index.xml")
+            )
+        ).value();
+        new LengthOf(
+            new TeeInput(
+                App.STYLESHEET.transform(index).toString(),
                 this.output.resolve("index.html")
             )
         ).value();
