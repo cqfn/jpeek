@@ -71,7 +71,7 @@ SOFTWARE.
           <xsl:text>, average: </xsl:text>
           <xsl:choose>
             <xsl:when test="//class">
-              <xsl:value-of select="format-number(sum(//class/@value) div count(//class), '#.####')"/>
+              <xsl:value-of select="format-number(sum(//class/@value) div count(//class), '0.####')"/>
             </xsl:when>
             <xsl:otherwise>
               <xsl:text>0</xsl:text>

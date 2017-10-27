@@ -50,7 +50,7 @@ SOFTWARE.
     <p>
       <xsl:text>Overall score: </xsl:text>
       <strong>
-        <xsl:value-of select="format-number(sum(metric/average) div count(metric),'#.##')"/>
+        <xsl:value-of select="format-number(sum(metric/average) div count(metric),'0.##')"/>
       </strong>
       <xsl:text>.</xsl:text>
     </p>
@@ -65,6 +65,12 @@ SOFTWARE.
           </th>
           <th>
             <xsl:text>Average</xsl:text>
+          </th>
+          <th>
+            <xsl:text>Min</xsl:text>
+          </th>
+          <th>
+            <xsl:text>Max</xsl:text>
           </th>
           <th>
             <xsl:text>Options</xsl:text>
@@ -98,7 +104,13 @@ SOFTWARE.
         <xsl:value-of select="classes"/>
       </td>
       <td style="text-align:right">
-        <xsl:value-of select="format-number(average,'#.##')"/>
+        <xsl:value-of select="format-number(average,'0.##')"/>
+      </td>
+      <td style="text-align:right">
+        <xsl:value-of select="format-number(min,'0.##')"/>
+      </td>
+      <td style="text-align:right">
+        <xsl:value-of select="format-number(max,'0.##')"/>
       </td>
       <th>
         <a href="{xml}">

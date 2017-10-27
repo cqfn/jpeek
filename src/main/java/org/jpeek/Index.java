@@ -31,6 +31,7 @@ import java.nio.file.Path;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 import org.cactoos.Scalar;
 import org.cactoos.collection.Filtered;
@@ -38,6 +39,7 @@ import org.cactoos.collection.Joined;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.iterable.Mapped;
 import org.cactoos.iterable.PropertiesOf;
+import org.cactoos.list.Sorted;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -109,9 +111,11 @@ final class Index implements Scalar<Iterable<Directive>> {
         final String name = file.getFileName()
             .toString().replaceAll("\\.xml$", "");
         final XML xml = new XMLDocument(file.toFile());
-        final Collection<Double> values = new org.cactoos.collection.Mapped<>(
-            xml.xpath("//class/@value"),
-            Double::parseDouble
+        final List<Double> values = new Sorted<>(
+            new org.cactoos.list.Mapped<>(
+                xml.xpath("//class/@value"),
+                Double::parseDouble
+            )
         );
         return new Directives()
             .add("metric")
@@ -120,6 +124,8 @@ final class Index implements Scalar<Iterable<Directive>> {
             .add("xml").set(String.format("%s.xml", name)).up()
             .add("classes").set(values.size()).up()
             .add("average").set(Index.avg(values)).up()
+            .add("min").set(values.get(0)).up()
+            .add("max").set(values.get(values.size() - 1)).up()
             .up();
     }
 
