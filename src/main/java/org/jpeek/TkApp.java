@@ -55,14 +55,14 @@ public final class TkApp extends TkWrap {
         super(
             new TkFork(
                 new FkRegex(
+                    "/([^/]+)/([^/]+)/(.*)",
+                    new TkReport(dir)
+                ),
+                new FkRegex(
                     "(/[^/]+/[^/]+)",
                     (TkRegex) req -> new RsRedirect(
                         String.format("%s/", req.matcher().group(1))
                     )
-                ),
-                new FkRegex(
-                    "/([^/]+)/([^/]+)/(.*)",
-                    new TkReport(dir)
                 )
             )
         );
