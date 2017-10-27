@@ -29,10 +29,10 @@ book series make sense.
 
 ## How to use?
 
-Load [this JAR file](http://repo1.maven.org/maven2/org/jpeek/jpeek/0.3/jpeek-0.3-jar-with-dependencies.jar) and then:
+Load [this JAR file](http://repo1.maven.org/maven2/org/jpeek/jpeek/0.5/jpeek-0.5-jar-with-dependencies.jar) and then:
 
 ```bash
-$ java -jar jpeek-0.1-jar-with-dependencies.jar . ./jpeek
+$ java -jar jpeek-0.5-jar-with-dependencies.jar . ./jpeek
 ```
 
 jPeek will analyze Java files in the current directory.
