@@ -117,6 +117,12 @@ final class Index implements Scalar<Iterable<Directive>> {
                 Double::parseDouble
             )
         );
+        final double green = (double) xml.nodes("//*[@color='green']").size();
+        final double yellow = (double) xml.nodes("//*[@color='yellow']").size();
+        final double red = (double) xml.nodes("//*[@color='red']").size();
+        final double score = 10.0d
+            * (green + yellow * 0.3d + red * 0.05d)
+            / (green + yellow + red);
         return new Directives()
             .add("metric")
             .attr("name", name)
@@ -126,6 +132,10 @@ final class Index implements Scalar<Iterable<Directive>> {
             .add("average").set(Index.avg(values)).up()
             .add("min").set(values.get(0)).up()
             .add("max").set(values.get(values.size() - 1)).up()
+            .add("green").set((int) green).up()
+            .add("yellow").set((int) yellow).up()
+            .add("red").set((int) red).up()
+            .add("score").set(score).up()
             .up();
     }
 

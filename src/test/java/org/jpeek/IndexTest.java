@@ -47,7 +47,9 @@ public final class IndexTest {
         final Path input = Paths.get(".");
         new App(input, output).analyze();
         MatcherAssert.assertThat(
-            new TextOf(output.resolve("index.xml")).asString(),
+            XhtmlMatchers.xhtml(
+                new TextOf(output.resolve("index.xml")).asString()
+            ),
             XhtmlMatchers.hasXPaths("/metrics/metric")
         );
     }

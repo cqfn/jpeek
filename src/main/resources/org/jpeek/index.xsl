@@ -35,6 +35,14 @@ SOFTWARE.
         <title>
           <xsl:text>jpeek</xsl:text>
         </title>
+        <style>
+          .under {
+            font-size: 75%;
+            display: block;
+            text-align: right;
+            color: gray;
+          }
+        </style>
       </head>
       <body>
         <xsl:apply-templates select="metrics"/>
@@ -50,7 +58,7 @@ SOFTWARE.
     <p>
       <xsl:text>Overall score: </xsl:text>
       <strong>
-        <xsl:value-of select="format-number(sum(metric/average) div count(metric),'0.##')"/>
+        <xsl:value-of select="format-number(sum(metric/score) div count(metric),'0.##')"/>
       </strong>
       <xsl:text>.</xsl:text>
     </p>
@@ -71,6 +79,18 @@ SOFTWARE.
           </th>
           <th>
             <xsl:text>Max</xsl:text>
+          </th>
+          <th>
+            <xsl:text>Green</xsl:text>
+          </th>
+          <th>
+            <xsl:text>Yellow</xsl:text>
+          </th>
+          <th>
+            <xsl:text>Red</xsl:text>
+          </th>
+          <th>
+            <xsl:text>Score</xsl:text>
           </th>
           <th>
             <xsl:text>Options</xsl:text>
@@ -111,6 +131,46 @@ SOFTWARE.
       </td>
       <td style="text-align:right">
         <xsl:value-of select="format-number(max,'0.##')"/>
+      </td>
+      <td style="text-align:right">
+        <xsl:value-of select="green"/>
+        <span class="under">
+          <xsl:value-of select="format-number((green div classes) * 100, '#')"/>
+          <xsl:text>%</xsl:text>
+        </span>
+      </td>
+      <td style="text-align:right">
+        <xsl:value-of select="yellow"/>
+        <span class="under">
+          <xsl:value-of select="format-number((yellow div classes) * 100, '#')"/>
+          <xsl:text>%</xsl:text>
+        </span>
+      </td>
+      <td style="text-align:right">
+        <xsl:value-of select="red"/>
+        <span class="under">
+          <xsl:value-of select="format-number((red div classes) * 100, '#')"/>
+          <xsl:text>%</xsl:text>
+        </span>
+      </td>
+      <td>
+        <xsl:attribute name="style">
+          <xsl:text>text-align:right;</xsl:text>
+          <xsl:text>font-weight:bold;</xsl:text>
+          <xsl:text>color:</xsl:text>
+          <xsl:choose>
+            <xsl:when test="score &gt; 7">
+              <xsl:text>green</xsl:text>
+            </xsl:when>
+            <xsl:when test="score &gt; 4">
+              <xsl:text>orange</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>red</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:attribute>
+        <xsl:value-of select="format-number(score,'0.##')"/>
       </td>
       <th>
         <a href="{xml}">
