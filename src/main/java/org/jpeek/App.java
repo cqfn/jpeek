@@ -36,6 +36,7 @@ import org.cactoos.io.LengthOf;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.io.TeeInput;
 import org.cactoos.iterable.Mapped;
+import org.cactoos.iterable.PropertiesOf;
 import org.cactoos.list.ListOf;
 import org.cactoos.scalar.And;
 import org.cactoos.scalar.IoCheckedScalar;
@@ -159,7 +160,14 @@ public final class App {
                                         DateTimeFormatter.ISO_INSTANT
                                     )
                                 )
-                                .attr("version", "1.0-SNAPSHOT")
+                                .attr(
+                                    "version",
+                                    new PropertiesOf(
+                                        new ResourceOf(
+                                            "org/jpeek/jpeek.properties"
+                                        )
+                                    ).value().getProperty("org.jpeek.version")
+                                )
                         ).xmlQuietly()
                     )
                 ).toString(),

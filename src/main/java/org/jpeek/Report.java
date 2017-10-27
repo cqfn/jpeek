@@ -35,7 +35,9 @@ import java.nio.file.Path;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import org.cactoos.io.LengthOf;
+import org.cactoos.io.ResourceOf;
 import org.cactoos.io.TeeInput;
+import org.cactoos.iterable.PropertiesOf;
 import org.xembly.Directives;
 import org.xembly.Xembler;
 
@@ -129,7 +131,14 @@ final class Report {
                             DateTimeFormatter.ISO_INSTANT
                         )
                     )
-                    .attr("version", "1.0-SNAPSHOT")
+                    .attr(
+                        "version",
+                        new PropertiesOf(
+                            new ResourceOf(
+                                "org/jpeek/jpeek.properties"
+                            )
+                        ).value().getProperty("org.jpeek.version")
+                    )
                     .attr("title", this.metric.getClass().getSimpleName())
             ).xmlQuietly()
         );
