@@ -67,7 +67,9 @@ final class TkReport implements TkRegex {
         // @checkstyle MagicNumber (1 line)
         String path = matcher.group(3);
         if (path.isEmpty()) {
-            throw new RsForward("/index.html");
+            throw new RsForward(
+                String.format("%s/index.html", matcher.group(0))
+            );
         }
         path = path.substring(1);
         return new RsWithType(
