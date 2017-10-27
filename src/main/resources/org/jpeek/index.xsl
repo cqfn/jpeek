@@ -56,11 +56,11 @@ SOFTWARE.
       </a>
     </p>
     <p>
-      <xsl:text>Overall score: </xsl:text>
+      <xsl:text>Overall score is </xsl:text>
       <strong>
         <xsl:value-of select="format-number(sum(metric/score) div count(metric),'0.##')"/>
       </strong>
-      <xsl:text>.</xsl:text>
+      <xsl:text> out of 10.</xsl:text>
     </p>
     <table>
       <thead>
@@ -172,11 +172,11 @@ SOFTWARE.
         </xsl:attribute>
         <xsl:value-of select="format-number(score,'0.##')"/>
       </td>
-      <th>
+      <td>
         <a href="{xml}">
           <xsl:text>XML</xsl:text>
         </a>
-      </th>
+      </td>
     </tr>
   </xsl:template>
 </xsl:stylesheet>
