@@ -9,10 +9,9 @@
 [![Maven Central](https://img.shields.io/maven-central/v/org.jpeek/jpeek.svg)](https://maven-badges.herokuapp.com/maven-central/org.jpeek/jpeek)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/yegor256/jpeek/blob/master/LICENSE.txt)
 
+[![jpeek report](http://i.jpeek.org/org.jpeek/jpeek/badge.svg)](http://i.jpeek.org/org.jpeek/jpeek/)
 [![Test Coverage](https://img.shields.io/codecov/c/github/yegor256/jpeek.svg)](https://codecov.io/github/yegor256/jpeek?branch=master)
 [![SonarQube](https://img.shields.io/badge/sonar-ok-green.svg)](https://sonarcloud.io/dashboard?id=org.jpeek%3Ajpeek)
-
-[![jpeek report](http://i.jpeek.org/org.jpeek/jpeek/badge.svg)](http://i.jpeek.org/org.jpeek/jpeek/)
 
 jPeek is a static collector of Java code metrics.
 
