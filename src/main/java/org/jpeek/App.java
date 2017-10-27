@@ -23,20 +23,12 @@
  */
 package org.jpeek;
 
-import com.jcabi.xml.XMLDocument;
-import com.jcabi.xml.XSL;
-import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import org.cactoos.collection.Joined;
 import org.cactoos.io.LengthOf;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.io.TeeInput;
-import org.cactoos.iterable.Mapped;
-import org.cactoos.iterable.PropertiesOf;
 import org.cactoos.list.ListOf;
 import org.cactoos.scalar.And;
 import org.cactoos.scalar.IoCheckedScalar;
@@ -44,8 +36,6 @@ import org.jpeek.metrics.basic.TotalFiles;
 import org.jpeek.metrics.cohesion.CAMC;
 import org.jpeek.metrics.cohesion.LCOM;
 import org.jpeek.metrics.cohesion.OCC;
-import org.xembly.Directives;
-import org.xembly.Xembler;
 
 /**
  * Application.
@@ -58,13 +48,6 @@ import org.xembly.Xembler;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class App {
-
-    /**
-     * XSL stylesheet.
-     */
-    private static final XSL INDEX = XSLDocument.make(
-        App.class.getResourceAsStream("index.xsl")
-    );
 
     /**
      * Location of the project to analyze.
@@ -122,55 +105,7 @@ public final class App {
         ).value();
         new LengthOf(
             new TeeInput(
-                App.INDEX.transform(
-                    new XMLDocument(
-                        new Xembler(
-                            new Directives()
-                                .add("metrics")
-                                .append(
-                                    new Joined<>(
-                                        new Mapped<>(
-                                            metrics,
-                                            mtc -> {
-                                                final String name = mtc
-                                                    .getClass().getSimpleName();
-                                                return new Directives()
-                                                    .add("metric")
-                                                    .set(name)
-                                                    .attr(
-                                                        "html",
-                                                        String.format(
-                                                            "%s.html", name
-                                                        )
-                                                    )
-                                                    .attr(
-                                                        "xml",
-                                                        String.format(
-                                                            "%s.xml", name
-                                                        )
-                                                    )
-                                                    .up();
-                                            }
-                                        )
-                                    )
-                                )
-                                .attr(
-                                    "date",
-                                    ZonedDateTime.now().format(
-                                        DateTimeFormatter.ISO_INSTANT
-                                    )
-                                )
-                                .attr(
-                                    "version",
-                                    new PropertiesOf(
-                                        new ResourceOf(
-                                            "org/jpeek/jpeek.properties"
-                                        )
-                                    ).value().getProperty("org.jpeek.version")
-                                )
-                        ).xmlQuietly()
-                    )
-                ).toString(),
+                new IoCheckedScalar<>(new Index(this.output)).value(),
                 this.output.resolve("index.html")
             )
         ).value();
