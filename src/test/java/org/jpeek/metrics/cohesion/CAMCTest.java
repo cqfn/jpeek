@@ -88,7 +88,7 @@ public final class CAMCTest {
                 ).xmlQuietly()
             ),
             XhtmlMatchers.hasXPaths(
-                "/app/package[@id='']/class[@id='Bar']",
+                "/app/package[@id='']",
                 "//class[@id='Bar' and @value='1.0000']",
                 "//class[@id='Bar' and @color='green']"
             )

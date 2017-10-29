@@ -1,6 +1,10 @@
 public final class Bar {
-    private Object key;
-    private Object value;
+    private final Object key;
+    private final Object value;
+    public Bar(final Object keyy, final Object val) {
+        this.key = keyy;
+        this.value = val;
+    }
     public Object getKey() {
         return this.key;
     }
