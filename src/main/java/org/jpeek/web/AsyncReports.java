@@ -24,13 +24,18 @@
 package org.jpeek.web;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import org.cactoos.BiFunc;
 import org.cactoos.Func;
-import org.cactoos.func.IoCheckedFunc;
+import org.cactoos.func.IoCheckedBiFunc;
+import org.cactoos.func.StickyBiFunc;
+import org.cactoos.func.SyncBiFunc;
 import org.takes.Response;
-import org.takes.rs.RsWithType;
+import org.takes.rs.RsHtml;
 
 /**
- * Typed pages.
+ * Async reports.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -39,34 +44,40 @@ import org.takes.rs.RsWithType;
  * @since 0.8
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-final class TypedPages implements Func<String, Response> {
+final class AsyncReports implements
+    BiFunc<String, String, Func<String, Response>> {
 
     /**
-     * Origin.
+     * Cache.
      */
-    private final Func<String, Response> origin;
+    private final BiFunc<String, String, Future<Func<String, Response>>> cache;
 
     /**
      * Ctor.
-     * @param func The func
+     * @param func Original bi-function
      */
-    TypedPages(final Func<String, Response> func) {
-        this.origin = func;
+    AsyncReports(final BiFunc<String, String, Func<String, Response>> func) {
+        this.cache = new SyncBiFunc<>(new StickyBiFunc<>(new Futures(func)));
     }
 
     @Override
-    public Response apply(final String path) throws IOException {
-        String type = "text/plain";
-        if (path.endsWith(".html")) {
-            type = "text/html";
-        } else if (path.endsWith(".xml")) {
-            type = "application/xml";
-        } else if (path.endsWith(".svg")) {
-            type = "image/svg+xml";
+    public Func<String, Response> apply(final String group,
+        final String artifact) throws IOException {
+        final Future<Func<String, Response>> future =
+            new IoCheckedBiFunc<>(this.cache).apply(group, artifact);
+        final Func<String, Response> output;
+        if (future.isDone()) {
+            try {
+                output = future.get();
+            } catch (final InterruptedException | ExecutionException ex) {
+                throw new IllegalStateException(ex);
+            }
+        } else {
+            output = input -> new RsHtml(
+                "<html>We're still building this report...</html>"
+            );
         }
-        return new RsWithType(
-            new IoCheckedFunc<>(this.origin).apply(path), type
-        );
+        return output;
     }
 
 }

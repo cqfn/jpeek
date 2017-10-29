@@ -26,6 +26,7 @@ package org.jpeek.web;
 import com.jcabi.xml.XMLDocument;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.BiFunc;
 import org.cactoos.Func;
@@ -79,6 +80,15 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
     public Func<String, Response> apply(final String group,
         final String artifact) throws IOException {
         final String grp = group.replace(".", "/");
+        final Path input = this.sources.resolve(grp).resolve(artifact);
+        if (Files.exists(input)) {
+            throw new IllegalStateException(
+                String.format(
+                    "The input directory for %s:%s already exists: %s",
+                    group, artifact, input
+                )
+            );
+        }
         final String version = new XMLDocument(
             new TextOf(
                 new URL(
@@ -90,7 +100,6 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
                 )
             ).asString()
         ).xpath("/metadata/versioning/latest/text()").get(0);
-        final Path input = this.sources.resolve(grp).resolve(artifact);
         final String name = String.format("%s-%s.jar", artifact, version);
         new LengthOf(
             new TeeInput(
@@ -113,6 +122,14 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
             throw new IllegalStateException(ex);
         }
         final Path output = this.target.resolve(grp).resolve(artifact);
+        if (Files.exists(input)) {
+            throw new IllegalStateException(
+                String.format(
+                    "The output directory for %s:%s already exists: %s",
+                    group, artifact, output
+                )
+            );
+        }
         new App(input, output).analyze();
         return new TypedPages(new Pages(output));
     }

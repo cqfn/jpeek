@@ -23,14 +23,16 @@
  */
 package org.jpeek.web;
 
-import java.io.IOException;
+import com.jcabi.log.VerboseThreads;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import org.cactoos.BiFunc;
 import org.cactoos.Func;
-import org.cactoos.func.IoCheckedFunc;
 import org.takes.Response;
-import org.takes.rs.RsWithType;
 
 /**
- * Typed pages.
+ * Futures for {@link AsyncReports}.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -39,33 +41,35 @@ import org.takes.rs.RsWithType;
  * @since 0.8
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-final class TypedPages implements Func<String, Response> {
+final class Futures implements
+    BiFunc<String, String, Future<Func<String, Response>>> {
 
     /**
-     * Origin.
+     * Original func.
      */
-    private final Func<String, Response> origin;
+    private final BiFunc<String, String, Func<String, Response>> origin;
+
+    /**
+     * Service.
+     */
+    private final ExecutorService service;
 
     /**
      * Ctor.
-     * @param func The func
+     * @param func Original bi-function
      */
-    TypedPages(final Func<String, Response> func) {
+    Futures(final BiFunc<String, String, Func<String, Response>> func) {
         this.origin = func;
+        this.service = Executors.newCachedThreadPool(
+            new VerboseThreads(Futures.class)
+        );
     }
 
     @Override
-    public Response apply(final String path) throws IOException {
-        String type = "text/plain";
-        if (path.endsWith(".html")) {
-            type = "text/html";
-        } else if (path.endsWith(".xml")) {
-            type = "application/xml";
-        } else if (path.endsWith(".svg")) {
-            type = "image/svg+xml";
-        }
-        return new RsWithType(
-            new IoCheckedFunc<>(this.origin).apply(path), type
+    public Future<Func<String, Response>> apply(final String group,
+        final String artifact) {
+        return this.service.submit(
+            () -> this.origin.apply(group, artifact)
         );
     }
 

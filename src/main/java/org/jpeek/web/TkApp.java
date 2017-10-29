@@ -26,8 +26,6 @@ package org.jpeek.web;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import org.cactoos.func.StickyBiFunc;
-import org.cactoos.func.SyncBiFunc;
 import org.takes.facets.fork.FkRegex;
 import org.takes.facets.fork.TkFork;
 import org.takes.facets.forward.TkForward;
@@ -59,10 +57,8 @@ public final class TkApp extends TkWrap {
                     new FkRegex(
                         "/([^/]+)/([^/]+)(.*)",
                         new TkReport(
-                            new StickyBiFunc<>(
-                                new SyncBiFunc<>(
-                                    new Reports(home)
-                                )
+                            new AsyncReports(
+                                new Reports(home)
                             )
                         )
                     )
