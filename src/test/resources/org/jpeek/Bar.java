@@ -1,4 +1,4 @@
-public class Bar {
+public final class Bar {
 
     private final Object key;
 
