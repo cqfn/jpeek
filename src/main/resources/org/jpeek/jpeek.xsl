@@ -65,9 +65,13 @@ SOFTWARE.
         <h1>
           <xsl:value-of select="title"/>
         </h1>
-        <h1>
-          <xsl:value-of select="colors"/>
-        </h1>
+        <p>
+          <xsl:text>"Yellow" zone: </xsl:text>
+          <code>
+            <xsl:value-of select="colors"/>
+          </code>
+          <xsl:text>.</xsl:text>
+        </p>
         <xsl:apply-templates select="app/@value"/>
         <p>
           <xsl:text>Packages: </xsl:text>
