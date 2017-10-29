@@ -87,7 +87,7 @@ public final class CAMC implements Metric {
         return new JavassistClasses(
             this.base, CAMC::cohesion,
             // @checkstyle MagicNumberCheck (1 line)
-            new Colors(0.15d, 0.35d, false)
+            new Colors(0.15d, 0.35d)
         ).xembly();
     }
 

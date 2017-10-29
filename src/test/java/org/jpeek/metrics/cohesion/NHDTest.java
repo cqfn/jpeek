@@ -54,7 +54,7 @@ public final class NHDTest {
                 ).xmlQuietly()
             ),
             XhtmlMatchers.hasXPaths(
-                "/app/package/class[@id='CAMCTest']",
+                "/metric/app/package/class[@id='CAMCTest']",
                 "//class[@id='DefaultBase' and @value='0.3333']"
             )
         );
@@ -71,7 +71,7 @@ public final class NHDTest {
                 ).xmlQuietly()
             ),
             XhtmlMatchers.hasXPaths(
-                "/app/package[@id='']/class[@id='Foo']",
+                "/metric/app/package[@id='']/class[@id='Foo']",
                 "//class[@id='Foo' and @value='0.3333']",
                 "//class[@id='Foo' and @color='yellow']"
             )

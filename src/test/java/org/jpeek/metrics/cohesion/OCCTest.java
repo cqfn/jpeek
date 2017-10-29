@@ -54,7 +54,7 @@ public final class OCCTest {
                 ).xmlQuietly()
             ),
             XhtmlMatchers.hasXPaths(
-                "/app/package/class[@id='OCCTest']",
+                "/metric/app/package/class[@id='OCCTest']",
                 "//class[@id='OCCTest' and @value='0.0000']"
             )
         );
@@ -71,7 +71,7 @@ public final class OCCTest {
                 ).xmlQuietly()
             ),
             XhtmlMatchers.hasXPaths(
-                "/app/package/class[@id='TwoCommonAttributes']",
+                "/metric/app/package/class[@id='TwoCommonAttributes']",
                 "//class[@id='TwoCommonAttributes' and @value='0.5000']",
                 "//class[@id='TwoCommonAttributes' and @color='yellow']"
             )
@@ -89,7 +89,7 @@ public final class OCCTest {
                 ).xmlQuietly()
             ),
             XhtmlMatchers.hasXPaths(
-                "/app/package/class[@id='Foo']",
+                "/metric/app/package/class[@id='Foo']",
                 "//class[@id='Foo' and @value='1.0000']",
                 "//class[@id='Foo' and @color='red']"
             )

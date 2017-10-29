@@ -56,7 +56,7 @@ public final class ColorsTest {
 
     @Test
     public void mapsCohesionToReverseColors() throws Exception {
-        final Func<Double, String> colors = new Colors(0.5d, 0.7d, true);
+        final Func<Double, String> colors = new Colors(0.7d, 0.5d);
         MatcherAssert.assertThat(
             colors.apply(1.0d), Matchers.equalTo("red")
         );

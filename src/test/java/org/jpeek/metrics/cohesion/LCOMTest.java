@@ -53,7 +53,7 @@ public final class LCOMTest {
                 ).xmlQuietly()
             ),
             XhtmlMatchers.hasXPaths(
-                "/app/package/class[@id='LCOMTest']",
+                "/metric/app/package/class[@id='LCOMTest']",
                 "//class[@id='DefaultBase' and @value='0.0000']"
             )
         );
@@ -70,7 +70,7 @@ public final class LCOMTest {
                 ).xmlQuietly()
             ),
             XhtmlMatchers.hasXPaths(
-                "/app/package/class[@id='Foo']",
+                "/metric/app/package/class[@id='Foo']",
                 "//class[@id='Foo' and @value='1.0000']",
                 "//class[@id='Foo' and @color='green']"
             )

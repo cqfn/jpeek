@@ -26,7 +26,7 @@ package org.jpeek.metrics;
 import org.cactoos.Func;
 
 /**
- * Forward colors.
+ * Colors.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -47,40 +47,35 @@ public final class Colors implements Func<Double, String> {
     private final double high;
 
     /**
-     * Reverse?
-     */
-    private final boolean reverse;
-
-    /**
      * Ctor.
      * @param left Low border
      * @param right High border
      */
     public Colors(final double left, final double right) {
-        this(left, right, false);
-    }
-
-    /**
-     * Ctor.
-     * @param left Low border
-     * @param right High border
-     * @param rev Reverse
-     */
-    public Colors(final double left, final double right,
-        final boolean rev) {
         this.low = left;
         this.high = right;
-        this.reverse = rev;
     }
 
     @Override
-    public String apply(final Double cohesion) throws Exception {
+    public String toString() {
+        final String text;
+        if (this.low < this.high) {
+            text = String.format("(%.2f .. %.2f]", this.low, this.high);
+        } else {
+            text = String.format("[%.2f .. %.2f)", this.high, this.low);
+        }
+        return text;
+    }
+
+    @Override
+    public String apply(final Double cohesion) {
+        final boolean reverse = this.high < this.low;
         final String color;
-        if (cohesion < this.low && !this.reverse
-            || cohesion > this.high && this.reverse) {
+        if (cohesion < this.low && !reverse
+            || cohesion > this.low && reverse) {
             color = "red";
-        } else if (cohesion > this.high && !this.reverse
-            || cohesion < this.low && this.reverse) {
+        } else if (cohesion > this.high && !reverse
+            || cohesion < this.high && reverse) {
             color = "green";
         } else {
             color = "yellow";

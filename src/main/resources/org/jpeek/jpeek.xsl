@@ -23,7 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml" version="2.0">
-  <xsl:template match="/">
+  <xsl:template match="/metric">
     <html lang="en">
       <head>
         <meta charset="UTF-8"/>
@@ -34,7 +34,7 @@ SOFTWARE.
         <link rel="stylesheet" href="http://cdn.rawgit.com/yegor256/tacit/gh-pages/tacit-css-1.1.1.min.css"/>
         <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/sortable/0.8.0/js/sortable.min.js">&#xA0;</script>
         <title>
-          <xsl:value-of select="app/title"/>
+          <xsl:value-of select="title"/>
         </title>
         <style type="text/css">
           body {
@@ -63,7 +63,10 @@ SOFTWARE.
           </a>
         </p>
         <h1>
-          <xsl:value-of select="app/title"/>
+          <xsl:value-of select="title"/>
+        </h1>
+        <h1>
+          <xsl:value-of select="colors"/>
         </h1>
         <xsl:apply-templates select="app/@value"/>
         <p>
@@ -89,9 +92,9 @@ SOFTWARE.
             <xsl:text>jpeek</xsl:text>
           </a>
           <xsl:text> </xsl:text>
-          <xsl:value-of select="app/@version"/>
+          <xsl:value-of select="@version"/>
           <xsl:text> on </xsl:text>
-          <xsl:value-of select="app/@date"/>
+          <xsl:value-of select="@date"/>
           <xsl:text>.</xsl:text>
         </p>
       </body>

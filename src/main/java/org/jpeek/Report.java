@@ -124,7 +124,7 @@ final class Report {
                 new Directives()
                     .pi("xml-stylesheet", "href='jpeek.xsl' type='text/xsl'")
                     .append(this.metric.xembly())
-                    .xpath("/app")
+                    .xpath("/metric")
                     .attr(
                         "date",
                         ZonedDateTime.now().format(
