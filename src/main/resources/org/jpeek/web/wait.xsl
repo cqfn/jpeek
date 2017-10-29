@@ -54,7 +54,9 @@ SOFTWARE.
                 <xsl:value-of select="artifact"/>
               </code>
               <xsl:text> for </xsl:text>
-              <xsl:value-of select="spent"/>
+              <strong>
+                <xsl:value-of select="spent"/>
+              </strong>
               <xsl:text> already</xsl:text>
             </xsl:when>
             <xsl:otherwise>
@@ -67,6 +69,12 @@ SOFTWARE.
             </xsl:otherwise>
           </xsl:choose>
           <xsl:text>, please reload this page in a few minutes...</xsl:text>
+        </p>
+        <p>
+          <xsl:text>Future:</xsl:text>
+          <code>
+            <xsl:value-of select="future"/>
+          </code>
         </p>
       </body>
     </html>

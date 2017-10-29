@@ -100,6 +100,7 @@ final class AsyncReports implements
                             new XeChain(
                                 new XeAppend("group", group),
                                 new XeAppend("artifact", artifact),
+                                new XeAppend("future", future.toString()),
                                 new XeAppend("msec", Long.toString(msec)),
                                 new XeAppend(
                                     "spent",

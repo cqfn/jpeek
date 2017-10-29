@@ -114,6 +114,9 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
         ).value();
         try {
             new ProcessBuilder()
+                .redirectOutput(ProcessBuilder.Redirect.INHERIT)
+                .redirectInput(ProcessBuilder.Redirect.INHERIT)
+                .redirectError(ProcessBuilder.Redirect.INHERIT)
                 .directory(input.toFile())
                 .command("unzip", name)
                 .start()
