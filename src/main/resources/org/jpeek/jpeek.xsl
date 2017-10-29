@@ -34,7 +34,7 @@ SOFTWARE.
         <link rel="stylesheet" href="http://cdn.rawgit.com/yegor256/tacit/gh-pages/tacit-css-1.1.1.min.css"/>
         <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/sortable/0.8.0/js/sortable.min.js">&#xA0;</script>
         <title>
-          <xsl:value-of select="app/@title"/>
+          <xsl:value-of select="app/title"/>
         </title>
         <style type="text/css">
           body {
@@ -63,7 +63,7 @@ SOFTWARE.
           </a>
         </p>
         <h1>
-          <xsl:value-of select="app/@title"/>
+          <xsl:value-of select="app/title"/>
         </h1>
         <xsl:apply-templates select="app/@value"/>
         <p>

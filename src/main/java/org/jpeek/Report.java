@@ -139,7 +139,9 @@ final class Report {
                             )
                         ).value().getProperty("org.jpeek.version")
                     )
-                    .attr("title", this.metric.getClass().getSimpleName())
+                    .add("title")
+                    .set(this.metric.getClass().getSimpleName())
+                    .up()
             ).xmlQuietly()
         );
     }
