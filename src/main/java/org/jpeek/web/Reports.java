@@ -122,7 +122,7 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
             throw new IllegalStateException(ex);
         }
         final Path output = this.target.resolve(grp).resolve(artifact);
-        if (Files.exists(input)) {
+        if (Files.exists(output)) {
             throw new IllegalStateException(
                 String.format(
                     "The output directory for %s:%s already exists: %s",
