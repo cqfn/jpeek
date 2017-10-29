@@ -83,14 +83,14 @@ public final class CAMCTest {
             XhtmlMatchers.xhtml(
                 new Xembler(
                     new CAMC(
-                        new FakeBase("Bar")
+                        new FakeBase("AboveNormalize")
                     ).xembly()
                 ).xmlQuietly()
             ),
             XhtmlMatchers.hasXPaths(
-                "/app/package[@id='']/class[@id='Bar']",
-                "//class[@id='Bar' and @value='1.0000']",
-                "//class[@id='Bar' and @color='green']"
+                "/app/package[@id='']/class[@id='AboveNormalize']",
+                "//class[@id='AboveNormalize' and @value='1.0000']",
+                "//class[@id='AboveNormalize' and @color='green']"
             )
         );
     }

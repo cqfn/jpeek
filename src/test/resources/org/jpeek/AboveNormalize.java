@@ -1,7 +1,7 @@
-public final class Bar {
+public final class AboveNormalize {
     private final Object key;
     private final Object value;
-    public Bar(final Object keyy, final Object val) {
+    public AboveNormalize(final Object keyy, final Object val) {
         this.key = keyy;
         this.value = val;
     }
