@@ -24,17 +24,15 @@
 package org.jpeek.web;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.regex.Matcher;
 import org.cactoos.BiFunc;
+import org.cactoos.Func;
 import org.cactoos.func.IoCheckedBiFunc;
-import org.cactoos.text.TextOf;
+import org.cactoos.func.IoCheckedFunc;
 import org.takes.Response;
 import org.takes.facets.fork.RqRegex;
 import org.takes.facets.fork.TkRegex;
 import org.takes.facets.forward.RsForward;
-import org.takes.rs.RsWithBody;
-import org.takes.rs.RsWithType;
 
 /**
  * Report page.
@@ -51,13 +49,13 @@ final class TkReport implements TkRegex {
     /**
      * Maker or reports.
      */
-    private final BiFunc<String, String, Path> reports;
+    private final BiFunc<String, String, Func<String, Response>> reports;
 
     /**
      * Ctor.
      * @param rpts Reports
      */
-    TkReport(final BiFunc<String, String, Path> rpts) {
+    TkReport(final BiFunc<String, String, Func<String, Response>> rpts) {
         this.reports = rpts;
     }
 
@@ -72,34 +70,12 @@ final class TkReport implements TkRegex {
             );
         }
         path = path.substring(1);
-        return new RsWithType(
-            new RsWithBody(
-                new TextOf(
-                    new IoCheckedBiFunc<>(this.reports).apply(
-                        matcher.group(1),
-                        matcher.group(2)
-                    ).resolve(path)
-                ).asString()
-            ),
-            TkReport.type(path)
-        );
-    }
-
-    /**
-     * Content type for the file.
-     * @param path Path
-     * @return The type
-     */
-    private static String type(final String path) {
-        String type = "text/plain";
-        if (path.endsWith(".html")) {
-            type = "text/html";
-        } else if (path.endsWith(".xml")) {
-            type = "application/xml";
-        } else if (path.endsWith(".svg")) {
-            type = "image/svg+xml";
-        }
-        return type;
+        return new IoCheckedFunc<>(
+            new IoCheckedBiFunc<>(this.reports).apply(
+                matcher.group(1),
+                matcher.group(2)
+            )
+        ).apply(path);
     }
 
 }

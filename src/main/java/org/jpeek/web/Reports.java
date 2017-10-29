@@ -28,13 +28,15 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
 import org.cactoos.BiFunc;
+import org.cactoos.Func;
 import org.cactoos.io.LengthOf;
 import org.cactoos.io.TeeInput;
 import org.cactoos.text.TextOf;
 import org.jpeek.App;
+import org.takes.Response;
 
 /**
- * Project badge.
+ * All reports.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -43,7 +45,7 @@ import org.jpeek.App;
  * @since 0.7
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-final class Reports implements BiFunc<String, String, Path> {
+final class Reports implements BiFunc<String, String, Func<String, Response>> {
 
     /**
      * Directory with sources.
@@ -74,8 +76,8 @@ final class Reports implements BiFunc<String, String, Path> {
     }
 
     @Override
-    public Path apply(final String group, final String artifact)
-        throws IOException {
+    public Func<String, Response> apply(final String group,
+        final String artifact) throws IOException {
         final String grp = group.replace(".", "/");
         final String version = new XMLDocument(
             new TextOf(
@@ -112,7 +114,7 @@ final class Reports implements BiFunc<String, String, Path> {
         }
         final Path output = this.target.resolve(grp).resolve(artifact);
         new App(input, output).analyze();
-        return output;
+        return new TypedPages(new Pages(output));
     }
 
 }

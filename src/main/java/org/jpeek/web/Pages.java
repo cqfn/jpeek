@@ -24,63 +24,44 @@
 package org.jpeek.web;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import org.cactoos.func.StickyBiFunc;
-import org.cactoos.func.SyncBiFunc;
-import org.takes.facets.fork.FkRegex;
-import org.takes.facets.fork.TkFork;
-import org.takes.facets.forward.TkForward;
-import org.takes.http.Exit;
-import org.takes.http.FtCli;
-import org.takes.tk.TkWrap;
+import org.cactoos.Func;
+import org.cactoos.text.TextOf;
+import org.takes.Response;
+import org.takes.rs.RsWithBody;
 
 /**
- * Web application.
+ * Pages in one report.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.5
+ * @since 0.8
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-@SuppressWarnings("PMD.UseUtilityClass")
-public final class TkApp extends TkWrap {
+final class Pages implements Func<String, Response> {
+
+    /**
+     * Directory with files.
+     */
+    private final Path home;
 
     /**
      * Ctor.
-     * @param home Home directory
+     * @param dir Home dir
      */
-    public TkApp(final Path home) {
-        super(
-            new TkForward(
-                new TkFork(
-                    new FkRegex(
-                        "/([^/]+)/([^/]+)(.*)",
-                        new TkReport(
-                            new StickyBiFunc<>(
-                                new SyncBiFunc<>(
-                                    new Reports(home)
-                                )
-                            )
-                        )
-                    )
-                )
-            )
-        );
+    Pages(final Path dir) {
+        this.home = dir;
     }
 
-    /**
-     * Main Java entry point.
-     * @param args Command line args
-     * @throws IOException If fails
-     */
-    public static void main(final String... args) throws IOException {
-        new FtCli(
-            new TkApp(Files.createTempDirectory("jpeek")),
-            args
-        ).start(Exit.NEVER);
+    @Override
+    public Response apply(final String path) throws IOException {
+        return new RsWithBody(
+            new TextOf(
+                this.home.resolve(path)
+            ).asString()
+        );
     }
 
 }
