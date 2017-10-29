@@ -47,8 +47,6 @@ SOFTWARE.
           th {
             cursor: pointer;
           }
-          .graph {
-          }
         </style>
       </head>
       <body>
@@ -87,6 +85,15 @@ SOFTWARE.
               <xsl:text>0</xsl:text>
             </xsl:otherwise>
           </xsl:choose>
+          <xsl:text>.</xsl:text>
+        </p>
+        <p>
+          <xsl:text>Green: </xsl:text>
+          <xsl:value-of select="count(//class[@color='green'])"/>
+          <xsl:text>, yellow: </xsl:text>
+          <xsl:value-of select="count(//class[@color='yellow'])"/>
+          <xsl:text>, red: </xsl:text>
+          <xsl:value-of select="count(//class[@color='red'])"/>
           <xsl:text>.</xsl:text>
         </p>
         <xsl:apply-templates select="app"/>

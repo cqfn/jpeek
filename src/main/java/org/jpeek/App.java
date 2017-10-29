@@ -56,10 +56,17 @@ import org.xembly.Xembler;
 public final class App {
 
     /**
-     * XSL stylesheet.
+     * Index XSL stylesheet.
      */
     private static final XSL STYLESHEET = XSLDocument.make(
         App.class.getResourceAsStream("index.xsl")
+    );
+
+    /**
+     * Matrix XSL stylesheet.
+     */
+    private static final XSL MATRIX = XSLDocument.make(
+        App.class.getResourceAsStream("matrix.xsl")
     );
 
     /**
@@ -138,6 +145,23 @@ public final class App {
             new TeeInput(
                 App.STYLESHEET.transform(index).toString(),
                 this.output.resolve("index.html")
+            )
+        ).value();
+        final XML matrix = new XMLDocument(
+            new Xembler(
+                new Matrix(this.output).value()
+            ).xmlQuietly()
+        );
+        new LengthOf(
+            new TeeInput(
+                matrix.toString(),
+                this.output.resolve("matrix.xml")
+            )
+        ).value();
+        new LengthOf(
+            new TeeInput(
+                App.MATRIX.transform(matrix).toString(),
+                this.output.resolve("matrix.html")
             )
         ).value();
         new LengthOf(

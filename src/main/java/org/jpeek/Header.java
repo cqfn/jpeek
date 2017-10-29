@@ -21,66 +21,51 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.jpeek.metrics;
+package org.jpeek;
 
-import org.cactoos.Func;
+import java.io.IOException;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Iterator;
+import org.cactoos.io.ResourceOf;
+import org.cactoos.iterable.PropertiesOf;
+import org.xembly.Directive;
+import org.xembly.Directives;
 
 /**
- * Colors.
+ * Xembly header for the report.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.3
+ * @since 0.8
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class Colors implements Func<Double, String> {
-
-    /**
-     * Low border.
-     */
-    private final double low;
-
-    /**
-     * High border.
-     */
-    private final double high;
-
-    /**
-     * Ctor.
-     * @param left Low border
-     * @param right High border
-     */
-    public Colors(final double left, final double right) {
-        this.low = left;
-        this.high = right;
-    }
+final class Header implements Iterable<Directive> {
 
     @Override
-    public String toString() {
-        final String text;
-        if (this.low < this.high) {
-            text = String.format("(%.2f .. %.2f]", this.low, this.high);
-        } else {
-            text = String.format("[%.2f .. %.2f)", this.low, this.high);
+    public Iterator<Directive> iterator() {
+        try {
+            return new Directives()
+                .attr(
+                    "date",
+                    ZonedDateTime.now().format(
+                        DateTimeFormatter.ISO_INSTANT
+                    )
+                )
+                .attr(
+                    "version",
+                    new PropertiesOf(
+                        new ResourceOf(
+                            "org/jpeek/jpeek.properties"
+                        )
+                    ).value().getProperty("org.jpeek.version")
+                )
+                .iterator();
+        } catch (final IOException ex) {
+            throw new IllegalStateException(ex);
         }
-        return text;
-    }
-
-    @Override
-    public String apply(final Double cohesion) {
-        final boolean reverse = this.high < this.low;
-        final String color;
-        if (cohesion < this.low && !reverse
-            || cohesion > this.low && reverse) {
-            color = "red";
-        } else if (cohesion > this.high && !reverse
-            || cohesion < this.high && reverse) {
-            color = "green";
-        } else {
-            color = "yellow";
-        }
-        return color;
     }
 
 }

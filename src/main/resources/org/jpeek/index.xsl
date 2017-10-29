@@ -77,6 +77,11 @@ SOFTWARE.
         <xsl:value-of select="format-number(sum(metric/score) div count(metric),'0.00')"/>
       </strong>
       <xsl:text> out of 10.</xsl:text>
+      <xsl:text> Here is the </xsl:text>
+      <a href="matrix.html">
+        <xsl:text>matrix</xsl:text>
+      </a>
+      <xsl:text>.</xsl:text>
     </p>
     <p>
       <img src="badge.svg" alt="SVG badge"/>
