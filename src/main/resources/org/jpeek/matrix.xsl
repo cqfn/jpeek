@@ -56,6 +56,11 @@ SOFTWARE.
         <img alt="logo" src="http://www.jpeek.org/logo.svg" style="height:60px"/>
       </a>
     </p>
+    <p>
+      <a href="index.html">
+        <xsl:text>Back to index</xsl:text>
+      </a>
+    </p>
     <xsl:apply-templates select="classes"/>
   </xsl:template>
   <xsl:template match="classes">

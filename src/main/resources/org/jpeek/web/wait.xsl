@@ -71,7 +71,7 @@ SOFTWARE.
           <xsl:text>, please reload this page in a few minutes...</xsl:text>
         </p>
         <p>
-          <xsl:text>Future:</xsl:text>
+          <xsl:text>Future: </xsl:text>
           <code>
             <xsl:value-of select="future"/>
           </code>
