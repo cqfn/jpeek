@@ -47,7 +47,8 @@ import org.xembly.Directive;
  * <p>Consider a class C with methods M1, M2,….., Mn. Let {Ii} = set of
  * instance variables used by method Mi. There are n such sets, i.e., {1i},
  * {I2},….., {In}. Let  P = { (Ii, Ij ) | Ii  Ij  = } and Q = {(Ii, Ij ) |
- * Ii  Ij   }. If all n sets {1i}, {I2},….., {In} are  then let P = .</p>
+ * Ii  Ij   }. If all n sets {1i}, {I2},….., {In} are  then let P = .
+ * </p>
  *
  * <p>There is no thread-safety guarantee.</p>
  *
