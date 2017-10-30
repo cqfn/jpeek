@@ -21,36 +21,47 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.jpeek;
+package org.jpeek.web;
 
-import com.jcabi.matchers.XhtmlMatchers;
+import com.jcabi.http.request.JdkRequest;
+import com.jcabi.http.response.RestResponse;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.takes.Take;
+import org.takes.http.FtRemote;
 
 /**
- * Test case for {@link Index}.
+ * Test case for {@link TkApp}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.6
+ * @since 0.5
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IndexTest {
+public final class TkAppTest {
 
     @Test
-    public void createsIndexXml() throws IOException {
-        final Path output = Files.createTempDirectory("").resolve("x2");
-        final Path input = Paths.get(".");
-        new App(input, output).analyze();
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
-                new TextOf(output.resolve("index.xml")).asString()
-            ),
-            XhtmlMatchers.hasXPaths("/metrics/metric")
+    public void rendersOneReport() throws IOException {
+        final Take app = new TkApp(Files.createTempDirectory("x"));
+        new FtRemote(app).exec(
+            home -> {
+                new JdkRequest(home)
+                    .uri().path("org.jpeek")
+                    .path("jpeek")
+                    .path("index.html").back()
+                    .fetch()
+                    .as(RestResponse.class)
+                    .assertStatus(HttpURLConnection.HTTP_OK);
+                new JdkRequest(String.format("%s/org.jpeek/jpeek/", home))
+                    .fetch()
+                    .as(RestResponse.class)
+                    .assertStatus(HttpURLConnection.HTTP_SEE_OTHER);
+                new JdkRequest(String.format("%s/org.jpeek/jpeek", home))
+                    .fetch()
+                    .as(RestResponse.class)
+                    .assertStatus(HttpURLConnection.HTTP_SEE_OTHER);
+            }
         );
     }
 

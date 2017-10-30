@@ -21,37 +21,62 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.jpeek;
+package org.jpeek.web;
 
-import com.jcabi.matchers.XhtmlMatchers;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import org.takes.facets.fork.FkRegex;
+import org.takes.facets.fork.TkFork;
+import org.takes.facets.forward.TkForward;
+import org.takes.http.Exit;
+import org.takes.http.FtCli;
+import org.takes.tk.TkWrap;
 
 /**
- * Test case for {@link Index}.
+ * Web application.
+ *
+ * <p>There is no thread-safety guarantee.
+ *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.6
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @since 0.5
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class IndexTest {
+@SuppressWarnings("PMD.UseUtilityClass")
+public final class TkApp extends TkWrap {
 
-    @Test
-    public void createsIndexXml() throws IOException {
-        final Path output = Files.createTempDirectory("").resolve("x2");
-        final Path input = Paths.get(".");
-        new App(input, output).analyze();
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
-                new TextOf(output.resolve("index.xml")).asString()
-            ),
-            XhtmlMatchers.hasXPaths("/metrics/metric")
+    /**
+     * Ctor.
+     * @param home Home directory
+     */
+    public TkApp(final Path home) {
+        super(
+            new TkForward(
+                new TkFork(
+                    new FkRegex(
+                        "/([^/]+)/([^/]+)(.*)",
+                        new TkReport(
+                            new AsyncReports(
+                                new Reports(home)
+                            )
+                        )
+                    )
+                )
+            )
         );
+    }
+
+    /**
+     * Main Java entry point.
+     * @param args Command line args
+     * @throws IOException If fails
+     */
+    public static void main(final String... args) throws IOException {
+        new FtCli(
+            new TkApp(Files.createTempDirectory("jpeek")),
+            args
+        ).start(Exit.NEVER);
     }
 
 }

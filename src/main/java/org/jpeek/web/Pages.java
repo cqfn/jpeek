@@ -21,36 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.jpeek;
+package org.jpeek.web;
 
-import com.jcabi.matchers.XhtmlMatchers;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
+import org.cactoos.Func;
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import org.takes.Response;
+import org.takes.rs.RsWithBody;
 
 /**
- * Test case for {@link Index}.
+ * Pages in one report.
+ *
+ * <p>There is no thread-safety guarantee.
+ *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.6
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @since 0.8
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class IndexTest {
+final class Pages implements Func<String, Response> {
 
-    @Test
-    public void createsIndexXml() throws IOException {
-        final Path output = Files.createTempDirectory("").resolve("x2");
-        final Path input = Paths.get(".");
-        new App(input, output).analyze();
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
-                new TextOf(output.resolve("index.xml")).asString()
-            ),
-            XhtmlMatchers.hasXPaths("/metrics/metric")
+    /**
+     * Directory with files.
+     */
+    private final Path home;
+
+    /**
+     * Ctor.
+     * @param dir Home dir
+     */
+    Pages(final Path dir) {
+        this.home = dir;
+    }
+
+    @Override
+    public Response apply(final String path) throws IOException {
+        return new RsWithBody(
+            new TextOf(
+                this.home.resolve(path)
+            ).asString()
         );
     }
 

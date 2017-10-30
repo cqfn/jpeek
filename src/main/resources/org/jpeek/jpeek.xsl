@@ -23,7 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml" version="2.0">
-  <xsl:template match="/">
+  <xsl:template match="/metric">
     <html lang="en">
       <head>
         <meta charset="UTF-8"/>
@@ -34,17 +34,18 @@ SOFTWARE.
         <link rel="stylesheet" href="http://cdn.rawgit.com/yegor256/tacit/gh-pages/tacit-css-1.1.1.min.css"/>
         <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/sortable/0.8.0/js/sortable.min.js">&#xA0;</script>
         <title>
-          <xsl:value-of select="app/@title"/>
+          <xsl:value-of select="title"/>
         </title>
         <style type="text/css">
+          body {
+            padding: 1em;
+          }
           td {
             padding-top: 0.25em;
             padding-bottom: 0.25em;
           }
           th {
             cursor: pointer;
-          }
-          .graph {
           }
         </style>
       </head>
@@ -60,8 +61,15 @@ SOFTWARE.
           </a>
         </p>
         <h1>
-          <xsl:value-of select="app/@title"/>
+          <xsl:value-of select="title"/>
         </h1>
+        <p>
+          <xsl:text>"Yellow" zone: </xsl:text>
+          <code>
+            <xsl:value-of select="colors"/>
+          </code>
+          <xsl:text>.</xsl:text>
+        </p>
         <xsl:apply-templates select="app/@value"/>
         <p>
           <xsl:text>Packages: </xsl:text>
@@ -71,12 +79,21 @@ SOFTWARE.
           <xsl:text>, average: </xsl:text>
           <xsl:choose>
             <xsl:when test="//class">
-              <xsl:value-of select="format-number(sum(//class/@value) div count(//class), '0.####')"/>
+              <xsl:value-of select="format-number(sum(//class/@value) div count(//class), '0.0000')"/>
             </xsl:when>
             <xsl:otherwise>
               <xsl:text>0</xsl:text>
             </xsl:otherwise>
           </xsl:choose>
+          <xsl:text>.</xsl:text>
+        </p>
+        <p>
+          <xsl:text>Green: </xsl:text>
+          <xsl:value-of select="count(//class[@color='green'])"/>
+          <xsl:text>, yellow: </xsl:text>
+          <xsl:value-of select="count(//class[@color='yellow'])"/>
+          <xsl:text>, red: </xsl:text>
+          <xsl:value-of select="count(//class[@color='red'])"/>
           <xsl:text>.</xsl:text>
         </p>
         <xsl:apply-templates select="app"/>
@@ -86,9 +103,9 @@ SOFTWARE.
             <xsl:text>jpeek</xsl:text>
           </a>
           <xsl:text> </xsl:text>
-          <xsl:value-of select="app/@version"/>
+          <xsl:value-of select="@version"/>
           <xsl:text> on </xsl:text>
-          <xsl:value-of select="app/@date"/>
+          <xsl:value-of select="@date"/>
           <xsl:text>.</xsl:text>
         </p>
       </body>

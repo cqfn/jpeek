@@ -9,6 +9,7 @@
 [![Maven Central](https://img.shields.io/maven-central/v/org.jpeek/jpeek.svg)](https://maven-badges.herokuapp.com/maven-central/org.jpeek/jpeek)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/yegor256/jpeek/blob/master/LICENSE.txt)
 
+[![jpeek report](http://i.jpeek.org/org.jpeek/jpeek/badge.svg)](http://i.jpeek.org/org.jpeek/jpeek/)
 [![Test Coverage](https://img.shields.io/codecov/c/github/yegor256/jpeek.svg)](https://codecov.io/github/yegor256/jpeek?branch=master)
 [![SonarQube](https://img.shields.io/badge/sonar-ok-green.svg)](https://sonarcloud.io/dashboard?id=org.jpeek%3Ajpeek)
 
@@ -29,10 +30,10 @@ book series make sense.
 
 ## How to use?
 
-Load [this JAR file](http://repo1.maven.org/maven2/org/jpeek/jpeek/0.3/jpeek-0.3-jar-with-dependencies.jar) and then:
+Load [this JAR file](http://repo1.maven.org/maven2/org/jpeek/jpeek/0.5/jpeek-0.5-jar-with-dependencies.jar) and then:
 
 ```bash
-$ java -jar jpeek-0.1-jar-with-dependencies.jar . ./jpeek
+$ java -jar jpeek-0.5-jar-with-dependencies.jar . ./jpeek
 ```
 
 jPeek will analyze Java files in the current directory.

@@ -21,35 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.jpeek;
+package org.jpeek.web;
 
 import com.jcabi.xml.XMLDocument;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.regex.Matcher;
-import org.cactoos.func.IoCheckedBiFunc;
-import org.cactoos.func.StickyBiFunc;
-import org.cactoos.func.SyncBiFunc;
+import org.cactoos.BiFunc;
+import org.cactoos.Func;
 import org.cactoos.io.LengthOf;
 import org.cactoos.io.TeeInput;
 import org.cactoos.text.TextOf;
+import org.jpeek.App;
 import org.takes.Response;
-import org.takes.facets.fork.RqRegex;
-import org.takes.facets.fork.TkRegex;
-import org.takes.rs.RsHtml;
 
 /**
- * Report page.
+ * All reports.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.5
+ * @since 0.7
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class TkReport implements TkRegex {
+final class Reports implements BiFunc<String, String, Func<String, Response>> {
 
     /**
      * Directory with sources.
@@ -62,15 +59,10 @@ public final class TkReport implements TkRegex {
     private final Path target;
 
     /**
-     * Maker or reports.
-     */
-    private final IoCheckedBiFunc<String, String, Path> reports;
-
-    /**
      * Ctor.
      * @param home Home dir
      */
-    public TkReport(final Path home) {
+    Reports(final Path home) {
         this(home.resolve("sources"), home.resolve("target"));
     }
 
@@ -79,48 +71,24 @@ public final class TkReport implements TkRegex {
      * @param input Dir with sources
      * @param output Dir with reports
      */
-    public TkReport(final Path input, final Path output) {
+    Reports(final Path input, final Path output) {
         this.sources = input;
         this.target = output;
-        this.reports = new IoCheckedBiFunc<>(
-            new StickyBiFunc<>(
-                new SyncBiFunc<>(
-                    this::home
-                )
-            )
-        );
     }
 
     @Override
-    public Response act(final RqRegex req) throws IOException {
-        final Matcher matcher = req.matcher();
-        // @checkstyle MagicNumber (1 line)
-        String path = matcher.group(3);
-        if (path.isEmpty()) {
-            path = "index.html";
-        } else {
-            path = path.substring(1);
-        }
-        return new RsHtml(
-            new TextOf(
-                this.reports.apply(
-                    matcher.group(1),
-                    matcher.group(2)
-                ).resolve(path)
-            ).asString()
-        );
-    }
-
-    /**
-     * Make report and return its path.
-     * @param group Maven group
-     * @param artifact Maven artiface
-     * @return Path to the report files
-     * @throws IOException If fails
-     */
-    private Path home(final String group, final String artifact)
-        throws IOException {
+    public Func<String, Response> apply(final String group,
+        final String artifact) throws IOException {
         final String grp = group.replace(".", "/");
+        final Path input = this.sources.resolve(grp).resolve(artifact);
+        if (Files.exists(input)) {
+            throw new IllegalStateException(
+                String.format(
+                    "The input directory for %s:%s already exists: %s",
+                    group, artifact, input
+                )
+            );
+        }
         final String version = new XMLDocument(
             new TextOf(
                 new URL(
@@ -132,7 +100,6 @@ public final class TkReport implements TkRegex {
                 )
             ).asString()
         ).xpath("/metadata/versioning/latest/text()").get(0);
-        final Path input = this.sources.resolve(grp).resolve(artifact);
         final String name = String.format("%s-%s.jar", artifact, version);
         new LengthOf(
             new TeeInput(
@@ -147,6 +114,9 @@ public final class TkReport implements TkRegex {
         ).value();
         try {
             new ProcessBuilder()
+                .redirectOutput(ProcessBuilder.Redirect.INHERIT)
+                .redirectInput(ProcessBuilder.Redirect.INHERIT)
+                .redirectError(ProcessBuilder.Redirect.INHERIT)
                 .directory(input.toFile())
                 .command("unzip", name)
                 .start()
@@ -155,8 +125,16 @@ public final class TkReport implements TkRegex {
             throw new IllegalStateException(ex);
         }
         final Path output = this.target.resolve(grp).resolve(artifact);
+        if (Files.exists(output)) {
+            throw new IllegalStateException(
+                String.format(
+                    "The output directory for %s:%s already exists: %s",
+                    group, artifact, output
+                )
+            );
+        }
         new App(input, output).analyze();
-        return output;
+        return new TypedPages(new Pages(output));
     }
 
 }

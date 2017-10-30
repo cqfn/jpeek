@@ -21,37 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.jpeek;
-
-import com.jcabi.matchers.XhtmlMatchers;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
-import org.junit.Test;
 
 /**
- * Test case for {@link Index}.
+ * JPeek web, tests.
+ *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.6
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @since 0.7
  */
-public final class IndexTest {
-
-    @Test
-    public void createsIndexXml() throws IOException {
-        final Path output = Files.createTempDirectory("").resolve("x2");
-        final Path input = Paths.get(".");
-        new App(input, output).analyze();
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
-                new TextOf(output.resolve("index.xml")).asString()
-            ),
-            XhtmlMatchers.hasXPaths("/metrics/metric")
-        );
-    }
-
-}
+package org.jpeek.web;

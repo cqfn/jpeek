@@ -33,28 +33,29 @@ import org.junit.Test;
 import org.xembly.Xembler;
 
 /**
- * Test case for {@link LCOM}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test case for {@link NHD}.
+ *
+ * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
  * @since 0.1
  * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class LCOMTest {
+public final class NHDTest {
 
     @Test
     public void createsBigXmlReport() throws IOException {
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
                 new Xembler(
-                    new LCOM(
+                    new NHD(
                         new DefaultBase(Paths.get("."))
                     ).xembly()
                 ).xmlQuietly()
             ),
             XhtmlMatchers.hasXPaths(
-                "/metric/app/package/class[@id='LCOMTest']",
-                "//class[@id='DefaultBase' and @value='0.0000']"
+                "/metric/app/package/class[@id='CAMCTest']",
+                "//class[@id='DefaultBase' and @value='0.3333']"
             )
         );
     }
@@ -64,16 +65,17 @@ public final class LCOMTest {
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
                 new Xembler(
-                    new LCOM(
+                    new NHD(
                         new FakeBase("Foo")
                     ).xembly()
                 ).xmlQuietly()
             ),
             XhtmlMatchers.hasXPaths(
-                "/metric/app/package/class[@id='Foo']",
-                "//class[@id='Foo' and @value='1.0000']",
-                "//class[@id='Foo' and @color='green']"
+                "/metric/app/package[@id='']/class[@id='Foo']",
+                "//class[@id='Foo' and @value='0.3333']",
+                "//class[@id='Foo' and @color='yellow']"
             )
         );
     }
+
 }

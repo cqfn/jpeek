@@ -21,36 +21,55 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.jpeek;
+package org.jpeek.web;
 
-import com.jcabi.matchers.XhtmlMatchers;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import com.jcabi.log.VerboseThreads;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import org.cactoos.BiFunc;
+import org.cactoos.Func;
+import org.takes.Response;
 
 /**
- * Test case for {@link Index}.
+ * Futures for {@link AsyncReports}.
+ *
+ * <p>There is no thread-safety guarantee.
+ *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.6
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @since 0.8
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class IndexTest {
+final class Futures implements
+    BiFunc<String, String, Future<Func<String, Response>>> {
 
-    @Test
-    public void createsIndexXml() throws IOException {
-        final Path output = Files.createTempDirectory("").resolve("x2");
-        final Path input = Paths.get(".");
-        new App(input, output).analyze();
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
-                new TextOf(output.resolve("index.xml")).asString()
-            ),
-            XhtmlMatchers.hasXPaths("/metrics/metric")
+    /**
+     * Original func.
+     */
+    private final BiFunc<String, String, Func<String, Response>> origin;
+
+    /**
+     * Service.
+     */
+    private final ExecutorService service;
+
+    /**
+     * Ctor.
+     * @param func Original bi-function
+     */
+    Futures(final BiFunc<String, String, Func<String, Response>> func) {
+        this.origin = func;
+        this.service = Executors.newCachedThreadPool(
+            new VerboseThreads(Futures.class)
+        );
+    }
+
+    @Override
+    public Future<Func<String, Response>> apply(final String group,
+        final String artifact) {
+        return this.service.submit(
+            () -> this.origin.apply(group, artifact)
         );
     }
 

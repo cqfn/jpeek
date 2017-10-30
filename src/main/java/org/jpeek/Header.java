@@ -23,35 +23,49 @@
  */
 package org.jpeek;
 
-import com.jcabi.matchers.XhtmlMatchers;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Iterator;
+import org.cactoos.io.ResourceOf;
+import org.cactoos.iterable.PropertiesOf;
+import org.xembly.Directive;
+import org.xembly.Directives;
 
 /**
- * Test case for {@link Index}.
+ * Xembly header for the report.
+ *
+ * <p>There is no thread-safety guarantee.
+ *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.6
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @since 0.8
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class IndexTest {
+final class Header implements Iterable<Directive> {
 
-    @Test
-    public void createsIndexXml() throws IOException {
-        final Path output = Files.createTempDirectory("").resolve("x2");
-        final Path input = Paths.get(".");
-        new App(input, output).analyze();
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
-                new TextOf(output.resolve("index.xml")).asString()
-            ),
-            XhtmlMatchers.hasXPaths("/metrics/metric")
-        );
+    @Override
+    public Iterator<Directive> iterator() {
+        try {
+            return new Directives()
+                .attr(
+                    "date",
+                    ZonedDateTime.now().format(
+                        DateTimeFormatter.ISO_INSTANT
+                    )
+                )
+                .attr(
+                    "version",
+                    new PropertiesOf(
+                        new ResourceOf(
+                            "org/jpeek/jpeek.properties"
+                        )
+                    ).value().getProperty("org.jpeek.version")
+                )
+                .iterator();
+        } catch (final IOException ex) {
+            throw new IllegalStateException(ex);
+        }
     }
 
 }

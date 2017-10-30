@@ -28,17 +28,13 @@ import com.jcabi.xml.XMLDocument;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.cactoos.Scalar;
 import org.cactoos.collection.Filtered;
 import org.cactoos.collection.Joined;
-import org.cactoos.io.ResourceOf;
 import org.cactoos.iterable.Mapped;
-import org.cactoos.iterable.PropertiesOf;
 import org.cactoos.list.Sorted;
 import org.xembly.Directive;
 import org.xembly.Directives;
@@ -72,31 +68,20 @@ final class Index implements Scalar<Iterable<Directive>> {
     public Iterable<Directive> value() throws IOException {
         return new Directives()
             .add("metrics")
+            .append(new Header())
             .append(
                 new Joined<>(
                     new Mapped<Path, Iterable<Directive>>(
                         new Filtered<Path>(
                             Files.list(this.output)
                                 .collect(Collectors.toList()),
-                            path -> path.toString().endsWith(".xml")
+                            path -> path.getFileName()
+                                .toString()
+                                .matches("^[A-Z].+\\.xml$")
                         ),
                         Index::metric
                     )
                 )
-            )
-            .attr(
-                "date",
-                ZonedDateTime.now().format(
-                    DateTimeFormatter.ISO_INSTANT
-                )
-            )
-            .attr(
-                "version",
-                new PropertiesOf(
-                    new ResourceOf(
-                        "org/jpeek/jpeek.properties"
-                    )
-                ).value().getProperty("org.jpeek.version")
             );
     }
 
@@ -117,6 +102,12 @@ final class Index implements Scalar<Iterable<Directive>> {
                 Double::parseDouble
             )
         );
+        final double green = (double) xml.nodes("//*[@color='green']").size();
+        final double yellow = (double) xml.nodes("//*[@color='yellow']").size();
+        final double red = (double) xml.nodes("//*[@color='red']").size();
+        final double score = 10.0d
+            * (green + yellow * 0.25d + red * 0.05d)
+            / (green + yellow + red);
         return new Directives()
             .add("metric")
             .attr("name", name)
@@ -126,6 +117,10 @@ final class Index implements Scalar<Iterable<Directive>> {
             .add("average").set(Index.avg(values)).up()
             .add("min").set(values.get(0)).up()
             .add("max").set(values.get(values.size() - 1)).up()
+            .add("green").set((int) green).up()
+            .add("yellow").set((int) yellow).up()
+            .add("red").set((int) red).up()
+            .add("score").set(score).up()
             .up();
     }
 

@@ -21,47 +21,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.jpeek;
+package org.jpeek.web;
 
-import com.jcabi.http.request.JdkRequest;
-import com.jcabi.http.response.RestResponse;
-import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.nio.file.Files;
+import org.hamcrest.MatcherAssert;
 import org.junit.Test;
-import org.takes.Take;
-import org.takes.http.FtRemote;
+import org.takes.facets.hamcrest.HmRsStatus;
 
 /**
- * Test case for {@link TkApp}.
+ * Test case for {@link Reports}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.5
+ * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class TkAppTest {
+public final class ReportsTest {
 
     @Test
-    public void rendersOneReport() throws IOException {
-        final Take app = new TkApp(Files.createTempDirectory("x"));
-        new FtRemote(app).exec(
-            home -> {
-                new JdkRequest(home)
-                    .uri().path("org.jpeek")
-                    .path("jpeek")
-                    .path("index.html").back()
-                    .fetch()
-                    .as(RestResponse.class)
-                    .assertStatus(HttpURLConnection.HTTP_OK);
-                new JdkRequest(String.format("%s/org.jpeek/jpeek/", home))
-                    .fetch()
-                    .as(RestResponse.class)
-                    .assertStatus(HttpURLConnection.HTTP_OK);
-                new JdkRequest(String.format("%s/org.jpeek/jpeek", home))
-                    .fetch()
-                    .as(RestResponse.class)
-                    .assertStatus(HttpURLConnection.HTTP_OK);
-            }
+    public void rendersOneReport() throws Exception {
+        MatcherAssert.assertThat(
+            new Reports(
+                Files.createTempDirectory("x")
+            ).apply("org.jpeek", "jpeek").apply("index.html"),
+            new HmRsStatus(HttpURLConnection.HTTP_OK)
         );
     }
 

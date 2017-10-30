@@ -71,7 +71,7 @@ public final class JavassistClasses implements Metric {
     /**
      * Colors.
      */
-    private final IoCheckedFunc<Double, String> colors;
+    private final Colors colors;
 
     /**
      * Javassist pool.
@@ -85,18 +85,20 @@ public final class JavassistClasses implements Metric {
      * @param clrs Colors
      */
     public JavassistClasses(final Base bse, final Func<CtClass, Double> fnc,
-        final Func<Double, String> clrs) {
+        final Colors clrs) {
         this.base = bse;
         this.pool = ClassPool.getDefault();
         this.func = new IoCheckedFunc<>(fnc);
-        this.colors = new IoCheckedFunc<>(clrs);
+        this.colors = clrs;
     }
 
     @Override
     public Iterable<Directive> xembly() throws IOException {
         return new Directives()
+            .add("metric")
+            .add("colors").set(this.colors).up()
             .add("app")
-            .attr("id", this.base.toString())
+            .attr("id", this.base)
             .append(
                 new Joined<Directive>(
                     new Mapped<>(

@@ -21,66 +21,61 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.jpeek.metrics;
+package org.jpeek.web;
 
+import java.io.IOException;
+import java.util.regex.Matcher;
+import org.cactoos.BiFunc;
 import org.cactoos.Func;
+import org.cactoos.func.IoCheckedBiFunc;
+import org.cactoos.func.IoCheckedFunc;
+import org.takes.Response;
+import org.takes.facets.fork.RqRegex;
+import org.takes.facets.fork.TkRegex;
+import org.takes.facets.forward.RsForward;
 
 /**
- * Colors.
+ * Report page.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.3
+ * @since 0.5
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class Colors implements Func<Double, String> {
+final class TkReport implements TkRegex {
 
     /**
-     * Low border.
+     * Maker or reports.
      */
-    private final double low;
-
-    /**
-     * High border.
-     */
-    private final double high;
+    private final BiFunc<String, String, Func<String, Response>> reports;
 
     /**
      * Ctor.
-     * @param left Low border
-     * @param right High border
+     * @param rpts Reports
      */
-    public Colors(final double left, final double right) {
-        this.low = left;
-        this.high = right;
+    TkReport(final BiFunc<String, String, Func<String, Response>> rpts) {
+        this.reports = rpts;
     }
 
     @Override
-    public String toString() {
-        final String text;
-        if (this.low < this.high) {
-            text = String.format("(%.2f .. %.2f]", this.low, this.high);
-        } else {
-            text = String.format("[%.2f .. %.2f)", this.low, this.high);
+    public Response act(final RqRegex req) throws IOException {
+        final Matcher matcher = req.matcher();
+        // @checkstyle MagicNumber (1 line)
+        String path = matcher.group(3);
+        if (path.isEmpty()) {
+            throw new RsForward(
+                String.format("%s/index.html", matcher.group(0))
+            );
         }
-        return text;
-    }
-
-    @Override
-    public String apply(final Double cohesion) {
-        final boolean reverse = this.high < this.low;
-        final String color;
-        if (cohesion < this.low && !reverse
-            || cohesion > this.low && reverse) {
-            color = "red";
-        } else if (cohesion > this.high && !reverse
-            || cohesion < this.high && reverse) {
-            color = "green";
-        } else {
-            color = "yellow";
-        }
-        return color;
+        path = path.substring(1);
+        return new IoCheckedFunc<>(
+            new IoCheckedBiFunc<>(this.reports).apply(
+                matcher.group(1),
+                matcher.group(2)
+            )
+        ).apply(path);
     }
 
 }

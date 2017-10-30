@@ -32,12 +32,8 @@ import com.jcabi.xml.XSL;
 import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import org.cactoos.io.LengthOf;
-import org.cactoos.io.ResourceOf;
 import org.cactoos.io.TeeInput;
-import org.cactoos.iterable.PropertiesOf;
 import org.xembly.Directives;
 import org.xembly.Xembler;
 
@@ -124,22 +120,11 @@ final class Report {
                 new Directives()
                     .pi("xml-stylesheet", "href='jpeek.xsl' type='text/xsl'")
                     .append(this.metric.xembly())
-                    .xpath("/app")
-                    .attr(
-                        "date",
-                        ZonedDateTime.now().format(
-                            DateTimeFormatter.ISO_INSTANT
-                        )
-                    )
-                    .attr(
-                        "version",
-                        new PropertiesOf(
-                            new ResourceOf(
-                                "org/jpeek/jpeek.properties"
-                            )
-                        ).value().getProperty("org.jpeek.version")
-                    )
-                    .attr("title", this.metric.getClass().getSimpleName())
+                    .xpath("/metric")
+                    .append(new Header())
+                    .add("title")
+                    .set(this.metric.getClass().getSimpleName())
+                    .up()
             ).xmlQuietly()
         );
     }

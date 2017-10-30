@@ -21,59 +21,48 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.jpeek.metrics.cohesion;
+package org.jpeek.web;
 
 import com.jcabi.matchers.XhtmlMatchers;
-import java.io.IOException;
-import java.nio.file.Paths;
+import java.net.HttpURLConnection;
+import java.util.concurrent.TimeUnit;
+import org.cactoos.BiFunc;
+import org.cactoos.Func;
 import org.hamcrest.MatcherAssert;
-import org.jpeek.DefaultBase;
-import org.jpeek.metrics.FakeBase;
 import org.junit.Test;
-import org.xembly.Xembler;
+import org.takes.Response;
+import org.takes.facets.hamcrest.HmRsStatus;
+import org.takes.rs.RsPrint;
+import org.takes.rs.RsText;
 
 /**
- * Test case for {@link LCOM}.
+ * Test case for {@link AsyncReports}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
- * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
+ * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class LCOMTest {
+public final class AsyncReportsTest {
 
     @Test
-    public void createsBigXmlReport() throws IOException {
+    public void rendersOneReport() throws Exception {
+        final BiFunc<String, String, Func<String, Response>> bifunc =
+            new AsyncReports(
+                (first, second) -> {
+                    TimeUnit.HOURS.sleep(1L);
+                    return input -> new RsText("done!");
+                }
+            );
+        final Response response =
+            bifunc.apply("org.jpeek", "jpeek").apply("index.html");
         MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
-                new Xembler(
-                    new LCOM(
-                        new DefaultBase(Paths.get("."))
-                    ).xembly()
-                ).xmlQuietly()
-            ),
-            XhtmlMatchers.hasXPaths(
-                "/metric/app/package/class[@id='LCOMTest']",
-                "//class[@id='DefaultBase' and @value='0.0000']"
-            )
+            response,
+            new HmRsStatus(HttpURLConnection.HTTP_OK)
+        );
+        MatcherAssert.assertThat(
+            XhtmlMatchers.xhtml(new RsPrint(response).printBody()),
+            XhtmlMatchers.hasXPath("//xhtml:body")
         );
     }
 
-    @Test
-    public void createsXmlReportForFixtureClassA() throws IOException {
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
-                new Xembler(
-                    new LCOM(
-                        new FakeBase("Foo")
-                    ).xembly()
-                ).xmlQuietly()
-            ),
-            XhtmlMatchers.hasXPaths(
-                "/metric/app/package/class[@id='Foo']",
-                "//class[@id='Foo' and @value='1.0000']",
-                "//class[@id='Foo' and @color='green']"
-            )
-        );
-    }
 }

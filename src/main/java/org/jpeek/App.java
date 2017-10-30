@@ -38,7 +38,9 @@ import org.cactoos.scalar.And;
 import org.cactoos.scalar.IoCheckedScalar;
 import org.jpeek.metrics.cohesion.CAMC;
 import org.jpeek.metrics.cohesion.LCOM;
+import org.jpeek.metrics.cohesion.NHD;
 import org.jpeek.metrics.cohesion.OCC;
+import org.xembly.Directives;
 import org.xembly.Xembler;
 
 /**
@@ -54,10 +56,24 @@ import org.xembly.Xembler;
 public final class App {
 
     /**
-     * XSL stylesheet.
+     * Index XSL stylesheet.
      */
     private static final XSL STYLESHEET = XSLDocument.make(
         App.class.getResourceAsStream("index.xsl")
+    );
+
+    /**
+     * Matrix XSL stylesheet.
+     */
+    private static final XSL MATRIX = XSLDocument.make(
+        App.class.getResourceAsStream("matrix.xsl")
+    );
+
+    /**
+     * XSL stylesheet.
+     */
+    private static final XSL BADGE = XSLDocument.make(
+        App.class.getResourceAsStream("badge.xsl")
     );
 
     /**
@@ -97,7 +113,8 @@ public final class App {
         final Iterable<Metric> metrics = new ListOf<>(
             new CAMC(base),
             new LCOM(base),
-            new OCC(base)
+            new OCC(base),
+            new NHD(base)
         );
         new IoCheckedScalar<>(
             new And(
@@ -128,6 +145,45 @@ public final class App {
             new TeeInput(
                 App.STYLESHEET.transform(index).toString(),
                 this.output.resolve("index.html")
+            )
+        ).value();
+        final XML matrix = new XMLDocument(
+            new Xembler(
+                new Matrix(this.output).value()
+            ).xmlQuietly()
+        );
+        new LengthOf(
+            new TeeInput(
+                matrix.toString(),
+                this.output.resolve("matrix.xml")
+            )
+        ).value();
+        new LengthOf(
+            new TeeInput(
+                App.MATRIX.transform(matrix).toString(),
+                this.output.resolve("matrix.html")
+            )
+        ).value();
+        new LengthOf(
+            new TeeInput(
+                App.BADGE.transform(
+                    new XMLDocument(
+                        new Xembler(
+                            new Directives().add("score").set(
+                                String.format(
+                                    "%.4f",
+                                    Double.parseDouble(
+                                        index.xpath(
+                                            // @checkstyle LineLength (1 line)
+                                            "sum(//metric/score) div count(//metric)"
+                                        ).get(0)
+                                    )
+                                )
+                            ).attr("style", "round")
+                        ).xmlQuietly()
+                    )
+                ).toString(),
+                this.output.resolve("badge.svg")
             )
         ).value();
     }

@@ -44,23 +44,21 @@ import org.objectweb.asm.signature.SignatureVisitor;
 import org.xembly.Directive;
 
 /**
- * Cohesion Among Methods of Classes (CAMC).
+ * Normalized Hamming Distance (NHD).
  *
- * <p>In the CAMC metric, the cohesion in the methods of
- * a class is determined by the types of objects (parameter
- * access pattern of methods) that method’s take as input parameters.
- * The metric determines the overlap in the object types of
- * the methods parameter lists. The amount of overlap in object
- * types used by the methods of a class can be used to predict
- * the cohesion of the class.</p>
- *
+ * <p>The metric uses the same parameter occurrence
+ * matrix used by CAMC metric (the type of the class is not
+ * considered). The metric calculates the average of the
+ * parameter agreement between each pair of methods. The
+ * parameter agreement between a pair of methods is defined as
+ * the number of places in which the parameter occurrence
+ * vectors of the two methods are equal. </p>
  * <p>The metric value ranges between 0 and 1.0. A value of
  * 1.0 represents maximum cohesion and 0 represents
  * a completely un-cohesive class.</p>
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
  * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
  * @see <a href="https://pdfs.semanticscholar.org/2709/1005bacefaee0242cf2643ba5efa20fa7c47.pdf">A class cohesion metric for object-oriented designs</a>
@@ -68,7 +66,7 @@ import org.xembly.Directive;
  * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class CAMC implements Metric {
+public final class NHD implements Metric {
 
     /**
      * The base.
@@ -79,29 +77,29 @@ public final class CAMC implements Metric {
      * Ctor.
      * @param bse The base
      */
-    public CAMC(final Base bse) {
+    public NHD(final Base bse) {
         this.base = bse;
     }
 
     @Override
     public Iterable<Directive> xembly() throws IOException {
         return new JavassistClasses(
-            this.base, CAMC::cohesion,
+            this.base, NHD::cohesion,
             // @checkstyle MagicNumberCheck (1 line)
-            new Colors(0.10d, 0.35d)
+            new Colors(0.15d, 0.35d)
         ).xembly();
     }
 
     /**
-     * Calculate CAMC metric for a single Java class.
+     * Calculate NHD metric for a single Java class.
      * @param ctc The .class file
      * @return Metrics
      * @throws NotFoundException If fails
      */
     private static double cohesion(final CtClass ctc) throws NotFoundException {
-        final Collection<Collection<String>> methods = CAMC.methods(ctc);
+        final Collection<Collection<String>> methods = NHD.methods(ctc);
         final Collection<String> types = new HashSet<>(
-            new Joined<>(
+            new Joined<String>(
                 () -> new Mapped<>(
                     methods.iterator(),
                     strings -> strings
@@ -116,13 +114,14 @@ public final class CAMC implements Metric {
                     ++mine;
                 }
             }
-            sum += mine;
+            sum += mine * (methods.size() - mine);
         }
         final double cohesion;
         if (types.isEmpty() || methods.isEmpty()) {
             cohesion = 1.0d;
         } else {
-            cohesion = (double) sum / (double) (types.size() * methods.size());
+            cohesion = 1 - (2 * ((double) sum / (double) (types.size()
+                * methods.size() * (methods.size() - 1))));
         }
         return cohesion;
     }
@@ -142,7 +141,7 @@ public final class CAMC implements Metric {
                 continue;
             }
             final Collection<String> args = new LinkedList<>();
-            for (final String arg : CAMC.types(mtd.getSignature())) {
+            for (final String arg : NHD.types(mtd.getSignature())) {
                 args.add(arg);
             }
             methods.add(args);
@@ -152,7 +151,7 @@ public final class CAMC implements Metric {
                 continue;
             }
             final Collection<String> args = new LinkedList<>();
-            for (final String arg : CAMC.types(ctor.getSignature())) {
+            for (final String arg : NHD.types(ctor.getSignature())) {
                 args.add(arg);
             }
             methods.add(args);

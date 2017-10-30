@@ -21,59 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.jpeek.metrics.cohesion;
+package org.jpeek;
 
 import com.jcabi.matchers.XhtmlMatchers;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
-import org.jpeek.DefaultBase;
-import org.jpeek.metrics.FakeBase;
 import org.junit.Test;
-import org.xembly.Xembler;
 
 /**
- * Test case for {@link LCOM}.
+ * Test case for {@link Matrix}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
- * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
+ * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class LCOMTest {
+public final class MatrixTest {
 
     @Test
-    public void createsBigXmlReport() throws IOException {
+    public void createsMatrixXml() throws IOException {
+        final Path output = Files.createTempDirectory("").resolve("x2");
+        final Path input = Paths.get(".");
+        new App(input, output).analyze();
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
-                new Xembler(
-                    new LCOM(
-                        new DefaultBase(Paths.get("."))
-                    ).xembly()
-                ).xmlQuietly()
+                new TextOf(output.resolve("matrix.xml")).asString()
             ),
-            XhtmlMatchers.hasXPaths(
-                "/metric/app/package/class[@id='LCOMTest']",
-                "//class[@id='DefaultBase' and @value='0.0000']"
-            )
+            XhtmlMatchers.hasXPaths("/matrix/classes")
         );
     }
 
-    @Test
-    public void createsXmlReportForFixtureClassA() throws IOException {
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
-                new Xembler(
-                    new LCOM(
-                        new FakeBase("Foo")
-                    ).xembly()
-                ).xmlQuietly()
-            ),
-            XhtmlMatchers.hasXPaths(
-                "/metric/app/package/class[@id='Foo']",
-                "//class[@id='Foo' and @value='1.0000']",
-                "//class[@id='Foo' and @color='green']"
-            )
-        );
-    }
 }
