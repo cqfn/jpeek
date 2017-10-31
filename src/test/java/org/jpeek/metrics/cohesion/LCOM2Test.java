@@ -76,4 +76,40 @@ public final class LCOM2Test {
             )
         );
     }
+
+    @Test
+    public void createsXmlReportForOneMethodWithoutAttr() throws IOException {
+        MatcherAssert.assertThat(
+            XhtmlMatchers.xhtml(
+                new Xembler(
+                    new LCOM2(
+                        new FakeBase("Bar")
+                    ).xembly()
+                ).xmlQuietly()
+            ),
+            XhtmlMatchers.hasXPaths(
+                "/metric/app/package/class[@id='Bar']",
+                "//class[@id='Bar' and @value='0.5000']",
+                "//class[@id='Bar' and @color='yellow']"
+            )
+        );
+    }
+
+    @Test
+    public void createsXmlReportForWithoutAttrClass() throws IOException {
+        MatcherAssert.assertThat(
+            XhtmlMatchers.xhtml(
+                new Xembler(
+                    new LCOM2(
+                        new FakeBase("WithoutAttributes")
+                    ).xembly()
+                ).xmlQuietly()
+            ),
+            XhtmlMatchers.hasXPaths(
+                "/metric/app/package/class[@id='WithoutAttributes']",
+                "//class[@id='WithoutAttributes' and @value='0.0000']",
+                "//class[@id='WithoutAttributes' and @color='yellow']"
+            )
+        );
+    }
 }
