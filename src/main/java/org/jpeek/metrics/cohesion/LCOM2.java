@@ -44,10 +44,10 @@ import org.xembly.Directive;
 /**
  * Lack of Cohesion in Methods 2 (LCOM2).
  *
- * <p>Consider a class C with methods M1, M2,….., Mn. Let {Ii} = set of
- * instance variables used by method Mi. There are n such sets, i.e., {1i},
- * {I2},….., {In}. Let  P = { (Ii, Ij ) | Ii ∩ Ij = Ø} and Q = {(Ii, Ij ) |
- * Ii ∩ Ij ≠ Ø}. If all n sets {1i}, {I2},….., {In} are Ø then let P = Ø.
+ * <p>Consider a class C with methods M1,M2,…..,Mn. Let {Ii}=set of
+ * instance variables used by method Mi.There are n such sets,i.e.,{1i},
+ * {I2},..,{In}. Let P={(Ii,Ij)|Ii∩Ij=Ø} and Q=(Ii,Ij) |
+ * Ii∩Ij≠Ø}.If all n sets {1i},{I2},..,{In} are Ø then let P=Ø.
  * </p>
  *
  * <p>There is no thread-safety guarantee.</p>
