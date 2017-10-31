@@ -122,7 +122,7 @@ public final class LCOM3 implements Metric {
             0
         );
         int sum = 0;
-        int result = 0;
+        double result = 0;
         for (final String attr : attrs) {
             for (final Collection<String> methodattrs : methods) {
                 if (methodattrs.contains(attr)) {
@@ -132,7 +132,8 @@ public final class LCOM3 implements Metric {
         }
         if (!attrs.isEmpty() && methods.size() != 1) {
             final int methodsize = methods.size();
-            result = (methodsize - (sum / attrs.size())) / (methodsize - 1);
+            result = ((double) methodsize - (double) sum / (double) attrs
+                .size()) / (methodsize - 1);
         }
         return result;
     }
