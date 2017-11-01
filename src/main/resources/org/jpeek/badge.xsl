@@ -24,7 +24,7 @@ SOFTWARE.
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/2000/svg" version="2.0">
   <xsl:output method="xml" omit-xml-declaration="yes"/>
-  <xsl:template match="/score">
+  <xsl:template match="/badge">
     <svg width="76" height="20">
       <xsl:if test="@style = 'round'">
         <linearGradient id="b" x2="0" y2="100%">

@@ -30,6 +30,7 @@ import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.cactoos.collection.Mapped;
 import org.cactoos.io.LengthOf;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.io.TeeInput;
@@ -102,6 +103,7 @@ public final class App {
      * Analyze sources.
      * @throws IOException If fails
      */
+    @SuppressWarnings("PMD.ExcessiveMethodLength")
     public void analyze() throws IOException {
         if (Files.exists(this.output)) {
             throw new IllegalStateException(
@@ -134,10 +136,21 @@ public final class App {
                 this.output.resolve("jpeek.xsl")
             )
         ).value();
-        final XML index = new XMLDocument(
+        XML index = new XMLDocument(
             new Xembler(
                 new Index(this.output).value()
             ).xmlQuietly()
+        );
+        final double score = new Avg(
+            new Mapped<>(
+                index.xpath("//metric/score/text()"),
+                Double::parseDouble
+            )
+        ).value();
+        index = new XMLDocument(
+            new Xembler(
+                new Directives().xpath("/metrics").attr("score", score)
+            ).applyQuietly(index.node())
         );
         new LengthOf(
             new TeeInput(
@@ -173,16 +186,8 @@ public final class App {
                 App.BADGE.transform(
                     new XMLDocument(
                         new Xembler(
-                            new Directives().add("score").set(
-                                String.format(
-                                    "%.4f",
-                                    Double.parseDouble(
-                                        index.xpath(
-                                            // @checkstyle LineLength (1 line)
-                                            "sum(//metric/score) div count(//metric)"
-                                        ).get(0)
-                                    )
-                                )
+                            new Directives().add("badge").set(
+                                String.format("%.4f", score)
                             ).attr("style", "round")
                         ).xmlQuietly()
                     )

@@ -29,7 +29,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.cactoos.Scalar;
@@ -115,7 +114,7 @@ final class Index implements Scalar<Iterable<Directive>> {
             .add("html").set(String.format("%s.html", name)).up()
             .add("xml").set(String.format("%s.xml", name)).up()
             .add("classes").set(values.size()).up()
-            .add("average").set(Index.avg(values)).up()
+            .add("average").set(new Avg(values).value()).up()
             .add("green").set((int) green).up()
             .add("yellow").set((int) yellow).up()
             .add("red").set((int) red).up()
@@ -127,20 +126,4 @@ final class Index implements Scalar<Iterable<Directive>> {
         return dirs.up();
     }
 
-    /**
-     * Calculate average.
-     * @param values Values
-     * @return Average
-     */
-    private static double avg(final Collection<Double> values) {
-        double sum = 0.0d;
-        for (final double val : values) {
-            sum += val;
-        }
-        double avg = 0.0d;
-        if (!values.isEmpty()) {
-            avg = sum / (double) values.size();
-        }
-        return avg;
-    }
 }

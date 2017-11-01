@@ -73,7 +73,7 @@ SOFTWARE.
   </xsl:template>
   <xsl:template match="metrics">
     <p>
-      <a href="http://www.jpeek.org">
+      <a href="http://i.jpeek.org">
         <img alt="logo" src="http://www.jpeek.org/logo.svg" style="height:60px"/>
       </a>
     </p>
@@ -86,7 +86,7 @@ SOFTWARE.
       </a>
       <xsl:text> is </xsl:text>
       <strong>
-        <xsl:value-of select="format-number(sum(metric/score) div count(metric),'0.00')"/>
+        <xsl:value-of select="format-number(@score,'0.00')"/>
       </strong>
       <xsl:text> out of 10.</xsl:text>
       <xsl:text> Here is the </xsl:text>

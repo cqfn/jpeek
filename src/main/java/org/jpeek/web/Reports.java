@@ -134,6 +134,14 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
             );
         }
         new App(input, output).analyze();
+        new Results().add(
+            String.format("%s:%s", group, artifact),
+            Double.parseDouble(
+                new XMLDocument(
+                    output.resolve("index.xml").toFile()
+                ).xpath("/metrics/@score").get(0)
+            )
+        );
         return new TypedPages(new Pages(output));
     }
 
