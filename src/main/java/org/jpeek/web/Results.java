@@ -113,7 +113,7 @@ final class Results {
                 .through(
                     new QueryValve()
                         .withScanIndexForward(false)
-                        .withIndexName("scored")
+                        .withIndexName("scores")
                         // @checkstyle MagicNumber (1 line)
                         .withLimit(20)
                         .withSelect(Select.ALL_ATTRIBUTES)

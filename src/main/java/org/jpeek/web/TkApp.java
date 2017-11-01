@@ -41,7 +41,6 @@ import org.takes.facets.forward.TkForward;
 import org.takes.http.Exit;
 import org.takes.http.FtCli;
 import org.takes.misc.Opt;
-import org.takes.rs.RsHtml;
 import org.takes.rs.RsText;
 import org.takes.rs.RsWithStatus;
 import org.takes.tk.TkWrap;
@@ -93,7 +92,7 @@ public final class TkApp extends TkWrap {
                         Sentry.capture(req.throwable());
                         return new Opt.Single<>(
                             new RsWithStatus(
-                                new RsHtml(
+                                new RsText(
                                     new TextOf(req.throwable()).asString()
                                 ),
                                 HttpURLConnection.HTTP_INTERNAL_ERROR
