@@ -69,7 +69,7 @@ public final class IndexTest {
                     new Index(output).value()
                 ).xmlQuietly()
             ),
-            XhtmlMatchers.hasXPaths("/metrics/metric")
+            XhtmlMatchers.hasXPaths("/metrics/metric[@name='XYZ']")
         );
     }
 

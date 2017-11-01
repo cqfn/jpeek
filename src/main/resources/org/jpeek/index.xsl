@@ -219,10 +219,24 @@ SOFTWARE.
         <xsl:value-of select="format-number(average,'0.00')"/>
       </td>
       <td style="text-align:right">
-        <xsl:value-of select="format-number(min,'0.00')"/>
+        <xsl:choose>
+          <xsl:when test="min">
+            <xsl:value-of select="format-number(min,'0.00')"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:text>-</xsl:text>
+          </xsl:otherwise>
+        </xsl:choose>
       </td>
       <td style="text-align:right">
-        <xsl:value-of select="format-number(max,'0.00')"/>
+        <xsl:choose>
+          <xsl:when test="max">
+            <xsl:value-of select="format-number(max,'0.00')"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:text>-</xsl:text>
+          </xsl:otherwise>
+        </xsl:choose>
       </td>
       <td style="text-align:right">
         <xsl:value-of select="green"/>
