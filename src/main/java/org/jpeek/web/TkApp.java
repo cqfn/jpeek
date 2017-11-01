@@ -23,14 +23,27 @@
  */
 package org.jpeek.web;
 
+import io.sentry.Sentry;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.cactoos.io.ResourceOf;
+import org.cactoos.iterable.PropertiesOf;
+import org.cactoos.text.TextOf;
+import org.takes.facets.fallback.Fallback;
+import org.takes.facets.fallback.FbChain;
+import org.takes.facets.fallback.FbStatus;
+import org.takes.facets.fallback.TkFallback;
 import org.takes.facets.fork.FkRegex;
 import org.takes.facets.fork.TkFork;
 import org.takes.facets.forward.TkForward;
 import org.takes.http.Exit;
 import org.takes.http.FtCli;
+import org.takes.misc.Opt;
+import org.takes.rs.RsHtml;
+import org.takes.rs.RsText;
+import org.takes.rs.RsWithStatus;
 import org.takes.tk.TkWrap;
 
 /**
@@ -52,16 +65,40 @@ public final class TkApp extends TkWrap {
      */
     public TkApp(final Path home) {
         super(
-            new TkForward(
-                new TkFork(
-                    new FkRegex(
-                        "/([^/]+)/([^/]+)(.*)",
-                        new TkReport(
-                            new AsyncReports(
-                                new Reports(home)
+            new TkFallback(
+                new TkForward(
+                    new TkFork(
+                        new FkRegex(
+                            "/([^/]+)/([^/]+)(.*)",
+                            new TkReport(
+                                new AsyncReports(
+                                    new Reports(home)
+                                )
                             )
                         )
                     )
+                ),
+                new FbChain(
+                    new FbStatus(
+                        HttpURLConnection.HTTP_NOT_FOUND,
+                        (Fallback) req -> new Opt.Single<>(
+                            new RsWithStatus(
+                                new RsText(req.throwable().getMessage()),
+                                req.code()
+                            )
+                        )
+                    ),
+                    req -> {
+                        Sentry.capture(req.throwable());
+                        return new Opt.Single<>(
+                            new RsWithStatus(
+                                new RsHtml(
+                                    new TextOf(req.throwable()).asString()
+                                ),
+                                HttpURLConnection.HTTP_INTERNAL_ERROR
+                            )
+                        );
+                    }
                 )
             )
         );
@@ -73,6 +110,13 @@ public final class TkApp extends TkWrap {
      * @throws IOException If fails
      */
     public static void main(final String... args) throws IOException {
+        Sentry.init(
+            new PropertiesOf(
+                new ResourceOf(
+                    "org/jpeek/jpeek.properties"
+                )
+            ).value().getProperty("org.jpeek.sentry")
+        );
         new FtCli(
             new TkApp(Files.createTempDirectory("jpeek")),
             args
