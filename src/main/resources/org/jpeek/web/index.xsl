@@ -50,12 +50,12 @@ SOFTWARE.
   </xsl:template>
   <xsl:template match="repo">
     <li>
-      <score>
+      <code>
         <xsl:value-of select="group"/>
         <xsl:text>:</xsl:text>
         <xsl:value-of select="artifact"/>
-      </score>
-      <xsl:text>:</xsl:text>
+      </code>
+      <xsl:text>: </xsl:text>
       <xsl:value-of select="score"/>
     </li>
   </xsl:template>

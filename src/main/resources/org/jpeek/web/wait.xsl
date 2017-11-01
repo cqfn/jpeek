@@ -40,7 +40,7 @@ SOFTWARE.
       </head>
       <body>
         <p>
-          <a href="http://www.jpeek.org">
+          <a href="http://i.jpeek.org">
             <img alt="logo" src="http://www.jpeek.org/logo.svg" style="height:60px"/>
           </a>
         </p>
