@@ -28,9 +28,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import org.cactoos.io.LengthOf;
+import org.cactoos.io.TeeInput;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.xembly.Xembler;
 
 /**
  * Test case for {@link Index}.
@@ -49,6 +52,22 @@ public final class IndexTest {
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
                 new TextOf(output.resolve("index.xml")).asString()
+            ),
+            XhtmlMatchers.hasXPaths("/metrics/metric")
+        );
+    }
+
+    @Test
+    public void createsIndexXmlWithEmptyMetric() throws IOException {
+        final Path output = Files.createTempDirectory("");
+        new LengthOf(
+            new TeeInput("<metric/>", output.resolve("XYZ.xml"))
+        ).value();
+        MatcherAssert.assertThat(
+            XhtmlMatchers.xhtml(
+                new Xembler(
+                    new Index(output).value()
+                ).xmlQuietly()
             ),
             XhtmlMatchers.hasXPaths("/metrics/metric")
         );
