@@ -109,20 +109,22 @@ final class Index implements Scalar<Iterable<Directive>> {
         final double score = 10.0d
             * (green + yellow * 0.25d + red * 0.05d)
             / (green + yellow + red);
-        return new Directives()
+        final Directives dirs = new Directives()
             .add("metric")
             .attr("name", name)
             .add("html").set(String.format("%s.html", name)).up()
             .add("xml").set(String.format("%s.xml", name)).up()
             .add("classes").set(values.size()).up()
             .add("average").set(Index.avg(values)).up()
-            .add("min").set(values.get(0)).up()
-            .add("max").set(values.get(values.size() - 1)).up()
             .add("green").set((int) green).up()
             .add("yellow").set((int) yellow).up()
             .add("red").set((int) red).up()
-            .add("score").set(score).up()
-            .up();
+            .add("score").set(score).up();
+        if (!values.isEmpty()) {
+            dirs.add("min").set(values.get(0)).up()
+                .add("max").set(values.get(values.size() - 1)).up();
+        }
+        return dirs.up();
     }
 
     /**
