@@ -38,6 +38,8 @@ import org.cactoos.scalar.And;
 import org.cactoos.scalar.IoCheckedScalar;
 import org.jpeek.metrics.cohesion.CAMC;
 import org.jpeek.metrics.cohesion.LCOM;
+import org.jpeek.metrics.cohesion.LCOM2;
+import org.jpeek.metrics.cohesion.LCOM3;
 import org.jpeek.metrics.cohesion.NHD;
 import org.jpeek.metrics.cohesion.OCC;
 import org.xembly.Directives;
@@ -114,7 +116,9 @@ public final class App {
             new CAMC(base),
             new LCOM(base),
             new OCC(base),
-            new NHD(base)
+            new NHD(base),
+            new LCOM2(base),
+            new LCOM3(base)
         );
         new IoCheckedScalar<>(
             new And(

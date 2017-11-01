@@ -33,28 +33,28 @@ import org.junit.Test;
 import org.xembly.Xembler;
 
 /**
- * Test case for {@link CAMC}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test case for {@link LCOM2}.
+ * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.2
  * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class CAMCTest {
+public final class LCOM2Test {
 
     @Test
     public void createsBigXmlReport() throws IOException {
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
                 new Xembler(
-                    new CAMC(
+                    new LCOM2(
                         new DefaultBase(Paths.get("."))
                     ).xembly()
                 ).xmlQuietly()
             ),
             XhtmlMatchers.hasXPaths(
-                "/metric/app/package/class[@id='CAMCTest']",
-                "//class[@id='DefaultBase' and @value='0.3333']"
+                "/metric/app/package/class[@id='LCOM2Test']",
+                "//class[@id='DefaultBase' and @value='0.0000']"
             )
         );
     }
@@ -64,35 +64,52 @@ public final class CAMCTest {
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
                 new Xembler(
-                    new CAMC(
+                    new LCOM2(
                         new FakeBase("Foo")
                     ).xembly()
                 ).xmlQuietly()
             ),
             XhtmlMatchers.hasXPaths(
-                "/metric/app/package[@id='']/class[@id='Foo']",
-                "//class[@id='Foo' and @value='0.6667']",
-                "//class[@id='Foo' and @color='green']"
+                "/metric/app/package/class[@id='Foo']",
+                "//class[@id='Foo' and @value='0.3333']",
+                "//class[@id='Foo' and @color='yellow']"
             )
         );
     }
 
     @Test
-    public void createsXmlReportForAboveNormalize() throws IOException {
+    public void createsXmlReportForOneMethodWithoutAttr() throws IOException {
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
                 new Xembler(
-                    new CAMC(
+                    new LCOM2(
                         new FakeBase("Bar")
                     ).xembly()
                 ).xmlQuietly()
             ),
             XhtmlMatchers.hasXPaths(
-                "/metric/app/package[@id='']/class[@id='Bar']",
-                "//class[@id='Bar' and @value='1.0000']",
-                "//class[@id='Bar' and @color='green']"
+                "/metric/app/package/class[@id='Bar']",
+                "//class[@id='Bar' and @value='0.5000']",
+                "//class[@id='Bar' and @color='yellow']"
             )
         );
     }
 
+    @Test
+    public void createsXmlReportForWithoutAttrClass() throws IOException {
+        MatcherAssert.assertThat(
+            XhtmlMatchers.xhtml(
+                new Xembler(
+                    new LCOM2(
+                        new FakeBase("WithoutAttributes")
+                    ).xembly()
+                ).xmlQuietly()
+            ),
+            XhtmlMatchers.hasXPaths(
+                "/metric/app/package/class[@id='WithoutAttributes']",
+                "//class[@id='WithoutAttributes' and @value='0.0000']",
+                "//class[@id='WithoutAttributes' and @color='yellow']"
+            )
+        );
+    }
 }
