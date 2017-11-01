@@ -25,6 +25,7 @@ package org.jpeek;
 
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -89,10 +90,10 @@ final class Index implements Scalar<Iterable<Directive>> {
      * Metric to Xembly.
      * @param file The XML file with metric report
      * @return Xembly
-     * @throws IOException If fails
+     * @throws FileNotFoundException If fails
      */
     private static Iterable<Directive> metric(final Path file)
-        throws IOException {
+        throws FileNotFoundException {
         final String name = file.getFileName()
             .toString().replaceAll("\\.xml$", "");
         final XML xml = new XMLDocument(file.toFile());
