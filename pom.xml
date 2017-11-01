@@ -98,6 +98,11 @@ SOFTWARE.
       <version>0.22</version>
     </dependency>
     <dependency>
+      <groupId>io.sentry</groupId>
+      <artifactId>sentry</artifactId>
+      <version>1.6.1</version>
+    </dependency>
+    <dependency>
       <groupId>org.javassist</groupId>
       <artifactId>javassist</artifactId>
       <version>3.22.0-GA</version>
