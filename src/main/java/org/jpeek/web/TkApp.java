@@ -68,7 +68,7 @@ public final class TkApp extends TkWrap {
             new TkFallback(
                 new TkForward(
                     new TkFork(
-                        new FkRegex("", new TkIndex()),
+                        new FkRegex("/", new TkIndex()),
                         new FkRegex(
                             "/([^/]+)/([^/]+)(.*)",
                             new TkReport(
