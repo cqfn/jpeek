@@ -56,7 +56,9 @@ SOFTWARE.
         <xsl:value-of select="artifact"/>
       </code>
       <xsl:text>: </xsl:text>
-      <xsl:value-of select="score"/>
+      <a href="{group}/{artifact}/">
+        <xsl:value-of select="score"/>
+      </a>
     </li>
   </xsl:template>
 </xsl:stylesheet>
