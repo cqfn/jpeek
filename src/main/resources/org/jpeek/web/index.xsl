@@ -42,23 +42,38 @@ SOFTWARE.
             <img alt="logo" src="http://www.jpeek.org/logo.svg" style="height:60px"/>
           </a>
         </p>
-        <ul>
-          <xsl:apply-templates select="repo"/>
-        </ul>
+        <table>
+          <thead>
+            <tr>
+              <th>
+                <xsl:text>Artifact</xsl:text>
+              </th>
+              <th>
+                <xsl:text>Score</xsl:text>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <xsl:apply-templates select="repo"/>
+          </tbody>
+        </table>
       </body>
     </html>
   </xsl:template>
   <xsl:template match="repo">
-    <li>
-      <code>
-        <xsl:value-of select="group"/>
-        <xsl:text>:</xsl:text>
-        <xsl:value-of select="artifact"/>
-      </code>
-      <xsl:text>: </xsl:text>
-      <a href="{group}/{artifact}/">
-        <xsl:value-of select="format-number(score,'0.00')"/>
-      </a>
-    </li>
+    <tr>
+      <td>
+        <code>
+          <xsl:value-of select="group"/>
+          <xsl:text>:</xsl:text>
+          <xsl:value-of select="artifact"/>
+        </code>
+      </td>
+      <td>
+        <a href="{group}/{artifact}/">
+          <xsl:value-of select="format-number(score,'0.00')"/>
+        </a>
+      </td>
+    </tr>
   </xsl:template>
 </xsl:stylesheet>
