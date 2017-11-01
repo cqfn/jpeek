@@ -114,6 +114,7 @@ final class Results {
                     new QueryValve()
                         .withScanIndexForward(false)
                         .withIndexName("scores")
+                        .withConsistentRead(false)
                         // @checkstyle MagicNumber (1 line)
                         .withLimit(20)
                         .withSelect(Select.ALL_ATTRIBUTES)
