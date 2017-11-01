@@ -57,7 +57,7 @@ SOFTWARE.
       </code>
       <xsl:text>: </xsl:text>
       <a href="{group}/{artifact}/">
-        <xsl:value-of select="score"/>
+        <xsl:value-of select="format-number(score,'0.00')"/>
       </a>
     </li>
   </xsl:template>
