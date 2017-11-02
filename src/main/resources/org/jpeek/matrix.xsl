@@ -88,7 +88,7 @@ SOFTWARE.
           <th>
             <xsl:text>Class</xsl:text>
           </th>
-          <th>
+          <th style="cursor:pointer">
             <xsl:text>Rank</xsl:text>
           </th>
           <xsl:for-each select="class[1]/metric">
@@ -115,7 +115,7 @@ SOFTWARE.
         </code>
       </td>
       <td style="text-align:right;">
-        <xsl:value-of select="sum(metric/@rank)"/>
+        <xsl:value-of select="format-number(sum(metric/@rank) div (count(metric) * 5),'0.00')"/>
       </td>
       <xsl:apply-templates select="metric">
         <xsl:sort select="@name" order="ascending" data-type="text"/>

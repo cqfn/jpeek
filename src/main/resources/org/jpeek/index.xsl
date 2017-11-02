@@ -32,6 +32,7 @@ SOFTWARE.
         <meta name="author" content="jpeek.org"/>
         <link rel="shortcut icon" href="http://www.jpeek.org/logo.png"/>
         <link rel="stylesheet" href="http://cdn.rawgit.com/yegor256/tacit/gh-pages/tacit-css-1.1.1.min.css"/>
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/sortable/0.8.0/js/sortable.min.js">&#xA0;</script>
         <title>
           <xsl:text>jpeek</xsl:text>
         </title>
@@ -51,6 +52,9 @@ SOFTWARE.
             display: block;
             text-align: right;
             color: gray;
+          }
+          th {
+            cursor: pointer;
           }
         </style>
       </head>
@@ -98,7 +102,7 @@ SOFTWARE.
     <p>
       <img src="badge.svg" alt="SVG badge"/>
     </p>
-    <table>
+    <table data-sortable="true">
       <thead>
         <tr>
           <th>
@@ -159,7 +163,7 @@ SOFTWARE.
             </a>
           </th>
           <th>
-            <xsl:text>Options</xsl:text>
+            <xsl:text>&#xA0;</xsl:text>
           </th>
         </tr>
       </thead>
