@@ -130,12 +130,6 @@ public final class App {
                 }
             )
         ).value();
-        new LengthOf(
-            new TeeInput(
-                new ResourceOf("org/jpeek/jpeek.xsl"),
-                this.output.resolve("jpeek.xsl")
-            )
-        ).value();
         XML index = new XMLDocument(
             new Xembler(
                 new Index(this.output).value()
@@ -193,6 +187,27 @@ public final class App {
                     )
                 ).toString(),
                 this.output.resolve("badge.svg")
+            )
+        ).value();
+        new IoCheckedScalar<>(
+            new And(
+                new ListOf<>("index", "matrix", "jpeek"),
+                this::copy
+            )
+        ).value();
+    }
+
+    /**
+     * Copy resource.
+     * @param name The name of resource
+     * @throws IOException If fails
+     */
+    private void copy(final String name) throws IOException {
+        final String file = String.format("%s.xsl", name);
+        new LengthOf(
+            new TeeInput(
+                new ResourceOf(String.format("org/jpeek/%s", file)),
+                this.output.resolve(file)
             )
         ).value();
     }

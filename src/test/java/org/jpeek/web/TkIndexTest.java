@@ -21,42 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.jpeek;
+package org.jpeek.web;
 
+import com.jcabi.matchers.XhtmlMatchers;
 import java.io.IOException;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Iterator;
-import org.xembly.Directive;
-import org.xembly.Directives;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
+import org.takes.rq.RqFake;
+import org.takes.rs.RsPrint;
 
 /**
- * Xembly header for the report.
- *
- * <p>There is no thread-safety guarantee.
- *
+ * Test case for {@link TkIndex}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.8
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @since 0.11
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class Header implements Iterable<Directive> {
+public final class TkIndexTest {
 
-    @Override
-    public Iterator<Directive> iterator() {
-        try {
-            return new Directives()
-                .attr(
-                    "date",
-                    ZonedDateTime.now().format(
-                        DateTimeFormatter.ISO_INSTANT
-                    )
-                )
-                .attr("version", new Version().value())
-                .iterator();
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+    @Test
+    public void rendersIndexPage() throws IOException {
+        MatcherAssert.assertThat(
+            XhtmlMatchers.xhtml(
+                new RsPrint(new TkIndex().act(new RqFake())).printBody()
+            ),
+            XhtmlMatchers.hasXPath("//xhtml:footer")
+        );
     }
 
 }

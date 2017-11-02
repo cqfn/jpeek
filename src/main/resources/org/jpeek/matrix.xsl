@@ -32,6 +32,7 @@ SOFTWARE.
         <meta name="author" content="jpeek.org"/>
         <link rel="shortcut icon" href="http://www.jpeek.org/logo.png"/>
         <link rel="stylesheet" href="http://cdn.rawgit.com/yegor256/tacit/gh-pages/tacit-css-1.1.1.min.css"/>
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/sortable/0.8.0/js/sortable.min.js">&#xA0;</script>
         <style type="text/css">
           body {
             padding: 1em;
@@ -81,14 +82,17 @@ SOFTWARE.
       <xsl:value-of select="count(class)"/>
       <xsl:text> classes:</xsl:text>
     </p>
-    <table>
+    <table data-sortable="true">
       <thead>
         <tr>
           <th>
             <xsl:text>Class</xsl:text>
           </th>
+          <th>
+            <xsl:text>Rank</xsl:text>
+          </th>
           <xsl:for-each select="class[1]/metric">
-            <th>
+            <th class="sorttable_nosort">
               <a href="{@name}.xml">
                 <xsl:value-of select="@name"/>
               </a>
@@ -109,6 +113,9 @@ SOFTWARE.
         <code>
           <xsl:value-of select="@id"/>
         </code>
+      </td>
+      <td style="text-align:right;">
+        <xsl:value-of select="sum(metric/@rank)"/>
       </td>
       <xsl:apply-templates select="metric">
         <xsl:sort select="@name" order="ascending" data-type="text"/>

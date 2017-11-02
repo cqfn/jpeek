@@ -24,6 +24,7 @@
 package org.jpeek.web;
 
 import java.io.IOException;
+import org.jpeek.Header;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
@@ -31,6 +32,7 @@ import org.takes.rs.RsXslt;
 import org.takes.rs.xe.RsXembly;
 import org.takes.rs.xe.XeAppend;
 import org.takes.rs.xe.XeChain;
+import org.takes.rs.xe.XeDirectives;
 import org.takes.rs.xe.XeStylesheet;
 import org.takes.rs.xe.XeTransform;
 
@@ -53,23 +55,38 @@ final class TkIndex implements Take {
                 new XeChain(
                     new XeStylesheet("/org/jpeek/web/index.xsl"),
                     new XeAppend(
-                        "best",
-                        new XeTransform<>(
-                            new Results().best(),
-                            ent -> {
-                                final String[] parts = ent.getKey().split(":");
-                                return new XeAppend(
-                                    "repo",
-                                    new XeChain(
-                                        new XeAppend("group", parts[0]),
-                                        new XeAppend("artifact", parts[1]),
-                                        new XeAppend(
-                                            "score",
-                                            Double.toString(ent.getValue())
-                                        )
-                                    )
-                                );
-                            }
+                        "index",
+                        new XeChain(
+                            new XeDirectives(new Header()),
+                            new XeAppend(
+                                "best",
+                                new XeTransform<>(
+                                    new Results().best(),
+                                    ent -> {
+                                        final String[] parts =
+                                            ent.getKey().split(":");
+                                        return new XeAppend(
+                                            "repo",
+                                            new XeChain(
+                                                new XeAppend(
+                                                    "group",
+                                                    parts[0]
+                                                ),
+                                                new XeAppend(
+                                                    "artifact",
+                                                    parts[1]
+                                                ),
+                                                new XeAppend(
+                                                    "score",
+                                                    Double.toString(
+                                                        ent.getValue()
+                                                    )
+                                                )
+                                            )
+                                        );
+                                    }
+                                )
+                            )
                         )
                     )
                 )

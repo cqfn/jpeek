@@ -112,6 +112,10 @@ final class Matrix implements Scalar<Iterable<Directive>> {
                                         .add("metric")
                                         .attr("name", mtd.getKey())
                                         .attr("color", mtd.getValue())
+                                        .attr(
+                                            "rank",
+                                            Matrix.rank(mtd.getValue())
+                                        )
                                         .up()
                                 )
                             )
@@ -119,6 +123,25 @@ final class Matrix implements Scalar<Iterable<Directive>> {
                     )
                 )
             );
+    }
+
+    /**
+     * Rank of color.
+     * @param color The color
+     * @return Rank
+     */
+    private static int rank(final String color) {
+        final int rank;
+        if ("red".equals(color)) {
+            rank = 1;
+        } else if ("yellow".equals(color)) {
+            // @checkstyle MagicNumber (1 line)
+            rank = 3;
+        } else {
+            // @checkstyle MagicNumber (1 line)
+            rank = 5;
+        }
+        return rank;
     }
 
 }

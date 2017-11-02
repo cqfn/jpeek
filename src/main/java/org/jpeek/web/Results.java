@@ -39,6 +39,7 @@ import org.cactoos.io.ResourceOf;
 import org.cactoos.iterable.Mapped;
 import org.cactoos.iterable.PropertiesOf;
 import org.cactoos.map.MapEntry;
+import org.jpeek.Version;
 
 /**
  * Futures for {@link AsyncReports}.
@@ -91,7 +92,7 @@ final class Results {
             new Attributes()
                 .with("artifact", artifact)
                 .with("score", (long) (score * Results.MULTIPLIER))
-                .with("version", Results.version())
+                .with("version", new Version().value())
                 .with(
                     "ttl",
                     System.currentTimeMillis() / TimeUnit.SECONDS.toMillis(1L)
@@ -109,7 +110,7 @@ final class Results {
     public Iterable<Map.Entry<String, Double>> best() throws IOException {
         return new Mapped<>(
             this.table.frame()
-                .where("version", Results.version())
+                .where("version", new Version().value())
                 .through(
                     new QueryValve()
                         .withScanIndexForward(false)
@@ -154,15 +155,6 @@ final class Results {
             );
         }
         return reg.table("jpeek-results");
-    }
-
-    /**
-     * Current version.
-     * @return Version
-     * @throws IOException If fails
-     */
-    private static String version() throws IOException {
-        return Results.pros().getProperty("org.jpeek.version");
     }
 
     /**
