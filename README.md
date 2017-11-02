@@ -78,6 +78,13 @@ _A proposal of class cohesion metrics using sizes of cohesive parts_,<br/>
 Proc. of Fifth Joint Conference on Knowledge-based Software Engineering, 2002,
 [PDF](https://www.researchgate.net/profile/Hirohisa_Aman/publication/268046583_A_Proposal_of_Class_Cohesion_Metrics_Using_Sizes_of_Cohesive_Parts/links/5729ca4b08ae057b0a060fa6/A-Proposal-of-Class-Cohesion-Metrics-Using-Sizes-of-Cohesive-Parts.pdf).
 
+[`dallal07`]
+Method-Method through Attributes Cohesion (**MMAC**).<br/>
+Jehad Al Dallal,<br/>
+_A Design-Based Cohesion Metric for Object-Oriented Classes_,<br/>
+World Academy of Science, Engineering and Technology International Journal of Computer and Information Engineering Vol:1, No:10, 2007,
+[PDF](http://waset.org/publications/5239/a-design-based-cohesion-metric-for-object-oriented-classes).
+
 ## How to contribute?
 
 Read [`CONTRIBUTING.md`](https://github.com/yegor256/jpeek/blob/master/CONTRIBUTING.md)
