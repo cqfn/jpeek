@@ -291,10 +291,10 @@ SOFTWARE.
             <xsl:text>font-weight:normal;</xsl:text>
             <xsl:text>color:</xsl:text>
             <xsl:choose>
-              <xsl:when test="abs(diff) &gt; 25">
+              <xsl:when test="abs($diff) &gt; 25">
                 <xsl:text>red</xsl:text>
               </xsl:when>
-              <xsl:when test="abs(diff) &gt; 15">
+              <xsl:when test="abs($diff) &gt; 15">
                 <xsl:text>orange</xsl:text>
               </xsl:when>
               <xsl:otherwise>
@@ -302,7 +302,7 @@ SOFTWARE.
               </xsl:otherwise>
             </xsl:choose>
           </xsl:attribute>
-          <xsl:value-of select="format-number(diff * 100, '#')"/>
+          <xsl:value-of select="format-number($diff * 100, '#')"/>
           <xsl:text>%</xsl:text>
         </span>
       </td>
