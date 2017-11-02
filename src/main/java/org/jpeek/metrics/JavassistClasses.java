@@ -135,6 +135,8 @@ public final class JavassistClasses implements Metric {
                     )
                 ),
                 ctClass -> !ctClass.isInterface()
+                    && !ctClass.isEnum()
+                    && !ctClass.isAnnotation()
             ),
             this::metric
         );

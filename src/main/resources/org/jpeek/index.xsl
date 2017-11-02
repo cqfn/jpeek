@@ -291,10 +291,10 @@ SOFTWARE.
             <xsl:text>font-weight:normal;</xsl:text>
             <xsl:text>color:</xsl:text>
             <xsl:choose>
-              <xsl:when test="abs($diff) &gt; 25">
+              <xsl:when test="abs($diff) &gt; 0.25">
                 <xsl:text>red</xsl:text>
               </xsl:when>
-              <xsl:when test="abs($diff) &gt; 15">
+              <xsl:when test="abs($diff) &gt; 0.15">
                 <xsl:text>orange</xsl:text>
               </xsl:when>
               <xsl:otherwise>
