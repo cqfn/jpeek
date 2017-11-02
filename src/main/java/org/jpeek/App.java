@@ -146,53 +146,32 @@ public final class App {
                 new Directives().xpath("/metrics").attr("score", score)
             ).applyQuietly(index.node())
         );
-        new LengthOf(
-            new TeeInput(
-                App.BADGE.transform(
-                    new XMLDocument(
-                        new Xembler(
-                            new Directives().add("badge").set(
-                                String.format("%.4f", score)
-                            ).attr("style", "round")
-                        ).xmlQuietly()
-                    )
-                ).toString(),
-                this.output.resolve("badge.svg")
-            )
-        ).value();
-        new LengthOf(
-            new TeeInput(
-                index.toString(),
-                this.output.resolve("index.xml")
-            )
-        ).value();
-        new LengthOf(
-            new TeeInput(
-                App.STYLESHEET.transform(index).toString(),
-                this.output.resolve("index.html")
-            )
-        ).value();
+        this.save(
+            App.BADGE.transform(
+                new XMLDocument(
+                    new Xembler(
+                        new Directives().add("badge").set(
+                            String.format("%.4f", score)
+                        ).attr("style", "round")
+                    ).xmlQuietly()
+                )
+            ).toString(),
+            "badge.svg"
+        );
+        this.save(index.toString(), "index.xml");
+        this.save(App.STYLESHEET.transform(index).toString(), "index.html");
         final XML matrix = new XMLDocument(
             new Xembler(
                 new Matrix(this.output).value()
             ).xmlQuietly()
         );
-        new LengthOf(
-            new TeeInput(
-                matrix.toString(),
-                this.output.resolve("matrix.xml")
-            )
-        ).value();
-        new LengthOf(
-            new TeeInput(
-                App.MATRIX.transform(matrix).toString(),
-                this.output.resolve("matrix.html")
-            )
-        ).value();
+        this.save(matrix.toString(), "matrix.xml");
+        this.save(App.MATRIX.transform(matrix).toString(), "matrix.html");
+        this.copy("jpeek.css");
         new IoCheckedScalar<>(
             new And(
                 new ListOf<>("index", "matrix", "jpeek"),
-                this::copy
+                this::copyXsl
             )
         ).value();
     }
@@ -203,11 +182,34 @@ public final class App {
      * @throws IOException If fails
      */
     private void copy(final String name) throws IOException {
-        final String file = String.format("%s.xsl", name);
         new LengthOf(
             new TeeInput(
-                new ResourceOf(String.format("org/jpeek/%s", file)),
-                this.output.resolve(file)
+                new ResourceOf(String.format("org/jpeek/%s", name)),
+                this.output.resolve(name)
+            )
+        ).value();
+    }
+
+    /**
+     * Copy XSL.
+     * @param name The name of resource
+     * @throws IOException If fails
+     */
+    private void copyXsl(final String name) throws IOException {
+        this.copy(String.format("%s.xsl", name));
+    }
+
+    /**
+     * Save file.
+     * @param data Content
+     * @param name The name of destination file
+     * @throws IOException If fails
+     */
+    private void save(final String data, final String name) throws IOException {
+        new LengthOf(
+            new TeeInput(
+                data,
+                this.output.resolve(name)
             )
         ).value();
     }

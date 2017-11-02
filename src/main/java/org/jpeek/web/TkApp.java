@@ -43,6 +43,8 @@ import org.takes.http.FtCli;
 import org.takes.misc.Opt;
 import org.takes.rs.RsText;
 import org.takes.rs.RsWithStatus;
+import org.takes.tk.TkText;
+import org.takes.tk.TkWithType;
 import org.takes.tk.TkWrap;
 
 /**
@@ -61,8 +63,9 @@ public final class TkApp extends TkWrap {
     /**
      * Ctor.
      * @param home Home directory
+     * @throws IOException If fails
      */
-    public TkApp(final Path home) {
+    public TkApp(final Path home) throws IOException {
         super(
             new TkFallback(
                 new TkForward(
@@ -74,6 +77,17 @@ public final class TkApp extends TkWrap {
                                 new AsyncReports(
                                     new Reports(home)
                                 )
+                            )
+                        ),
+                        new FkRegex(
+                            "/jpeek.css",
+                            new TkWithType(
+                                new TkText(
+                                    new TextOf(
+                                        new ResourceOf("org/jpeek/jpeek.css")
+                                    ).asString()
+                                ),
+                                "text/css"
                             )
                         )
                     )

@@ -27,36 +27,17 @@ SOFTWARE.
     <html lang="en">
       <head>
         <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta name="description" content="jpeek metrics"/>
         <meta name="keywords" content="code quality metrics"/>
         <meta name="author" content="jpeek.org"/>
         <link rel="shortcut icon" href="http://www.jpeek.org/logo.png"/>
         <link rel="stylesheet" href="http://cdn.rawgit.com/yegor256/tacit/gh-pages/tacit-css-1.1.1.min.css"/>
+        <link rel="stylesheet" href="jpeek.css"/>
         <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/sortable/0.8.0/js/sortable.min.js">&#xA0;</script>
         <title>
           <xsl:text>jpeek</xsl:text>
         </title>
-        <style>
-          body {
-            padding: 1em;
-          }
-          sup {
-            top: -0.5em;
-            font-size: 75%;
-            line-height: 0;
-            position: relative;
-            vertical-align: baseline;
-          }
-          .under {
-            font-size: 75%;
-            display: block;
-            text-align: right;
-            color: gray;
-          }
-          th {
-            cursor: pointer;
-          }
-        </style>
       </head>
       <body>
         <xsl:apply-templates select="metrics"/>
