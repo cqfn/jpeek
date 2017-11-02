@@ -93,7 +93,9 @@ SOFTWARE.
   </xsl:template>
   <xsl:template match="best[repo]">
     <p>
-      <xsl:text>This is the list of the best 20 artifacts we've seen recently:</xsl:text>
+      <xsl:text>This is the list of the best </xsl:text>
+      <xsl:value-of select="count(repo)"/>
+      <xsl:text> artifacts we've seen recently:</xsl:text>
     </p>
     <table>
       <thead>
@@ -147,6 +149,7 @@ SOFTWARE.
           <xsl:value-of select="artifact"/>
         </a>
       </xsl:for-each>
+      <xsl:text>.</xsl:text>
     </p>
   </xsl:template>
 </xsl:stylesheet>
