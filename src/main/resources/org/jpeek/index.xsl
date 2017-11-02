@@ -246,21 +246,21 @@ SOFTWARE.
           </xsl:otherwise>
         </xsl:choose>
       </td>
-      <td style="text-align:right" sorttable_customkey="{100 * green div classes}">
+      <td style="text-align:right" sorttable_customkey="{green div classes}">
         <xsl:value-of select="green"/>
         <span class="under">
           <xsl:value-of select="format-number((green div classes) * 100, '#')"/>
           <xsl:text>%</xsl:text>
         </span>
       </td>
-      <td style="text-align:right" sorttable_customkey="{100 * yellow div classes}">
+      <td style="text-align:right" sorttable_customkey="{yellow div classes}">
         <xsl:value-of select="yellow"/>
         <span class="under">
           <xsl:value-of select="format-number((yellow div classes) * 100, '#')"/>
           <xsl:text>%</xsl:text>
         </span>
       </td>
-      <td style="text-align:right" sorttable_customkey="{100 * red div classes}">
+      <td style="text-align:right" sorttable_customkey="{red div classes}">
         <xsl:value-of select="red"/>
         <span class="under">
           <xsl:value-of select="format-number((red div classes) * 100, '#')"/>
@@ -285,8 +285,24 @@ SOFTWARE.
           </xsl:choose>
         </xsl:attribute>
         <xsl:value-of select="format-number(score,'0.00')"/>
-        <span class="under" style="color:red;font-weight:normal;">
-          <xsl:value-of select="format-number(((score - /metrics/@score) div /metrics/@score) * 100, '#')"/>
+        <xsl:variable name="diff" select="((score - /metrics/@score) div /metrics/@score)"/>
+        <span class="under">
+          <xsl:attribute name="style">
+            <xsl:text>font-weight:normal;</xsl:text>
+            <xsl:text>color:</xsl:text>
+            <xsl:choose>
+              <xsl:when test="abs(diff) &gt; 25">
+                <xsl:text>red</xsl:text>
+              </xsl:when>
+              <xsl:when test="abs(diff) &gt; 15">
+                <xsl:text>orange</xsl:text>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:text>gray</xsl:text>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:attribute>
+          <xsl:value-of select="format-number(diff * 100, '#')"/>
           <xsl:text>%</xsl:text>
         </span>
       </td>
