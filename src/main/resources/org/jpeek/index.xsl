@@ -246,28 +246,28 @@ SOFTWARE.
           </xsl:otherwise>
         </xsl:choose>
       </td>
-      <td style="text-align:right" sorttable_customkey="{green div classes}">
+      <td style="text-align:right" class="sorttable_numeric" sorttable_customkey="{green div classes}">
         <xsl:value-of select="green"/>
         <span class="under">
           <xsl:value-of select="format-number((green div classes) * 100, '#')"/>
           <xsl:text>%</xsl:text>
         </span>
       </td>
-      <td style="text-align:right" sorttable_customkey="{yellow div classes}">
+      <td style="text-align:right" class="sorttable_numeric" sorttable_customkey="{yellow div classes}">
         <xsl:value-of select="yellow"/>
         <span class="under">
           <xsl:value-of select="format-number((yellow div classes) * 100, '#')"/>
           <xsl:text>%</xsl:text>
         </span>
       </td>
-      <td style="text-align:right" sorttable_customkey="{red div classes}">
+      <td style="text-align:right" class="sorttable_numeric" sorttable_customkey="{red div classes}">
         <xsl:value-of select="red"/>
         <span class="under">
           <xsl:value-of select="format-number((red div classes) * 100, '#')"/>
           <xsl:text>%</xsl:text>
         </span>
       </td>
-      <td sorttable_customkey="{score}">
+      <td class="sorttable_numeric" sorttable_customkey="{score}">
         <xsl:attribute name="style">
           <xsl:text>text-align:right;</xsl:text>
           <xsl:text>font-weight:bold;</xsl:text>

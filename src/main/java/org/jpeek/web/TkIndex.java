@@ -24,6 +24,7 @@
 package org.jpeek.web;
 
 import java.io.IOException;
+import org.cactoos.iterable.Limited;
 import org.jpeek.Header;
 import org.takes.Request;
 import org.takes.Response;
@@ -46,6 +47,7 @@ import org.takes.rs.xe.XeTransform;
  * @since 0.10
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class TkIndex implements Take {
 
     @Override
@@ -61,7 +63,8 @@ final class TkIndex implements Take {
                             new XeAppend(
                                 "best",
                                 new XeTransform<>(
-                                    new Results().best(),
+                                    // @checkstyle MagicNumber (1 line)
+                                    new Limited<>(new Results().best(), 20),
                                     ent -> {
                                         final String[] parts =
                                             ent.getKey().split(":");
@@ -81,6 +84,30 @@ final class TkIndex implements Take {
                                                     Double.toString(
                                                         ent.getValue()
                                                     )
+                                                )
+                                            )
+                                        );
+                                    }
+                                )
+                            ),
+                            new XeAppend(
+                                "recent",
+                                new XeTransform<>(
+                                    // @checkstyle MagicNumber (1 line)
+                                    new Limited<>(new Results().recent(), 50),
+                                    coords -> {
+                                        final String[] parts =
+                                            coords.split(":");
+                                        return new XeAppend(
+                                            "repo",
+                                            new XeChain(
+                                                new XeAppend(
+                                                    "group",
+                                                    parts[0]
+                                                ),
+                                                new XeAppend(
+                                                    "artifact",
+                                                    parts[1]
                                                 )
                                             )
                                         );

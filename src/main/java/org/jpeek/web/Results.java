@@ -23,7 +23,6 @@
  */
 package org.jpeek.web;
 
-import com.amazonaws.services.dynamodbv2.model.Select;
 import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.Credentials;
 import com.jcabi.dynamo.QueryValve;
@@ -90,15 +89,39 @@ final class Results {
         throws IOException {
         this.table.put(
             new Attributes()
+                .with("good", "true")
                 .with("artifact", artifact)
                 .with("score", (long) (score * Results.MULTIPLIER))
                 .with("version", new Version().value())
+                .with("added", System.currentTimeMillis())
                 .with(
                     "ttl",
                     System.currentTimeMillis() / TimeUnit.SECONDS.toMillis(1L)
                         // @checkstyle MagicNumber (1 line)
                         + TimeUnit.DAYS.toSeconds(100L)
                 )
+        );
+    }
+
+    /**
+     * Recent artifacts..
+     * @return List of them
+     * @throws IOException If fails
+     */
+    public Iterable<String> recent() throws IOException {
+        return new Mapped<>(
+            this.table.frame()
+                .where("good", "true")
+                .through(
+                    new QueryValve()
+                        .withScanIndexForward(false)
+                        .withIndexName("recent")
+                        .withConsistentRead(false)
+                        // @checkstyle MagicNumber (1 line)
+                        .withLimit(50)
+                        .withAttributesToGet("artifact")
+                ),
+            item -> item.get("artifact").getS()
         );
     }
 
@@ -118,7 +141,7 @@ final class Results {
                         .withConsistentRead(false)
                         // @checkstyle MagicNumber (1 line)
                         .withLimit(20)
-                        .withSelect(Select.ALL_ATTRIBUTES)
+                        .withAttributesToGet("artifact", "score")
                 ),
             item -> new MapEntry<>(
                 item.get("artifact").getS(),
@@ -150,7 +173,7 @@ final class Results {
                 new H2Data().with(
                     "jpeek-results",
                     new String[] {"artifact"},
-                    "score", "ttl", "version"
+                    "score", "ttl", "version", "added", "good"
                 )
             );
         }
