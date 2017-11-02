@@ -91,6 +91,9 @@ SOFTWARE.
           <th style="cursor:pointer">
             <xsl:text>Rank</xsl:text>
           </th>
+          <th style="cursor:pointer">
+            <xsl:text>Trust</xsl:text>
+          </th>
           <xsl:for-each select="class[1]/metric">
             <th class="sorttable_nosort">
               <a href="{@name}.xml">
@@ -110,12 +113,42 @@ SOFTWARE.
   <xsl:template match="class">
     <tr>
       <td>
-        <code>
-          <xsl:value-of select="@id"/>
+        <code title="{@id}">
+          <xsl:value-of select="replace(replace(@id, '([a-z])[a-z0-9\$]+\.', '$1.'), '([A-Z])[A-Za-z0-9]+\$', '$1..\$')"/>
         </code>
       </td>
       <td style="text-align:right;">
         <xsl:value-of select="format-number(sum(metric/@rank) div (count(metric) * 5),'0.00')"/>
+      </td>
+      <td style="text-align:right;">
+        <xsl:variable name="counts" as="node()*">
+          <xsl:if test="metric[@color='red']">
+            <c>
+              <xsl:value-of select="count(metric[@color='red'])"/>
+            </c>
+          </xsl:if>
+          <xsl:if test="metric[@color='yellow']">
+            <c>
+              <xsl:value-of select="count(metric[@color='yellow'])"/>
+            </c>
+          </xsl:if>
+          <xsl:if test="metric[@color='green']">
+            <c>
+              <xsl:value-of select="count(metric[@color='green'])"/>
+            </c>
+          </xsl:if>
+        </xsl:variable>
+        <xsl:variable name="trust">
+          <xsl:choose>
+            <xsl:when test="count($counts)">
+              <xsl:value-of select="sum($counts) div count($counts) div count(metric)"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>0</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:variable>
+        <xsl:value-of select="format-number($trust,'0.0')"/>
       </td>
       <xsl:apply-templates select="metric">
         <xsl:sort select="@name" order="ascending" data-type="text"/>
