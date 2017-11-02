@@ -148,6 +148,20 @@ public final class App {
         );
         new LengthOf(
             new TeeInput(
+                App.BADGE.transform(
+                    new XMLDocument(
+                        new Xembler(
+                            new Directives().add("badge").set(
+                                String.format("%.4f", score)
+                            ).attr("style", "round")
+                        ).xmlQuietly()
+                    )
+                ).toString(),
+                this.output.resolve("badge.svg")
+            )
+        ).value();
+        new LengthOf(
+            new TeeInput(
                 index.toString(),
                 this.output.resolve("index.xml")
             )
@@ -173,20 +187,6 @@ public final class App {
             new TeeInput(
                 App.MATRIX.transform(matrix).toString(),
                 this.output.resolve("matrix.html")
-            )
-        ).value();
-        new LengthOf(
-            new TeeInput(
-                App.BADGE.transform(
-                    new XMLDocument(
-                        new Xembler(
-                            new Directives().add("badge").set(
-                                String.format("%.4f", score)
-                            ).attr("style", "round")
-                        ).xmlQuietly()
-                    )
-                ).toString(),
-                this.output.resolve("badge.svg")
             )
         ).value();
         new IoCheckedScalar<>(

@@ -208,7 +208,9 @@ SOFTWARE.
         and red ones get 0.05; if the color of the number is
         green, the quality is high enough, if it's orange the quality
         is average, if it's red, the quality is too low, for this
-        particular metric. </xsl:text>
+        particular metric; in small font below the score value
+        you can see how big is the difference between this metric
+        score and the average score for the entire code base.</xsl:text>
     </p>
   </xsl:template>
   <xsl:template match="metric">
@@ -244,28 +246,28 @@ SOFTWARE.
           </xsl:otherwise>
         </xsl:choose>
       </td>
-      <td style="text-align:right">
+      <td style="text-align:right" sorttable_customkey="{100 * green div classes}">
         <xsl:value-of select="green"/>
         <span class="under">
           <xsl:value-of select="format-number((green div classes) * 100, '#')"/>
           <xsl:text>%</xsl:text>
         </span>
       </td>
-      <td style="text-align:right">
+      <td style="text-align:right" sorttable_customkey="{100 * yellow div classes}">
         <xsl:value-of select="yellow"/>
         <span class="under">
           <xsl:value-of select="format-number((yellow div classes) * 100, '#')"/>
           <xsl:text>%</xsl:text>
         </span>
       </td>
-      <td style="text-align:right">
+      <td style="text-align:right" sorttable_customkey="{100 * red div classes}">
         <xsl:value-of select="red"/>
         <span class="under">
           <xsl:value-of select="format-number((red div classes) * 100, '#')"/>
           <xsl:text>%</xsl:text>
         </span>
       </td>
-      <td>
+      <td sorttable_customkey="{score}">
         <xsl:attribute name="style">
           <xsl:text>text-align:right;</xsl:text>
           <xsl:text>font-weight:bold;</xsl:text>
@@ -283,6 +285,10 @@ SOFTWARE.
           </xsl:choose>
         </xsl:attribute>
         <xsl:value-of select="format-number(score,'0.00')"/>
+        <span class="under" style="color:red;font-weight:normal;">
+          <xsl:value-of select="format-number(((score - /metrics/@score) div /metrics/@score) * 100, '#')"/>
+          <xsl:text>%</xsl:text>
+        </span>
       </td>
       <td>
         <a href="{xml}">

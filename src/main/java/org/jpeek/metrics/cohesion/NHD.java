@@ -86,7 +86,7 @@ public final class NHD implements Metric {
         return new JavassistClasses(
             this.base, NHD::cohesion,
             // @checkstyle MagicNumberCheck (1 line)
-            new Colors(0.15d, 0.35d)
+            new Colors(0.15d, 0.55d)
         ).xembly();
     }
 
