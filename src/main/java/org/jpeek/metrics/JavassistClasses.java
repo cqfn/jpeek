@@ -137,6 +137,7 @@ public final class JavassistClasses implements Metric {
                 ctClass -> !ctClass.isInterface()
                     && !ctClass.isEnum()
                     && !ctClass.isAnnotation()
+                    && !ctClass.getName().matches("^.+\\$[0-9]+$")
             ),
             this::metric
         );
