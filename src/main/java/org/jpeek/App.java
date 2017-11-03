@@ -30,6 +30,7 @@ import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.cactoos.collection.Mapped;
 import org.cactoos.io.LengthOf;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.io.TeeInput;
@@ -103,6 +104,7 @@ public final class App {
      * Analyze sources.
      * @throws IOException If fails
      */
+    @SuppressWarnings("PMD.ExcessiveMethodLength")
     public void analyze() throws IOException {
         if (Files.exists(this.output)) {
             throw new IllegalStateException(
@@ -130,66 +132,86 @@ public final class App {
                 }
             )
         ).value();
-        new LengthOf(
-            new TeeInput(
-                new ResourceOf("org/jpeek/jpeek.xsl"),
-                this.output.resolve("jpeek.xsl")
-            )
-        ).value();
-        final XML index = new XMLDocument(
+        XML index = new XMLDocument(
             new Xembler(
                 new Index(this.output).value()
             ).xmlQuietly()
         );
-        new LengthOf(
-            new TeeInput(
-                index.toString(),
-                this.output.resolve("index.xml")
+        final double score = new Avg(
+            new Mapped<>(
+                index.xpath("//metric/score/text()"),
+                Double::parseDouble
             )
         ).value();
-        new LengthOf(
-            new TeeInput(
-                App.STYLESHEET.transform(index).toString(),
-                this.output.resolve("index.html")
-            )
-        ).value();
+        index = new XMLDocument(
+            new Xembler(
+                new Directives().xpath("/metrics").attr("score", score)
+            ).applyQuietly(index.node())
+        );
+        this.save(
+            App.BADGE.transform(
+                new XMLDocument(
+                    new Xembler(
+                        new Directives().add("badge").set(
+                            String.format("%.4f", score)
+                        ).attr("style", "round")
+                    ).xmlQuietly()
+                )
+            ).toString(),
+            "badge.svg"
+        );
+        this.save(index.toString(), "index.xml");
+        this.save(App.STYLESHEET.transform(index).toString(), "index.html");
         final XML matrix = new XMLDocument(
             new Xembler(
                 new Matrix(this.output).value()
             ).xmlQuietly()
         );
-        new LengthOf(
-            new TeeInput(
-                matrix.toString(),
-                this.output.resolve("matrix.xml")
+        this.save(matrix.toString(), "matrix.xml");
+        this.save(App.MATRIX.transform(matrix).toString(), "matrix.html");
+        this.copy("jpeek.css");
+        new IoCheckedScalar<>(
+            new And(
+                new ListOf<>("index", "matrix", "jpeek"),
+                this::copyXsl
             )
         ).value();
+    }
+
+    /**
+     * Copy resource.
+     * @param name The name of resource
+     * @throws IOException If fails
+     */
+    private void copy(final String name) throws IOException {
         new LengthOf(
             new TeeInput(
-                App.MATRIX.transform(matrix).toString(),
-                this.output.resolve("matrix.html")
+                new ResourceOf(String.format("org/jpeek/%s", name)),
+                this.output.resolve(name)
             )
         ).value();
+    }
+
+    /**
+     * Copy XSL.
+     * @param name The name of resource
+     * @throws IOException If fails
+     */
+    private void copyXsl(final String name) throws IOException {
+        this.copy(String.format("%s.xsl", name));
+    }
+
+    /**
+     * Save file.
+     * @param data Content
+     * @param name The name of destination file
+     * @throws IOException If fails
+     */
+    private void save(final String data, final String name) throws IOException {
         new LengthOf(
             new TeeInput(
-                App.BADGE.transform(
-                    new XMLDocument(
-                        new Xembler(
-                            new Directives().add("score").set(
-                                String.format(
-                                    "%.4f",
-                                    Double.parseDouble(
-                                        index.xpath(
-                                            // @checkstyle LineLength (1 line)
-                                            "sum(//metric/score) div count(//metric)"
-                                        ).get(0)
-                                    )
-                                )
-                            ).attr("style", "round")
-                        ).xmlQuietly()
-                    )
-                ).toString(),
-                this.output.resolve("badge.svg")
+                data,
+                this.output.resolve(name)
             )
         ).value();
     }

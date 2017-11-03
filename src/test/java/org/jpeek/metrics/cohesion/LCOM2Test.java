@@ -108,7 +108,7 @@ public final class LCOM2Test {
             XhtmlMatchers.hasXPaths(
                 "/metric/app/package/class[@id='WithoutAttributes']",
                 "//class[@id='WithoutAttributes' and @value='0.0000']",
-                "//class[@id='WithoutAttributes' and @color='yellow']"
+                "//class[@id='WithoutAttributes' and @color='green']"
             )
         );
     }

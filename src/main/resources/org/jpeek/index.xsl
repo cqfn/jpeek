@@ -27,32 +27,17 @@ SOFTWARE.
     <html lang="en">
       <head>
         <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta name="description" content="jpeek metrics"/>
         <meta name="keywords" content="code quality metrics"/>
         <meta name="author" content="jpeek.org"/>
         <link rel="shortcut icon" href="http://www.jpeek.org/logo.png"/>
         <link rel="stylesheet" href="http://cdn.rawgit.com/yegor256/tacit/gh-pages/tacit-css-1.1.1.min.css"/>
+        <link rel="stylesheet" href="jpeek.css"/>
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/sortable/0.8.0/js/sortable.min.js">&#xA0;</script>
         <title>
           <xsl:text>jpeek</xsl:text>
         </title>
-        <style>
-          body {
-            padding: 1em;
-          }
-          sup {
-            top: -0.5em;
-            font-size: 75%;
-            line-height: 0;
-            position: relative;
-            vertical-align: baseline;
-          }
-          .under {
-            font-size: 75%;
-            display: block;
-            text-align: right;
-            color: gray;
-          }
-        </style>
       </head>
       <body>
         <xsl:apply-templates select="metrics"/>
@@ -73,7 +58,7 @@ SOFTWARE.
   </xsl:template>
   <xsl:template match="metrics">
     <p>
-      <a href="http://www.jpeek.org">
+      <a href="http://i.jpeek.org">
         <img alt="logo" src="http://www.jpeek.org/logo.svg" style="height:60px"/>
       </a>
     </p>
@@ -86,7 +71,7 @@ SOFTWARE.
       </a>
       <xsl:text> is </xsl:text>
       <strong>
-        <xsl:value-of select="format-number(sum(metric/score) div count(metric),'0.00')"/>
+        <xsl:value-of select="format-number(@score,'0.00')"/>
       </strong>
       <xsl:text> out of 10.</xsl:text>
       <xsl:text> Here is the </xsl:text>
@@ -98,7 +83,7 @@ SOFTWARE.
     <p>
       <img src="badge.svg" alt="SVG badge"/>
     </p>
-    <table>
+    <table data-sortable="true">
       <thead>
         <tr>
           <th>
@@ -159,7 +144,7 @@ SOFTWARE.
             </a>
           </th>
           <th>
-            <xsl:text>Options</xsl:text>
+            <xsl:text>&#xA0;</xsl:text>
           </th>
         </tr>
       </thead>
@@ -204,7 +189,9 @@ SOFTWARE.
         and red ones get 0.05; if the color of the number is
         green, the quality is high enough, if it's orange the quality
         is average, if it's red, the quality is too low, for this
-        particular metric. </xsl:text>
+        particular metric; in small font below the score value
+        you can see how big is the difference between this metric
+        score and the average score for the entire code base.</xsl:text>
     </p>
   </xsl:template>
   <xsl:template match="metric">
@@ -240,28 +227,28 @@ SOFTWARE.
           </xsl:otherwise>
         </xsl:choose>
       </td>
-      <td style="text-align:right">
+      <td style="text-align:right" class="sorttable_numeric" sorttable_customkey="{green div classes}">
         <xsl:value-of select="green"/>
         <span class="under">
           <xsl:value-of select="format-number((green div classes) * 100, '#')"/>
           <xsl:text>%</xsl:text>
         </span>
       </td>
-      <td style="text-align:right">
+      <td style="text-align:right" class="sorttable_numeric" sorttable_customkey="{yellow div classes}">
         <xsl:value-of select="yellow"/>
         <span class="under">
           <xsl:value-of select="format-number((yellow div classes) * 100, '#')"/>
           <xsl:text>%</xsl:text>
         </span>
       </td>
-      <td style="text-align:right">
+      <td style="text-align:right" class="sorttable_numeric" sorttable_customkey="{red div classes}">
         <xsl:value-of select="red"/>
         <span class="under">
           <xsl:value-of select="format-number((red div classes) * 100, '#')"/>
           <xsl:text>%</xsl:text>
         </span>
       </td>
-      <td>
+      <td class="sorttable_numeric" sorttable_customkey="{score}">
         <xsl:attribute name="style">
           <xsl:text>text-align:right;</xsl:text>
           <xsl:text>font-weight:bold;</xsl:text>
@@ -279,6 +266,26 @@ SOFTWARE.
           </xsl:choose>
         </xsl:attribute>
         <xsl:value-of select="format-number(score,'0.00')"/>
+        <xsl:variable name="diff" select="((score - /metrics/@score) div /metrics/@score)"/>
+        <span class="under">
+          <xsl:attribute name="style">
+            <xsl:text>font-weight:normal;</xsl:text>
+            <xsl:text>color:</xsl:text>
+            <xsl:choose>
+              <xsl:when test="abs($diff) &gt; 0.25">
+                <xsl:text>red</xsl:text>
+              </xsl:when>
+              <xsl:when test="abs($diff) &gt; 0.15">
+                <xsl:text>orange</xsl:text>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:text>gray</xsl:text>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:attribute>
+          <xsl:value-of select="format-number($diff * 100, '#')"/>
+          <xsl:text>%</xsl:text>
+        </span>
       </td>
       <td>
         <a href="{xml}">

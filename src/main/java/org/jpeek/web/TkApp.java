@@ -41,9 +41,10 @@ import org.takes.facets.forward.TkForward;
 import org.takes.http.Exit;
 import org.takes.http.FtCli;
 import org.takes.misc.Opt;
-import org.takes.rs.RsHtml;
 import org.takes.rs.RsText;
 import org.takes.rs.RsWithStatus;
+import org.takes.tk.TkText;
+import org.takes.tk.TkWithType;
 import org.takes.tk.TkWrap;
 
 /**
@@ -62,18 +63,31 @@ public final class TkApp extends TkWrap {
     /**
      * Ctor.
      * @param home Home directory
+     * @throws IOException If fails
      */
-    public TkApp(final Path home) {
+    public TkApp(final Path home) throws IOException {
         super(
             new TkFallback(
                 new TkForward(
                     new TkFork(
+                        new FkRegex("/", new TkIndex()),
                         new FkRegex(
                             "/([^/]+)/([^/]+)(.*)",
                             new TkReport(
                                 new AsyncReports(
                                     new Reports(home)
                                 )
+                            )
+                        ),
+                        new FkRegex(
+                            "/jpeek.css",
+                            new TkWithType(
+                                new TkText(
+                                    new TextOf(
+                                        new ResourceOf("org/jpeek/jpeek.css")
+                                    ).asString()
+                                ),
+                                "text/css"
                             )
                         )
                     )
@@ -92,7 +106,7 @@ public final class TkApp extends TkWrap {
                         Sentry.capture(req.throwable());
                         return new Opt.Single<>(
                             new RsWithStatus(
-                                new RsHtml(
+                                new RsText(
                                     new TextOf(req.throwable()).asString()
                                 ),
                                 HttpURLConnection.HTTP_INTERNAL_ERROR

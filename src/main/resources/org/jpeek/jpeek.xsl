@@ -27,27 +27,17 @@ SOFTWARE.
     <html lang="en">
       <head>
         <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta name="description" content="jpeek metric"/>
         <meta name="keywords" content="code quality metrics"/>
         <meta name="author" content="jpeek.org"/>
         <link rel="shortcut icon" href="http://www.jpeek.org/logo.png"/>
         <link rel="stylesheet" href="http://cdn.rawgit.com/yegor256/tacit/gh-pages/tacit-css-1.1.1.min.css"/>
+        <link rel="stylesheet" href="jpeek.css"/>
         <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/sortable/0.8.0/js/sortable.min.js">&#xA0;</script>
         <title>
           <xsl:value-of select="title"/>
         </title>
-        <style type="text/css">
-          body {
-            padding: 1em;
-          }
-          td {
-            padding-top: 0.25em;
-            padding-bottom: 0.25em;
-          }
-          th {
-            cursor: pointer;
-          }
-        </style>
       </head>
       <body>
         <xsl:apply-templates select="metric"/>
@@ -68,7 +58,7 @@ SOFTWARE.
   </xsl:template>
   <xsl:template match="metric">
     <p>
-      <a href="http://www.jpeek.org">
+      <a href="http://i.jpeek.org">
         <img alt="logo" src="http://www.jpeek.org/logo.svg" style="height:60px"/>
       </a>
     </p>
@@ -170,10 +160,10 @@ SOFTWARE.
   <xsl:template match="class">
     <tr>
       <td>
-        <code>
-          <xsl:value-of select="../@id"/>
+        <code title="{../@id}.{@id}">
+          <xsl:value-of select="replace(../@id, '([a-z])[a-z0-9\$]+\.', '$1.')"/>
           <xsl:text>.</xsl:text>
-          <xsl:value-of select="@id"/>
+          <xsl:value-of select="replace(@id, '([A-Z])[A-Za-z0-9]+\$', '$1..\$')"/>
         </code>
       </td>
       <td>

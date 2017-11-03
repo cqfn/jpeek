@@ -82,7 +82,7 @@ public final class OCC implements Metric {
             this.base,
             OCC::cohesion,
             // @checkstyle MagicNumberCheck (1 line)
-            new Colors(0.75d, 0.35d)
+            new Colors(0.85d, 0.25d)
         ).xembly();
     }
 

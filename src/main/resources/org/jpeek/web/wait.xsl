@@ -27,11 +27,13 @@ SOFTWARE.
     <html lang="en">
       <head>
         <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta name="description" content="jpeek wait"/>
         <meta name="keywords" content="code quality metrics"/>
         <meta name="author" content="jpeek.org"/>
         <link rel="shortcut icon" href="http://www.jpeek.org/logo.png"/>
         <link rel="stylesheet" href="http://cdn.rawgit.com/yegor256/tacit/gh-pages/tacit-css-1.1.1.min.css"/>
+        <link rel="stylesheet" href="/jpeek.css"/>
         <title>
           <xsl:value-of select="group"/>
           <xsl:text>:</xsl:text>
@@ -40,7 +42,7 @@ SOFTWARE.
       </head>
       <body>
         <p>
-          <a href="http://www.jpeek.org">
+          <a href="http://i.jpeek.org">
             <img alt="logo" src="http://www.jpeek.org/logo.svg" style="height:60px"/>
           </a>
         </p>

@@ -72,7 +72,7 @@ public final class LCOM3Test {
             XhtmlMatchers.hasXPaths(
                 "/metric/app/package/class[@id='Foo']",
                 "//class[@id='Foo' and @value='0.5000']",
-                "//class[@id='Foo' and @color='red']"
+                "//class[@id='Foo' and @color='yellow']"
             )
         );
     }
@@ -108,7 +108,7 @@ public final class LCOM3Test {
             XhtmlMatchers.hasXPaths(
                 "/metric/app/package/class[@id='WithoutAttributes']",
                 "//class[@id='WithoutAttributes' and @value='0.0000']",
-                "//class[@id='WithoutAttributes' and @color='yellow']"
+                "//class[@id='WithoutAttributes' and @color='green']"
             )
         );
     }

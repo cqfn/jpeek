@@ -27,20 +27,14 @@ SOFTWARE.
     <html lang="en">
       <head>
         <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta name="description" content="jpeek metrics"/>
         <meta name="keywords" content="code quality metrics"/>
         <meta name="author" content="jpeek.org"/>
         <link rel="shortcut icon" href="http://www.jpeek.org/logo.png"/>
         <link rel="stylesheet" href="http://cdn.rawgit.com/yegor256/tacit/gh-pages/tacit-css-1.1.1.min.css"/>
-        <style type="text/css">
-          body {
-            padding: 1em;
-          }
-          td {
-            padding-top: 0.25em;
-            padding-bottom: 0.25em;
-          }
-        </style>
+        <link rel="stylesheet" href="jpeek.css"/>
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/sortable/0.8.0/js/sortable.min.js">&#xA0;</script>
         <title>
           <xsl:text>matrix</xsl:text>
         </title>
@@ -64,7 +58,7 @@ SOFTWARE.
   </xsl:template>
   <xsl:template match="matrix">
     <p>
-      <a href="http://www.jpeek.org">
+      <a href="http://i.jpeek.org">
         <img alt="logo" src="http://www.jpeek.org/logo.svg" style="height:60px"/>
       </a>
     </p>
@@ -81,14 +75,20 @@ SOFTWARE.
       <xsl:value-of select="count(class)"/>
       <xsl:text> classes:</xsl:text>
     </p>
-    <table>
+    <table data-sortable="true">
       <thead>
         <tr>
           <th>
             <xsl:text>Class</xsl:text>
           </th>
+          <th style="cursor:pointer">
+            <xsl:text>Rank</xsl:text>
+          </th>
+          <th style="cursor:pointer">
+            <xsl:text>Trust</xsl:text>
+          </th>
           <xsl:for-each select="class[1]/metric">
-            <th>
+            <th class="sorttable_nosort">
               <a href="{@name}.xml">
                 <xsl:value-of select="@name"/>
               </a>
@@ -106,9 +106,42 @@ SOFTWARE.
   <xsl:template match="class">
     <tr>
       <td>
-        <code>
-          <xsl:value-of select="@id"/>
+        <code title="{@id}">
+          <xsl:value-of select="replace(replace(@id, '([a-z])[a-z0-9\$]+\.', '$1.'), '([A-Z])[A-Za-z0-9]+\$', '$1..\$')"/>
         </code>
+      </td>
+      <td style="text-align:right;">
+        <xsl:value-of select="format-number(sum(metric/@rank) div (count(metric) * 5),'0.00')"/>
+      </td>
+      <td style="text-align:right;">
+        <xsl:variable name="counts" as="node()*">
+          <xsl:if test="metric[@color='red']">
+            <c>
+              <xsl:value-of select="count(metric[@color='red'])"/>
+            </c>
+          </xsl:if>
+          <xsl:if test="metric[@color='yellow']">
+            <c>
+              <xsl:value-of select="count(metric[@color='yellow'])"/>
+            </c>
+          </xsl:if>
+          <xsl:if test="metric[@color='green']">
+            <c>
+              <xsl:value-of select="count(metric[@color='green'])"/>
+            </c>
+          </xsl:if>
+        </xsl:variable>
+        <xsl:variable name="trust">
+          <xsl:choose>
+            <xsl:when test="count($counts)">
+              <xsl:value-of select="sum($counts) div count($counts) div count(metric)"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>0</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:variable>
+        <xsl:value-of select="format-number($trust,'0.0')"/>
       </td>
       <xsl:apply-templates select="metric">
         <xsl:sort select="@name" order="ascending" data-type="text"/>

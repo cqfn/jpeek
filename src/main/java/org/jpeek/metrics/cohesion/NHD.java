@@ -53,9 +53,6 @@ import org.xembly.Directive;
  * parameter agreement between a pair of methods is defined as
  * the number of places in which the parameter occurrence
  * vectors of the two methods are equal. </p>
- * <p>The metric value ranges between 0 and 1.0. A value of
- * 1.0 represents maximum cohesion and 0 represents
- * a completely un-cohesive class.</p>
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -86,7 +83,7 @@ public final class NHD implements Metric {
         return new JavassistClasses(
             this.base, NHD::cohesion,
             // @checkstyle MagicNumberCheck (1 line)
-            new Colors(0.15d, 0.35d)
+            new Colors(0.55d, 0.15d)
         ).xembly();
     }
 

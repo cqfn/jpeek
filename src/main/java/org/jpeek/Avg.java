@@ -23,40 +23,44 @@
  */
 package org.jpeek;
 
-import java.io.IOException;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Iterator;
-import org.xembly.Directive;
-import org.xembly.Directives;
+import java.util.Collection;
+import org.cactoos.Scalar;
 
 /**
- * Xembly header for the report.
+ * Average.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.8
+ * @since 0.10
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class Header implements Iterable<Directive> {
+final class Avg implements Scalar<Double> {
 
-    @Override
-    public Iterator<Directive> iterator() {
-        try {
-            return new Directives()
-                .attr(
-                    "date",
-                    ZonedDateTime.now().format(
-                        DateTimeFormatter.ISO_INSTANT
-                    )
-                )
-                .attr("version", new Version().value())
-                .iterator();
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+    /**
+     * Numbers.
+     */
+    private final Collection<Double> values;
+
+    /**
+     * Ctor.
+     * @param list List of values
+     */
+    Avg(final Collection<Double> list) {
+        this.values = list;
     }
 
+    @Override
+    public Double value() {
+        double sum = 0.0d;
+        for (final double val : this.values) {
+            sum += val;
+        }
+        double avg = 0.0d;
+        if (!this.values.isEmpty()) {
+            avg = sum / (double) this.values.size();
+        }
+        return avg;
+    }
 }

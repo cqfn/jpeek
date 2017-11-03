@@ -24,39 +24,29 @@
 package org.jpeek;
 
 import java.io.IOException;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Iterator;
-import org.xembly.Directive;
-import org.xembly.Directives;
+import org.cactoos.Scalar;
+import org.cactoos.io.ResourceOf;
+import org.cactoos.iterable.PropertiesOf;
 
 /**
- * Xembly header for the report.
+ * Version.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.8
+ * @since 0.11
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class Header implements Iterable<Directive> {
+public final class Version implements Scalar<String> {
 
     @Override
-    public Iterator<Directive> iterator() {
-        try {
-            return new Directives()
-                .attr(
-                    "date",
-                    ZonedDateTime.now().format(
-                        DateTimeFormatter.ISO_INSTANT
-                    )
-                )
-                .attr("version", new Version().value())
-                .iterator();
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+    public String value() throws IOException {
+        return new PropertiesOf(
+            new ResourceOf(
+                "org/jpeek/jpeek.properties"
+            )
+        ).value().getProperty("org.jpeek.version");
     }
 
 }

@@ -134,7 +134,12 @@ public final class JavassistClasses implements Metric {
                         new FileInputStream(path.toFile())
                     )
                 ),
+                // @checkstyle BooleanExpressionComplexityCheck (10 lines)
                 ctClass -> !ctClass.isInterface()
+                    && !ctClass.isEnum()
+                    && !ctClass.isAnnotation()
+                    && !ctClass.getName().matches("^.+\\$[0-9]+$")
+                    && !ctClass.getName().matches("^.+\\$AjcClosure[0-9]+$")
             ),
             this::metric
         );

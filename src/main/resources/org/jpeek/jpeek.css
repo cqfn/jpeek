@@ -1,0 +1,23 @@
+body {
+    padding: 1em;
+}
+td {
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
+}
+th {
+    cursor: pointer;
+}
+sup {
+    top: -0.5em;
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+.under {
+    font-size: 75%;
+    display: block;
+    text-align: right;
+    color: gray;
+}

@@ -77,7 +77,7 @@ public final class LCOM3 implements Metric {
         return new JavassistClasses(
             this.base, LCOM3::cohesion,
             // @checkstyle MagicNumberCheck (1 line)
-            new Colors(0.35d, 0.0d)
+            new Colors(0.85d, 0.25d)
         ).xembly();
     }
 
