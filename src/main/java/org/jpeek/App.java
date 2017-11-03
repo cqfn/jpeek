@@ -134,10 +134,12 @@ public final class App {
             App.xsl("index.xsl").transform(index).toString(),
             "index.html"
         );
-        final XML matrix = new XMLDocument(
-            new Xembler(
-                new Matrix(this.output).value()
-            ).xmlQuietly()
+        final XML matrix = App.xsl("matrix-post.xsl").transform(
+            new XMLDocument(
+                new Xembler(
+                    new Matrix(this.output).value()
+                ).xmlQuietly()
+            )
         );
         this.save(matrix.toString(), "matrix.xml");
         this.save(
