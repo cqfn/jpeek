@@ -88,7 +88,7 @@ World Academy of Science, Engineering and Technology International Journal of Co
 [`sellers96`]
 Lack of Cohesion in Methods 2-3 (**LCOM 2-3**).<br/>
 B. Henderson-Sellers et al.,<br/>
-Coupling and cohesion (towards a valid metrics suite for object-oriented analysis and design),<br/>
+_Coupling and cohesion (towards a valid metrics suite for object-oriented analysis and design)_,<br/>
 Object Oriented Systems 3, 1996,
 [PDF](http://www.ibrarian.net/navon/paper/Coupling_and_cohesion__towards_a_valid_metrics_su.pdf?paperid=1090060).
 
