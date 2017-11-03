@@ -139,7 +139,7 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
             Double.parseDouble(
                 new XMLDocument(
                     output.resolve("index.xml").toFile()
-                ).xpath("/metrics/@score").get(0)
+                ).xpath("/index/@score").get(0)
             )
         );
         return new TypedPages(new Pages(output));

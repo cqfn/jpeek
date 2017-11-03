@@ -30,7 +30,6 @@ import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import org.cactoos.collection.Mapped;
 import org.cactoos.io.LengthOf;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.io.TeeInput;
@@ -57,27 +56,6 @@ import org.xembly.Xembler;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class App {
-
-    /**
-     * Index XSL stylesheet.
-     */
-    private static final XSL STYLESHEET = XSLDocument.make(
-        App.class.getResourceAsStream("index.xsl")
-    );
-
-    /**
-     * Matrix XSL stylesheet.
-     */
-    private static final XSL MATRIX = XSLDocument.make(
-        App.class.getResourceAsStream("matrix.xsl")
-    );
-
-    /**
-     * XSL stylesheet.
-     */
-    private static final XSL BADGE = XSLDocument.make(
-        App.class.getResourceAsStream("badge.xsl")
-    );
 
     /**
      * Location of the project to analyze.
@@ -130,43 +108,40 @@ public final class App {
                 }
             )
         ).value();
-        XML index = new XMLDocument(
-            new Xembler(
-                new Index(this.output).value()
-            ).xmlQuietly()
-        );
-        final double score = new Avg(
-            new Mapped<>(
-                index.xpath("//metric/score/text()"),
-                Double::parseDouble
+        final XML index = App.xsl("index-post.xsl").transform(
+            new XMLDocument(
+                new Xembler(
+                    new Index(this.output).value()
+                ).xmlQuietly()
             )
-        ).value();
-        index = new XMLDocument(
-            new Xembler(
-                new Directives().xpath("/metrics").attr("score", score)
-            ).applyQuietly(index.node())
         );
+        this.save(index.toString(), "index.xml");
         this.save(
-            App.BADGE.transform(
+            App.xsl("badge.xsl").transform(
                 new XMLDocument(
                     new Xembler(
                         new Directives().add("badge").set(
-                            String.format("%.4f", score)
+                            index.xpath("/index/@score").get(0)
                         ).attr("style", "round")
                     ).xmlQuietly()
                 )
             ).toString(),
             "badge.svg"
         );
-        this.save(index.toString(), "index.xml");
-        this.save(App.STYLESHEET.transform(index).toString(), "index.html");
+        this.save(
+            App.xsl("index.xsl").transform(index).toString(),
+            "index.html"
+        );
         final XML matrix = new XMLDocument(
             new Xembler(
                 new Matrix(this.output).value()
             ).xmlQuietly()
         );
         this.save(matrix.toString(), "matrix.xml");
-        this.save(App.MATRIX.transform(matrix).toString(), "matrix.html");
+        this.save(
+            App.xsl("matrix.xsl").transform(matrix).toString(),
+            "matrix.html"
+        );
         this.copy("jpeek.css");
         new IoCheckedScalar<>(
             new And(
@@ -212,6 +187,15 @@ public final class App {
                 this.output.resolve(name)
             )
         ).value();
+    }
+
+    /**
+     * Make XSL.
+     * @param name The name of XSL file
+     * @return XSL document
+     */
+    private static XSL xsl(final String name) {
+        return new XSLDocument(App.class.getResourceAsStream(name));
     }
 
 }

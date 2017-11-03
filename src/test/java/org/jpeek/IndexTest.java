@@ -53,7 +53,7 @@ public final class IndexTest {
             XhtmlMatchers.xhtml(
                 new TextOf(output.resolve("index.xml")).asString()
             ),
-            XhtmlMatchers.hasXPaths("/metrics/metric")
+            XhtmlMatchers.hasXPaths("/index/metric")
         );
     }
 
@@ -69,7 +69,7 @@ public final class IndexTest {
                     new Index(output).value()
                 ).xmlQuietly()
             ),
-            XhtmlMatchers.hasXPaths("/metrics/metric[@name='XYZ']")
+            XhtmlMatchers.hasXPaths("/index/metric[@name='XYZ']")
         );
     }
 
