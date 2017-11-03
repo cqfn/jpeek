@@ -85,6 +85,13 @@ _A Design-Based Cohesion Metric for Object-Oriented Classes_,<br/>
 World Academy of Science, Engineering and Technology International Journal of Computer and Information Engineering Vol:1, No:10, 2007,
 [PDF](http://waset.org/publications/5239/a-design-based-cohesion-metric-for-object-oriented-classes).
 
+[`counsell06`]
+Normalized Hamming Distance (**NHD**).<br/>
+Steve Counsell et al.,<br/>
+_The interpretation and utility of three cohesion metrics for object-oriented design_,<br/>
+ACM TOSEM, April 2006,
+[PDF](https://www.researchgate.net/publication/220403868_The_interpretation_and_utility_of_three_cohesion_metrics_for_object-oriented_design).
+
 ## How to contribute?
 
 Read [`CONTRIBUTING.md`](https://github.com/yegor256/jpeek/blob/master/CONTRIBUTING.md)
