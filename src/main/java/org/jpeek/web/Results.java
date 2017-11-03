@@ -30,7 +30,9 @@ import com.jcabi.dynamo.Region;
 import com.jcabi.dynamo.Table;
 import com.jcabi.dynamo.mock.H2Data;
 import com.jcabi.dynamo.mock.MkRegion;
+import com.jcabi.xml.XMLDocument;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
@@ -82,11 +84,16 @@ final class Results {
     /**
      * Add result.
      * @param artifact The artifact, like "org.jpeek:jpeek"
-     * @param score The score [0..10]
+     * @param dir Directory with files
      * @throws IOException If fails
      */
-    public void add(final String artifact, final double score)
+    public void add(final String artifact, final Path dir)
         throws IOException {
+        final double score = Double.parseDouble(
+            new XMLDocument(
+                dir.resolve("index.xml").toFile()
+            ).xpath("/index/@score").get(0)
+        );
         this.table.put(
             new Attributes()
                 .with("good", "true")
