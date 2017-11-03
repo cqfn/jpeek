@@ -92,6 +92,13 @@ _The interpretation and utility of three cohesion metrics for object-oriented de
 ACM TOSEM, April 2006,
 [PDF](https://www.researchgate.net/publication/220403868_The_interpretation_and_utility_of_three_cohesion_metrics_for_object-oriented_design).
 
+[`sellers96`]
+Lack of Cohesion in Methods 2-3 (**LCOM 2-3**).<br/>
+B. Henderson-Sellers et al.,<br/>
+_Coupling and cohesion (towards a valid metrics suite for object-oriented analysis and design)_,<br/>
+Object Oriented Systems 3, 1996,
+[PDF](http://www.ibrarian.net/navon/paper/Coupling_and_cohesion__towards_a_valid_metrics_su.pdf?paperid=1090060).
+
 ## How to contribute?
 
 Read [`CONTRIBUTING.md`](https://github.com/yegor256/jpeek/blob/master/CONTRIBUTING.md)
