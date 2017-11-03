@@ -25,6 +25,7 @@ package org.jpeek.metrics;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Locale;
@@ -130,9 +131,14 @@ public final class JavassistClasses implements Metric {
                         path -> Files.isRegularFile(path)
                             && path.toString().endsWith(".class")
                     ),
-                    path -> this.pool.makeClassIfNew(
-                        new FileInputStream(path.toFile())
-                    )
+                    path -> {
+                        try (InputStream inputStream =
+                                     new FileInputStream(path.toFile())) {
+                            return this.pool.makeClassIfNew(
+                                    inputStream
+                            );
+                        }
+                    }
                 ),
                 // @checkstyle BooleanExpressionComplexityCheck (10 lines)
                 ctClass -> !ctClass.isInterface()
