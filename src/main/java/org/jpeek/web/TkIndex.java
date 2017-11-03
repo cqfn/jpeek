@@ -34,6 +34,7 @@ import org.takes.rs.xe.RsXembly;
 import org.takes.rs.xe.XeAppend;
 import org.takes.rs.xe.XeChain;
 import org.takes.rs.xe.XeDirectives;
+import org.takes.rs.xe.XeMillis;
 import org.takes.rs.xe.XeStylesheet;
 import org.takes.rs.xe.XeTransform;
 
@@ -59,6 +60,7 @@ final class TkIndex implements Take {
                     new XeAppend(
                         "index",
                         new XeChain(
+                            new XeMillis(),
                             new XeDirectives(new Header()),
                             new XeAppend(
                                 "best",
@@ -113,7 +115,8 @@ final class TkIndex implements Take {
                                         );
                                     }
                                 )
-                            )
+                            ),
+                            new XeMillis(true)
                         )
                     )
                 )

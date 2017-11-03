@@ -106,9 +106,8 @@ final class Results {
     /**
      * Recent artifacts..
      * @return List of them
-     * @throws IOException If fails
      */
-    public Iterable<String> recent() throws IOException {
+    public Iterable<String> recent() {
         return new Mapped<>(
             this.table.frame()
                 .where("good", "true")
