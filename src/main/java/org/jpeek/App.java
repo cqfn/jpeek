@@ -110,11 +110,13 @@ public final class App {
                 }
             )
         ).value();
-        final XML index = App.xsl("index-post.xsl").transform(
-            new XMLDocument(
-                new Xembler(
-                    new Index(this.output).value()
-                ).xmlQuietly()
+        final XML index = App.xsl("index-post-2.xsl").transform(
+            App.xsl("index-post-1.xsl").transform(
+                new XMLDocument(
+                    new Xembler(
+                        new Index(this.output).value()
+                    ).xmlQuietly()
+                )
             )
         );
         this.save(index.toString(), "index.xml");

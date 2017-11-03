@@ -143,6 +143,28 @@ SOFTWARE.
       </tbody>
     </table>
     <p>
+      <xsl:text>The average mistake of individual scores: </xsl:text>
+      <strong>
+        <xsl:attribute name="style">
+          <xsl:text>color:</xsl:text>
+          <xsl:choose>
+            <xsl:when test="@diff &lt; 0.10">
+              <xsl:text>green</xsl:text>
+            </xsl:when>
+            <xsl:when test="@diff &lt; 0.20">
+              <xsl:text>orange</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>red</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:attribute>
+        <xsl:value-of select="format-number(100 * @diff,'#')"/>
+        <xsl:text>%</xsl:text>
+      </strong>
+      <xsl:text>.</xsl:text>
+    </p>
+    <p>
       <sup id="1">
         <xsl:text>1</xsl:text>
       </sup>
