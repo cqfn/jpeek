@@ -111,6 +111,9 @@ SOFTWARE.
           <th>
             <xsl:text>Score</xsl:text>
           </th>
+          <th>
+            <xsl:text>Mistake</xsl:text>
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -135,6 +138,10 @@ SOFTWARE.
         <a href="{group}/{artifact}/">
           <xsl:value-of select="format-number(score,'0.00')"/>
         </a>
+      </td>
+      <td style="text-align:right">
+        <xsl:value-of select="format-number(100 * diff,'#')"/>
+        <xsl:text>%</xsl:text>
       </td>
     </tr>
   </xsl:template>
