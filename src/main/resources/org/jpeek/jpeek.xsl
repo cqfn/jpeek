@@ -160,7 +160,7 @@ SOFTWARE.
   <xsl:template match="class">
     <tr>
       <td>
-        <code>
+        <code title="{../@id}.{@id}">
           <xsl:value-of select="replace(../@id, '([a-z])[a-z0-9\$]+\.', '$1.')"/>
           <xsl:text>.</xsl:text>
           <xsl:value-of select="replace(@id, '([A-Z])[A-Za-z0-9]+\$', '$1..\$')"/>
