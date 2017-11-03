@@ -28,10 +28,10 @@ SOFTWARE.
       <xsl:attribute name="score">
         <xsl:choose>
           <xsl:when test="metric">
-            <xsl:value-of select="format-number(sum(metric/@score) div count(metric), '0.0000')"/>
+            <xsl:value-of select="format-number(sum(metric/score) div count(metric), '0.0000')"/>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:text>0.0000</xsl:text>
+            <xsl:text>0</xsl:text>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:attribute>
