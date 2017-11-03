@@ -85,6 +85,13 @@ _A Design-Based Cohesion Metric for Object-Oriented Classes_,<br/>
 World Academy of Science, Engineering and Technology International Journal of Computer and Information Engineering Vol:1, No:10, 2007,
 [PDF](http://waset.org/publications/5239/a-design-based-cohesion-metric-for-object-oriented-classes).
 
+[`sellers96`]
+Lack of Cohesion in Methods 2-3 (**LCOM 2-3**).<br/>
+B. Henderson-Sellers et al.,<br/>
+Coupling and cohesion (towards a valid metrics suite for object-oriented analysis and design),<br/>
+Object Oriented Systems 3, 1996,
+[PDF](http://www.ibrarian.net/navon/paper/Coupling_and_cohesion__towards_a_valid_metrics_su.pdf?paperid=1090060).
+
 ## How to contribute?
 
 Read [`CONTRIBUTING.md`](https://github.com/yegor256/jpeek/blob/master/CONTRIBUTING.md)
