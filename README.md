@@ -78,12 +78,12 @@ _A proposal of class cohesion metrics using sizes of cohesive parts_,<br/>
 Proc. of Fifth Joint Conference on Knowledge-based Software Engineering, 2002,
 [PDF](https://www.researchgate.net/profile/Hirohisa_Aman/publication/268046583_A_Proposal_of_Class_Cohesion_Metrics_Using_Sizes_of_Cohesive_Parts/links/5729ca4b08ae057b0a060fa6/A-Proposal-of-Class-Cohesion-Metrics-Using-Sizes-of-Cohesive-Parts.pdf).
 
-[`sellers96`]
-Lack of Cohesion in Methods 2-3 (**LCOM 2-3**).<br/>
-B. Henderson-Sellers et al.,<br/>
-Coupling and cohesion (towards a valid metrics suite for object-oriented analysis and design),<br/>
-Object Oriented Systems 3, 1996,
-[PDF](http://www.ibrarian.net/navon/paper/Coupling_and_cohesion__towards_a_valid_metrics_su.pdf?paperid=1090060).
+[`dallal07`]
+Method-Method through Attributes Cohesion (**MMAC**).<br/>
+Jehad Al Dallal,<br/>
+_A Design-Based Cohesion Metric for Object-Oriented Classes_,<br/>
+World Academy of Science, Engineering and Technology International Journal of Computer and Information Engineering Vol:1, No:10, 2007,
+[PDF](http://waset.org/publications/5239/a-design-based-cohesion-metric-for-object-oriented-classes).
 
 ## How to contribute?
 
@@ -94,6 +94,7 @@ Read [`CONTRIBUTING.md`](https://github.com/yegor256/jpeek/blob/master/CONTRIBUT
   - [@yegor256](https://github.com/yegor256) as Yegor Bugayenko ([Blog](http://www.yegor256.com))
   - [@alayor](https://github.com/alayor) as Alonso A. Ortega ([Blog](http://www.alayor.com))
   - [@memoyil](https://github.com/memoyil) as Mehmet Yildirim
+  - [@sergey-karazhenets](https://github.com/sergey-karazhenets) as Sergey Karazhenets
 
 Don't hesitate to add your name to this list in your next pull request.
 
