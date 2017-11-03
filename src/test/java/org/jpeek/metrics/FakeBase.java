@@ -82,7 +82,9 @@ public final class FakeBase implements Base {
                 java -> {
                     new LengthOf(
                         new TeeInput(
-                            new ResourceOf(String.format("org/jpeek/%s", java)),
+                            new ResourceOf(
+                                String.format("org/jpeek/metrics/%s", java)
+                            ),
                             temp.resolve(java)
                         )
                     ).value();

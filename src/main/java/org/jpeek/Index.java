@@ -67,7 +67,7 @@ final class Index implements Scalar<Iterable<Directive>> {
     @Override
     public Iterable<Directive> value() throws IOException {
         return new Directives()
-            .add("metrics")
+            .add("index")
             .append(new Header())
             .append(
                 new Joined<>(
