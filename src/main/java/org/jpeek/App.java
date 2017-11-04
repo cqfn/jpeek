@@ -23,7 +23,6 @@
  */
 package org.jpeek;
 
-import com.jcabi.xml.ClasspathSources;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import com.jcabi.xml.XSL;
@@ -41,6 +40,7 @@ import org.jpeek.metrics.cohesion.CAMC;
 import org.jpeek.metrics.cohesion.LCOM;
 import org.jpeek.metrics.cohesion.LCOM2;
 import org.jpeek.metrics.cohesion.LCOM3;
+import org.jpeek.metrics.cohesion.LCOM5;
 import org.jpeek.metrics.cohesion.MMAC;
 import org.jpeek.metrics.cohesion.NHD;
 import org.jpeek.metrics.cohesion.OCC;
@@ -101,7 +101,8 @@ public final class App {
             new Report(new NHD(base), 0.5d, -0.25d),
             new Report(new LCOM2(base), 0.5d, -0.25d),
             new Report(new LCOM3(base), 0.5d, -0.25d),
-            new Report(new MMAC(base), 0.5d, 0.25d)
+            new Report(new MMAC(base), 0.5d, 0.25d),
+            new Report(new LCOM5(base), 0d, 0d)
         );
         new IoCheckedScalar<>(
             new And(
