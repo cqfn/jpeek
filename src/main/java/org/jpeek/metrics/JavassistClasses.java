@@ -134,9 +134,7 @@ public final class JavassistClasses implements Metric {
                     path -> {
                         try (InputStream inputStream =
                             new FileInputStream(path.toFile())) {
-                            return this.pool.makeClassIfNew(
-                                inputStream
-                            );
+                            return this.pool.makeClassIfNew(inputStream);
                         }
                     }
                 ),
