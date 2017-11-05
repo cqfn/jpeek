@@ -130,6 +130,14 @@ final class Results {
      */
     public Iterable<Iterable<Directive>> recent() {
         return new Mapped<>(
+            item -> {
+                final String[] parts = item.get("artifact").getS().split(":");
+                return new Directives()
+                    .add("repo")
+                    .add("group").set(parts[0]).up()
+                    .add("artifact").set(parts[1]).up()
+                    .up();
+            },
             this.table.frame()
                 .where("good", "true")
                 .through(
@@ -140,15 +148,7 @@ final class Results {
                         // @checkstyle MagicNumber (1 line)
                         .withLimit(50)
                         .withAttributesToGet("artifact")
-                ),
-            item -> {
-                final String[] parts = item.get("artifact").getS().split(":");
-                return new Directives()
-                    .add("repo")
-                    .add("group").set(parts[0]).up()
-                    .add("artifact").set(parts[1]).up()
-                    .up();
-            }
+                )
         );
     }
 
@@ -159,17 +159,6 @@ final class Results {
      */
     public Iterable<Iterable<Directive>> best() throws IOException {
         return new Mapped<>(
-            this.table.frame()
-                .where("version", new Version().value())
-                .through(
-                    new QueryValve()
-                        .withScanIndexForward(false)
-                        .withIndexName("scores")
-                        .withConsistentRead(false)
-                        // @checkstyle MagicNumber (1 line)
-                        .withLimit(20)
-                        .withAttributesToGet("artifact", "score", "diff")
-                ),
             item -> {
                 final String[] parts = item.get("artifact").getS().split(":");
                 return new Directives()
@@ -187,7 +176,18 @@ final class Results {
                     )
                     .up()
                     .up();
-            }
+            },
+            this.table.frame()
+                .where("version", new Version().value())
+                .through(
+                    new QueryValve()
+                        .withScanIndexForward(false)
+                        .withIndexName("scores")
+                        .withConsistentRead(false)
+                        // @checkstyle MagicNumber (1 line)
+                        .withLimit(20)
+                        .withAttributesToGet("artifact", "score", "diff")
+                )
         );
     }
 

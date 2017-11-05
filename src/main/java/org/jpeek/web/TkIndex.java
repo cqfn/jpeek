@@ -68,7 +68,7 @@ final class TkIndex implements Take {
                                     new Joined<>(
                                         new Limited<>(
                                             // @checkstyle MagicNumber (1 line)
-                                            new Results().best(), 20
+                                            20, new Results().best()
                                         )
                                     )
                                 )
@@ -79,7 +79,7 @@ final class TkIndex implements Take {
                                     new Joined<>(
                                         new Limited<>(
                                             // @checkstyle MagicNumber (1 line)
-                                            new Results().recent(), 50
+                                            50, new Results().recent()
                                         )
                                     )
                                 )

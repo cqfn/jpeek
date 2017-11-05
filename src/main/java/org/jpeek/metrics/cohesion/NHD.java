@@ -98,8 +98,8 @@ public final class NHD implements Metric {
         final Collection<String> types = new HashSet<>(
             new Joined<String>(
                 () -> new Mapped<>(
-                    methods.iterator(),
-                    strings -> strings
+                    strings -> strings,
+                    methods.iterator()
                 )
             )
         );

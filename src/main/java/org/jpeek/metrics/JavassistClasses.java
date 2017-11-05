@@ -102,12 +102,12 @@ public final class JavassistClasses implements Metric {
             .append(
                 new Joined<Directive>(
                     new Mapped<>(
-                        this.metrics(),
                         ent -> new Directives()
                             .add("package")
                             .attr("id", ent.getKey())
                             .append(ent.getValue())
-                            .up()
+                            .up(),
+                        this.metrics()
                     )
                 )
             );
@@ -123,25 +123,25 @@ public final class JavassistClasses implements Metric {
         throws IOException {
         final Map<String, Directives> map = new HashMap<>(0);
         final Iterable<Map.Entry<String, Directives>> all = new Mapped<>(
+            this::metric,
             new Filtered<>(
-                new Mapped<>(
-                    new Filtered<>(
-                        this.base.files(),
-                        path -> Files.isRegularFile(path)
-                            && path.toString().endsWith(".class")
-                    ),
-                    path -> this.pool.makeClassIfNew(
-                        new FileInputStream(path.toFile())
-                    )
-                ),
                 // @checkstyle BooleanExpressionComplexityCheck (10 lines)
                 ctClass -> !ctClass.isInterface()
                     && !ctClass.isEnum()
                     && !ctClass.isAnnotation()
                     && !ctClass.getName().matches("^.+\\$[0-9]+$")
-                    && !ctClass.getName().matches("^.+\\$AjcClosure[0-9]+$")
-            ),
-            this::metric
+                    && !ctClass.getName().matches("^.+\\$AjcClosure[0-9]+$"),
+                new Mapped<>(
+                    path -> this.pool.makeClassIfNew(
+                        new FileInputStream(path.toFile())
+                    ),
+                    new Filtered<>(
+                        path -> Files.isRegularFile(path)
+                            && path.toString().endsWith(".class"),
+                        this.base.files()
+                    )
+                )
+            )
         );
         for (final Map.Entry<String, Directives> ent : all) {
             map.putIfAbsent(ent.getKey(), new Directives());
