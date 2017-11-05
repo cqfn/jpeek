@@ -122,6 +122,7 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
                 .start()
                 .waitFor();
         } catch (final InterruptedException ex) {
+            Thread.currentThread().interrupt();
             throw new IllegalStateException(ex);
         }
         final Path output = this.target.resolve(grp).resolve(artifact);
