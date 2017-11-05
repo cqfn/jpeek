@@ -39,6 +39,8 @@ import org.xembly.Xembler;
  * @since 0.1
  * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle EmptyLinesCheck (500 lines)
+ * @checkstyle LineLengthCheck (500 lines)
  */
 public final class CAMCTest {
 
@@ -65,14 +67,41 @@ public final class CAMCTest {
             XhtmlMatchers.xhtml(
                 new Xembler(
                     new CAMC(
-                        new FakeBase("Foo")
+                        new FakeBase(
+                            "Foo",
+                            "OverrideMethodFromInterface",
+                            "OverrideGenericMethodFromInterface",
+                            "OverrideGenericMethodFromClass",
+                            "OverrideGenericMethodsFromTwoInterfaces",
+                            "OverrideGenericMethodsFromInterfacesInheritance"
+                        )
                     ).xembly()
                 ).xmlQuietly()
             ),
             XhtmlMatchers.hasXPaths(
                 "/metric/app/package[@id='']/class[@id='Foo']",
                 "//class[@id='Foo' and @value='0.6667']",
-                "//class[@id='Foo' and @color='green']"
+                "//class[@id='Foo' and @color='green']",
+
+                "/metric/app/package[@id='']/class[@id='OverrideMethodFromInterface']",
+                "//class[@id='OverrideMethodFromInterface' and @value='0.5000']",
+                "//class[@id='OverrideMethodFromInterface' and @color='green']",
+
+                "/metric/app/package[@id='']/class[@id='OverrideGenericMethodFromInterface']",
+                "//class[@id='OverrideGenericMethodFromInterface' and @value='0.5000']",
+                "//class[@id='OverrideGenericMethodFromInterface' and @color='green']",
+
+                "/metric/app/package[@id='']/class[@id='OverrideGenericMethodFromClass']",
+                "//class[@id='OverrideGenericMethodFromClass' and @value='0.5000']",
+                "//class[@id='OverrideGenericMethodFromClass' and @color='green']",
+
+                "/metric/app/package[@id='']/class[@id='OverrideGenericMethodsFromTwoInterfaces']",
+                "//class[@id='OverrideGenericMethodsFromTwoInterfaces' and @value='0.3333']",
+                "//class[@id='OverrideGenericMethodsFromTwoInterfaces' and @color='yellow']",
+
+                "/metric/app/package[@id='']/class[@id='OverrideGenericMethodsFromInterfacesInheritance']",
+                "//class[@id='OverrideGenericMethodsFromInterfacesInheritance' and @value='0.3333']",
+                "//class[@id='OverrideGenericMethodsFromInterfacesInheritance' and @color='yellow']"
             )
         );
     }
