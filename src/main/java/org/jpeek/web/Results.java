@@ -113,6 +113,12 @@ final class Results {
                         ) * Results.MULTIPLIER
                     )
                 )
+                .with(
+                    "classes",
+                    Integer.parseInt(
+                        index.xpath("/index/metric[1]/classes/text()").get(0)
+                    )
+                )
                 .with("version", new Version().value())
                 .with("added", System.currentTimeMillis())
                 .with(
@@ -175,6 +181,10 @@ final class Results {
                             / Results.MULTIPLIER
                     )
                     .up()
+                    .add("classes").set(
+                        Integer.parseInt(item.get("classes").getN())
+                    )
+                    .up()
                     .up();
             },
             this.table.frame()
@@ -213,7 +223,8 @@ final class Results {
                 new H2Data().with(
                     "jpeek-results",
                     new String[] {"artifact"},
-                    "score", "diff", "ttl", "version", "added", "good"
+                    "score", "diff", "ttl", "version", "added",
+                    "good", "classes"
                 )
             );
         }
