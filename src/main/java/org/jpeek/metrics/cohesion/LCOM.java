@@ -33,8 +33,8 @@ import javassist.CannotCompileException;
 import javassist.CtClass;
 import org.jpeek.Base;
 import org.jpeek.Metric;
-import org.jpeek.metrics.Colors;
 import org.jpeek.metrics.JavassistClasses;
+import org.jpeek.metrics.Summary;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
@@ -85,9 +85,7 @@ public final class LCOM implements Metric {
     @Override
     public Iterable<Directive> xembly() throws IOException {
         return new JavassistClasses(
-            this.base, LCOM::cohesion,
-            // @checkstyle MagicNumberCheck (1 line)
-            new Colors(100.0d, 5.0d)
+            this.base, LCOM::cohesion
         ).xembly();
     }
 
@@ -98,7 +96,7 @@ public final class LCOM implements Metric {
      * @checkstyle ParameterNumberCheck (100 lines)
      */
     @SuppressWarnings({ "PMD.UseObjectForClearerAPI", "PMD.UseVarargs" })
-    private static double cohesion(final CtClass ctc) {
+    private static Iterable<Directive> cohesion(final CtClass ctc) {
         final ClassReader reader;
         try {
             reader = new ClassReader(ctc.toBytecode());
@@ -139,7 +137,10 @@ public final class LCOM implements Metric {
                 }
             }
         }
-        return Math.max(0.0d, (double) (empty - nonempty));
+        return new Summary(Math.max(0.0d, (double) (empty - nonempty)))
+            .with("E", empty)
+            .with("NE", nonempty)
+            .with("methods", methods.size());
     }
 
 }

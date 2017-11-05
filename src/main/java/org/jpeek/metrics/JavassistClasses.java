@@ -27,7 +27,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import javassist.ClassPool;
 import javassist.CtClass;
@@ -66,12 +65,7 @@ public final class JavassistClasses implements Metric {
     /**
      * Func.
      */
-    private final IoCheckedFunc<CtClass, Double> func;
-
-    /**
-     * Colors.
-     */
-    private final Colors colors;
+    private final IoCheckedFunc<CtClass, Iterable<Directive>> func;
 
     /**
      * Javassist pool.
@@ -82,21 +76,18 @@ public final class JavassistClasses implements Metric {
      * Ctor.
      * @param bse The base
      * @param fnc Func
-     * @param clrs Colors
      */
-    public JavassistClasses(final Base bse, final Func<CtClass, Double> fnc,
-        final Colors clrs) {
+    public JavassistClasses(final Base bse,
+        final Func<CtClass, Iterable<Directive>> fnc) {
         this.base = bse;
         this.pool = ClassPool.getDefault();
         this.func = new IoCheckedFunc<>(fnc);
-        this.colors = clrs;
     }
 
     @Override
     public Iterable<Directive> xembly() throws IOException {
         return new Directives()
             .add("metric")
-            .add("colors").set(this.colors).up()
             .add("app")
             .attr("id", this.base)
             .append(
@@ -158,7 +149,7 @@ public final class JavassistClasses implements Metric {
      */
     private Map.Entry<String, Directives> metric(
         final CtClass ctc) throws IOException {
-        final double cohesion = this.func.apply(ctc);
+        final Iterable<Directive> cohesion = this.func.apply(ctc);
         ctc.defrost();
         String pkg = ctc.getPackageName();
         if (pkg == null) {
@@ -169,8 +160,7 @@ public final class JavassistClasses implements Metric {
             new Directives()
                 .add("class")
                 .attr("id", ctc.getSimpleName())
-                .attr("value", String.format(Locale.ENGLISH, "%.4f", cohesion))
-                .attr("color", this.colors.apply(cohesion))
+                .append(cohesion)
                 .up()
         );
     }

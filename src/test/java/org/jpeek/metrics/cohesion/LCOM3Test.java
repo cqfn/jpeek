@@ -71,8 +71,7 @@ public final class LCOM3Test {
             ),
             XhtmlMatchers.hasXPaths(
                 "/metric/app/package/class[@id='Foo']",
-                "//class[@id='Foo' and @value='0.5000']",
-                "//class[@id='Foo' and @color='yellow']"
+                "//class[@id='Foo' and @value='0.5000']"
             )
         );
     }
@@ -89,8 +88,7 @@ public final class LCOM3Test {
             ),
             XhtmlMatchers.hasXPaths(
                 "/metric/app/package/class[@id='Bar']",
-                "//class[@id='Bar' and @value='0.5000']",
-                "//class[@id='Bar' and @color='yellow']"
+                "//class[@id='Bar' and @value='0.5000']"
             )
         );
     }
@@ -107,8 +105,7 @@ public final class LCOM3Test {
             ),
             XhtmlMatchers.hasXPaths(
                 "/metric/app/package/class[@id='WithoutAttributes']",
-                "//class[@id='WithoutAttributes' and @value='0.0000']",
-                "//class[@id='WithoutAttributes' and @color='green']"
+                "//class[@id='WithoutAttributes' and @value='0.0000']"
             )
         );
     }

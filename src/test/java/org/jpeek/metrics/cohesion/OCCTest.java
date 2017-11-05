@@ -72,8 +72,7 @@ public final class OCCTest {
             ),
             XhtmlMatchers.hasXPaths(
                 "/metric/app/package/class[@id='TwoCommonAttributes']",
-                "//class[@id='TwoCommonAttributes' and @value='0.5000']",
-                "//class[@id='TwoCommonAttributes' and @color='yellow']"
+                "//class[@id='TwoCommonAttributes' and @value='0.5000']"
             )
         );
     }
@@ -90,8 +89,7 @@ public final class OCCTest {
             ),
             XhtmlMatchers.hasXPaths(
                 "/metric/app/package/class[@id='Foo']",
-                "//class[@id='Foo' and @value='1.0000']",
-                "//class[@id='Foo' and @color='red']"
+                "//class[@id='Foo' and @value='1.0000']"
             )
         );
     }
