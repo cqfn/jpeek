@@ -131,9 +131,9 @@ SOFTWARE.
             <xsl:text>Class</xsl:text>
           </th>
           <th style="text-align:right">
-            <xsl:text>/metric/title</xsl:text>
+            <xsl:value-of select="/metric/title"/>
           </th>
-          <xsl:for-each select="package/class/vars/var">
+          <xsl:for-each select="package[1]/class[1]/vars/var">
             <th style="text-align:right">
               <xsl:value-of select="@id"/>
             </th>
