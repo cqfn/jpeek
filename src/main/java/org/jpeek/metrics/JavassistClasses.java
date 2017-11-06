@@ -23,8 +23,8 @@
  */
 package org.jpeek.metrics;
 
-import com.google.common.io.Closer;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.HashMap;
@@ -125,18 +125,10 @@ public final class JavassistClasses implements Metric {
                     && !ctClass.getName().matches("^.+\\$AjcClosure[0-9]+$"),
                 new Mapped<>(
                     path -> {
-                        final Closer closer = Closer.create();
-                        try {
-                            return this.pool.makeClassIfNew(
-                                closer.register(
-                                    new FileInputStream(path.toFile())
-                                )
-                            );
-                        } catch (final Throwable exc) {
-                            throw closer.rethrow(exc);
-                        } finally {
-                            closer.close();
-                        }
+                        try (InputStream inputStream =
+                            new FileInputStream(path.toFile())) {
+                                return this.pool.makeClassIfNew(inputStream);
+                            }
                     },
                     new Filtered<>(
                         path -> Files.isRegularFile(path)
