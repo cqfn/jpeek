@@ -29,6 +29,8 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.google.common.io.Closer;
 import javassist.ClassPool;
 import javassist.CtClass;
 import org.cactoos.Func;
@@ -125,12 +127,15 @@ public final class JavassistClasses implements Metric {
                     && !ctClass.getName().matches("^.+\\$AjcClosure[0-9]+$"),
                 new Mapped<>(
                     path -> {
-                        final InputStream inputstream =
-                            new FileInputStream(path.toFile());
+                        final Closer closer = Closer.create();
                         try {
-                            return this.pool.makeClassIfNew(inputstream);
+                            return this.pool.makeClassIfNew(
+                                closer.register(
+                                    new FileInputStream(path.toFile())));
+                        } catch (Throwable e) {
+                            throw closer.rethrow(e);
                         } finally {
-                            inputstream.close();
+                            closer.close();
                         }
                     },
                     new Filtered<>(
