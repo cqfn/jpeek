@@ -4,7 +4,7 @@
 [![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/jpeek)](http://www.rultor.com/p/yegor256/jpeek)
 
 [![Build Status](https://travis-ci.org/yegor256/jpeek.svg?branch=master)](https://travis-ci.org/yegor256/jpeek)
-[![Javadoc](https://javadoc-emblem.rhcloud.com/doc/org.jpeek/jpeek/badge.svg?color=blue&prefix=v)](http://www.javadoc.io/doc/org.jpeek/jpeek)
+[![Javadoc](http://www.javadoc.io/badge/org.jpeek/jpeek.svg)](http://www.javadoc.io/doc/org.jpeek/jpeek)
 [![PDD status](http://www.0pdd.com/svg?name=yegor256/jpeek)](http://www.0pdd.com/p?name=yegor256/jpeek)
 [![Maven Central](https://img.shields.io/maven-central/v/org.jpeek/jpeek.svg)](https://maven-badges.herokuapp.com/maven-central/org.jpeek/jpeek)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/yegor256/jpeek/blob/master/LICENSE.txt)
@@ -91,6 +91,13 @@ Steve Counsell et al.,<br/>
 _The interpretation and utility of three cohesion metrics for object-oriented design_,<br/>
 ACM TOSEM, April 2006,
 [PDF](https://www.researchgate.net/publication/220403868_The_interpretation_and_utility_of_three_cohesion_metrics_for_object-oriented_design).
+
+[`sellers96`]
+Lack of Cohesion in Methods 2-3 (**LCOM 2-3**).<br/>
+B. Henderson-Sellers et al.,<br/>
+_Coupling and cohesion (towards a valid metrics suite for object-oriented analysis and design)_,<br/>
+Object Oriented Systems 3, 1996,
+[PDF](http://www.ibrarian.net/navon/paper/Coupling_and_cohesion__towards_a_valid_metrics_su.pdf?paperid=1090060).
 
 ## How to contribute?
 

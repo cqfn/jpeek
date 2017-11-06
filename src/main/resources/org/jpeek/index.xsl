@@ -143,6 +143,28 @@ SOFTWARE.
       </tbody>
     </table>
     <p>
+      <xsl:text>The average mistake of individual scores: </xsl:text>
+      <strong>
+        <xsl:attribute name="style">
+          <xsl:text>color:</xsl:text>
+          <xsl:choose>
+            <xsl:when test="@diff &lt; 0.10">
+              <xsl:text>green</xsl:text>
+            </xsl:when>
+            <xsl:when test="@diff &lt; 0.20">
+              <xsl:text>orange</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>red</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:attribute>
+        <xsl:value-of select="format-number(100 * @diff,'#')"/>
+        <xsl:text>%</xsl:text>
+      </strong>
+      <xsl:text>.</xsl:text>
+    </p>
+    <p>
       <sup id="1">
         <xsl:text>1</xsl:text>
       </sup>
@@ -266,16 +288,15 @@ SOFTWARE.
           </xsl:choose>
         </xsl:attribute>
         <xsl:value-of select="format-number(score,'0.00')"/>
-        <xsl:variable name="diff" select="((score - /metrics/@score) div /metrics/@score)"/>
         <span class="under">
           <xsl:attribute name="style">
             <xsl:text>font-weight:normal;</xsl:text>
             <xsl:text>color:</xsl:text>
             <xsl:choose>
-              <xsl:when test="abs($diff) &gt; 0.25">
+              <xsl:when test="abs(@diff) &gt; 0.25">
                 <xsl:text>red</xsl:text>
               </xsl:when>
-              <xsl:when test="abs($diff) &gt; 0.15">
+              <xsl:when test="abs(@diff) &gt; 0.15">
                 <xsl:text>orange</xsl:text>
               </xsl:when>
               <xsl:otherwise>
@@ -283,7 +304,7 @@ SOFTWARE.
               </xsl:otherwise>
             </xsl:choose>
           </xsl:attribute>
-          <xsl:value-of select="format-number($diff * 100, '#')"/>
+          <xsl:value-of select="format-number(@diff * 100, '#')"/>
           <xsl:text>%</xsl:text>
         </span>
       </td>

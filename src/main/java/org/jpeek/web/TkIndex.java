@@ -24,6 +24,7 @@
 package org.jpeek.web;
 
 import java.io.IOException;
+import org.cactoos.iterable.Joined;
 import org.cactoos.iterable.Limited;
 import org.jpeek.Header;
 import org.takes.Request;
@@ -36,7 +37,6 @@ import org.takes.rs.xe.XeChain;
 import org.takes.rs.xe.XeDirectives;
 import org.takes.rs.xe.XeMillis;
 import org.takes.rs.xe.XeStylesheet;
-import org.takes.rs.xe.XeTransform;
 
 /**
  * Index page.
@@ -64,56 +64,24 @@ final class TkIndex implements Take {
                             new XeDirectives(new Header()),
                             new XeAppend(
                                 "best",
-                                new XeTransform<>(
-                                    // @checkstyle MagicNumber (1 line)
-                                    new Limited<>(new Results().best(), 20),
-                                    ent -> {
-                                        final String[] parts =
-                                            ent.getKey().split(":");
-                                        return new XeAppend(
-                                            "repo",
-                                            new XeChain(
-                                                new XeAppend(
-                                                    "group",
-                                                    parts[0]
-                                                ),
-                                                new XeAppend(
-                                                    "artifact",
-                                                    parts[1]
-                                                ),
-                                                new XeAppend(
-                                                    "score",
-                                                    Double.toString(
-                                                        ent.getValue()
-                                                    )
-                                                )
-                                            )
-                                        );
-                                    }
+                                new XeDirectives(
+                                    new Joined<>(
+                                        new Limited<>(
+                                            // @checkstyle MagicNumber (1 line)
+                                            20, new Results().best()
+                                        )
+                                    )
                                 )
                             ),
                             new XeAppend(
                                 "recent",
-                                new XeTransform<>(
-                                    // @checkstyle MagicNumber (1 line)
-                                    new Limited<>(new Results().recent(), 50),
-                                    coords -> {
-                                        final String[] parts =
-                                            coords.split(":");
-                                        return new XeAppend(
-                                            "repo",
-                                            new XeChain(
-                                                new XeAppend(
-                                                    "group",
-                                                    parts[0]
-                                                ),
-                                                new XeAppend(
-                                                    "artifact",
-                                                    parts[1]
-                                                )
-                                            )
-                                        );
-                                    }
+                                new XeDirectives(
+                                    new Joined<>(
+                                        new Limited<>(
+                                            // @checkstyle MagicNumber (1 line)
+                                            50, new Results().recent()
+                                        )
+                                    )
                                 )
                             ),
                             new XeMillis(true)

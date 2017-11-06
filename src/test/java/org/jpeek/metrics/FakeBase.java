@@ -73,8 +73,8 @@ public final class FakeBase implements Base {
     public Iterable<Path> files() throws IOException {
         final Path temp = Files.createTempDirectory("jpeek");
         final Iterable<String> sources = new Mapped<>(
-            this.classes,
-            cls -> String.format("%s.java", cls)
+            cls -> String.format("%s.java", cls),
+            this.classes
         );
         new IoCheckedScalar<>(
             new And(

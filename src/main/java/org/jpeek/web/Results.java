@@ -30,17 +30,18 @@ import com.jcabi.dynamo.Region;
 import com.jcabi.dynamo.Table;
 import com.jcabi.dynamo.mock.H2Data;
 import com.jcabi.dynamo.mock.MkRegion;
+import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.iterable.Mapped;
 import org.cactoos.iterable.PropertiesOf;
-import org.cactoos.map.MapEntry;
 import org.jpeek.Version;
+import org.xembly.Directive;
+import org.xembly.Directives;
 
 /**
  * Futures for {@link AsyncReports}.
@@ -89,16 +90,35 @@ final class Results {
      */
     public void add(final String artifact, final Path dir)
         throws IOException {
-        final double score = Double.parseDouble(
-            new XMLDocument(
-                dir.resolve("index.xml").toFile()
-            ).xpath("/index/@score").get(0)
+        final XML index = new XMLDocument(
+            dir.resolve("index.xml").toFile()
         );
         this.table.put(
             new Attributes()
                 .with("good", "true")
                 .with("artifact", artifact)
-                .with("score", (long) (score * Results.MULTIPLIER))
+                .with(
+                    "score",
+                    (long) (
+                        Double.parseDouble(
+                            index.xpath("/index/@score").get(0)
+                        ) * Results.MULTIPLIER
+                    )
+                )
+                .with(
+                    "diff",
+                    (long) (
+                        Double.parseDouble(
+                            index.xpath("/index/@diff").get(0)
+                        ) * Results.MULTIPLIER
+                    )
+                )
+                .with(
+                    "classes",
+                    Integer.parseInt(
+                        index.xpath("/index/metric[1]/classes/text()").get(0)
+                    )
+                )
                 .with("version", new Version().value())
                 .with("added", System.currentTimeMillis())
                 .with(
@@ -114,8 +134,16 @@ final class Results {
      * Recent artifacts..
      * @return List of them
      */
-    public Iterable<String> recent() {
+    public Iterable<Iterable<Directive>> recent() {
         return new Mapped<>(
+            item -> {
+                final String[] parts = item.get("artifact").getS().split(":");
+                return new Directives()
+                    .add("repo")
+                    .add("group").set(parts[0]).up()
+                    .add("artifact").set(parts[1]).up()
+                    .up();
+            },
             this.table.frame()
                 .where("good", "true")
                 .through(
@@ -126,8 +154,7 @@ final class Results {
                         // @checkstyle MagicNumber (1 line)
                         .withLimit(50)
                         .withAttributesToGet("artifact")
-                ),
-            item -> item.get("artifact").getS()
+                )
         );
     }
 
@@ -136,8 +163,30 @@ final class Results {
      * @return List of them
      * @throws IOException If fails
      */
-    public Iterable<Map.Entry<String, Double>> best() throws IOException {
+    public Iterable<Iterable<Directive>> best() throws IOException {
         return new Mapped<>(
+            item -> {
+                final String[] parts = item.get("artifact").getS().split(":");
+                return new Directives()
+                    .add("repo")
+                    .add("group").set(parts[0]).up()
+                    .add("artifact").set(parts[1]).up()
+                    .add("score").set(
+                        Double.parseDouble(item.get("score").getN())
+                            / Results.MULTIPLIER
+                    )
+                    .up()
+                    .add("diff").set(
+                        Double.parseDouble(item.get("diff").getN())
+                            / Results.MULTIPLIER
+                    )
+                    .up()
+                    .add("classes").set(
+                        Integer.parseInt(item.get("classes").getN())
+                    )
+                    .up()
+                    .up();
+            },
             this.table.frame()
                 .where("version", new Version().value())
                 .through(
@@ -147,13 +196,8 @@ final class Results {
                         .withConsistentRead(false)
                         // @checkstyle MagicNumber (1 line)
                         .withLimit(20)
-                        .withAttributesToGet("artifact", "score")
-                ),
-            item -> new MapEntry<>(
-                item.get("artifact").getS(),
-                Double.parseDouble(item.get("score").getN())
-                    / Results.MULTIPLIER
-            )
+                        .withAttributesToGet("artifact", "score", "diff")
+                )
         );
     }
 
@@ -179,7 +223,8 @@ final class Results {
                 new H2Data().with(
                     "jpeek-results",
                     new String[] {"artifact"},
-                    "score", "ttl", "version", "added", "good"
+                    "score", "diff", "ttl", "version", "added",
+                    "good", "classes"
                 )
             );
         }

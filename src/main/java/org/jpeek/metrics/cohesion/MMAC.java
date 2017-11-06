@@ -36,8 +36,8 @@ import org.cactoos.iterable.Mapped;
 import org.cactoos.list.ListOf;
 import org.jpeek.Base;
 import org.jpeek.Metric;
-import org.jpeek.metrics.Colors;
 import org.jpeek.metrics.JavassistClasses;
+import org.jpeek.metrics.Summary;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.signature.SignatureReader;
 import org.objectweb.asm.signature.SignatureVisitor;
@@ -85,9 +85,7 @@ public final class MMAC implements Metric {
     @Override
     public Iterable<Directive> xembly() throws IOException {
         return new JavassistClasses(
-            this.base, MMAC::cohesion,
-            // @checkstyle MagicNumberCheck (1 line)
-            new Colors(0.15d, 0.85d)
+            this.base, MMAC::cohesion
         ).xembly();
     }
 
@@ -96,29 +94,18 @@ public final class MMAC implements Metric {
      *
      * @param ctc The .class file
      * @return MMAC metric
-     * @checkstyle ReturnCountCheck (10 lines). This assert is suppressed
-     *  because we have non one line formula for metric calculation.
      * @checkstyle TrailingCommentCheck (50 lines)
-     * @checkstyle MethodBodyCommentsCheck (50 lines)
      */
     @SuppressWarnings(
-        // These PMD asserts are suppressed because we have non one line
-        // formula for metric calculation.
         {
-            "PMD.OnlyOneReturn", "PMD.CyclomaticComplexity",
-            "PMD.StdCyclomaticComplexity", "PMD.ModifiedCyclomaticComplexity"
-        })
-    private static double cohesion(final CtClass ctc) {
+            "PMD.CyclomaticComplexity",
+            "PMD.StdCyclomaticComplexity",
+            "PMD.ModifiedCyclomaticComplexity"
+        }
+    )
+    private static Iterable<Directive> cohesion(final CtClass ctc) {
         final List<Collection<String>> methods = new ListOf<>(
             new Mapped<>(
-                new Mapped<>(
-                    new Filtered<>(
-                        new IterableOf<>(ctc.getDeclaredMethods()),
-                        // isn't lambda or other generated methods by compiler
-                        m -> !m.getName().contains("$")
-                    ),
-                    CtBehavior::getSignature
-                ),
                 signature -> {
                     final Set<String> types = new HashSet<>();
                     new SignatureReader(signature).accept(
@@ -131,28 +118,26 @@ public final class MMAC implements Metric {
                             @Override
                             public void visitBaseType(final char name) {
                                 super.visitBaseType(name);
-                                if ('V' != name) { // isn't void type
+                                if ('V' != name) {
                                     types.add(String.valueOf(name));
                                 }
                             }
                         }
                     );
                     return types;
-                }
+                },
+                new Mapped<>(
+                    CtBehavior::getSignature,
+                    new Filtered<>(
+                        m -> !m.getName().contains("$"),
+                        new IterableOf<>(ctc.getDeclaredMethods())
+                    )
+                )
             )
         );
-        if (methods.isEmpty()) {
-            return 0.0d;
-        }
-        if (methods.size() == 1) {
-            return 1.0d;
-        }
         final Set<String> types = new HashSet<>();
         for (final Collection<String> method : methods) {
             types.addAll(method);
-        }
-        if (types.isEmpty()) {
-            return 0.0d;
         }
         double sum = 0.0d;
         for (final String type : types) {
@@ -164,7 +149,17 @@ public final class MMAC implements Metric {
             }
             sum += mcnt * (mcnt - 1);
         }
-        return sum
-            / (types.size() * methods.size() * (methods.size() - 1));
+        final int div = types.size() * methods.size() * (methods.size() - 1);
+        final double value;
+        if (methods.size() == 1) {
+            value = 1.0d;
+        } else if (div == 0) {
+            value = 0.0d;
+        } else {
+            value = sum / (double) div;
+        }
+        return new Summary(value)
+            .with("methods", methods.size())
+            .with("types", types.size());
     }
 }

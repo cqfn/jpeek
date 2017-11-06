@@ -93,28 +93,30 @@ public final class App {
             );
         }
         final Base base = new DefaultBase(this.input);
-        final Iterable<Metric> metrics = new ListOf<>(
-            new CAMC(base),
-            new LCOM(base),
-            new OCC(base),
-            new NHD(base),
-            new LCOM2(base),
-            new LCOM3(base),
-            new MMAC(base)
+        final Iterable<Report> reports = new ListOf<>(
+            new Report(new CAMC(base), 0.10d, 0.35d),
+            new Report(new LCOM(base), 100.0d, 5.0d),
+            new Report(new OCC(base), 0.85d, 0.25d),
+            new Report(new NHD(base), 0.55d, 0.15d),
+            new Report(new LCOM2(base), 0.75d, 0.25d),
+            new Report(new LCOM3(base), 0.85d, 0.25d),
+            new Report(new MMAC(base), 0.15d, 0.85d)
         );
         new IoCheckedScalar<>(
             new And(
-                metrics,
-                metric -> {
-                    new Report(metric).save(this.output);
+                reports,
+                report -> {
+                    report.save(this.output);
                 }
             )
         ).value();
-        final XML index = App.xsl("index-post.xsl").transform(
-            new XMLDocument(
-                new Xembler(
-                    new Index(this.output).value()
-                ).xmlQuietly()
+        final XML index = App.xsl("index-post-2.xsl").transform(
+            App.xsl("index-post-1.xsl").transform(
+                new XMLDocument(
+                    new Xembler(
+                        new Index(this.output).value()
+                    ).xmlQuietly()
+                )
             )
         );
         this.save(index.toString(), "index.xml");

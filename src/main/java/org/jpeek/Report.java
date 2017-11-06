@@ -69,11 +69,30 @@ final class Report {
     private final Metric metric;
 
     /**
+     * Post processing XSL.
+     */
+    private final XSL post;
+
+    /**
      * Ctor.
      * @param mtc Metric
      */
     Report(final Metric mtc) {
+        // @checkstyle MagicNumber (1 line)
+        this(mtc, 0.25d, 0.75d);
+    }
+
+    /**
+     * Ctor.
+     * @param mtc Metric
+     * @param low Low boundary
+     * @param high High boundary
+     */
+    Report(final Metric mtc, final double low, final double high) {
         this.metric = mtc;
+        this.post = new XSLDocument(
+            Report.class.getResourceAsStream("colors.xsl")
+        ).with("low", low).with("high", high);
     }
 
     /**
@@ -83,7 +102,8 @@ final class Report {
      */
     public void save(final Path target) throws IOException {
         final XML xml = new StrictXML(
-            this.xml(), Report.SCHEMA
+            this.post.transform(this.xml()),
+            Report.SCHEMA
         );
         new LengthOf(
             new TeeInput(

@@ -109,7 +109,13 @@ SOFTWARE.
             <xsl:text>Artifact</xsl:text>
           </th>
           <th>
+            <xsl:text>Classes</xsl:text>
+          </th>
+          <th>
             <xsl:text>Score</xsl:text>
+          </th>
+          <th>
+            <xsl:text>Mistake</xsl:text>
           </th>
         </tr>
       </thead>
@@ -132,9 +138,31 @@ SOFTWARE.
         </code>
       </td>
       <td style="text-align:right">
+        <xsl:value-of select="classes"/>
+      </td>
+      <td style="text-align:right">
         <a href="{group}/{artifact}/">
           <xsl:value-of select="format-number(score,'0.00')"/>
         </a>
+      </td>
+      <td>
+        <xsl:attribute name="style">
+          <xsl:text>text-align:right;</xsl:text>
+          <xsl:text>color:</xsl:text>
+          <xsl:choose>
+            <xsl:when test="diff &lt; 0.10">
+              <xsl:text>green</xsl:text>
+            </xsl:when>
+            <xsl:when test="diff &lt; 0.20">
+              <xsl:text>orange</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>red</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:attribute>
+        <xsl:value-of select="format-number(100 * diff,'#')"/>
+        <xsl:text>%</xsl:text>
       </td>
     </tr>
   </xsl:template>

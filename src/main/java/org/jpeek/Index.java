@@ -27,13 +27,12 @@ import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.cactoos.Scalar;
 import org.cactoos.collection.Filtered;
 import org.cactoos.collection.Joined;
+import org.cactoos.io.Directory;
 import org.cactoos.iterable.Mapped;
 import org.cactoos.list.Sorted;
 import org.xembly.Directive;
@@ -71,15 +70,14 @@ final class Index implements Scalar<Iterable<Directive>> {
             .append(new Header())
             .append(
                 new Joined<>(
-                    new Mapped<Path, Iterable<Directive>>(
-                        new Filtered<Path>(
-                            Files.list(this.output)
-                                .collect(Collectors.toList()),
-                            path -> path.getFileName()
-                                .toString()
-                                .matches("^[A-Z].+\\.xml$")
-                        ),
-                        Index::metric
+                    new Mapped<>(
+                        Index::metric,
+                        new Filtered<>(
+                            new Directory(this.output),
+                            path -> path.getFileName().toString().matches(
+                                "^[A-Z].+\\.xml$"
+                            )
+                        )
                     )
                 )
             );

@@ -76,10 +76,8 @@ public final class MMACTest {
             XhtmlMatchers.hasXPaths(
                 "/metric/app/package/class[@id='NoMethods']",
                 "//class[@id='NoMethods' and @value='0.0000']",
-                "//class[@id='NoMethods' and @color='red']",
                 "/metric/app/package/class[@id='MethodsWithDiffParamTypes']",
-                "//class[@id='MethodsWithDiffParamTypes' and @value='0.0370']",
-                "//class[@id='MethodsWithDiffParamTypes' and @color='red']"
+                "//class[@id='MethodsWithDiffParamTypes' and @value='0.0370']"
             )
         );
     }
@@ -96,8 +94,7 @@ public final class MMACTest {
             ),
             XhtmlMatchers.hasXPaths(
                 "/metric/app/package/class[@id='OverloadMethods']",
-                "//class[@id='OverloadMethods' and @value='0.7222']",
-                "//class[@id='OverloadMethods' and @color='yellow']"
+                "//class[@id='OverloadMethods' and @value='0.7222']"
             )
         );
     }
@@ -120,16 +117,12 @@ public final class MMACTest {
             XhtmlMatchers.hasXPaths(
                 "/metric/app/package/class[@id='OneVoidMethodWithoutParams']",
                 "//class[@id='OneVoidMethodWithoutParams' and @value='1.0000']",
-                "//class[@id='OneVoidMethodWithoutParams' and @color='green']",
                 "/metric/app/package/class[@id='OnlyOneMethodWithParams']",
                 "//class[@id='OnlyOneMethodWithParams' and @value='1.0000']",
-                "//class[@id='OnlyOneMethodWithParams' and @color='green']",
                 "/metric/app/package/class[@id='OneMethodCreatesLambda']",
                 "//class[@id='OneMethodCreatesLambda' and @value='1.0000']",
-                "//class[@id='OneMethodCreatesLambda' and @color='green']",
                 "/metric/app/package/class[@id='Foo']",
-                "//class[@id='Foo' and @value='1.0000']",
-                "//class[@id='Foo' and @color='green']"
+                "//class[@id='Foo' and @value='1.0000']"
             )
         );
     }

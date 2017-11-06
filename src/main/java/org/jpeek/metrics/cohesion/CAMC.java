@@ -36,8 +36,8 @@ import org.cactoos.collection.Joined;
 import org.cactoos.iterator.Mapped;
 import org.jpeek.Base;
 import org.jpeek.Metric;
-import org.jpeek.metrics.Colors;
 import org.jpeek.metrics.JavassistClasses;
+import org.jpeek.metrics.Summary;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.signature.SignatureReader;
 import org.objectweb.asm.signature.SignatureVisitor;
@@ -86,9 +86,7 @@ public final class CAMC implements Metric {
     @Override
     public Iterable<Directive> xembly() throws IOException {
         return new JavassistClasses(
-            this.base, CAMC::cohesion,
-            // @checkstyle MagicNumberCheck (1 line)
-            new Colors(0.10d, 0.35d)
+            this.base, CAMC::cohesion
         ).xembly();
     }
 
@@ -98,13 +96,14 @@ public final class CAMC implements Metric {
      * @return Metrics
      * @throws NotFoundException If fails
      */
-    private static double cohesion(final CtClass ctc) throws NotFoundException {
+    private static Iterable<Directive> cohesion(final CtClass ctc)
+        throws NotFoundException {
         final Collection<Collection<String>> methods = CAMC.methods(ctc);
         final Collection<String> types = new HashSet<>(
             new Joined<String>(
                 () -> new Mapped<>(
-                    methods.iterator(),
-                    strings -> strings
+                    strings -> strings,
+                    methods.iterator()
                 )
             )
         );
@@ -124,18 +123,19 @@ public final class CAMC implements Metric {
         } else {
             cohesion = (double) sum / (double) (types.size() * methods.size());
         }
-        return cohesion;
+        return new Summary(cohesion)
+            .with("sum", sum)
+            .with("types", types.size())
+            .with("methods", methods.size());
     }
 
     /**
      * Get all method signatures.
      * @param ctc The .class file
      * @return Method signatures
-     * @throws NotFoundException If fails
      */
     @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
-    private static Collection<Collection<String>> methods(final CtClass ctc)
-        throws NotFoundException {
+    private static Collection<Collection<String>> methods(final CtClass ctc) {
         final Collection<Collection<String>> methods = new LinkedList<>();
         for (final CtMethod mtd : ctc.getDeclaredMethods()) {
             if (Modifier.isPrivate(mtd.getModifiers())) {

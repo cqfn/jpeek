@@ -71,8 +71,7 @@ public final class CAMCTest {
             ),
             XhtmlMatchers.hasXPaths(
                 "/metric/app/package[@id='']/class[@id='Foo']",
-                "//class[@id='Foo' and @value='0.6667']",
-                "//class[@id='Foo' and @color='green']"
+                "//class[@id='Foo' and @value='0.6667']"
             )
         );
     }
@@ -89,8 +88,7 @@ public final class CAMCTest {
             ),
             XhtmlMatchers.hasXPaths(
                 "/metric/app/package[@id='']/class[@id='Bar']",
-                "//class[@id='Bar' and @value='1.0000']",
-                "//class[@id='Bar' and @color='green']"
+                "//class[@id='Bar' and @value='1.0000']"
             )
         );
     }
