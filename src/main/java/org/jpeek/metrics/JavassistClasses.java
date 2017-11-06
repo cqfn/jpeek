@@ -25,6 +25,7 @@ package org.jpeek.metrics;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
@@ -124,11 +125,12 @@ public final class JavassistClasses implements Metric {
                     && !ctClass.getName().matches("^.+\\$AjcClosure[0-9]+$"),
                 new Mapped<>(
                     path -> {
-                        FileInputStream inputStream = new FileInputStream(path.toFile());
+                        final InputStream inputstream =
+                            new FileInputStream(path.toFile());
                         try {
-                            return this.pool.makeClassIfNew(inputStream);
-                        }finally {
-                            inputStream.close();
+                            return this.pool.makeClassIfNew(inputstream);
+                        } finally {
+                            inputstream.close();
                         }
                     },
                     new Filtered<>(
