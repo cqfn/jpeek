@@ -123,9 +123,14 @@ public final class JavassistClasses implements Metric {
                     && !ctClass.getName().matches("^.+\\$[0-9]+$")
                     && !ctClass.getName().matches("^.+\\$AjcClosure[0-9]+$"),
                 new Mapped<>(
-                    path -> this.pool.makeClassIfNew(
-                        new FileInputStream(path.toFile())
-                    ),
+                    path -> {
+                        FileInputStream inputStream = new FileInputStream(path.toFile());
+                        try {
+                            return this.pool.makeClassIfNew(inputStream);
+                        }finally {
+                            inputStream.close();
+                        }
+                    },
                     new Filtered<>(
                         path -> Files.isRegularFile(path)
                             && path.toString().endsWith(".class"),
