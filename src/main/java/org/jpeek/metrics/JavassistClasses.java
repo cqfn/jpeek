@@ -23,14 +23,12 @@
  */
 package org.jpeek.metrics;
 
+import com.google.common.io.Closer;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.google.common.io.Closer;
 import javassist.ClassPool;
 import javassist.CtClass;
 import org.cactoos.Func;
@@ -131,9 +129,11 @@ public final class JavassistClasses implements Metric {
                         try {
                             return this.pool.makeClassIfNew(
                                 closer.register(
-                                    new FileInputStream(path.toFile())));
-                        } catch (Throwable e) {
-                            throw closer.rethrow(e);
+                                    new FileInputStream(path.toFile())
+                                )
+                            );
+                        } catch (final Throwable exc) {
+                            throw closer.rethrow(exc);
                         } finally {
                             closer.close();
                         }
