@@ -25,15 +25,14 @@ package org.jpeek;
 
 import com.jcabi.xml.XMLDocument;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
-import java.util.stream.Collectors;
 import org.cactoos.Scalar;
 import org.cactoos.collection.Filtered;
 import org.cactoos.collection.Joined;
+import org.cactoos.io.Directory;
 import org.cactoos.iterable.Mapped;
 import org.cactoos.scalar.And;
 import org.cactoos.scalar.IoCheckedScalar;
@@ -71,11 +70,10 @@ final class Matrix implements Scalar<Iterable<Directive>> {
         new IoCheckedScalar<>(
             new And(
                 new Filtered<>(
-                    Files.list(this.output)
-                        .collect(Collectors.toList()),
-                    path -> path.getFileName()
-                        .toString()
-                        .matches("^[A-Z].+\\.xml$")
+                    new Directory(this.output),
+                    path -> path.getFileName().toString().matches(
+                        "^[A-Z].+\\.xml$"
+                    )
                 ),
                 path -> {
                     new And(
@@ -103,11 +101,9 @@ final class Matrix implements Scalar<Iterable<Directive>> {
             .append(
                 new Joined<Directive>(
                     new Mapped<>(
-                        matrix.entrySet(),
                         ent -> new Directives().add("class").append(
                             new Joined<Directive>(
                                 new Mapped<>(
-                                    ent.getValue().entrySet(),
                                     mtd -> new Directives()
                                         .add("metric")
                                         .attr("name", mtd.getKey())
@@ -116,10 +112,12 @@ final class Matrix implements Scalar<Iterable<Directive>> {
                                             "rank",
                                             Matrix.rank(mtd.getValue())
                                         )
-                                        .up()
+                                        .up(),
+                                    ent.getValue().entrySet()
                                 )
                             )
-                        ).attr("id", ent.getKey()).up()
+                        ).attr("id", ent.getKey()).up(),
+                        matrix.entrySet()
                     )
                 )
             );

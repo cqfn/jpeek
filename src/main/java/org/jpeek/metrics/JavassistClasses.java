@@ -25,10 +25,8 @@ package org.jpeek.metrics;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import javassist.ClassPool;
 import javassist.CtClass;
@@ -67,12 +65,7 @@ public final class JavassistClasses implements Metric {
     /**
      * Func.
      */
-    private final IoCheckedFunc<CtClass, Double> func;
-
-    /**
-     * Colors.
-     */
-    private final Colors colors;
+    private final IoCheckedFunc<CtClass, Iterable<Directive>> func;
 
     /**
      * Javassist pool.
@@ -83,32 +76,29 @@ public final class JavassistClasses implements Metric {
      * Ctor.
      * @param bse The base
      * @param fnc Func
-     * @param clrs Colors
      */
-    public JavassistClasses(final Base bse, final Func<CtClass, Double> fnc,
-        final Colors clrs) {
+    public JavassistClasses(final Base bse,
+        final Func<CtClass, Iterable<Directive>> fnc) {
         this.base = bse;
         this.pool = ClassPool.getDefault();
         this.func = new IoCheckedFunc<>(fnc);
-        this.colors = clrs;
     }
 
     @Override
     public Iterable<Directive> xembly() throws IOException {
         return new Directives()
             .add("metric")
-            .add("colors").set(this.colors).up()
             .add("app")
             .attr("id", this.base)
             .append(
                 new Joined<Directive>(
                     new Mapped<>(
-                        this.metrics(),
                         ent -> new Directives()
                             .add("package")
                             .attr("id", ent.getKey())
                             .append(ent.getValue())
-                            .up()
+                            .up(),
+                        this.metrics()
                     )
                 )
             );
@@ -124,28 +114,30 @@ public final class JavassistClasses implements Metric {
         throws IOException {
         final Map<String, Directives> map = new HashMap<>(0);
         final Iterable<Map.Entry<String, Directives>> all = new Mapped<>(
+            this::metric,
             new Filtered<>(
-                new Mapped<>(
-                    new Filtered<>(
-                        this.base.files(),
-                        path -> Files.isRegularFile(path)
-                            && path.toString().endsWith(".class")
-                    ),
-                    path -> {
-                        try (InputStream inputStream =
-                            new FileInputStream(path.toFile())) {
-                            return this.pool.makeClassIfNew(inputStream);
-                        }
-                    }
-                ),
                 // @checkstyle BooleanExpressionComplexityCheck (10 lines)
                 ctClass -> !ctClass.isInterface()
                     && !ctClass.isEnum()
                     && !ctClass.isAnnotation()
                     && !ctClass.getName().matches("^.+\\$[0-9]+$")
-                    && !ctClass.getName().matches("^.+\\$AjcClosure[0-9]+$")
-            ),
-            this::metric
+                    && !ctClass.getName().matches("^.+\\$AjcClosure[0-9]+$"),
+                new Mapped<>(
+                    path -> {
+                        FileInputStream inputStream = new FileInputStream(path.toFile());
+                        try {
+                            return this.pool.makeClassIfNew(inputStream);
+                        }finally {
+                            inputStream.close();
+                        }
+                    },
+                    new Filtered<>(
+                        path -> Files.isRegularFile(path)
+                            && path.toString().endsWith(".class"),
+                        this.base.files()
+                    )
+                )
+            )
         );
         for (final Map.Entry<String, Directives> ent : all) {
             map.putIfAbsent(ent.getKey(), new Directives());
@@ -162,7 +154,7 @@ public final class JavassistClasses implements Metric {
      */
     private Map.Entry<String, Directives> metric(
         final CtClass ctc) throws IOException {
-        final double cohesion = this.func.apply(ctc);
+        final Iterable<Directive> cohesion = this.func.apply(ctc);
         ctc.defrost();
         String pkg = ctc.getPackageName();
         if (pkg == null) {
@@ -173,8 +165,7 @@ public final class JavassistClasses implements Metric {
             new Directives()
                 .add("class")
                 .attr("id", ctc.getSimpleName())
-                .attr("value", String.format(Locale.ENGLISH, "%.4f", cohesion))
-                .attr("color", this.colors.apply(cohesion))
+                .append(cohesion)
                 .up()
         );
     }

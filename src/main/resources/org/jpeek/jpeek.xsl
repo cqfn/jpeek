@@ -114,12 +114,12 @@ SOFTWARE.
       <xsl:text>.</xsl:text>
     </p>
   </xsl:template>
-  <xsl:template match="app[not(package)]">
+  <xsl:template match="app[not(package/class)]">
     <p>
       <xsl:text>No measurements for packages.</xsl:text>
     </p>
   </xsl:template>
-  <xsl:template match="app[package]">
+  <xsl:template match="app[package/class]">
     <table data-sortable="true">
       <colgroup>
         <col/>
@@ -128,11 +128,16 @@ SOFTWARE.
       <thead>
         <tr>
           <th>
-            <xsl:text>ID</xsl:text>
+            <xsl:text>Class</xsl:text>
           </th>
           <th style="text-align:right">
-            <xsl:text>Value</xsl:text>
+            <xsl:value-of select="/metric/title"/>
           </th>
+          <xsl:for-each select="package[1]/class[1]/vars/var">
+            <th style="text-align:right">
+              <xsl:value-of select="@id"/>
+            </th>
+          </xsl:for-each>
         </tr>
       </thead>
       <tbody>
@@ -190,6 +195,11 @@ SOFTWARE.
         </xsl:if>
         <xsl:value-of select="@value"/>
       </td>
+      <xsl:for-each select="vars/var">
+        <td style="text-align:right">
+          <xsl:value-of select="."/>
+        </td>
+      </xsl:for-each>
     </tr>
   </xsl:template>
 </xsl:stylesheet>

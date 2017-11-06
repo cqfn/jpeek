@@ -72,8 +72,7 @@ public final class NHDTest {
             ),
             XhtmlMatchers.hasXPaths(
                 "/metric/app/package[@id='']/class[@id='Foo']",
-                "//class[@id='Foo' and @value='0.3333']",
-                "//class[@id='Foo' and @color='yellow']"
+                "//class[@id='Foo' and @value='0.3333']"
             )
         );
     }

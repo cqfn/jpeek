@@ -36,8 +36,8 @@ import org.cactoos.collection.Joined;
 import org.cactoos.iterator.Mapped;
 import org.jpeek.Base;
 import org.jpeek.Metric;
-import org.jpeek.metrics.Colors;
 import org.jpeek.metrics.JavassistClasses;
+import org.jpeek.metrics.Summary;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.signature.SignatureReader;
 import org.objectweb.asm.signature.SignatureVisitor;
@@ -81,9 +81,7 @@ public final class NHD implements Metric {
     @Override
     public Iterable<Directive> xembly() throws IOException {
         return new JavassistClasses(
-            this.base, NHD::cohesion,
-            // @checkstyle MagicNumberCheck (1 line)
-            new Colors(0.55d, 0.15d)
+            this.base, NHD::cohesion
         ).xembly();
     }
 
@@ -93,13 +91,14 @@ public final class NHD implements Metric {
      * @return Metrics
      * @throws NotFoundException If fails
      */
-    private static double cohesion(final CtClass ctc) throws NotFoundException {
+    private static Iterable<Directive> cohesion(final CtClass ctc)
+        throws NotFoundException {
         final Collection<Collection<String>> methods = NHD.methods(ctc);
         final Collection<String> types = new HashSet<>(
             new Joined<String>(
                 () -> new Mapped<>(
-                    methods.iterator(),
-                    strings -> strings
+                    strings -> strings,
+                    methods.iterator()
                 )
             )
         );
@@ -117,10 +116,13 @@ public final class NHD implements Metric {
         if (types.isEmpty() || methods.isEmpty()) {
             cohesion = 1.0d;
         } else {
-            cohesion = 1 - (2 * ((double) sum / (double) (types.size()
-                * methods.size() * (methods.size() - 1))));
+            cohesion = 1.0d - 2.0d * (double) sum / (double) (types.size()
+                * methods.size() * (methods.size() - 1));
         }
-        return cohesion;
+        return new Summary(cohesion)
+            .with("sum", sum)
+            .with("types", types.size())
+            .with("methods", methods.size());
     }
 
     /**

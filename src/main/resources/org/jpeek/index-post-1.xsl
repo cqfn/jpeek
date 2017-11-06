@@ -23,15 +23,33 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml" version="2.0">
+  <xsl:variable name="score">
+    <xsl:choose>
+      <xsl:when test="/index/metric">
+        <xsl:value-of select="sum(/index/metric/score) div count(/index/metric)"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:text>0</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
   <xsl:template match="/index">
     <xsl:copy>
       <xsl:attribute name="score">
+        <xsl:value-of select="format-number($score,'0.0000')"/>
+      </xsl:attribute>
+      <xsl:apply-templates select="node()|@*"/>
+    </xsl:copy>
+  </xsl:template>
+  <xsl:template match="metric">
+    <xsl:copy>
+      <xsl:attribute name="diff">
         <xsl:choose>
-          <xsl:when test="metric">
-            <xsl:value-of select="format-number(sum(metric/@score) div count(metric), '0.0000')"/>
+          <xsl:when test="$score != 0">
+            <xsl:value-of select="((score - $score) div $score)"/>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:text>0.0000</xsl:text>
+            <xsl:text>0</xsl:text>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:attribute>

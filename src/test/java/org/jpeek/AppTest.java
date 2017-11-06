@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -68,6 +69,22 @@ public final class AppTest {
         MatcherAssert.assertThat(
             Files.exists(output.resolve("index.html")),
             Matchers.equalTo(true)
+        );
+    }
+
+    @Test
+    public void createsIndexXml() throws IOException {
+        final Path output = Files.createTempDirectory("").resolve("x7");
+        final Path input = Paths.get(".");
+        new App(input, output).analyze();
+        MatcherAssert.assertThat(
+            XhtmlMatchers.xhtml(
+                new TextOf(output.resolve("index.xml")).asString()
+            ),
+            XhtmlMatchers.hasXPaths(
+                "/index[@score!='0.0000']",
+                "/index[count(metric)>0]"
+            )
         );
     }
 

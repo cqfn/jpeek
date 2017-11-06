@@ -37,8 +37,8 @@ import javassist.CtField;
 import javassist.CtMethod;
 import org.jpeek.Base;
 import org.jpeek.Metric;
-import org.jpeek.metrics.Colors;
 import org.jpeek.metrics.JavassistClasses;
+import org.jpeek.metrics.Summary;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
@@ -79,10 +79,7 @@ public final class OCC implements Metric {
     @Override
     public Iterable<Directive> xembly() throws IOException {
         return new JavassistClasses(
-            this.base,
-            OCC::cohesion,
-            // @checkstyle MagicNumberCheck (1 line)
-            new Colors(0.85d, 0.25d)
+            this.base, OCC::cohesion
         ).xembly();
     }
 
@@ -92,7 +89,7 @@ public final class OCC implements Metric {
      * @param ctc The .class file
      * @return Metrics
      */
-    private static double cohesion(final CtClass ctc) {
+    private static Iterable<Directive> cohesion(final CtClass ctc) {
         final List<String> ctmethods = Arrays.stream(ctc.getDeclaredMethods())
             .map(CtMethod::getName)
             .collect(Collectors.toList());
@@ -101,9 +98,11 @@ public final class OCC implements Metric {
         if (number == 1) {
             result = 0;
         } else {
-            result = maxRw(ctc, ctmethods) / (number - 1);
+            result = maxRw(ctc, ctmethods) / (double) (number - 1);
         }
-        return result;
+        return new Summary(result)
+            .with("methods", ctmethods.size())
+            .with("number", number);
     }
 
     /**
