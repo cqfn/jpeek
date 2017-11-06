@@ -24,8 +24,8 @@
 package org.jpeek.metrics;
 
 import java.io.FileInputStream;
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
@@ -127,8 +127,8 @@ public final class JavassistClasses implements Metric {
                     path -> {
                         try (InputStream inputStream =
                             new FileInputStream(path.toFile())) {
-                                return this.pool.makeClassIfNew(inputStream);
-                            }
+                            return this.pool.makeClassIfNew(inputStream);
+                        }
                     },
                     new Filtered<>(
                         path -> Files.isRegularFile(path)
