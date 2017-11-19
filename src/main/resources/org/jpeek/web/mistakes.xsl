@@ -79,6 +79,9 @@ SOFTWARE.
             <xsl:text>Metric</xsl:text>
           </th>
           <th>
+            <xsl:text>Seen in</xsl:text>
+          </th>
+          <th>
             <xsl:text>Neg</xsl:text>
           </th>
           <th>
@@ -100,6 +103,9 @@ SOFTWARE.
         <xsl:value-of select="@id"/>
       </td>
       <td style="text-align:right">
+        <xsl:value-of select="pos + neg"/>
+      </td>
+      <td style="text-align:right">
         <xsl:if test="navg &gt; 0">
           <xsl:text>-</xsl:text>
           <xsl:value-of select="format-number(navg * 100, '#')"/>
@@ -109,7 +115,22 @@ SOFTWARE.
           </span>
         </xsl:if>
       </td>
-      <td style="text-align:right">
+      <td>
+        <xsl:attribute name="style">
+          <xsl:text>text-align:right;</xsl:text>
+          <xsl:text>color:</xsl:text>
+          <xsl:choose>
+            <xsl:when test="avg &lt; 0.10">
+              <xsl:text>green</xsl:text>
+            </xsl:when>
+            <xsl:when test="avg &lt; 0.20">
+              <xsl:text>orange</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>red</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:attribute>
         <xsl:value-of select="format-number(avg * 100, '#')"/>
         <xsl:text>%</xsl:text>
       </td>

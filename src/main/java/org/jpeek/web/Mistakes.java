@@ -269,7 +269,7 @@ final class Mistakes {
             .next();
         // @checkstyle StringLiteralsConcatenationCheck (2 lines)
         final long avg = Long.parseLong(fin.get("pavg").getN())
-            + Long.parseLong(fin.get("navg").getN());
+            + Long.parseLong(fin.get("navg").getN()) >> 1;
         fin.put(
             new AttributeUpdates()
                 .with(

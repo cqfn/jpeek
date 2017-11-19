@@ -37,50 +37,37 @@ import org.takes.rs.xe.XeChain;
 import org.takes.rs.xe.XeDirectives;
 import org.takes.rs.xe.XeMillis;
 import org.takes.rs.xe.XeStylesheet;
-import org.xembly.Directive;
 
 /**
- * Index page.
+ * Ping them all.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.10
+ * @since 0.14
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
-final class TkIndex implements Take {
+final class TkPing implements Take {
 
     @Override
     public Response act(final Request req) throws IOException {
         return new RsXslt(
             new RsXembly(
                 new XeChain(
-                    new XeStylesheet("/org/jpeek/web/index.xsl"),
+                    new XeStylesheet("/org/jpeek/web/ping.xsl"),
                     new XeAppend(
                         "index",
                         new XeChain(
                             new XeMillis(),
                             new XeDirectives(new Header()),
                             new XeAppend(
-                                "best",
-                                new XeDirectives(
-                                    new Joined<>(
-                                        new Limited<Iterable<Directive>>(
-                                            // @checkstyle MagicNumber (1 line)
-                                            20, new Results().best()
-                                        )
-                                    )
-                                )
-                            ),
-                            new XeAppend(
                                 "recent",
                                 new XeDirectives(
                                     new Joined<>(
                                         new Limited<>(
                                             // @checkstyle MagicNumber (1 line)
-                                            50, new Results().recent()
+                                            200, new Results().recent()
                                         )
                                     )
                                 )

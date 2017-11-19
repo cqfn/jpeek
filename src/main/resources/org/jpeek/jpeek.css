@@ -20,4 +20,5 @@ sup {
     display: block;
     text-align: right;
     color: gray;
+    line-height: .75em;
 }
