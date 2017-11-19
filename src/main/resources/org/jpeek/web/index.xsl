@@ -73,6 +73,13 @@ SOFTWARE.
           <xsl:text> To refresh your report, just re-open the URL.</xsl:text>
         </p>
         <xsl:apply-templates select="best"/>
+        <p>
+          <xsl:text>See metrics </xsl:text>
+          <a href="/mistakes">
+            <xsl:text>summary</xsl:text>
+          </a>
+          <xsl:text> mistakes.</xsl:text>
+        </p>
         <xsl:apply-templates select="recent"/>
         <footer style="color:gray;font-size:75%;">
           <p>
