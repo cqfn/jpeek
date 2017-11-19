@@ -109,8 +109,8 @@ final class Mistakes {
             item -> new Directives()
                 .add("metric")
                 .attr("id", item.get("metric").getS()).up()
-                .add("pos").set(item.get("pos").getS()).up()
-                .add("neg").set(item.get("neg").getS()).up()
+                .add("pos").set(item.get("pos").getN()).up()
+                .add("neg").set(item.get("neg").getN()).up()
                 .add("p-sum").set(
                     Double.parseDouble(item.get("p-sum").getN())
                         / Mistakes.MULTIPLIER
