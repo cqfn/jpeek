@@ -108,29 +108,25 @@ final class Mistakes {
         return new Mapped<>(
             item -> new Directives()
                 .add("metric")
-                .attr("id", item.get("metric").getS()).up()
+                .attr("id", item.get("metric").getS())
                 .add("pos").set(item.get("pos").getN()).up()
                 .add("neg").set(item.get("neg").getN()).up()
                 .add("psum").set(
                     Double.parseDouble(item.get("psum").getN())
                         / Mistakes.MULTIPLIER
-                )
-                .up()
+                ).up()
                 .add("pavg").set(
                     Double.parseDouble(item.get("pavg").getN())
                         / Mistakes.MULTIPLIER
-                )
-                .up()
+                ).up()
                 .add("nsum").set(
                     Double.parseDouble(item.get("nsum").getN())
                         / Mistakes.MULTIPLIER
-                )
-                .up()
+                ).up()
                 .add("navg").set(
                     Double.parseDouble(item.get("navg").getN())
                         / Mistakes.MULTIPLIER
-                )
-                .up()
+                ).up()
                 .up(),
             this.table.frame()
                 .where("version", new Version().value())

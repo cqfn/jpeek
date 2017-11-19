@@ -74,11 +74,11 @@ SOFTWARE.
         </p>
         <xsl:apply-templates select="best"/>
         <p>
-          <xsl:text>See metrics </xsl:text>
+          <xsl:text>See metric mistakes </xsl:text>
           <a href="/mistakes">
             <xsl:text>summary</xsl:text>
           </a>
-          <xsl:text> mistakes.</xsl:text>
+          <xsl:text>.</xsl:text>
         </p>
         <xsl:apply-templates select="recent"/>
         <footer style="color:gray;font-size:75%;">
