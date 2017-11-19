@@ -267,9 +267,12 @@ final class Mistakes {
             .where("version", version)
             .iterator()
             .next();
+        final long pos = Long.parseLong(fin.get("pos").getN());
+        final long neg = Long.parseLong(fin.get("neg").getN());
         // @checkstyle StringLiteralsConcatenationCheck (2 lines)
-        final long avg = Long.parseLong(fin.get("pavg").getN())
-            + Long.parseLong(fin.get("navg").getN()) >> 1;
+        final long avg = (Long.parseLong(fin.get("pavg").getN()) * pos
+            + Long.parseLong(fin.get("navg").getN()) * neg)
+            / (pos + neg);
         fin.put(
             new AttributeUpdates()
                 .with(
