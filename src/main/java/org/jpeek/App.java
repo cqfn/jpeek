@@ -95,7 +95,7 @@ public final class App {
         final Base base = new DefaultBase(this.input);
         final Iterable<Report> reports = new ListOf<>(
             new Report(new CAMC(base), 0.10d, 0.35d),
-            new Report(new LCOM(base), 50.0d, 5.0d),
+            new Report(new LCOM(base), 15.0d, 5.0d),
             new Report(new OCC(base), 0.85d, 0.25d),
             new Report(new NHD(base), 0.55d, 0.15d),
             new Report(new LCOM2(base), 0.75d, 0.25d),

@@ -71,7 +71,7 @@ SOFTWARE.
         <xsl:value-of select="artifact"/>
       </a>
       <xsl:text>: </xsl:text>
-      <span class="ping" data-uri="http://i.jpeek.org/{group}/{artifact}/">
+      <span class="ping" data-uri="http://i.jpeek.org/{group}/{artifact}/index.html">
         <xsl:text>...</xsl:text>
       </span>
     </p>
