@@ -79,9 +79,6 @@ SOFTWARE.
             <xsl:text>Metric</xsl:text>
           </th>
           <th>
-            <xsl:text>Projects</xsl:text>
-          </th>
-          <th>
             <xsl:text>Pos</xsl:text>
           </th>
           <th>
@@ -92,6 +89,9 @@ SOFTWARE.
           </th>
           <th>
             <xsl:text>N-avg</xsl:text>
+          </th>
+          <th>
+            <xsl:text>Avg</xsl:text>
           </th>
         </tr>
       </thead>
@@ -109,14 +109,17 @@ SOFTWARE.
         <xsl:value-of select="pos"/>
       </td>
       <td style="text-align:right">
-        <xsl:value-of select="format-number(p-avg * 100, '#')"/>
+        <xsl:value-of select="format-number(pavg * 100, '#')"/>
       </td>
       <td style="text-align:right">
         <xsl:value-of select="neg"/>
       </td>
       <td style="text-align:right">
-        <xsl:value-of select="format-number(n-avg * 100, '#')"/>
+        <xsl:value-of select="format-number(navg * 100, '#')"/>
         <xsl:text>%</xsl:text>
+      </td>
+      <td style="text-align:right">
+        <xsl:value-of select="format-number(avg * 100, '#')"/>
       </td>
     </tr>
   </xsl:template>
