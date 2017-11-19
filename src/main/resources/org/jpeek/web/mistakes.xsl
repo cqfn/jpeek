@@ -36,7 +36,7 @@ SOFTWARE.
         <link rel="stylesheet" href="/jpeek.css"/>
         <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/sortable/0.8.0/js/sortable.min.js">&#xA0;</script>
         <title>
-          <xsl:text>jpeek</xsl:text>
+          <xsl:text>mistakes</xsl:text>
         </title>
       </head>
       <body>
@@ -45,35 +45,7 @@ SOFTWARE.
             <img alt="logo" src="http://www.jpeek.org/logo.svg" style="height:60px"/>
           </a>
         </p>
-        <p>
-          <xsl:text>You can test any artifact just by pointing your browser to </xsl:text>
-          <code>
-            <xsl:text>http://i.jpeek.org/{group}/{artifact}/</xsl:text>
-          </code>
-          <xsl:text>, where </xsl:text>
-          <code>
-            <xsl:text>{group}</xsl:text>
-          </code>
-          <xsl:text> is the group part of your Maven coordinates and </xsl:text>
-          <code>
-            <xsl:text>{artifact}</xsl:text>
-          </code>
-          <xsl:text> is the artifact name.</xsl:text>
-          <xsl:text> For example, for </xsl:text>
-          <code>
-            <xsl:text>org.takes:takes</xsl:text>
-          </code>
-          <xsl:text> it is </xsl:text>
-          <code>
-            <xsl:text>http://i.jpeek.org/org.takes/takes/</xsl:text>
-          </code>
-          <xsl:text>. Got the idea?</xsl:text>
-          <xsl:text> Please, remember that every time we deploy a new</xsl:text>
-          <xsl:text> version of jpeek, the list gets cleaned up.</xsl:text>
-          <xsl:text> To refresh your report, just re-open the URL.</xsl:text>
-        </p>
-        <xsl:apply-templates select="best"/>
-        <xsl:apply-templates select="recent"/>
+        <xsl:apply-templates select="worst"/>
         <footer style="color:gray;font-size:75%;">
           <p>
             <xsl:text>This is </xsl:text>
@@ -89,98 +61,63 @@ SOFTWARE.
       </body>
     </html>
   </xsl:template>
-  <xsl:template match="best[not(repo)]">
+  <xsl:template match="worst[not(metric)]">
     <p>
       <xsl:text>There is nothing here yet.</xsl:text>
     </p>
   </xsl:template>
-  <xsl:template match="best[repo]">
+  <xsl:template match="worst[metric]">
     <p>
-      <xsl:text>This is the list of the best </xsl:text>
-      <xsl:value-of select="count(repo)"/>
-      <xsl:text> artifacts we've seen recently:</xsl:text>
+      <xsl:text>This is the list of the worst </xsl:text>
+      <xsl:value-of select="count(metric)"/>
+      <xsl:text> metrics we've seen recently:</xsl:text>
     </p>
     <table data-sortable="true">
       <thead>
         <tr>
           <th>
-            <xsl:text>Rank</xsl:text>
+            <xsl:text>Metric</xsl:text>
           </th>
           <th>
-            <xsl:text>Artifact</xsl:text>
+            <xsl:text>Projects</xsl:text>
           </th>
           <th>
-            <xsl:text>Classes</xsl:text>
+            <xsl:text>Pos</xsl:text>
           </th>
           <th>
-            <xsl:text>Score</xsl:text>
+            <xsl:text>P-avg</xsl:text>
           </th>
           <th>
-            <xsl:text>Mistake</xsl:text>
+            <xsl:text>Neg</xsl:text>
+          </th>
+          <th>
+            <xsl:text>N-avg</xsl:text>
           </th>
         </tr>
       </thead>
       <tbody>
-        <xsl:apply-templates select="repo"/>
+        <xsl:apply-templates select="metric"/>
       </tbody>
     </table>
   </xsl:template>
-  <xsl:template match="best/repo">
+  <xsl:template match="metric">
     <tr>
       <td>
-        <xsl:text>#</xsl:text>
-        <xsl:value-of select="position()"/>
-      </td>
-      <td>
-        <code>
-          <xsl:value-of select="group"/>
-          <xsl:text>:</xsl:text>
-          <xsl:value-of select="artifact"/>
-        </code>
+        <xsl:value-of select="@id"/>
       </td>
       <td style="text-align:right">
-        <xsl:value-of select="classes"/>
+        <xsl:value-of select="pos"/>
       </td>
       <td style="text-align:right">
-        <a href="{group}/{artifact}/">
-          <xsl:value-of select="format-number(score,'0.00')"/>
-        </a>
+        <xsl:value-of select="format-number(p-avg * 100, '#')"/>
       </td>
-      <td>
-        <xsl:attribute name="style">
-          <xsl:text>text-align:right;</xsl:text>
-          <xsl:text>color:</xsl:text>
-          <xsl:choose>
-            <xsl:when test="diff &lt; 0.10">
-              <xsl:text>green</xsl:text>
-            </xsl:when>
-            <xsl:when test="diff &lt; 0.20">
-              <xsl:text>orange</xsl:text>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:text>red</xsl:text>
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:attribute>
-        <xsl:value-of select="format-number(100 * diff,'#')"/>
+      <td style="text-align:right">
+        <xsl:value-of select="neg"/>
+      </td>
+      <td style="text-align:right">
+        <xsl:value-of select="format-number(n-avg * 100, '#')"/>
         <xsl:text>%</xsl:text>
       </td>
     </tr>
-  </xsl:template>
-  <xsl:template match="recent[repo]">
-    <p>
-      <xsl:text>Recently analyzed: </xsl:text>
-      <xsl:for-each select="repo">
-        <xsl:if test="position() &gt; 1">
-          <xsl:text>, </xsl:text>
-        </xsl:if>
-        <a href="{group}/{artifact}/">
-          <xsl:value-of select="group"/>
-          <xsl:text>:</xsl:text>
-          <xsl:value-of select="artifact"/>
-        </a>
-      </xsl:for-each>
-      <xsl:text>.</xsl:text>
-    </p>
   </xsl:template>
 </xsl:stylesheet>

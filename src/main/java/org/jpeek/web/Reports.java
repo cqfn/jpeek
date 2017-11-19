@@ -136,6 +136,7 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
         }
         new App(input, output).analyze();
         new Results().add(String.format("%s:%s", group, artifact), output);
+        new Mistakes().add(output);
         return new TypedPages(new Pages(output));
     }
 

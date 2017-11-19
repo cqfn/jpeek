@@ -24,21 +24,14 @@
 package org.jpeek.web;
 
 import com.jcabi.dynamo.Attributes;
-import com.jcabi.dynamo.Credentials;
 import com.jcabi.dynamo.QueryValve;
-import com.jcabi.dynamo.Region;
 import com.jcabi.dynamo.Table;
-import com.jcabi.dynamo.mock.H2Data;
-import com.jcabi.dynamo.mock.MkRegion;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Properties;
 import java.util.concurrent.TimeUnit;
-import org.cactoos.io.ResourceOf;
 import org.cactoos.iterable.Mapped;
-import org.cactoos.iterable.PropertiesOf;
 import org.jpeek.Version;
 import org.xembly.Directive;
 import org.xembly.Directives;
@@ -71,7 +64,7 @@ final class Results {
      * @throws IOException If fails
      */
     Results() throws IOException {
-        this(Results.live());
+        this(new Dynamo().table("jpeek-results"));
     }
 
     /**
@@ -199,49 +192,6 @@ final class Results {
                         .withAttributesToGet("artifact", "score", "diff")
                 )
         );
-    }
-
-    /**
-     * Live DynamoDB table.
-     * @return Table
-     * @throws IOException If fails
-     */
-    private static Table live() throws IOException {
-        final Properties props = Results.pros();
-        final String key = props.getProperty("org.jpeek.dynamo.key");
-        final Region reg;
-        // @checkstyle MagicNumber (1 line)
-        if (key.length() == 20) {
-            reg = new Region.Simple(
-                new Credentials.Simple(
-                    key,
-                    props.getProperty("org.jpeek.dynamo.secret")
-                )
-            );
-        } else {
-            reg = new MkRegion(
-                new H2Data().with(
-                    "jpeek-results",
-                    new String[] {"artifact"},
-                    "score", "diff", "ttl", "version", "added",
-                    "good", "classes"
-                )
-            );
-        }
-        return reg.table("jpeek-results");
-    }
-
-    /**
-     * Properties.
-     * @return Props
-     * @throws IOException If fails
-     */
-    private static Properties pros() throws IOException {
-        return new PropertiesOf(
-            new ResourceOf(
-                "org/jpeek/jpeek.properties"
-            )
-        ).value();
     }
 
 }
