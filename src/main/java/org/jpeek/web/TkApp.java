@@ -72,6 +72,7 @@ public final class TkApp extends TkWrap {
                     new TkFork(
                         new FkRegex("/", new TkIndex()),
                         new FkRegex("/mistakes", new TkMistakes()),
+                        new FkRegex("/ping", new TkPing()),
                         new FkRegex(
                             "/([^/]+)/([^/]+)(.*)",
                             new TkReport(

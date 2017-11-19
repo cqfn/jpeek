@@ -23,32 +23,51 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml" version="2.0">
-    <xsl:template match="/index">
-        <html lang="en">
-            <head>
-                <meta charset="UTF-8"/>
-                <link rel="shortcut icon" href="http://www.jpeek.org/logo.png"/>
-                <title>
-                    <xsl:text>ping...</xsl:text>
-                </title>
-            </head>
-            <body>
-                <p>
-                    <a href="http://i.jpeek.org">
-                        <img alt="logo" src="http://www.jpeek.org/logo.svg" style="height:60px"/>
-                    </a>
-                </p>
-                <xsl:apply-templates select="recent/repo"/>
-            </body>
-        </html>
-    </xsl:template>
-    <xsl:template match="recent/repo">
+  <xsl:template match="/index">
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8"/>
+        <link rel="shortcut icon" href="http://www.jpeek.org/logo.png"/>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js">
+          <!-- nothing -->
+        </script>
+        <title>
+          <xsl:text>ping...</xsl:text>
+        </title>
+      </head>
+      <body>
         <p>
-            <a href="{group}/{artifact}/">
-                <xsl:value-of select="group"/>
-                <xsl:text>:</xsl:text>
-                <xsl:value-of select="artifact"/>
-            </a>
+          <a href="http://i.jpeek.org">
+            <img alt="logo" src="http://www.jpeek.org/logo.svg" style="height:60px"/>
+          </a>
         </p>
-    </xsl:template>
+        <xsl:apply-templates select="recent/repo"/>
+      </body>
+      <script>
+        $(function () {
+          $('.ping').each(function(span) {
+            $.get(
+              $(span).attr('data-uri'),
+              function(data, status) {
+                $(span).text(status);
+              }
+            );
+          })
+        })
+      </script>
+    </html>
+  </xsl:template>
+  <xsl:template match="recent/repo">
+    <p>
+      <a href="{group}/{artifact}/">
+        <xsl:value-of select="group"/>
+        <xsl:text>:</xsl:text>
+        <xsl:value-of select="artifact"/>
+      </a>
+      <xsl:text>: </xsl:text>
+      <span class="ping" data-uri="http://i.jpeek.org/{group}/{artifact}/">
+        <xsl:text>...</xsl:text>
+      </span>
+    </p>
+  </xsl:template>
 </xsl:stylesheet>

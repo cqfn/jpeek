@@ -187,7 +187,10 @@ SOFTWARE.
           <xsl:value-of select="artifact"/>
         </a>
       </xsl:for-each>
-      <xsl:text>.</xsl:text>
+      <xsl:text> </xsl:text>
+      <a href="/ping">
+        <xsl:text>...</xsl:text>
+      </a>
     </p>
   </xsl:template>
 </xsl:stylesheet>
