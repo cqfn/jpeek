@@ -111,23 +111,23 @@ final class Mistakes {
                 .attr("id", item.get("metric").getS()).up()
                 .add("pos").set(item.get("pos").getN()).up()
                 .add("neg").set(item.get("neg").getN()).up()
-                .add("p-sum").set(
-                    Double.parseDouble(item.get("p-sum").getN())
+                .add("psum").set(
+                    Double.parseDouble(item.get("psum").getN())
                         / Mistakes.MULTIPLIER
                 )
                 .up()
-                .add("p-avg").set(
-                    Double.parseDouble(item.get("p-avg").getN())
+                .add("pavg").set(
+                    Double.parseDouble(item.get("pavg").getN())
                         / Mistakes.MULTIPLIER
                 )
                 .up()
-                .add("n-sum").set(
-                    Double.parseDouble(item.get("n-sum").getN())
+                .add("nsum").set(
+                    Double.parseDouble(item.get("nsum").getN())
                         / Mistakes.MULTIPLIER
                 )
                 .up()
-                .add("n-avg").set(
-                    Double.parseDouble(item.get("n-avg").getN())
+                .add("navg").set(
+                    Double.parseDouble(item.get("navg").getN())
                         / Mistakes.MULTIPLIER
                 )
                 .up()
