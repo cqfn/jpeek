@@ -56,10 +56,10 @@ SOFTWARE.
           </xsl:when>
           <xsl:otherwise>
             <xsl:choose>
-              <xsl:when test="@value &lt; $low">
+              <xsl:when test="@value &lt; $high">
                 <xsl:text>green</xsl:text>
               </xsl:when>
-              <xsl:when test="@value &gt; $high">
+              <xsl:when test="@value &gt; $low">
                 <xsl:text>red</xsl:text>
               </xsl:when>
               <xsl:otherwise>
