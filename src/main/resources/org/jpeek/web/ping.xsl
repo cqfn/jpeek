@@ -35,21 +35,27 @@ SOFTWARE.
           <xsl:text>ping...</xsl:text>
         </title>
       </head>
-      <body>
+      <body style="font-family:monospace;">
         <p>
           <a href="http://i.jpeek.org">
             <img alt="logo" src="http://www.jpeek.org/logo.svg" style="height:60px"/>
           </a>
         </p>
+        <p>
+          <xsl:text>There are </xsl:text>
+          <xsl:value-of select="count(recent/repo)"/>
+          <xsl:text> artifact:</xsl:text>
+        </p>
         <xsl:apply-templates select="recent/repo"/>
       </body>
       <script>
         $(function () {
-          $('.ping').each(function(span) {
+          $('.ping').each(function() {
+            var $span = $(this);
             $.get(
-              $(span).attr('data-uri'),
+              $span.attr('data-uri'),
               function(data, status) {
-                $(span).text(status);
+                $span.text(status);
               }
             );
           })

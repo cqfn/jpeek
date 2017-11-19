@@ -93,7 +93,9 @@ SOFTWARE.
         </tr>
       </thead>
       <tbody>
-        <xsl:apply-templates select="metric"/>
+        <xsl:apply-templates select="metric">
+          <xsl:sort select="@id"/>
+        </xsl:apply-templates>
       </tbody>
     </table>
   </xsl:template>
