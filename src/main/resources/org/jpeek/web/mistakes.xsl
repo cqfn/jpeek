@@ -80,15 +80,35 @@ SOFTWARE.
           </th>
           <th>
             <xsl:text>Seen in</xsl:text>
+            <a href="#1">
+              <sup>
+                <xsl:text>1</xsl:text>
+              </sup>
+            </a>
           </th>
           <th>
             <xsl:text>Neg</xsl:text>
+            <a href="#2">
+              <sup>
+                <xsl:text>2</xsl:text>
+              </sup>
+            </a>
           </th>
           <th>
             <xsl:text>Avg</xsl:text>
+            <a href="#3">
+              <sup>
+                <xsl:text>3</xsl:text>
+              </sup>
+            </a>
           </th>
           <th>
             <xsl:text>Pos</xsl:text>
+            <a href="#2">
+              <sup>
+                <xsl:text>2</xsl:text>
+              </sup>
+            </a>
           </th>
         </tr>
       </thead>
@@ -98,6 +118,23 @@ SOFTWARE.
         </xsl:apply-templates>
       </tbody>
     </table>
+    <p>
+      <sup id="1">
+        <xsl:text>1</xsl:text>
+      </sup>
+      <xsl:text>This is a total number of artifacts this metric was seen in. </xsl:text>
+      <sup id="2">
+        <xsl:text>2</xsl:text>
+      </sup>
+      <xsl:text>"Neg" and "Pos" demonstrate average mistakes this metric
+        makes to either negative or positive direction. </xsl:text>
+      <sup id="3">
+        <xsl:text>3</xsl:text>
+      </sup>
+      <xsl:text>"Avg" is calculated as a mathematical average
+        between "Neg" and "Pos" weighed by the total number of
+        project they were seen in. </xsl:text>
+    </p>
   </xsl:template>
   <xsl:template match="metric">
     <tr>

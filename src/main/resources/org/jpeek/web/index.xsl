@@ -131,6 +131,11 @@ SOFTWARE.
         <xsl:apply-templates select="repo"/>
       </tbody>
     </table>
+    <p>
+      <xsl:text>Average mistake: </xsl:text>
+      <xsl:value-of select="format-number(100 * sum(repo/diff) div count(repo/diff),'#')"/>
+      <xsl:text>%.</xsl:text>
+    </p>
   </xsl:template>
   <xsl:template match="best/repo">
     <tr>
