@@ -127,6 +127,10 @@ final class Mistakes {
                     Double.parseDouble(item.get("navg").getN())
                         / Mistakes.MULTIPLIER
                 ).up()
+                .add("avg").set(
+                    Double.parseDouble(item.get("avg").getN())
+                        / Mistakes.MULTIPLIER
+                ).up()
                 .up(),
             this.table.frame()
                 .where("version", new Version().value())

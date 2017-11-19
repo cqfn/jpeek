@@ -79,19 +79,13 @@ SOFTWARE.
             <xsl:text>Metric</xsl:text>
           </th>
           <th>
-            <xsl:text>Pos</xsl:text>
-          </th>
-          <th>
-            <xsl:text>P-avg</xsl:text>
-          </th>
-          <th>
             <xsl:text>Neg</xsl:text>
           </th>
           <th>
-            <xsl:text>N-avg</xsl:text>
+            <xsl:text>Avg</xsl:text>
           </th>
           <th>
-            <xsl:text>Avg</xsl:text>
+            <xsl:text>Pos</xsl:text>
           </th>
         </tr>
       </thead>
@@ -106,20 +100,28 @@ SOFTWARE.
         <xsl:value-of select="@id"/>
       </td>
       <td style="text-align:right">
-        <xsl:value-of select="pos"/>
-      </td>
-      <td style="text-align:right">
-        <xsl:value-of select="format-number(pavg * 100, '#')"/>
-      </td>
-      <td style="text-align:right">
-        <xsl:value-of select="neg"/>
-      </td>
-      <td style="text-align:right">
-        <xsl:value-of select="format-number(navg * 100, '#')"/>
-        <xsl:text>%</xsl:text>
+        <xsl:if test="navg &gt; 0">
+          <xsl:text>-</xsl:text>
+          <xsl:value-of select="format-number(navg * 100, '#')"/>
+          <xsl:text>%</xsl:text>
+          <span class="under">
+            <xsl:value-of select="neg"/>
+          </span>
+        </xsl:if>
       </td>
       <td style="text-align:right">
         <xsl:value-of select="format-number(avg * 100, '#')"/>
+        <xsl:text>%</xsl:text>
+      </td>
+      <td style="text-align:right">
+        <xsl:if test="pavg &gt; 0">
+          <xsl:text>+</xsl:text>
+          <xsl:value-of select="format-number(pavg * 100, '#')"/>
+          <xsl:text>%</xsl:text>
+          <span class="under">
+            <xsl:value-of select="pos"/>
+          </span>
+        </xsl:if>
       </td>
     </tr>
   </xsl:template>
