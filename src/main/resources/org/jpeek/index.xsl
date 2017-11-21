@@ -251,24 +251,30 @@ SOFTWARE.
       </td>
       <td style="text-align:right" class="sorttable_numeric" sorttable_customkey="{green div classes}">
         <xsl:value-of select="green"/>
-        <span class="under">
-          <xsl:value-of select="format-number((green div classes) * 100, '#')"/>
-          <xsl:text>%</xsl:text>
-        </span>
+        <xsl:if test="classes &gt; 0">
+          <span class="under">
+            <xsl:value-of select="format-number((green div classes) * 100, '#')"/>
+            <xsl:text>%</xsl:text>
+          </span>
+        </xsl:if>
       </td>
       <td style="text-align:right" class="sorttable_numeric" sorttable_customkey="{yellow div classes}">
         <xsl:value-of select="yellow"/>
-        <span class="under">
-          <xsl:value-of select="format-number((yellow div classes) * 100, '#')"/>
-          <xsl:text>%</xsl:text>
-        </span>
+        <xsl:if test="classes &gt; 0">
+          <span class="under">
+            <xsl:value-of select="format-number((yellow div classes) * 100, '#')"/>
+            <xsl:text>%</xsl:text>
+          </span>
+        </xsl:if>
       </td>
       <td style="text-align:right" class="sorttable_numeric" sorttable_customkey="{red div classes}">
         <xsl:value-of select="red"/>
-        <span class="under">
-          <xsl:value-of select="format-number((red div classes) * 100, '#')"/>
-          <xsl:text>%</xsl:text>
-        </span>
+        <xsl:if test="classes &gt; 0">
+          <span class="under">
+            <xsl:value-of select="format-number((red div classes) * 100, '#')"/>
+            <xsl:text>%</xsl:text>
+          </span>
+        </xsl:if>
       </td>
       <td class="sorttable_numeric" sorttable_customkey="{score}">
         <xsl:attribute name="style">

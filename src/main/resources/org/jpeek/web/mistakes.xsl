@@ -95,7 +95,7 @@ SOFTWARE.
             </a>
           </th>
           <th>
-            <xsl:text>Avg</xsl:text>
+            <xsl:text>Total</xsl:text>
             <a href="#3">
               <sup>
                 <xsl:text>3</xsl:text>
@@ -131,9 +131,9 @@ SOFTWARE.
       <sup id="3">
         <xsl:text>3</xsl:text>
       </sup>
-      <xsl:text>"Avg" is calculated as a mathematical average
-        between "Neg" and "Pos" weighed by the total number of
-        project they were seen in. </xsl:text>
+      <xsl:text>"Total" is the overall mistake value calculated as
+        a square between "Neg" and "Pos" weighed by the total number of
+        project they were seen in.</xsl:text>
     </p>
   </xsl:template>
   <xsl:template match="metric">

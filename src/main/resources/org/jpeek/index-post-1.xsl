@@ -45,7 +45,7 @@ SOFTWARE.
     <xsl:copy>
       <xsl:attribute name="diff">
         <xsl:choose>
-          <xsl:when test="$score != 0">
+          <xsl:when test="$score &gt; 0">
             <xsl:value-of select="((score - $score) div $score)"/>
           </xsl:when>
           <xsl:otherwise>
