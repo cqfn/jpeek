@@ -1,6 +1,9 @@
 body {
     padding: 1em;
 }
+td, th {
+    vertical-align: top;
+}
 td {
     padding-top: 0.25em;
     padding-bottom: 0.25em;

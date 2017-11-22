@@ -28,6 +28,7 @@ import com.jcabi.xml.XMLDocument;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Iterator;
 import java.util.List;
 import org.cactoos.Scalar;
 import org.cactoos.collection.Filtered;
@@ -69,7 +70,7 @@ final class Index implements Scalar<Iterable<Directive>> {
             .add("index")
             .append(new Header())
             .append(
-                new Joined<>(
+                new Joined<Directive>(
                     new Mapped<>(
                         Index::metric,
                         new Filtered<>(
@@ -120,6 +121,10 @@ final class Index implements Scalar<Iterable<Directive>> {
         if (!values.isEmpty()) {
             dirs.add("min").set(values.get(0)).up()
                 .add("max").set(values.get(values.size() - 1)).up();
+        }
+        final Iterator<XML> bars = xml.nodes("/metric/bars").iterator();
+        if (bars.hasNext()) {
+            dirs.add("bars").append(Directives.copyOf(bars.next().node())).up();
         }
         return dirs.up();
     }

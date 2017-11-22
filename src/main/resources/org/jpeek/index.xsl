@@ -132,6 +132,9 @@ SOFTWARE.
             </a>
           </th>
           <th>
+            <xsl:text>Graph</xsl:text>
+          </th>
+          <th>
             <xsl:text>&#xA0;</xsl:text>
           </th>
         </tr>
@@ -315,10 +318,47 @@ SOFTWARE.
         </span>
       </td>
       <td>
+        <xsl:apply-templates select="bars"/>
+      </td>
+      <td>
         <a href="{xml}">
           <xsl:text>XML</xsl:text>
         </a>
       </td>
     </tr>
+  </xsl:template>
+  <xsl:template match="bars">
+    <xsl:variable name="w" select="128"/>
+    <xsl:variable name="h" select="32"/>
+    <div>
+      <xsl:attribute name="style">
+        <xsl:text>background-color:#ddd;</xsl:text>
+        <xsl:text>position:relative;</xsl:text>
+        <xsl:text>width:</xsl:text>
+        <xsl:value-of select="$w + 4"/>
+        <xsl:text>px;height:</xsl:text>
+        <xsl:value-of select="$h + 4"/>
+        <xsl:text>px;</xsl:text>
+      </xsl:attribute>
+      <xsl:variable name="width" select="$w div count(bar)"/>
+      <xsl:variable name="max" select="max(bar)"/>
+      <xsl:for-each select="bar">
+        <div>
+          <xsl:attribute name="style">
+            <xsl:text>position:absolute;</xsl:text>
+            <xsl:text>background-color:</xsl:text>
+            <xsl:value-of select="@color"/>
+            <xsl:text>;bottom:1px;</xsl:text>
+            <xsl:text>width:</xsl:text>
+            <xsl:value-of select="$width"/>
+            <xsl:text>;left:</xsl:text>
+            <xsl:value-of select="@x * $w + 1"/>
+            <xsl:text>px;height:</xsl:text>
+            <xsl:value-of select="$h * . div $max"/>
+            <xsl:text>px;</xsl:text>
+          </xsl:attribute>
+        </div>
+      </xsl:for-each>
+    </div>
   </xsl:template>
 </xsl:stylesheet>

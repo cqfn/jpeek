@@ -34,6 +34,9 @@ import java.io.IOException;
 import java.nio.file.Path;
 import org.cactoos.io.LengthOf;
 import org.cactoos.io.TeeInput;
+import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterable.Reduced;
+import org.cactoos.scalar.IoCheckedScalar;
 import org.xembly.Directives;
 import org.xembly.Xembler;
 
@@ -69,9 +72,9 @@ final class Report {
     private final Metric metric;
 
     /**
-     * Post processing XSL.
+     * Post processing XSLs.
      */
-    private final XSL post;
+    private final Iterable<XSL> post;
 
     /**
      * Ctor.
@@ -90,9 +93,14 @@ final class Report {
      */
     Report(final Metric mtc, final double low, final double high) {
         this.metric = mtc;
-        this.post = new XSLDocument(
-            Report.class.getResourceAsStream("colors.xsl")
-        ).with("low", low).with("high", high);
+        this.post = new IterableOf<>(
+            new XSLDocument(
+                Report.class.getResourceAsStream("jpeek-post-colors.xsl")
+            ).with("low", low).with("high", high),
+            new XSLDocument(
+                Report.class.getResourceAsStream("jpeek-post-bars.xsl")
+            )
+        );
     }
 
     /**
@@ -102,7 +110,13 @@ final class Report {
      */
     public void save(final Path target) throws IOException {
         final XML xml = new StrictXML(
-            this.post.transform(this.xml()),
+            new IoCheckedScalar<>(
+                new Reduced<>(
+                    this.xml(),
+                    (doc, xsl) -> xsl.transform(doc),
+                    this.post
+                )
+            ).value(),
             Report.SCHEMA
         );
         new LengthOf(

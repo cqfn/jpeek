@@ -23,13 +23,16 @@
  */
 package org.jpeek;
 
+import com.jcabi.matchers.XhtmlMatchers;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.jpeek.metrics.FakeBase;
 import org.jpeek.metrics.cohesion.LCOM;
+import org.jpeek.metrics.cohesion.MMAC;
 import org.junit.Test;
 
 /**
@@ -52,6 +55,28 @@ public final class ReportTest {
         MatcherAssert.assertThat(
             Files.exists(output.resolve("LCOM.html")),
             Matchers.equalTo(true)
+        );
+    }
+
+    @Test
+    public void createsXmlReportWithXpaths() throws IOException {
+        final Path output = Files.createTempDirectory("");
+        new Report(
+            new MMAC(
+                new FakeBase(
+                    "NoMethods", "Bar", "OverloadMethods",
+                    "OnlyOneMethodWithParams", "WithoutAttributes"
+                )
+            )
+        ).save(output);
+        MatcherAssert.assertThat(
+            XhtmlMatchers.xhtml(
+                new TextOf(output.resolve("MMAC.xml")).asString()
+            ),
+            XhtmlMatchers.hasXPaths(
+                "/metric/app/package/class/vars",
+                "/metric/bars/bar[@x='0' and .='1' and @color='red']"
+            )
         );
     }
 
