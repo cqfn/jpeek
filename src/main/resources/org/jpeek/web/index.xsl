@@ -125,6 +125,9 @@ SOFTWARE.
           <th>
             <xsl:text>Mistake</xsl:text>
           </th>
+          <th>
+            <xsl:text>Defects</xsl:text>
+          </th>
         </tr>
       </thead>
       <tbody>

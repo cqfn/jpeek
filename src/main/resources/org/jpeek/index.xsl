@@ -157,6 +157,29 @@ SOFTWARE.
         <xsl:value-of select="format-number(100 * @diff,'#')"/>
         <xsl:text>%</xsl:text>
       </strong>
+      <xsl:text>, average defects rate: </xsl:text>
+      <strong>
+        <xsl:attribute name="style">
+          <xsl:text>color:</xsl:text>
+          <xsl:call-template name="color">
+            <xsl:with-param name="name">
+              <xsl:choose>
+                <xsl:when test="@defects &lt; 0.10">
+                  <xsl:text>green</xsl:text>
+                </xsl:when>
+                <xsl:when test="@defects &lt; 0.20">
+                  <xsl:text>yellow</xsl:text>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:text>red</xsl:text>
+                </xsl:otherwise>
+              </xsl:choose>
+            </xsl:with-param>
+          </xsl:call-template>
+        </xsl:attribute>
+        <xsl:value-of select="format-number(100 * @defects,'#')"/>
+        <xsl:text>%</xsl:text>
+      </strong>
       <xsl:text>.</xsl:text>
     </p>
     <p>

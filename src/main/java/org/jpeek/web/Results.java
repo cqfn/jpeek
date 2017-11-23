@@ -31,6 +31,7 @@ import com.jcabi.xml.XMLDocument;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.concurrent.TimeUnit;
+import org.cactoos.iterable.Filtered;
 import org.cactoos.iterable.Mapped;
 import org.jpeek.Version;
 import org.xembly.Directive;
@@ -193,17 +194,21 @@ final class Results {
                     .up()
                     .up();
             },
-            this.table.frame()
-                .where("version", new Version().value())
-                .through(
-                    new QueryValve()
-                        .withScanIndexForward(false)
-                        .withIndexName("scores")
-                        .withConsistentRead(false)
-                        // @checkstyle MagicNumber (1 line)
-                        .withLimit(20)
-                        .withAttributesToGet("artifact", "score", "diff")
-                )
+            new Filtered<>(
+                // @checkstyle MagicNumber (1 line)
+                item -> Long.parseLong(item.get("classes").getN()) >= 100L,
+                this.table.frame()
+                    .where("version", new Version().value())
+                    .through(
+                        new QueryValve()
+                            .withScanIndexForward(false)
+                            .withIndexName("scores")
+                            .withConsistentRead(false)
+                            // @checkstyle MagicNumber (1 line)
+                            .withLimit(40)
+                            .withAttributesToGet("artifact", "score", "diff")
+                    )
+            )
         );
     }
 
