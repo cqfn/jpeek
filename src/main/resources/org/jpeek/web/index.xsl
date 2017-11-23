@@ -105,7 +105,8 @@ SOFTWARE.
     <p>
       <xsl:text>This is the list of the best </xsl:text>
       <xsl:value-of select="count(repo)"/>
-      <xsl:text> artifacts we've seen recently:</xsl:text>
+      <xsl:text> artifacts we've seen recently</xsl:text>
+      <xsl:text> (only if they have over 100 classes, they get into this list):</xsl:text>
     </p>
     <table data-sortable="true">
       <thead>
