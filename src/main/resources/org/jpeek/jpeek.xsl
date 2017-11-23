@@ -26,7 +26,7 @@ SOFTWARE.
   <xsl:import href="/org/jpeek/templates.xsl"/>
   <xsl:template match="/">
     <xsl:call-template name="html">
-      <xsl:with-param name="title" select="title"/>
+      <xsl:with-param name="title" select="metric/title"/>
       <xsl:with-param name="body" select="metric"/>
     </xsl:call-template>
   </xsl:template>
