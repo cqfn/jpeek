@@ -113,7 +113,7 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
             )
         ).value();
         try {
-            new ProcessBuilder()
+            final int exit = new ProcessBuilder()
                 .redirectOutput(ProcessBuilder.Redirect.INHERIT)
                 .redirectInput(ProcessBuilder.Redirect.INHERIT)
                 .redirectError(ProcessBuilder.Redirect.INHERIT)
@@ -121,6 +121,14 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
                 .command("unzip", name)
                 .start()
                 .waitFor();
+            if (exit != 0) {
+                throw new IllegalStateException(
+                    String.format(
+                        "Failed to unzip %s:%s archive, exit code %d",
+                        group, artifact, exit
+                    )
+                );
+            }
         } catch (final InterruptedException ex) {
             Thread.currentThread().interrupt();
             throw new IllegalStateException(ex);
