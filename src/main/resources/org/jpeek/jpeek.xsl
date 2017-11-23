@@ -73,7 +73,13 @@ SOFTWARE.
       <xsl:value-of select="count(//class[@color='red'])"/>
       <xsl:text>.</xsl:text>
     </p>
-    <xsl:apply-templates select="bars"/>
+    <p>
+      <xsl:call-template name="bars">
+        <xsl:with-param name="bars" select="."/>
+        <xsl:with-param name="w" select="min((max((240, count(bars/bar) * 5)), 1024))"/>
+        <xsl:with-param name="h" select="64"/>
+      </xsl:call-template>
+    </p>
     <xsl:apply-templates select="app"/>
     <p>
       <xsl:text>Download </xsl:text>
@@ -183,14 +189,5 @@ SOFTWARE.
         </td>
       </xsl:for-each>
     </tr>
-  </xsl:template>
-  <xsl:template match="bars[bar]">
-    <p>
-      <xsl:call-template name="bars">
-        <xsl:with-param name="bars" select="."/>
-        <xsl:with-param name="w" select="240"/>
-        <xsl:with-param name="h" select="64"/>
-      </xsl:call-template>
-    </p>
   </xsl:template>
 </xsl:stylesheet>
