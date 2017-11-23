@@ -77,7 +77,7 @@ SOFTWARE.
     <xsl:apply-templates select="app"/>
     <p>
       <xsl:text>Download </xsl:text>
-      <a href="{metric/title}.xml">
+      <a href="{title}.xml">
         <xsl:text>XML</xsl:text>
       </a>
       <xsl:text>.</xsl:text>

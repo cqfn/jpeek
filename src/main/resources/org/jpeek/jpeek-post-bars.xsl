@@ -36,6 +36,18 @@ SOFTWARE.
       <xsl:variable name="min" select="min($all/@value)"/>
       <xsl:variable name="max" select="max($all/@value)"/>
       <xsl:variable name="delta" select="($max - $min) div $steps"/>
+      <xsl:comment>
+        <xsl:text>steps: </xsl:text>
+        <xsl:value-of select="$steps"/>
+        <xsl:text>; all: </xsl:text>
+        <xsl:value-of select="count($all)"/>
+        <xsl:text>; min: </xsl:text>
+        <xsl:value-of select="$min"/>
+        <xsl:text>; max: </xsl:text>
+        <xsl:value-of select="$max"/>
+        <xsl:text>; delta: </xsl:text>
+        <xsl:value-of select="$delta"/>
+      </xsl:comment>
       <xsl:for-each select="0 to ($steps - 1)">
         <xsl:variable name="step" select="."/>
         <xsl:variable name="classes" select="$all[(@value &gt;= $step * $delta) and (@value &lt; ($step + 1) * $delta) or ($step = $steps -1 and @value = $steps * $delta)]"/>
