@@ -40,9 +40,6 @@ import org.xembly.Xembler;
  * @since 0.13
  * @checkstyle AbbreviationAsWordInNameCheck (10 lines)
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle LineLengthCheck (500 lines)
- * @checkstyle EmptyLinesCheck (500 lines)
- * @checkstyle MethodBodyCommentsCheck (500 lines)
  */
 public final class LCOM5Test {
 
@@ -80,20 +77,19 @@ public final class LCOM5Test {
             XhtmlMatchers.hasXPaths(
                 "/metric/app/package/class[@id='Bar']",
                 "//class[@id='Bar' and @value='1.0000']",
-                "//class[@id='Bar' and @color='red']",
+                // @checkstyle EmptyLinesCheck (1 line)
 
                 "/metric/app/package/class[@id='WithoutAttributes']",
                 "//class[@id='WithoutAttributes' and @value='1.0000']",
-                "//class[@id='WithoutAttributes' and @color='red']",
+                // @checkstyle EmptyLinesCheck (1 line)
 
                 "/metric/app/package/class[@id='ClassUsesNotOwnAttr']",
                 "//class[@id='ClassUsesNotOwnAttr' and @value='1.0000']",
-                "//class[@id='ClassUsesNotOwnAttr' and @color='red']",
+                // @checkstyle EmptyLinesCheck (1 line)
 
-                // ClassUsesNotOwnAttr$InnerKeyProvider is inner class
+                // @checkstyle LineLengthCheck (2 lines)
                 "/metric/app/package/class[@id='ClassUsesNotOwnAttr$InnerKeyProvider']",
-                "//class[@id='ClassUsesNotOwnAttr$InnerKeyProvider' and @value='1.0000']",
-                "//class[@id='ClassUsesNotOwnAttr$InnerKeyProvider' and @color='red']"
+                "//class[@id='ClassUsesNotOwnAttr$InnerKeyProvider' and @value='1.0000']"
             )
         );
     }
@@ -111,9 +107,9 @@ public final class LCOM5Test {
                 ).xmlQuietly()
             ),
             XhtmlMatchers.hasXPaths(
+                // @checkstyle LineLengthCheck (2 lines)
                 "/metric/app/package/class[@id='ThreeMethodsAccessThreeAttrs']",
-                "//class[@id='ThreeMethodsAccessThreeAttrs' and @value='0.5833']",
-                "//class[@id='ThreeMethodsAccessThreeAttrs' and @color='yellow']"
+                "//class[@id='ThreeMethodsAccessThreeAttrs' and @value='0.5833']"
             )
         );
     }
@@ -136,19 +132,19 @@ public final class LCOM5Test {
             XhtmlMatchers.hasXPaths(
                 "/metric/app/package/class[@id='Foo']",
                 "//class[@id='Foo' and @value='0.0000']",
-                "//class[@id='Foo' and @color='green']",
+                // @checkstyle EmptyLinesCheck (1 line)
 
                 "/metric/app/package/class[@id='NoMethods']",
                 "//class[@id='NoMethods' and @value='0.0000']",
-                "//class[@id='NoMethods' and @color='green']",
+                // @checkstyle EmptyLinesCheck (1 line)
 
                 "/metric/app/package/class[@id='PassAttrToOtherClassCtor']",
                 "//class[@id='PassAttrToOtherClassCtor' and @value='0.0000']",
-                "//class[@id='PassAttrToOtherClassCtor' and @color='green']",
+                // @checkstyle EmptyLinesCheck (1 line)
 
+                // @checkstyle LineLengthCheck (2 lines)
                 "/metric/app/package/class[@id='OverrideMethodFromInterface']",
-                "//class[@id='OverrideMethodFromInterface' and @value='0.0000']",
-                "//class[@id='OverrideMethodFromInterface' and @color='green']"
+                "//class[@id='OverrideMethodFromInterface' and @value='0.0000']"
             )
         );
     }

@@ -102,7 +102,7 @@ public final class App {
             new Report(new LCOM2(base), 0.5d, -0.25d),
             new Report(new LCOM3(base), 0.5d, -0.25d),
             new Report(new MMAC(base), 0.5d, 0.25d),
-            new Report(new LCOM5(base), 0d, 0d)
+            new Report(new LCOM5(base), 0.67d, 0.42d)
         );
         new IoCheckedScalar<>(
             new And(
