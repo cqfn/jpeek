@@ -98,7 +98,7 @@ final class Index implements Scalar<Iterable<Directive>> {
         final List<Double> values = new Sorted<>(
             new org.cactoos.list.Mapped<>(
                 Double::parseDouble,
-                xml.xpath("//class/@value")
+                xml.xpath("//class[@value!='NaN']/@value")
             )
         );
         final double green = (double) xml.nodes("//*[@color='green']").size();

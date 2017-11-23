@@ -69,7 +69,7 @@ SOFTWARE.
             </a>
           </th>
           <th>
-            <xsl:text>Average</xsl:text>
+            <xsl:text>Mean</xsl:text>
             <a href="#3">
               <sup>
                 <xsl:text>3</xsl:text>
