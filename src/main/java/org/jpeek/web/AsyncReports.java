@@ -34,14 +34,9 @@ import org.cactoos.Func;
 import org.cactoos.func.IoCheckedBiFunc;
 import org.cactoos.func.StickyBiFunc;
 import org.cactoos.func.SyncBiFunc;
-import org.jpeek.Header;
+import org.cactoos.iterable.IterableOf;
 import org.takes.Response;
-import org.takes.rs.RsXslt;
-import org.takes.rs.xe.RsXembly;
 import org.takes.rs.xe.XeAppend;
-import org.takes.rs.xe.XeChain;
-import org.takes.rs.xe.XeDirectives;
-import org.takes.rs.xe.XeStylesheet;
 
 /**
  * Async reports.
@@ -93,24 +88,16 @@ final class AsyncReports implements
                     String.format("%s:%s", group, artifact),
                     s -> System.currentTimeMillis()
                 );
-            output = input -> new RsXslt(
-                new RsXembly(
-                    new XeChain(
-                        new XeStylesheet("/org/jpeek/web/wait.xsl"),
-                        new XeAppend(
-                            "wait",
-                            new XeChain(
-                                new XeDirectives(new Header()),
-                                new XeAppend("group", group),
-                                new XeAppend("artifact", artifact),
-                                new XeAppend("future", future.toString()),
-                                new XeAppend("msec", Long.toString(msec)),
-                                new XeAppend(
-                                    "spent",
-                                    Logger.format("%[ms]s", msec)
-                                )
-                            )
-                        )
+            output = input -> new RsPage(
+                "wait",
+                () -> new IterableOf<>(
+                    new XeAppend("group", group),
+                    new XeAppend("artifact", artifact),
+                    new XeAppend("future", future.toString()),
+                    new XeAppend("msec", Long.toString(msec)),
+                    new XeAppend(
+                        "spent",
+                        Logger.format("%[ms]s", msec)
                     )
                 )
             );

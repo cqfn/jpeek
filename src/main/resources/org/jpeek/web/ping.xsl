@@ -23,32 +23,25 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml" version="2.0">
-  <xsl:template match="/index">
-    <html lang="en">
-      <head>
-        <meta charset="UTF-8"/>
-        <link rel="shortcut icon" href="http://www.jpeek.org/logo.png"/>
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js">
-          <!-- nothing -->
-        </script>
-        <title>
-          <xsl:text>ping...</xsl:text>
-        </title>
-      </head>
-      <body style="font-family:monospace;">
-        <p>
-          <a href="http://i.jpeek.org">
-            <img alt="logo" src="http://www.jpeek.org/logo.svg" style="height:60px"/>
-          </a>
-        </p>
-        <p>
-          <xsl:text>There are </xsl:text>
-          <xsl:value-of select="count(recent/repo)"/>
-          <xsl:text> artifact:</xsl:text>
-        </p>
-        <xsl:apply-templates select="recent/repo"/>
-      </body>
-      <script>
+  <xsl:output method="html" doctype-system="about:legacy-compat" encoding="UTF-8" indent="yes"/>
+  <xsl:strip-space elements="*"/>
+  <xsl:import href="/org/jpeek/web/layout.xsl"/>
+  <xsl:template match="/page" mode="head">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js">
+      <!-- nothing -->
+    </script>
+    <title>
+      <xsl:text>ping...</xsl:text>
+    </title>
+  </xsl:template>
+  <xsl:template match="/page" mode="body">
+    <p>
+      <xsl:text>There are </xsl:text>
+      <xsl:value-of select="count(recent/repo)"/>
+      <xsl:text> artifact:</xsl:text>
+    </p>
+    <xsl:apply-templates select="recent/repo"/>
+    <script>
         $(function () {
           $('.ping').each(function() {
             var $span = $(this);
@@ -61,7 +54,6 @@ SOFTWARE.
           })
         })
       </script>
-    </html>
   </xsl:template>
   <xsl:template match="recent/repo">
     <p>

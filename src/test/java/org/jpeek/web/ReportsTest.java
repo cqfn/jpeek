@@ -23,9 +23,14 @@
  */
 package org.jpeek.web;
 
+import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.net.URL;
 import java.nio.file.Files;
+import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
+import org.junit.Assume;
+import org.junit.Before;
 import org.junit.Test;
 import org.takes.facets.hamcrest.HmRsStatus;
 
@@ -37,6 +42,15 @@ import org.takes.facets.hamcrest.HmRsStatus;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class ReportsTest {
+
+    @Before
+    public void weAreOnline() {
+        try {
+            new TextOf(new URL("http://www.jpeek.org/")).asString();
+        } catch (final IOException ex) {
+            Assume.assumeTrue(false);
+        }
+    }
 
     @Test
     public void rendersOneReport() throws Exception {

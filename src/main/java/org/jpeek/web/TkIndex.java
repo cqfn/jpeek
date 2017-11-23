@@ -23,20 +23,14 @@
  */
 package org.jpeek.web;
 
-import java.io.IOException;
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Joined;
 import org.cactoos.iterable.Limited;
-import org.jpeek.Header;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
-import org.takes.rs.RsXslt;
-import org.takes.rs.xe.RsXembly;
 import org.takes.rs.xe.XeAppend;
-import org.takes.rs.xe.XeChain;
 import org.takes.rs.xe.XeDirectives;
-import org.takes.rs.xe.XeMillis;
-import org.takes.rs.xe.XeStylesheet;
 import org.xembly.Directive;
 
 /**
@@ -49,43 +43,32 @@ import org.xembly.Directive;
  * @since 0.10
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class TkIndex implements Take {
 
     @Override
-    public Response act(final Request req) throws IOException {
-        return new RsXslt(
-            new RsXembly(
-                new XeChain(
-                    new XeStylesheet("/org/jpeek/web/index.xsl"),
-                    new XeAppend(
-                        "index",
-                        new XeChain(
-                            new XeMillis(),
-                            new XeDirectives(new Header()),
-                            new XeAppend(
-                                "best",
-                                new XeDirectives(
-                                    new Joined<>(
-                                        new Limited<Iterable<Directive>>(
-                                            // @checkstyle MagicNumber (1 line)
-                                            20, new Results().best()
-                                        )
-                                    )
-                                )
-                            ),
-                            new XeAppend(
-                                "recent",
-                                new XeDirectives(
-                                    new Joined<>(
-                                        new Limited<>(
-                                            // @checkstyle MagicNumber (1 line)
-                                            50, new Results().recent()
-                                        )
-                                    )
-                                )
-                            ),
-                            new XeMillis(true)
+    public Response act(final Request req) {
+        return new RsPage(
+            "index",
+            () -> new IterableOf<>(
+                new XeAppend(
+                    "best",
+                    new XeDirectives(
+                        new Joined<>(
+                            new Limited<Iterable<Directive>>(
+                                // @checkstyle MagicNumber (1 line)
+                                20, new Results().best()
+                            )
+                        )
+                    )
+                ),
+                new XeAppend(
+                    "recent",
+                    new XeDirectives(
+                        new Joined<>(
+                            new Limited<>(
+                                // @checkstyle MagicNumber (1 line)
+                                50, new Results().recent()
+                            )
                         )
                     )
                 )

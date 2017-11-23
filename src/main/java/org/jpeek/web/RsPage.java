@@ -23,17 +23,20 @@
  */
 package org.jpeek.web;
 
-import org.cactoos.iterable.IterableOf;
-import org.cactoos.iterable.Joined;
-import org.cactoos.iterable.Limited;
-import org.takes.Request;
-import org.takes.Response;
-import org.takes.Take;
+import org.jpeek.Header;
+import org.takes.Scalar;
+import org.takes.rs.RsWrap;
+import org.takes.rs.RsXslt;
+import org.takes.rs.xe.RsXembly;
 import org.takes.rs.xe.XeAppend;
+import org.takes.rs.xe.XeChain;
 import org.takes.rs.xe.XeDirectives;
+import org.takes.rs.xe.XeMillis;
+import org.takes.rs.xe.XeSource;
+import org.takes.rs.xe.XeStylesheet;
 
 /**
- * Mistakes page.
+ * Ping them all.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -42,20 +45,28 @@ import org.takes.rs.xe.XeDirectives;
  * @since 0.14
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-final class TkMistakes implements Take {
+final class RsPage extends RsWrap {
 
-    @Override
-    public Response act(final Request req) {
-        return new RsPage(
-            "mistakes",
-            () -> new IterableOf<>(
-                new XeAppend(
-                    "worst",
-                    new XeDirectives(
-                        new Joined<>(
-                            new Limited<>(
-                                // @checkstyle MagicNumber (1 line)
-                                20, new Mistakes().worst()
+    /**
+     * Ctor.
+     * @param xsl XSL stylesheet
+     * @param src Sources
+     */
+    RsPage(final String xsl, final Scalar<Iterable<XeSource>> src) {
+        super(
+            new RsXslt(
+                new RsXembly(
+                    new XeChain(
+                        new XeStylesheet(
+                            String.format("/org/jpeek/web/%s.xsl", xsl)
+                        ),
+                        new XeAppend(
+                            "page",
+                            new XeChain(
+                                new XeMillis(),
+                                new XeDirectives(new Header()),
+                                new XeChain(src),
+                                new XeMillis(true)
                             )
                         )
                     )
