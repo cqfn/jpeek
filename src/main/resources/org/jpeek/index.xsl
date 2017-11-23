@@ -117,9 +117,6 @@ SOFTWARE.
           <th>
             <xsl:text>Graph</xsl:text>
           </th>
-          <th>
-            <xsl:text>&#xA0;</xsl:text>
-          </th>
         </tr>
       </thead>
       <tbody>
@@ -307,11 +304,6 @@ SOFTWARE.
           <xsl:with-param name="w" select="128"/>
           <xsl:with-param name="h" select="32"/>
         </xsl:call-template>
-      </td>
-      <td>
-        <a href="{xml}">
-          <xsl:text>XML</xsl:text>
-        </a>
       </td>
     </tr>
   </xsl:template>
