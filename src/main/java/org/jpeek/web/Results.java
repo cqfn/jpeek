@@ -144,6 +144,15 @@ final class Results {
                     .add("repo")
                     .add("group").set(parts[0]).up()
                     .add("artifact").set(parts[1]).up()
+                    .up()
+                    .add("defects").set(
+                        Double.parseDouble(item.get("defects").getN())
+                            / Results.MULTIPLIER
+                    )
+                    .up()
+                    .add("classes").set(
+                        Integer.parseInt(item.get("classes").getN())
+                    )
                     .up();
             },
             this.table.frame()
@@ -155,7 +164,7 @@ final class Results {
                         .withConsistentRead(false)
                         // @checkstyle MagicNumber (1 line)
                         .withLimit(50)
-                        .withAttributesToGet("artifact")
+                        .withAttributesToGet("artifact", "classes", "defects")
                 )
         );
     }

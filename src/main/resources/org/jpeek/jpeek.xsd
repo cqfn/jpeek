@@ -111,6 +111,7 @@ SOFTWARE.
           <xs:complexType>
             <xs:all>
               <xs:element name="mean" type="xs:double" minOccurs="1" maxOccurs="1"/>
+              <xs:element name="variance" type="xs:double" minOccurs="1" maxOccurs="1"/>
               <xs:element name="sigma" type="xs:double" minOccurs="1" maxOccurs="1"/>
               <xs:element name="defects" type="xs:double" minOccurs="1" maxOccurs="1"/>
             </xs:all>

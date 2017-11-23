@@ -82,10 +82,23 @@ SOFTWARE.
   </xsl:template>
   <xsl:template match="statistics">
     <p>
-      <xsl:text>&#x3BC;: </xsl:text>
+      <a href="https://en.wikipedia.org/wiki/Mean">
+        <xsl:text>&#x3BC;: </xsl:text>
+      </a>
+      <xsl:text>: </xsl:text>
       <xsl:value-of select="format-number(mean, '0.0000')"/>
-      <xsl:text>, &#x3C3;: </xsl:text>
+      <xsl:text>, </xsl:text>
+      <a href="https://en.wikipedia.org/wiki/Standard_deviation">
+        <xsl:text>&#x3C3;</xsl:text>
+      </a>
+      <xsl:text>: </xsl:text>
       <xsl:value-of select="format-number(sigma, '0.0000')"/>
+      <xsl:text>, </xsl:text>
+      <a href="https://en.wikipedia.org/wiki/Variance">
+        <xsl:text>Var</xsl:text>
+      </a>
+      <xsl:text>: </xsl:text>
+      <xsl:value-of select="format-number(variance, '0.0000')"/>
       <xsl:text>, defects: </xsl:text>
       <xsl:value-of select="format-number(defects * 100, '#')"/>
       <xsl:text>%.</xsl:text>

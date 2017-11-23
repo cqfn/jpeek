@@ -78,6 +78,7 @@ public final class TkAppTest {
             "/",
             "/mistakes",
             "/ping",
+            "/all",
             "/robots.txt",
         };
         final Take app = new TkApp(Files.createTempDirectory("x"));

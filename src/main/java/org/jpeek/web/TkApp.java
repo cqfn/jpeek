@@ -75,11 +75,12 @@ public final class TkApp extends TkWrap {
                         new FkRegex("/robots.txt", new TkText("")),
                         new FkRegex("/mistakes", new TkMistakes()),
                         new FkRegex("/ping", new TkPing()),
+                        new FkRegex("/all", new TkAll()),
                         new FkRegex(
                             ".+\\.xsl",
                             new TkWithType(
                                 new TkClasspath(),
-                                "application/xml"
+                                "text/xsl"
                             )
                         ),
                         new FkRegex(

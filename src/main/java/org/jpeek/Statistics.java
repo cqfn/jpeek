@@ -72,7 +72,8 @@ final class Statistics implements Scalar<XML> {
         for (final Double value : values) {
             squares += Math.pow(value - mean, 2.0d);
         }
-        final double sigma = Math.sqrt(squares / total);
+        final double variance = squares / total;
+        final double sigma = Math.sqrt(variance);
         double defects = 0.0d;
         for (final Double value : values) {
             if (value < mean - sigma || value > mean + sigma) {
@@ -86,6 +87,7 @@ final class Statistics implements Scalar<XML> {
                     .add("statistics")
                     .add("mean").set(Double.toString(mean)).up()
                     .add("sigma").set(Double.toString(sigma)).up()
+                    .add("variance").set(Double.toString(variance)).up()
                     .add("defects")
                     .set(Double.toString(defects / total)).up()
             ).applyQuietly(this.origin.node())
