@@ -22,7 +22,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="2.0">
   <xsl:template match="metric">
     <xsl:copy>
       <xsl:apply-templates select="node()|@*"/>
@@ -31,7 +31,7 @@ SOFTWARE.
   </xsl:template>
   <xsl:template match="metric" mode="bars">
     <xsl:variable name="all" select="//class[@value != 'NaN']"/>
-    <xsl:variable name="steps" select="max((32, count($all) div 20))"/>
+    <xsl:variable name="steps" select="xs:integer(max((32, count($all) div 20)))"/>
     <bars>
       <xsl:variable name="min" select="min($all/@value)"/>
       <xsl:variable name="max" select="max($all/@value)"/>
