@@ -60,7 +60,8 @@ final class Futures implements
      */
     Futures(final BiFunc<String, String, Func<String, Response>> func) {
         this.origin = func;
-        this.service = Executors.newCachedThreadPool(
+        this.service = Executors.newFixedThreadPool(
+            Runtime.getRuntime().availableProcessors(),
             new VerboseThreads(Futures.class)
         );
     }
