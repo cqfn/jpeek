@@ -75,7 +75,7 @@ SOFTWARE.
     </p>
     <p>
       <xsl:call-template name="bars">
-        <xsl:with-param name="bars" select="."/>
+        <xsl:with-param name="bars" select="bars"/>
         <xsl:with-param name="w" select="min((max((240, count(bars/bar) * 5)), 1024))"/>
         <xsl:with-param name="h" select="64"/>
       </xsl:call-template>
