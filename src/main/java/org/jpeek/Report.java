@@ -23,6 +23,7 @@
  */
 package org.jpeek;
 
+import com.jcabi.xml.ClasspathSources;
 import com.jcabi.xml.StrictXML;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
@@ -64,7 +65,7 @@ final class Report {
      */
     private static final XSL STYLESHEET = XSLDocument.make(
         Report.class.getResourceAsStream("jpeek.xsl")
-    );
+    ).with(new ClasspathSources());
 
     /**
      * The metric.

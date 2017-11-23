@@ -23,6 +23,7 @@
  */
 package org.jpeek;
 
+import com.jcabi.xml.ClasspathSources;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import com.jcabi.xml.XSL;
@@ -201,7 +202,9 @@ public final class App {
      * @return XSL document
      */
     private static XSL xsl(final String name) {
-        return new XSLDocument(App.class.getResourceAsStream(name));
+        return new XSLDocument(
+            App.class.getResourceAsStream(name)
+        ).with(new ClasspathSources());
     }
 
 }

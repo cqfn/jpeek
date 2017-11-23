@@ -24,6 +24,7 @@
 package org.jpeek;
 
 import com.jcabi.matchers.XhtmlMatchers;
+import com.jcabi.xml.ClasspathSources;
 import com.jcabi.xml.XMLDocument;
 import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
@@ -54,9 +55,9 @@ public final class AppTest {
             Matchers.equalTo(true)
         );
         MatcherAssert.assertThat(
-            XSLDocument.make(
-                this.getClass().getResourceAsStream("jpeek.xsl")
-            ).applyTo(new XMLDocument(output.resolve("LCOM.xml").toFile())),
+            XSLDocument.make(this.getClass().getResourceAsStream("jpeek.xsl"))
+                .with(new ClasspathSources())
+                .applyTo(new XMLDocument(output.resolve("LCOM.xml").toFile())),
             XhtmlMatchers.hasXPath("//xhtml:body")
         );
     }
