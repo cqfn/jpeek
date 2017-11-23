@@ -30,8 +30,8 @@ SOFTWARE.
     </xsl:copy>
   </xsl:template>
   <xsl:template match="metric" mode="bars">
-    <xsl:variable name="steps" select="32"/>
     <xsl:variable name="all" select="//class[@value != 'NaN']"/>
+    <xsl:variable name="steps" select="max((32, count($all) div 20))"/>
     <bars>
       <xsl:variable name="min" select="min($all/@value)"/>
       <xsl:variable name="max" select="max($all/@value)"/>
