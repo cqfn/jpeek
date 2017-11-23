@@ -74,10 +74,10 @@ final class Index implements Scalar<Iterable<Directive>> {
                     new Mapped<>(
                         Index::metric,
                         new Filtered<>(
-                            new Directory(this.output),
                             path -> path.getFileName().toString().matches(
                                 "^[A-Z].+\\.xml$"
-                            )
+                            ),
+                            new Directory(this.output)
                         )
                     )
                 )
@@ -97,8 +97,8 @@ final class Index implements Scalar<Iterable<Directive>> {
         final XML xml = new XMLDocument(file.toFile());
         final List<Double> values = new Sorted<>(
             new org.cactoos.list.Mapped<>(
-                xml.xpath("//class/@value"),
-                Double::parseDouble
+                Double::parseDouble,
+                xml.xpath("//class/@value")
             )
         );
         final double green = (double) xml.nodes("//*[@color='green']").size();
@@ -125,6 +125,12 @@ final class Index implements Scalar<Iterable<Directive>> {
         final Iterator<XML> bars = xml.nodes("/metric/bars").iterator();
         if (bars.hasNext()) {
             dirs.add("bars").append(Directives.copyOf(bars.next().node())).up();
+        }
+        final Iterator<XML> stats = xml.nodes("/metric/statistics").iterator();
+        if (stats.hasNext()) {
+            final XML stat = stats.next();
+            dirs.add("defects")
+                .set(stat.xpath("defects/text()").get(0)).up();
         }
         return dirs.up();
     }

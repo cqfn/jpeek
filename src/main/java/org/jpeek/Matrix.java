@@ -69,15 +69,8 @@ final class Matrix implements Scalar<Iterable<Directive>> {
         final SortedMap<String, Map<String, String>> matrix = new TreeMap<>();
         new IoCheckedScalar<>(
             new And(
-                new Filtered<>(
-                    new Directory(this.output),
-                    path -> path.getFileName().toString().matches(
-                        "^[A-Z].+\\.xml$"
-                    )
-                ),
                 path -> {
                     new And(
-                        new XMLDocument(path.toFile()).nodes("//class"),
                         node -> {
                             final String name = String.format(
                                 "%s.%s",
@@ -89,9 +82,16 @@ final class Matrix implements Scalar<Iterable<Directive>> {
                                 node.xpath("/metric/title/text()").get(0),
                                 node.xpath("@color").get(0)
                             );
-                        }
+                        },
+                        new XMLDocument(path.toFile()).nodes("//class")
                     ).value();
-                }
+                },
+                new Filtered<>(
+                    path -> path.getFileName().toString().matches(
+                        "^[A-Z].+\\.xml$"
+                    ),
+                    new Directory(this.output)
+                )
             )
         ).value();
         return new Directives()

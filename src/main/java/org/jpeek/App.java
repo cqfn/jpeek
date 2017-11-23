@@ -105,10 +105,10 @@ public final class App {
         );
         new IoCheckedScalar<>(
             new And(
-                reports,
                 report -> {
                     report.save(this.output);
-                }
+                },
+                reports
             )
         ).value();
         final XML index = App.xsl("index-post-2.xsl").transform(
@@ -152,8 +152,8 @@ public final class App {
         this.copy("jpeek.css");
         new IoCheckedScalar<>(
             new And(
-                new ListOf<>("index", "matrix", "jpeek"),
-                this::copyXsl
+                this::copyXsl,
+                new ListOf<>("index", "matrix", "jpeek")
             )
         ).value();
     }

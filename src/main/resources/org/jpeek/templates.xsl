@@ -87,6 +87,7 @@ SOFTWARE.
     <div>
       <xsl:attribute name="style">
         <xsl:text>background-color:#e8e8ee;</xsl:text>
+        <xsl:text>border: 1px solid #ccc;</xsl:text>
         <xsl:text>position:relative;</xsl:text>
         <xsl:text>width:</xsl:text>
         <xsl:value-of select="$w + 4"/>

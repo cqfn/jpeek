@@ -47,21 +47,12 @@ SOFTWARE.
       <xsl:text>.</xsl:text>
     </p>
     <xsl:apply-templates select="app/@value"/>
+    <xsl:apply-templates select="statistics"/>
     <p>
-      <xsl:variable name="all" select="//class[@value != 'NaN']"/>
       <xsl:text>Packages: </xsl:text>
       <xsl:value-of select="count(//package)"/>
       <xsl:text>, classes: </xsl:text>
       <xsl:value-of select="count(//class)"/>
-      <xsl:text>, average: </xsl:text>
-      <xsl:choose>
-        <xsl:when test="$all">
-          <xsl:value-of select="format-number(sum($all/@value) div count($all), '0.0000')"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:text>0</xsl:text>
-        </xsl:otherwise>
-      </xsl:choose>
       <xsl:text>.</xsl:text>
     </p>
     <p>
@@ -87,6 +78,17 @@ SOFTWARE.
         <xsl:text>XML</xsl:text>
       </a>
       <xsl:text>.</xsl:text>
+    </p>
+  </xsl:template>
+  <xsl:template match="statistics">
+    <p>
+      <xsl:text>&#x3BC;: </xsl:text>
+      <xsl:value-of select="format-number(mean, '0.0000')"/>
+      <xsl:text>, &#x3C3;: </xsl:text>
+      <xsl:value-of select="format-number(sigma, '0.0000')"/>
+      <xsl:text>, defects: </xsl:text>
+      <xsl:value-of select="format-number(defects * 100, '#')"/>
+      <xsl:text>%.</xsl:text>
     </p>
   </xsl:template>
   <xsl:template match="app/@value">

@@ -115,6 +115,14 @@ SOFTWARE.
             </a>
           </th>
           <th>
+            <xsl:text>Error</xsl:text>
+            <a href="#6">
+              <sup>
+                <xsl:text>6</xsl:text>
+              </sup>
+            </a>
+          </th>
+          <th>
             <xsl:text>Graph</xsl:text>
           </th>
         </tr>
@@ -189,6 +197,11 @@ SOFTWARE.
         particular metric; in small font below the score value
         you can see how big is the difference between this metric
         score and the average score for the entire code base.</xsl:text>
+      <sup id="6">
+        <xsl:text>6</xsl:text>
+      </sup>
+      <xsl:text>"Error" is the percentage of classes that fall out
+        of one-sigma standard deviation interval.</xsl:text>
     </p>
   </xsl:template>
   <xsl:template match="metric">
@@ -297,6 +310,29 @@ SOFTWARE.
           <xsl:value-of select="format-number(@diff * 100, '#')"/>
           <xsl:text>%</xsl:text>
         </span>
+      </td>
+      <td>
+        <xsl:attribute name="style">
+          <xsl:text>text-align:right;</xsl:text>
+          <xsl:text>color:</xsl:text>
+          <xsl:call-template name="color">
+            <xsl:with-param name="name">
+              <xsl:choose>
+                <xsl:when test="defects &gt; 0.25">
+                  <xsl:text>red</xsl:text>
+                </xsl:when>
+                <xsl:when test="defects &gt; 0.15">
+                  <xsl:text>yellow</xsl:text>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:text>green</xsl:text>
+                </xsl:otherwise>
+              </xsl:choose>
+            </xsl:with-param>
+          </xsl:call-template>
+        </xsl:attribute>
+        <xsl:value-of select="format-number(defects * 100, '#')"/>
+        <xsl:text>%</xsl:text>
       </td>
       <td>
         <xsl:call-template name="bars">

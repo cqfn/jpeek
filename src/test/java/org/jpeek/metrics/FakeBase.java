@@ -78,7 +78,6 @@ public final class FakeBase implements Base {
         );
         new IoCheckedScalar<>(
             new And(
-                sources,
                 java -> {
                     new LengthOf(
                         new TeeInput(
@@ -88,7 +87,8 @@ public final class FakeBase implements Base {
                             temp.resolve(java)
                         )
                     ).value();
-                }
+                },
+                sources
             )
         ).value();
         if (sources.iterator().hasNext()) {

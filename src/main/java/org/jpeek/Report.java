@@ -112,10 +112,14 @@ final class Report {
     public void save(final Path target) throws IOException {
         final XML xml = new StrictXML(
             new IoCheckedScalar<>(
-                new Reduced<>(
-                    this.xml(),
-                    (doc, xsl) -> xsl.transform(doc),
-                    this.post
+                new Statistics(
+                    new IoCheckedScalar<>(
+                        new Reduced<>(
+                            this.xml(),
+                            (doc, xsl) -> xsl.transform(doc),
+                            this.post
+                        )
+                    ).value()
                 )
             ).value(),
             Report.SCHEMA
