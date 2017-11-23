@@ -48,14 +48,15 @@ SOFTWARE.
     </p>
     <xsl:apply-templates select="app/@value"/>
     <p>
+      <xsl:variable name="all" select="//class[@value != 'NaN']"/>
       <xsl:text>Packages: </xsl:text>
       <xsl:value-of select="count(//package)"/>
       <xsl:text>, classes: </xsl:text>
       <xsl:value-of select="count(//class)"/>
       <xsl:text>, average: </xsl:text>
       <xsl:choose>
-        <xsl:when test="//class">
-          <xsl:value-of select="format-number(sum(//class/@value) div count(//class), '0.0000')"/>
+        <xsl:when test="$all">
+          <xsl:value-of select="format-number(sum($all/@value) div count($all), '0.0000')"/>
         </xsl:when>
         <xsl:otherwise>
           <xsl:text>0</xsl:text>
@@ -74,6 +75,13 @@ SOFTWARE.
     </p>
     <xsl:apply-templates select="bars"/>
     <xsl:apply-templates select="app"/>
+    <p>
+      <xsl:text>Download </xsl:text>
+      <a href="{metric/title}.xml">
+        <xsl:text>XML</xsl:text>
+      </a>
+      <xsl:text>.</xsl:text>
+    </p>
   </xsl:template>
   <xsl:template match="app/@value">
     <p>

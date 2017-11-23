@@ -30,15 +30,15 @@ SOFTWARE.
     </xsl:copy>
   </xsl:template>
   <xsl:template match="metric" mode="bars">
+    <xsl:variable name="steps" select="32"/>
+    <xsl:variable name="all" select="//class[@value != 'NaN']"/>
     <bars>
-      <xsl:variable name="min" select="min(//class/@value)"/>
-      <xsl:variable name="max" select="max(//class/@value)"/>
-      <xsl:variable name="steps" select="50"/>
+      <xsl:variable name="min" select="min($all/@value)"/>
+      <xsl:variable name="max" select="max($all/@value)"/>
       <xsl:variable name="delta" select="($max - $min) div $steps"/>
-      <xsl:variable name="root" select="."/>
       <xsl:for-each select="0 to ($steps - 1)">
         <xsl:variable name="step" select="."/>
-        <xsl:variable name="classes" select="$root//class[(@value &gt;= $step * $delta) and (@value &lt; ($step + 1) * $delta) or ($step = $steps -1 and @value = $steps * $delta)]"/>
+        <xsl:variable name="classes" select="$all[(@value &gt;= $step * $delta) and (@value &lt; ($step + 1) * $delta) or ($step = $steps -1 and @value = $steps * $delta)]"/>
         <bar x="{$step div $steps}" color="{$classes[1]/@color}">
           <xsl:value-of select="count($classes)"/>
         </bar>

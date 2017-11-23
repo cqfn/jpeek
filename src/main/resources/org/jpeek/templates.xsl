@@ -86,7 +86,7 @@ SOFTWARE.
     <xsl:param name="h"/>
     <div>
       <xsl:attribute name="style">
-        <xsl:text>background-color:#ddd;</xsl:text>
+        <xsl:text>background-color:#e8e8ee;</xsl:text>
         <xsl:text>position:relative;</xsl:text>
         <xsl:text>width:</xsl:text>
         <xsl:value-of select="$w + 4"/>

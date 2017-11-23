@@ -302,7 +302,11 @@ SOFTWARE.
         </span>
       </td>
       <td>
-        <xsl:apply-templates select="bars"/>
+        <xsl:call-template name="bars">
+          <xsl:with-param name="bars" select="bars"/>
+          <xsl:with-param name="w" select="128"/>
+          <xsl:with-param name="h" select="32"/>
+        </xsl:call-template>
       </td>
       <td>
         <a href="{xml}">
@@ -310,12 +314,5 @@ SOFTWARE.
         </a>
       </td>
     </tr>
-  </xsl:template>
-  <xsl:template match="bars">
-    <xsl:call-template name="bars">
-      <xsl:with-param name="bars" select="bars"/>
-      <xsl:with-param name="w" select="128"/>
-      <xsl:with-param name="h" select="32"/>
-    </xsl:call-template>
   </xsl:template>
 </xsl:stylesheet>

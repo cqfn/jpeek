@@ -33,6 +33,7 @@ import org.hamcrest.Matchers;
 import org.jpeek.metrics.FakeBase;
 import org.jpeek.metrics.cohesion.LCOM;
 import org.jpeek.metrics.cohesion.MMAC;
+import org.jpeek.metrics.cohesion.NHD;
 import org.junit.Test;
 
 /**
@@ -76,6 +77,20 @@ public final class ReportTest {
             XhtmlMatchers.hasXPaths(
                 "/metric/app/package/class/vars",
                 "/metric/bars/bar[@x='0' and .='1' and @color='red']"
+            )
+        );
+    }
+
+    @Test
+    public void createsXmlReportWithEmptyProject() throws IOException {
+        final Path output = Files.createTempDirectory("");
+        new Report(new NHD(new FakeBase())).save(output);
+        MatcherAssert.assertThat(
+            XhtmlMatchers.xhtml(
+                new TextOf(output.resolve("NHD.xml")).asString()
+            ),
+            XhtmlMatchers.hasXPaths(
+                "/metric[title='NHD']/bars/bar"
             )
         );
     }

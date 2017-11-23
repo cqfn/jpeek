@@ -91,25 +91,33 @@ public final class FakeBase implements Base {
                 }
             )
         ).value();
-        final Process process = new ProcessBuilder()
-            .redirectOutput(ProcessBuilder.Redirect.INHERIT)
-            .redirectInput(ProcessBuilder.Redirect.INHERIT)
-            .redirectError(ProcessBuilder.Redirect.INHERIT)
-            .directory(temp.toFile())
-            .command(
-                new ListOf<>(
-                    new Joined<String>(
-                        new ListOf<>("javac"),
-                        sources
+        if (sources.iterator().hasNext()) {
+            final int exit;
+            try {
+                exit = new ProcessBuilder()
+                    .redirectOutput(ProcessBuilder.Redirect.INHERIT)
+                    .redirectInput(ProcessBuilder.Redirect.INHERIT)
+                    .redirectError(ProcessBuilder.Redirect.INHERIT)
+                    .directory(temp.toFile())
+                    .command(
+                        new ListOf<>(
+                            new Joined<String>(
+                                new ListOf<>("javac"),
+                                sources
+                            )
+                        )
                     )
-                )
-            )
-            .start();
-        try {
-            assert process.waitFor() == 0;
-        } catch (final InterruptedException ex) {
-            Thread.currentThread().interrupt();
-            throw new IllegalStateException(ex);
+                    .start()
+                    .waitFor();
+            } catch (final InterruptedException ex) {
+                Thread.currentThread().interrupt();
+                throw new IllegalStateException(ex);
+            }
+            if (exit != 0) {
+                throw new IllegalStateException(
+                    String.format("javac failed with exit code %d", exit)
+                );
+            }
         }
         return new DefaultBase(temp).files();
     }
