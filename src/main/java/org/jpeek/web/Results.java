@@ -206,7 +206,10 @@ final class Results {
                             .withConsistentRead(false)
                             // @checkstyle MagicNumber (1 line)
                             .withLimit(40)
-                            .withAttributesToGet("artifact", "score", "diff")
+                            .withAttributesToGet(
+                                "artifact", "score", "diff", "defects",
+                                "classes"
+                            )
                     )
             )
         );
