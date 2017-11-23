@@ -47,7 +47,7 @@ final class TkPing implements Take {
     @Override
     public Response act(final Request req) {
         return new RsPage(
-            "ping",
+            req, "ping",
             () -> new IterableOf<>(
                 new XeAppend(
                     "recent",

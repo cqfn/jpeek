@@ -43,6 +43,7 @@ import org.takes.http.FtCli;
 import org.takes.misc.Opt;
 import org.takes.rs.RsText;
 import org.takes.rs.RsWithStatus;
+import org.takes.tk.TkClasspath;
 import org.takes.tk.TkText;
 import org.takes.tk.TkWithType;
 import org.takes.tk.TkWrap;
@@ -71,18 +72,18 @@ public final class TkApp extends TkWrap {
                 new TkForward(
                     new TkFork(
                         new FkRegex("/", new TkIndex()),
+                        new FkRegex("/robots.txt", new TkText("")),
                         new FkRegex("/mistakes", new TkMistakes()),
                         new FkRegex("/ping", new TkPing()),
                         new FkRegex(
-                            "/([^/]+)/([^/]+)(.*)",
-                            new TkReport(
-                                new AsyncReports(
-                                    new Reports(home)
-                                )
+                            ".+\\.xsl",
+                            new TkWithType(
+                                new TkClasspath(),
+                                "application/xml"
                             )
                         ),
                         new FkRegex(
-                            "/jpeek.css",
+                            "/jpeek\\.css",
                             new TkWithType(
                                 new TkText(
                                     new TextOf(
@@ -90,6 +91,14 @@ public final class TkApp extends TkWrap {
                                     ).asString()
                                 ),
                                 "text/css"
+                            )
+                        ),
+                        new FkRegex(
+                            "/([^/]+)/([^/]+)(.*)",
+                            new TkReport(
+                                new AsyncReports(
+                                    new Reports(home)
+                                )
                             )
                         )
                     )

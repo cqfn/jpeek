@@ -36,6 +36,7 @@ import org.cactoos.func.StickyBiFunc;
 import org.cactoos.func.SyncBiFunc;
 import org.cactoos.iterable.IterableOf;
 import org.takes.Response;
+import org.takes.rq.RqFake;
 import org.takes.rs.xe.XeAppend;
 
 /**
@@ -89,7 +90,7 @@ final class AsyncReports implements
                     s -> System.currentTimeMillis()
                 );
             output = input -> new RsPage(
-                "wait",
+                new RqFake(), "wait",
                 () -> new IterableOf<>(
                     new XeAppend("group", group),
                     new XeAppend("artifact", artifact),

@@ -28,9 +28,12 @@ import com.jcabi.http.response.RestResponse;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.nio.file.Files;
+import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import org.takes.Take;
+import org.takes.facets.hamcrest.HmRsStatus;
 import org.takes.http.FtRemote;
+import org.takes.rq.RqFake;
 
 /**
  * Test case for {@link TkApp}.
@@ -63,6 +66,28 @@ public final class TkAppTest {
                     .assertStatus(HttpURLConnection.HTTP_SEE_OTHER);
             }
         );
+    }
+
+    @Test
+    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
+    public void pingsSimplePages() throws IOException {
+        final String[] pages = {
+            "/org/jpeek/web/layout.xsl",
+            "/org/jpeek/web/index.xsl",
+            "/jpeek.css",
+            "/",
+            "/mistakes",
+            "/ping",
+            "/robots.txt",
+        };
+        final Take app = new TkApp(Files.createTempDirectory("x"));
+        for (final String page : pages) {
+            MatcherAssert.assertThat(
+                page,
+                app.act(new RqFake("GET", page)),
+                new HmRsStatus(HttpURLConnection.HTTP_OK)
+            );
+        }
     }
 
 }

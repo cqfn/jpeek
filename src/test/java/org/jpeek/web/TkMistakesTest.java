@@ -28,6 +28,7 @@ import java.io.IOException;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import org.takes.rq.RqFake;
+import org.takes.rq.RqWithHeaders;
 import org.takes.rs.RsPrint;
 
 /**
@@ -46,6 +47,23 @@ public final class TkMistakesTest {
                 new RsPrint(new TkMistakes().act(new RqFake())).printBody()
             ),
             XhtmlMatchers.hasXPath("//xhtml:footer")
+        );
+    }
+
+    @Test
+    public void rendersMistakesPageInXml() throws IOException {
+        MatcherAssert.assertThat(
+            XhtmlMatchers.xhtml(
+                new RsPrint(
+                    new TkMistakes().act(
+                        new RqWithHeaders(
+                            new RqFake(),
+                            "Accept: application/xml"
+                        )
+                    )
+                ).printBody()
+            ),
+            XhtmlMatchers.hasXPath("/page/worst")
         );
     }
 

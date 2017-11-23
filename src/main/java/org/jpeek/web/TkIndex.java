@@ -48,7 +48,7 @@ final class TkIndex implements Take {
     @Override
     public Response act(final Request req) {
         return new RsPage(
-            "index",
+            req, "index",
             () -> new IterableOf<>(
                 new XeAppend(
                     "best",

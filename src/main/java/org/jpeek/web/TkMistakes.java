@@ -47,7 +47,7 @@ final class TkMistakes implements Take {
     @Override
     public Response act(final Request req) {
         return new RsPage(
-            "mistakes",
+            req, "mistakes",
             () -> new IterableOf<>(
                 new XeAppend(
                     "worst",
