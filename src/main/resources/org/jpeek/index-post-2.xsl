@@ -35,6 +35,16 @@ SOFTWARE.
           </xsl:otherwise>
         </xsl:choose>
       </xsl:attribute>
+      <xsl:attribute name="defects">
+        <xsl:choose>
+          <xsl:when test="metric">
+            <xsl:value-of select="sum(metric/defects) div count(metric)"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:text>0</xsl:text>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:attribute>
       <xsl:apply-templates select="node()|@*"/>
     </xsl:copy>
   </xsl:template>

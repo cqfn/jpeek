@@ -107,6 +107,14 @@ final class Results {
                     )
                 )
                 .with(
+                    "defects",
+                    (long) (
+                        Double.parseDouble(
+                            index.xpath("/index/@defects").get(0)
+                        ) * Results.MULTIPLIER
+                    )
+                )
+                .with(
                     "classes",
                     Integer.parseInt(
                         index.xpath("/index/metric[1]/classes/text()").get(0)
@@ -171,6 +179,11 @@ final class Results {
                     .up()
                     .add("diff").set(
                         Double.parseDouble(item.get("diff").getN())
+                            / Results.MULTIPLIER
+                    )
+                    .up()
+                    .add("defects").set(
+                        Double.parseDouble(item.get("defects").getN())
                             / Results.MULTIPLIER
                     )
                     .up()

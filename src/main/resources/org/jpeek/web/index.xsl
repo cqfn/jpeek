@@ -177,6 +177,25 @@ SOFTWARE.
         <xsl:value-of select="format-number(100 * diff,'#')"/>
         <xsl:text>%</xsl:text>
       </td>
+      <td>
+        <xsl:attribute name="style">
+          <xsl:text>text-align:right;</xsl:text>
+          <xsl:text>color:</xsl:text>
+          <xsl:choose>
+            <xsl:when test="defects &lt; 0.10">
+              <xsl:text>green</xsl:text>
+            </xsl:when>
+            <xsl:when test="defects &lt; 0.20">
+              <xsl:text>orange</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>red</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:attribute>
+        <xsl:value-of select="format-number(100 * defects,'#')"/>
+        <xsl:text>%</xsl:text>
+      </td>
     </tr>
   </xsl:template>
   <xsl:template match="recent[repo]">
