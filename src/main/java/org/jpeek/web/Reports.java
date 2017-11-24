@@ -24,6 +24,7 @@
 package org.jpeek.web;
 
 import com.jcabi.xml.XMLDocument;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -113,10 +114,11 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
             )
         ).value();
         try {
+            final File none = new File("/dev/null");
             final int exit = new ProcessBuilder()
-                .redirectOutput(ProcessBuilder.Redirect.INHERIT)
-                .redirectInput(ProcessBuilder.Redirect.INHERIT)
-                .redirectError(ProcessBuilder.Redirect.INHERIT)
+                .redirectOutput(ProcessBuilder.Redirect.to(none))
+                .redirectInput(ProcessBuilder.Redirect.from(none))
+                .redirectError(ProcessBuilder.Redirect.to(none))
                 .directory(input.toFile())
                 .command("unzip", name)
                 .start()

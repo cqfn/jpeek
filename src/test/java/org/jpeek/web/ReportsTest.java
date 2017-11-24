@@ -57,7 +57,7 @@ public final class ReportsTest {
         MatcherAssert.assertThat(
             new Reports(
                 Files.createTempDirectory("x")
-            ).apply("org.jpeek", "jpeek").apply("index.html"),
+            ).apply("org.takes", "takes").apply("index.html"),
             new HmRsStatus(HttpURLConnection.HTTP_OK)
         );
     }

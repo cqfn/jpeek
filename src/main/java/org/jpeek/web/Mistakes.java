@@ -156,6 +156,11 @@ final class Mistakes {
     private void add(final String name, final double diff) throws IOException {
         final String version = new Version().value();
         final Iterator<Item> items = this.table.frame()
+            .through(
+                new QueryValve()
+                    .withLimit(1)
+                    .withSelect(Select.ALL_ATTRIBUTES)
+            )
             .where("metric", name)
             .where("version", version)
             .iterator();
@@ -229,6 +234,11 @@ final class Mistakes {
             );
         }
         final Item after = this.table.frame()
+            .through(
+                new QueryValve()
+                    .withLimit(1)
+                    .withSelect(Select.ALL_ATTRIBUTES)
+            )
             .where("metric", name)
             .where("version", version)
             .iterator()
@@ -263,6 +273,11 @@ final class Mistakes {
                 )
         );
         final Item fin = this.table.frame()
+            .through(
+                new QueryValve()
+                    .withLimit(1)
+                    .withSelect(Select.ALL_ATTRIBUTES)
+            )
             .where("metric", name)
             .where("version", version)
             .iterator()

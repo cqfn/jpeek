@@ -30,10 +30,12 @@ import java.net.HttpURLConnection;
 import java.nio.file.Files;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.takes.Response;
 import org.takes.Take;
 import org.takes.facets.hamcrest.HmRsStatus;
 import org.takes.http.FtRemote;
 import org.takes.rq.RqFake;
+import org.takes.rs.RsPrint;
 
 /**
  * Test case for {@link TkApp}.
@@ -83,9 +85,10 @@ public final class TkAppTest {
         };
         final Take app = new TkApp(Files.createTempDirectory("x"));
         for (final String page : pages) {
+            final Response response = app.act(new RqFake("GET", page));
             MatcherAssert.assertThat(
-                page,
-                app.act(new RqFake("GET", page)),
+                new RsPrint(response).print(),
+                response,
                 new HmRsStatus(HttpURLConnection.HTTP_OK)
             );
         }
