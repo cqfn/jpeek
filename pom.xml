@@ -348,6 +348,7 @@ SOFTWARE.
                   <goal>copy-dependencies</goal>
                 </goals>
                 <configuration>
+                  <includeScope>runtime</includeScope>
                   <outputDirectory>${project.build.directory}/deps</outputDirectory>
                   <overWriteReleases>true</overWriteReleases>
                   <overWriteSnapshots>true</overWriteSnapshots>
