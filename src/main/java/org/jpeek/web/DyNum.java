@@ -61,7 +61,7 @@ final class DyNum extends Number {
      * @param num The number
      */
     DyNum(final String num) {
-        this(Double.parseDouble(num) / DyNum.MULTIPLIER);
+        this(Double.parseDouble(num));
     }
 
     /**
@@ -71,7 +71,7 @@ final class DyNum extends Number {
      * @throws IOException If fails
      */
     DyNum(final Item item, final String attr) throws IOException {
-        this(item.get(attr).getN());
+        this(Double.parseDouble(item.get(attr).getN()) / DyNum.MULTIPLIER);
     }
 
     /**
