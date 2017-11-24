@@ -28,16 +28,19 @@ SOFTWARE.
   <xsl:import href="/org/jpeek/web/layout.xsl"/>
   <xsl:template match="/page" mode="head">
     <title>
-      <xsl:text>all</xsl:text>
+      <xsl:text>All </xsl:text>
+      <xsl:value-of select="count(repo)"/>
     </title>
   </xsl:template>
   <xsl:template match="/page" mode="body">
-    <p>
-      <xsl:text>Full list of artifacts in our database:</xsl:text>
-    </p>
     <xsl:apply-templates select="recent"/>
   </xsl:template>
   <xsl:template match="recent">
+    <p>
+      <xsl:text>All </xsl:text>
+      <xsl:value-of select="count(repo)"/>
+      <xsl:text> artifacts in our database:</xsl:text>
+    </p>
     <table data-sortable="true">
       <thead>
         <tr>
@@ -67,7 +70,9 @@ SOFTWARE.
         </code>
       </td>
       <td style="text-align:right">
-        <xsl:value-of select="classes"/>
+        <a href="/{group}/{artifact}">
+          <xsl:value-of select="classes"/>
+        </a>
       </td>
       <td>
         <xsl:attribute name="style">

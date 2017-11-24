@@ -28,7 +28,7 @@ SOFTWARE.
   <xsl:template match="metric">
     <xsl:copy>
       <xsl:apply-templates select="node()|@*"/>
-      <colors>
+      <colors low="{$low}" high="{$high}">
         <xsl:text>[</xsl:text>
         <xsl:value-of select="$low"/>
         <xsl:text> .. </xsl:text>

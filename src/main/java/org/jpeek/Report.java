@@ -83,21 +83,21 @@ final class Report {
      */
     Report(final Metric mtc) {
         // @checkstyle MagicNumber (1 line)
-        this(mtc, 0.25d, 0.75d);
+        this(mtc, 0.5d, 0.25d);
     }
 
     /**
      * Ctor.
      * @param mtc Metric
-     * @param low Low boundary
-     * @param high High boundary
+     * @param mean Mean
+     * @param sigma Sigma
      */
-    Report(final Metric mtc, final double low, final double high) {
+    Report(final Metric mtc, final double mean, final double sigma) {
         this.metric = mtc;
         this.post = new IterableOf<>(
             new XSLDocument(
                 Report.class.getResourceAsStream("jpeek-post-colors.xsl")
-            ).with("low", low).with("high", high),
+            ).with("low", mean - sigma).with("high", mean + sigma),
             new XSLDocument(
                 Report.class.getResourceAsStream("jpeek-post-bars.xsl")
             )

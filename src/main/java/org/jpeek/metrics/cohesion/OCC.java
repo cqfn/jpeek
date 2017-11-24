@@ -51,6 +51,10 @@ import org.xembly.Directive;
  * Maximum value of percentage of methods to be reachable by some method,
  * on the weak-connection graph.
  *
+ * <p>The metric value ranges between 0 and 1.0. A value of
+ * 1.0 represents minimum cohesion and 0 represents
+ * a completely cohesive class.</p>
+ *
  * <p>There is no thread-safety guarantee.
  *
  * @author Vseslav Sekorin (vssekorin@gmail.com)

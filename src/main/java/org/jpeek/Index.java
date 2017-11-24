@@ -117,7 +117,17 @@ final class Index implements Scalar<Iterable<Directive>> {
             .add("green").set((int) green).up()
             .add("yellow").set((int) yellow).up()
             .add("red").set((int) red).up()
-            .add("score").set(score).up();
+            .add("score").set(score).up()
+            .add("reverse")
+            .set(
+                Boolean.toString(
+                    Double.parseDouble(xml.xpath("/metric/colors/@high").get(0))
+                    > Double.parseDouble(
+                        xml.xpath("/metric/colors/@low").get(0)
+                    )
+                )
+            )
+            .up();
         if (!values.isEmpty()) {
             dirs.add("min").set(values.get(0)).up()
                 .add("max").set(values.get(values.size() - 1)).up();
@@ -129,8 +139,9 @@ final class Index implements Scalar<Iterable<Directive>> {
         final Iterator<XML> stats = xml.nodes("/metric/statistics").iterator();
         if (stats.hasNext()) {
             final XML stat = stats.next();
-            dirs.add("defects")
-                .set(stat.xpath("defects/text()").get(0)).up();
+            dirs.add("defects").set(stat.xpath("defects/text()").get(0)).up()
+                .add("sigma").set(stat.xpath("sigma/text()").get(0)).up()
+                .add("mean").set(stat.xpath("mean/text()").get(0)).up();
         }
         return dirs.up();
     }

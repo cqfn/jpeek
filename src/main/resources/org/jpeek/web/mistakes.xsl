@@ -28,7 +28,7 @@ SOFTWARE.
   <xsl:import href="/org/jpeek/web/layout.xsl"/>
   <xsl:template match="/page" mode="head">
     <title>
-      <xsl:text>mistakes</xsl:text>
+      <xsl:text>Mistakes</xsl:text>
     </title>
   </xsl:template>
   <xsl:template match="/page" mode="body">
@@ -81,6 +81,16 @@ SOFTWARE.
               <sup>
                 <xsl:text>2</xsl:text>
               </sup>
+            </a>
+          </th>
+          <th>
+            <a href="https://en.wikipedia.org/wiki/Mean">
+              <xsl:text>&#x3BC;</xsl:text>
+            </a>
+          </th>
+          <th>
+            <a href="https://en.wikipedia.org/wiki/Standard_deviation">
+              <xsl:text>&#x3C3;</xsl:text>
             </a>
           </th>
         </tr>
@@ -155,6 +165,12 @@ SOFTWARE.
             <xsl:value-of select="pos"/>
           </span>
         </xsl:if>
+      </td>
+      <td style="text-align:right">
+        <xsl:value-of select="format-number(mean, '0.00')"/>
+      </td>
+      <td style="text-align:right">
+        <xsl:value-of select="format-number(sigma, '0.00')"/>
       </td>
     </tr>
   </xsl:template>

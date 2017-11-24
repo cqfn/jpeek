@@ -51,20 +51,14 @@ import org.xembly.Directives;
 final class Results {
 
     /**
-     * Score multiplier.
-     */
-    private static final Double MULTIPLIER = 100000.0d;
-
-    /**
      * DynamoDB table.
      */
     private final Table table;
 
     /**
      * Ctor.
-     * @throws IOException If fails
      */
-    Results() throws IOException {
+    Results() {
         this(new Dynamo().table("jpeek-results"));
     }
 
@@ -93,27 +87,15 @@ final class Results {
                 .with("artifact", artifact)
                 .with(
                     "score",
-                    (long) (
-                        Double.parseDouble(
-                            index.xpath("/index/@score").get(0)
-                        ) * Results.MULTIPLIER
-                    )
+                    new DyNum(index.xpath("/index/@score").get(0)).longValue()
                 )
                 .with(
                     "diff",
-                    (long) (
-                        Double.parseDouble(
-                            index.xpath("/index/@diff").get(0)
-                        ) * Results.MULTIPLIER
-                    )
+                    new DyNum(index.xpath("/index/@diff").get(0)).longValue()
                 )
                 .with(
                     "defects",
-                    (long) (
-                        Double.parseDouble(
-                            index.xpath("/index/@defects").get(0)
-                        ) * Results.MULTIPLIER
-                    )
+                    new DyNum(index.xpath("/index/@defects").get(0)).longValue()
                 )
                 .with(
                     "classes",
@@ -144,14 +126,11 @@ final class Results {
                     .add("repo")
                     .add("group").set(parts[0]).up()
                     .add("artifact").set(parts[1]).up()
-                    .add("defects").set(
-                        Double.parseDouble(item.get("defects").getN())
-                            / Results.MULTIPLIER
-                    )
+                    .add("defects")
+                    .set(new DyNum(item, "defects").doubleValue())
                     .up()
-                    .add("classes").set(
-                        Integer.parseInt(item.get("classes").getN())
-                    )
+                    .add("classes")
+                    .set(Integer.parseInt(item.get("classes").getN()))
                     .up()
                     .up();
             },
@@ -182,24 +161,17 @@ final class Results {
                     .add("repo")
                     .add("group").set(parts[0]).up()
                     .add("artifact").set(parts[1]).up()
-                    .add("score").set(
-                        Double.parseDouble(item.get("score").getN())
-                            / Results.MULTIPLIER
-                    )
+                    .add("score")
+                    .set(new DyNum(item, "score").doubleValue())
                     .up()
-                    .add("diff").set(
-                        Double.parseDouble(item.get("diff").getN())
-                            / Results.MULTIPLIER
-                    )
+                    .add("diff")
+                    .set(new DyNum(item, "diff").doubleValue())
                     .up()
-                    .add("defects").set(
-                        Double.parseDouble(item.get("defects").getN())
-                            / Results.MULTIPLIER
-                    )
+                    .add("defects")
+                    .set(new DyNum(item, "defects").doubleValue())
                     .up()
-                    .add("classes").set(
-                        Integer.parseInt(item.get("classes").getN())
-                    )
+                    .add("classes")
+                    .set(Integer.parseInt(item.get("classes").getN()))
                     .up()
                     .up();
             },

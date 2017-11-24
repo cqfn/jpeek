@@ -54,6 +54,10 @@ import org.xembly.Directive;
  * the number of places in which the parameter occurrence
  * vectors of the two methods are equal. </p>
  *
+ * <p>The metric value ranges between 0 and 1.0. A value of
+ * 1.0 represents minimum cohesion and 0 represents
+ * a completely cohesive class.</p>
+ *
  * <p>There is no thread-safety guarantee.
  *
  * @author Mehmet Yildirim (memoyil@gmail.com)

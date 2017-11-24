@@ -48,6 +48,10 @@ import org.xembly.Directive;
  * class, and there is an edge between two vertices if the corresponding
  * methods share at least one instance variable.</p>
  *
+ * <p>The metric value ranges between 0 and 1.0. A value of
+ * 1.0 represents minimum cohesion and 0 represents
+ * a completely cohesive class.</p>
+ *
  * <p>There is no thread-safety guarantee.</p>
  *
  * @author Mehmet Yildirim (memoyil@gmail.com)

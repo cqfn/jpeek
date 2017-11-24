@@ -90,7 +90,16 @@ SOFTWARE.
           </xs:unique>
         </xs:element>
         <xs:element name="title" type="xs:string" minOccurs="1" maxOccurs="1"/>
-        <xs:element name="colors" type="xs:string" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="colors" minOccurs="1" maxOccurs="1">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="low" use="required" type="xs:double"/>
+                <xs:attribute name="high" use="required" type="xs:double"/>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
         <xs:element name="bars" minOccurs="1" maxOccurs="1">
           <xs:complexType>
             <xs:sequence>

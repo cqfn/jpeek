@@ -94,7 +94,8 @@ final class Dynamo implements Region {
                         new String[] {"metric"},
                         "ttl", "avg", "version",
                         "pos", "psum", "pavg",
-                        "neg", "nsum", "navg"
+                        "neg", "nsum", "navg",
+                        "mean", "sigma"
                     )
             );
         }

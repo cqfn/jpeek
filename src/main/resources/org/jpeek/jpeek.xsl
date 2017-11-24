@@ -101,7 +101,11 @@ SOFTWARE.
       <xsl:value-of select="format-number(variance, '0.0000')"/>
       <xsl:text>, defects: </xsl:text>
       <xsl:value-of select="format-number(defects * 100, '#')"/>
-      <xsl:text>%.</xsl:text>
+      <xsl:text>%</xsl:text>
+      <xsl:if test="reverse='true'">
+        <xsl:text>, reversed metric</xsl:text>
+      </xsl:if>
+      <xsl:text>.</xsl:text>
     </p>
   </xsl:template>
   <xsl:template match="app/@value">

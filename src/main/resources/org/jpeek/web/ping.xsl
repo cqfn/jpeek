@@ -31,7 +31,7 @@ SOFTWARE.
       <!-- nothing -->
     </script>
     <title>
-      <xsl:text>ping...</xsl:text>
+      <xsl:text>Ping...</xsl:text>
     </title>
   </xsl:template>
   <xsl:template match="/page" mode="body">

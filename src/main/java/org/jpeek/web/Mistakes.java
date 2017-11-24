@@ -57,11 +57,6 @@ import org.xembly.Directives;
 final class Mistakes {
 
     /**
-     * Score multiplier.
-     */
-    private static final Double MULTIPLIER = 100000.0d;
-
-    /**
      * DynamoDB table.
      */
     private final Table table;
@@ -111,26 +106,13 @@ final class Mistakes {
                 .attr("id", item.get("metric").getS())
                 .add("pos").set(item.get("pos").getN()).up()
                 .add("neg").set(item.get("neg").getN()).up()
-                .add("psum").set(
-                    Double.parseDouble(item.get("psum").getN())
-                        / Mistakes.MULTIPLIER
-                ).up()
-                .add("pavg").set(
-                    Double.parseDouble(item.get("pavg").getN())
-                        / Mistakes.MULTIPLIER
-                ).up()
-                .add("nsum").set(
-                    Double.parseDouble(item.get("nsum").getN())
-                        / Mistakes.MULTIPLIER
-                ).up()
-                .add("navg").set(
-                    Double.parseDouble(item.get("navg").getN())
-                        / Mistakes.MULTIPLIER
-                ).up()
-                .add("avg").set(
-                    Double.parseDouble(item.get("avg").getN())
-                        / Mistakes.MULTIPLIER
-                ).up()
+                .add("psum").set(new DyNum(item, "psum").doubleValue()).up()
+                .add("pavg").set(new DyNum(item, "pavg").doubleValue()).up()
+                .add("nsum").set(new DyNum(item, "nsum").doubleValue()).up()
+                .add("navg").set(new DyNum(item, "navg").doubleValue()).up()
+                .add("avg").set(new DyNum(item, "avg").doubleValue()).up()
+                .add("mean").set(new DyNum(item, "mean").doubleValue()).up()
+                .add("sigma").set(new DyNum(item, "sigma").doubleValue()).up()
                 .up(),
             this.table.frame()
                 .where("version", new Version().value())
@@ -186,6 +168,8 @@ final class Mistakes {
                     .with("nsum", 0L)
                     .with("navg", 0L)
                     .with("avg", 0L)
+                    .with("mean", 0L)
+                    .with("sigma", Integer.MAX_VALUE)
             );
         }
         if (diff > 0.0d) {
@@ -197,18 +181,7 @@ final class Mistakes {
                             .withValue(new AttributeValue().withN("1"))
                             .withAction(AttributeAction.ADD)
                     )
-                    .with(
-                        "psum",
-                        new AttributeValueUpdate()
-                            .withAction(AttributeAction.ADD)
-                            .withValue(
-                                new AttributeValue().withN(
-                                    Long.toString(
-                                        (long) (diff * Mistakes.MULTIPLIER)
-                                    )
-                                )
-                            )
-                    )
+                    .with("psum", new DyNum(diff).update(AttributeAction.ADD))
             );
         } else {
             before.put(
@@ -219,18 +192,7 @@ final class Mistakes {
                             .withValue(new AttributeValue().withN("1"))
                             .withAction(AttributeAction.ADD)
                     )
-                    .with(
-                        "nsum",
-                        new AttributeValueUpdate()
-                            .withAction(AttributeAction.ADD)
-                            .withValue(
-                                new AttributeValue().withN(
-                                    Long.toString(
-                                        (long) (-diff * Mistakes.MULTIPLIER)
-                                    )
-                                )
-                            )
-                    )
+                    .with("nsum", new DyNum(-diff).update(AttributeAction.ADD))
             );
         }
         final Item after = this.table.frame()
@@ -247,29 +209,21 @@ final class Mistakes {
             new AttributeUpdates()
                 .with(
                     "navg",
-                    new AttributeValueUpdate()
-                        .withAction(AttributeAction.PUT)
-                        .withValue(
-                            new AttributeValue().withN(
-                                Mistakes.div(
-                                    Long.parseLong(after.get("nsum").getN()),
-                                    Long.parseLong(after.get("neg").getN())
-                                )
-                            )
+                    new DyNum(
+                        Mistakes.div(
+                            Long.parseLong(after.get("nsum").getN()),
+                            Long.parseLong(after.get("neg").getN())
                         )
+                    ).update()
                 )
                 .with(
                     "pavg",
-                    new AttributeValueUpdate()
-                        .withAction(AttributeAction.PUT)
-                        .withValue(
-                            new AttributeValue().withN(
-                                Mistakes.div(
-                                    Long.parseLong(after.get("psum").getN()),
-                                    Long.parseLong(after.get("pos").getN())
-                                )
-                            )
+                    new DyNum(
+                        Mistakes.div(
+                            Long.parseLong(after.get("psum").getN()),
+                            Long.parseLong(after.get("pos").getN())
                         )
+                    ).update()
                 )
         );
         final Item fin = this.table.frame()
@@ -282,24 +236,18 @@ final class Mistakes {
             .where("version", version)
             .iterator()
             .next();
-        final long pos = Long.parseLong(fin.get("pos").getN());
-        final long neg = Long.parseLong(fin.get("neg").getN());
-        // @checkstyle StringLiteralsConcatenationCheck (2 lines)
-        final long avg = (Long.parseLong(fin.get("pavg").getN()) * pos
-            + Long.parseLong(fin.get("navg").getN()) * neg)
-            / (pos + neg);
+        final double pos = (double) Long.parseLong(fin.get("pos").getN());
+        final double neg = (double) Long.parseLong(fin.get("neg").getN());
         fin.put(
-            new AttributeUpdates()
-                .with(
-                    "avg",
-                    new AttributeValueUpdate()
-                        .withAction(AttributeAction.PUT)
-                        .withValue(
-                            new AttributeValue().withN(
-                                Long.toString(avg)
-                            )
-                        )
-                )
+            new AttributeUpdates().with(
+                "avg",
+                new DyNum(
+                    (new DyNum(fin, "pavg").doubleValue() * pos
+                    // @checkstyle StringLiteralsConcatenationCheck (1 line)
+                    + new DyNum(fin, "navg").doubleValue()) * neg
+                    / (pos + neg)
+                ).update()
+            )
         );
     }
 

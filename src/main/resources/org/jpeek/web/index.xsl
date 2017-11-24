@@ -28,7 +28,7 @@ SOFTWARE.
   <xsl:import href="/org/jpeek/web/layout.xsl"/>
   <xsl:template match="/page" mode="head">
     <title>
-      <xsl:text>jpeek</xsl:text>
+      <xsl:text>Jpeek</xsl:text>
     </title>
   </xsl:template>
   <xsl:template match="/page" mode="body">

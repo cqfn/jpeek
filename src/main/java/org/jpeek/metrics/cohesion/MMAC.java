@@ -26,10 +26,9 @@ package org.jpeek.metrics.cohesion;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import javassist.CtBehavior;
 import javassist.CtClass;
+import javassist.CtMethod;
 import org.cactoos.iterable.Filtered;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
@@ -56,8 +55,7 @@ import org.xembly.Directive;
  * do only one thing. Value of MMAC metric is better for these
  * one classes.</p>
  *
- * <p>Metric value is in interval [0, 1].
- * Value closer to 1 is better.</p>
+ * <p>Metric value is in interval [0, 1]. Value closer to 1 is better.</p>
  *
  * @author Sergey Karazhenets (sergeykarazhenets@gmail.com)
  * @version $Id$
@@ -104,10 +102,10 @@ public final class MMAC implements Metric {
         }
     )
     private static Iterable<Directive> cohesion(final CtClass ctc) {
-        final List<Collection<String>> methods = new ListOf<>(
+        final Collection<Collection<String>> methods = new ListOf<>(
             new Mapped<>(
                 signature -> {
-                    final Set<String> types = new HashSet<>();
+                    final Collection<String> types = new HashSet<>(0);
                     new SignatureReader(signature).accept(
                         new SignatureVisitor(Opcodes.ASM6) {
                             @Override
@@ -126,16 +124,16 @@ public final class MMAC implements Metric {
                     );
                     return types;
                 },
-                new Mapped<>(
+                new Mapped<CtMethod, String>(
                     CtBehavior::getSignature,
                     new Filtered<>(
-                        m -> !m.getName().contains("$"),
+                        mtd -> !mtd.getName().contains("$"),
                         new IterableOf<>(ctc.getDeclaredMethods())
                     )
                 )
             )
         );
-        final Set<String> types = new HashSet<>();
+        final Collection<String> types = new HashSet<>(0);
         for (final Collection<String> method : methods) {
             types.addAll(method);
         }
