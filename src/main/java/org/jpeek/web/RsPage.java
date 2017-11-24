@@ -71,6 +71,7 @@ final class RsPage extends RsWrap {
      * @param src Sources
      * @return Response
      */
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     private static Response make(final Request req, final String xsl,
         final Scalar<Iterable<XeSource>> src) {
         final Response raw = new RsXembly(
@@ -92,13 +93,14 @@ final class RsPage extends RsWrap {
         return new RsFork(
             req,
             new FkTypes(
+                "text/html",
+                new RsXslt(new RsWithType(raw, "text/html"))
+            ),
+            new FkTypes(
                 "application/vnd.jpeek+xml",
                 new RsPrettyXml(new RsWithType(raw, "text/xml"))
             ),
-            new FkTypes(
-                "*/*",
-                new RsXslt(new RsWithType(raw, "text/html"))
-            )
+            new FkTypes("*/*", raw)
         );
     }
 
