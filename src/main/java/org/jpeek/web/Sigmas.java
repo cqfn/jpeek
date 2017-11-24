@@ -119,7 +119,7 @@ final class Sigmas {
         final double mbefore = new DyNum(item, "mean").doubleValue();
         final double sbefore = new DyNum(item, "sigma").doubleValue();
         // @checkstyle BooleanExpressionComplexityCheck (1 line)
-        if (sigma < sbefore && mean < mbefore && reverse
+        if (sigma < sbefore || mean < mbefore && reverse
             || mean > mbefore && !reverse) {
             item.put(
                 new AttributeUpdates()
