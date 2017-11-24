@@ -72,13 +72,11 @@ final class Dynamo implements Region {
      */
     private static Region live() throws IOException {
         final Properties props = Dynamo.pros();
-        final String key = props.getProperty("org.jpeek.dynamo.key");
         final Region reg;
-        // @checkstyle MagicNumber (1 line)
-        if (key.length() == 20) {
+        if (Dynamo.class.getResource("/org/junit/Test.class") == null) {
             reg = new Region.Simple(
                 new Credentials.Simple(
-                    key,
+                    props.getProperty("org.jpeek.dynamo.key"),
                     props.getProperty("org.jpeek.dynamo.secret")
                 )
             );
