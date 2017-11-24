@@ -66,6 +66,14 @@ final class DyNum extends Number {
 
     /**
      * Ctor.
+     * @param num The number
+     */
+    DyNum(final long num) {
+        this((double) num / DyNum.MULTIPLIER);
+    }
+
+    /**
+     * Ctor.
      * @param item The item
      * @param attr Attribute name
      * @throws IOException If fails

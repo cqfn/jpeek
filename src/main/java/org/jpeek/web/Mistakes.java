@@ -257,14 +257,14 @@ final class Mistakes {
      * @param div The div
      * @return Results in string
      */
-    private static String div(final long head, final long div) {
+    private static long div(final long head, final long div) {
         final long res;
         if (div == 0L) {
             res = 0L;
         } else {
             res = head / div;
         }
-        return Long.toString(res);
+        return res;
     }
 
 }
