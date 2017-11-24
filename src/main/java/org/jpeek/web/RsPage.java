@@ -92,7 +92,7 @@ final class RsPage extends RsWrap {
         return new RsFork(
             req,
             new FkTypes(
-                "application/xml,text/xml",
+                "application/vnd.jpeek+xml",
                 new RsPrettyXml(new RsWithType(raw, "text/xml"))
             ),
             new FkTypes(

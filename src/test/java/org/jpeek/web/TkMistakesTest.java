@@ -58,7 +58,7 @@ public final class TkMistakesTest {
                     new TkMistakes().act(
                         new RqWithHeaders(
                             new RqFake(),
-                            "Accept: application/xml"
+                            "Accept: application/vnd.jpeek+xml"
                         )
                     )
                 ).printBody()
