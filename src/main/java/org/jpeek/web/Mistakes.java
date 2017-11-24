@@ -153,7 +153,7 @@ final class Mistakes {
      * @throws IOException If fails
      */
     @SuppressWarnings("PMD.ExcessiveMethodLength")
-    public void add(final String name, final double diff) throws IOException {
+    private void add(final String name, final double diff) throws IOException {
         final String version = new Version().value();
         final Iterator<Item> items = this.table.frame()
             .where("metric", name)
@@ -180,7 +180,7 @@ final class Mistakes {
                     .with("neg", 0L)
                     .with("nsum", 0L)
                     .with("navg", 0L)
-                    .with("total", 0L)
+                    .with("avg", 0L)
             );
         }
         if (diff > 0.0d) {
@@ -270,18 +270,18 @@ final class Mistakes {
         final long pos = Long.parseLong(fin.get("pos").getN());
         final long neg = Long.parseLong(fin.get("neg").getN());
         // @checkstyle StringLiteralsConcatenationCheck (2 lines)
-        final long total = (Long.parseLong(fin.get("pavg").getN()) * pos
+        final long avg = (Long.parseLong(fin.get("pavg").getN()) * pos
             + Long.parseLong(fin.get("navg").getN()) * neg)
             / (pos + neg);
         fin.put(
             new AttributeUpdates()
                 .with(
-                    "total",
+                    "avg",
                     new AttributeValueUpdate()
                         .withAction(AttributeAction.PUT)
                         .withValue(
                             new AttributeValue().withN(
-                                Long.toString(total)
+                                Long.toString(avg)
                             )
                         )
                 )

@@ -144,7 +144,6 @@ final class Results {
                     .add("repo")
                     .add("group").set(parts[0]).up()
                     .add("artifact").set(parts[1]).up()
-                    .up()
                     .add("defects").set(
                         Double.parseDouble(item.get("defects").getN())
                             / Results.MULTIPLIER
@@ -153,6 +152,7 @@ final class Results {
                     .add("classes").set(
                         Integer.parseInt(item.get("classes").getN())
                     )
+                    .up()
                     .up();
             },
             this.table.frame()

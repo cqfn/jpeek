@@ -94,7 +94,7 @@ final class Dynamo implements Region {
                     .with(
                         "jpeek-mistakes",
                         new String[] {"metric"},
-                        "ttl", "total", "version",
+                        "ttl", "avg", "version",
                         "pos", "psum", "pavg",
                         "neg", "nsum", "navg"
                     )
