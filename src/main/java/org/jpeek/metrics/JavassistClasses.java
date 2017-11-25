@@ -81,7 +81,7 @@ public final class JavassistClasses implements Metric {
     public JavassistClasses(final Base bse,
         final Func<CtClass, Iterable<Directive>> fnc) {
         this.base = bse;
-        this.pool = ClassPool.getDefault();
+        this.pool = new ClassPool();
         this.func = new IoCheckedFunc<>(fnc);
     }
 
