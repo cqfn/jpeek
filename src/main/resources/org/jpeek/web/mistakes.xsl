@@ -83,12 +83,12 @@ SOFTWARE.
               </sup>
             </a>
           </th>
-          <th>
+          <th style="text-align:right;">
             <a href="https://en.wikipedia.org/wiki/Mean">
               <xsl:text>&#x3BC;</xsl:text>
             </a>
           </th>
-          <th>
+          <th style="text-align:right;">
             <a href="https://en.wikipedia.org/wiki/Standard_deviation">
               <xsl:text>&#x3C3;</xsl:text>
             </a>
