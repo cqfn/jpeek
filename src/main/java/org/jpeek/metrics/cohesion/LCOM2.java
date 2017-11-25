@@ -26,19 +26,16 @@ package org.jpeek.metrics.cohesion;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
-import javassist.CannotCompileException;
 import javassist.CtClass;
+import org.cactoos.collection.Joined;
+import org.cactoos.iterable.Mapped;
+import org.cactoos.list.ListOf;
 import org.jpeek.Base;
 import org.jpeek.Metric;
 import org.jpeek.metrics.JavassistClasses;
+import org.jpeek.metrics.Methods;
 import org.jpeek.metrics.Summary;
-import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.ClassVisitor;
-import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.Opcodes;
 import org.xembly.Directive;
 
 /**
@@ -90,47 +87,19 @@ public final class LCOM2 implements Metric {
      *
      * @param ctc The .class file
      * @return Metrics
-     * @checkstyle ParameterNumberCheck (100 lines)
-     * @checkstyle AnonInnerLengthCheck (25 lines)
      */
-    @SuppressWarnings({"PMD.UseObjectForClearerAPI", "PMD.UseVarargs"})
     private static Iterable<Directive> cohesion(final CtClass ctc) {
-        final ClassReader reader;
-        try {
-            reader = new ClassReader(ctc.toBytecode());
-        } catch (final IOException | CannotCompileException ex) {
-            throw new IllegalStateException(ex);
-        }
-        final List<Collection<String>> methods = new LinkedList<>();
-        final Set<String> attrs = new HashSet<>();
-        reader.accept(
-            new ClassVisitor(Opcodes.ASM6) {
-                @Override
-                public MethodVisitor visitMethod(final int access, final
-                    String mtd, final String desc, final String signature, final
-                    String[] exceptions) {
-                    super.visitMethod(access, mtd, desc, signature, exceptions);
-                    final Collection<String> methodattrs = new HashSet<>(0);
-                    methods.add(methodattrs);
-                    return new MethodVisitor(Opcodes.ASM6) {
-                        @Override
-                        public void visitFieldInsn(final int opcode,
-                            final String owner, final String attr,
-                            final String details) {
-                            super.visitFieldInsn(opcode, owner, attr, details);
-                            attrs.add(attr);
-                            methodattrs.add(attr);
-                        }
-                    };
-                }
-            },
-            0
+        final List<Collection<String>> methods = new ListOf<>(
+            new Methods(ctc)
+        );
+        final Collection<String> attrs = new HashSet<>(
+            new Joined<>(new Mapped<>(list -> list, methods))
         );
         int sum = 0;
         double result = 0;
         for (final String attr : attrs) {
-            for (final Collection<String> methodattrs : methods) {
-                if (methodattrs.contains(attr)) {
+            for (final Collection<String> mattrs : methods) {
+                if (mattrs.contains(attr)) {
                     ++sum;
                 }
             }
