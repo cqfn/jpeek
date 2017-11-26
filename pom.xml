@@ -31,7 +31,7 @@ SOFTWARE.
   </parent>
   <groupId>org.jpeek</groupId>
   <artifactId>jpeek</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>0.19</version>
   <packaging>jar</packaging>
   <name>jpeek</name>
   <description>Static collector of Java code metrics</description>
