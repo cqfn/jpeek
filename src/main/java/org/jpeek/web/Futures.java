@@ -95,8 +95,9 @@ final class Futures implements
     @Override
     public String asString() throws IOException {
         return String.format(
-            "%d artifacts: %s",
+            "%d artifacts, %d threads:\n%s",
             this.queue.size(),
+            Runtime.getRuntime().availableProcessors(),
             new JoinedText(", ", this.queue).asString()
         );
     }

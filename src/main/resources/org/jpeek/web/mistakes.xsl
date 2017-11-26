@@ -93,6 +93,9 @@ SOFTWARE.
               <xsl:text>&#x3C3;</xsl:text>
             </a>
           </th>
+          <th>
+            <xsl:text>Artifact</xsl:text>
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -167,10 +170,17 @@ SOFTWARE.
         </xsl:if>
       </td>
       <td style="text-align:right">
-        <xsl:value-of select="format-number(mean, '0.00')"/>
+        <a href="{artifact}">
+          <xsl:value-of select="format-number(mean, '0.00')"/>
+        </a>
       </td>
       <td style="text-align:right">
         <xsl:value-of select="format-number(sigma, '0.00')"/>
+      </td>
+      <td>
+        <code>
+          <xsl:value-of select="artifact"/>
+        </code>
       </td>
     </tr>
   </xsl:template>
