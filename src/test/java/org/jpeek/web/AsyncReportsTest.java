@@ -25,6 +25,8 @@ package org.jpeek.web;
 
 import com.jcabi.matchers.XhtmlMatchers;
 import java.net.HttpURLConnection;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import org.cactoos.BiFunc;
 import org.cactoos.Func;
@@ -46,12 +48,15 @@ public final class AsyncReportsTest {
 
     @Test
     public void rendersOneReport() throws Exception {
+        final ExecutorService service = Executors.newSingleThreadExecutor();
         final BiFunc<String, String, Func<String, Response>> bifunc =
             new AsyncReports(
-                (first, second) -> {
-                    TimeUnit.HOURS.sleep(1L);
-                    return input -> new RsText("done!");
-                }
+                (first, second) -> service.submit(
+                    () -> input -> {
+                        TimeUnit.HOURS.sleep(1L);
+                        return new RsText("done!");
+                    }
+                )
             );
         final Response response =
             bifunc.apply("org.jpeek", "jpeek").apply("index.html");

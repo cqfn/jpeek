@@ -123,6 +123,7 @@ final class Sigmas {
             || mean > mbefore && !reverse) {
             item.put(
                 new AttributeUpdates()
+                    .with("artifact", metric.xpath("/index/@artifact").get(0))
                     .with("mean", new DyNum(mean).update())
                     .with("sigma", new DyNum(sigma).update())
             );

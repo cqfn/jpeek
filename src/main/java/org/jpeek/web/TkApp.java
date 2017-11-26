@@ -28,9 +28,11 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.cactoos.func.SolidBiFunc;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.iterable.PropertiesOf;
 import org.cactoos.text.TextOf;
+import org.takes.Take;
 import org.takes.facets.fallback.Fallback;
 import org.takes.facets.fallback.FbChain;
 import org.takes.facets.fallback.FbStatus;
@@ -67,67 +69,7 @@ public final class TkApp extends TkWrap {
      * @throws IOException If fails
      */
     public TkApp(final Path home) throws IOException {
-        super(
-            new TkFallback(
-                new TkForward(
-                    new TkFork(
-                        new FkRegex("/", new TkIndex()),
-                        new FkRegex("/robots.txt", new TkText("")),
-                        new FkRegex("/mistakes", new TkMistakes()),
-                        new FkRegex("/ping", new TkPing()),
-                        new FkRegex("/all", new TkAll()),
-                        new FkRegex(
-                            ".+\\.xsl",
-                            new TkWithType(
-                                new TkClasspath(),
-                                "text/xsl"
-                            )
-                        ),
-                        new FkRegex(
-                            "/jpeek\\.css",
-                            new TkWithType(
-                                new TkText(
-                                    new TextOf(
-                                        new ResourceOf("org/jpeek/jpeek.css")
-                                    ).asString()
-                                ),
-                                "text/css"
-                            )
-                        ),
-                        new FkRegex(
-                            "/([^/]+)/([^/]+)(.*)",
-                            new TkReport(
-                                new AsyncReports(
-                                    new Reports(home)
-                                )
-                            )
-                        )
-                    )
-                ),
-                new FbChain(
-                    new FbStatus(
-                        HttpURLConnection.HTTP_NOT_FOUND,
-                        (Fallback) req -> new Opt.Single<>(
-                            new RsWithStatus(
-                                new RsText(req.throwable().getMessage()),
-                                req.code()
-                            )
-                        )
-                    ),
-                    req -> {
-                        Sentry.capture(req.throwable());
-                        return new Opt.Single<>(
-                            new RsWithStatus(
-                                new RsText(
-                                    new TextOf(req.throwable()).asString()
-                                ),
-                                HttpURLConnection.HTTP_INTERNAL_ERROR
-                            )
-                        );
-                    }
-                )
-            )
-        );
+        super(TkApp.make(home));
     }
 
     /**
@@ -147,6 +89,76 @@ public final class TkApp extends TkWrap {
             new TkApp(Files.createTempDirectory("jpeek")),
             args
         ).start(Exit.NEVER);
+    }
+
+    /**
+     * Ctor.
+     * @param home Home directory
+     * @return The take
+     * @throws IOException If fails
+     */
+    private static Take make(final Path home) throws IOException {
+        final Futures futures = new Futures(new Reports(home));
+        return new TkFallback(
+            new TkForward(
+                new TkFork(
+                    new FkRegex("/", new TkIndex()),
+                    new FkRegex("/robots.txt", new TkText("")),
+                    new FkRegex("/mistakes", new TkMistakes()),
+                    new FkRegex("/ping", new TkPing()),
+                    new FkRegex("/all", new TkAll()),
+                    new FkRegex("/queue", new TkQueue(futures)),
+                    new FkRegex(
+                        ".+\\.xsl",
+                        new TkWithType(
+                            new TkClasspath(),
+                            "text/xsl"
+                        )
+                    ),
+                    new FkRegex(
+                        "/jpeek\\.css",
+                        new TkWithType(
+                            new TkText(
+                                new TextOf(
+                                    new ResourceOf("org/jpeek/jpeek.css")
+                                ).asString()
+                            ),
+                            "text/css"
+                        )
+                    ),
+                    new FkRegex(
+                        "/([^/]+)/([^/]+)(.*)",
+                        new TkReport(
+                            new AsyncReports(
+                                new SolidBiFunc<>(futures)
+                            )
+                        )
+                    )
+                )
+            ),
+            new FbChain(
+                new FbStatus(
+                    HttpURLConnection.HTTP_NOT_FOUND,
+                    (Fallback) req -> new Opt.Single<>(
+                        new RsWithStatus(
+                            new RsText(req.throwable().getMessage()),
+                            req.code()
+                        )
+                    )
+                ),
+                req -> {
+                    Sentry.capture(req.throwable());
+                    return new Opt.Single<>(
+                        new RsWithStatus(
+                            new RsText(
+                                new TextOf(req.throwable()).asString()
+                            ),
+                            HttpURLConnection.HTTP_INTERNAL_ERROR
+                        )
+                    );
+                }
+            )
+        );
     }
 
 }

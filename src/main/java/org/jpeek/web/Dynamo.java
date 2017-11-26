@@ -95,7 +95,7 @@ final class Dynamo implements Region {
                         "ttl", "avg", "version",
                         "pos", "psum", "pavg",
                         "neg", "nsum", "navg",
-                        "mean", "sigma"
+                        "artifact", "mean", "sigma"
                     )
             );
         }

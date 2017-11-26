@@ -32,8 +32,6 @@ import java.util.concurrent.Future;
 import org.cactoos.BiFunc;
 import org.cactoos.Func;
 import org.cactoos.func.IoCheckedBiFunc;
-import org.cactoos.func.StickyBiFunc;
-import org.cactoos.func.SyncBiFunc;
 import org.cactoos.iterable.IterableOf;
 import org.takes.Response;
 import org.takes.rq.RqFake;
@@ -66,8 +64,9 @@ final class AsyncReports implements
      * Ctor.
      * @param func Original bi-function
      */
-    AsyncReports(final BiFunc<String, String, Func<String, Response>> func) {
-        this.cache = new SyncBiFunc<>(new StickyBiFunc<>(new Futures(func)));
+    AsyncReports(
+        final BiFunc<String, String, Future<Func<String, Response>>> func) {
+        this.cache = func;
         this.starts = new ConcurrentHashMap<>(0);
     }
 

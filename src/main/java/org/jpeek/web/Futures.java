@@ -24,11 +24,16 @@
 package org.jpeek.web;
 
 import com.jcabi.log.VerboseThreads;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import org.cactoos.BiFunc;
 import org.cactoos.Func;
+import org.cactoos.Text;
+import org.cactoos.text.JoinedText;
 import org.takes.Response;
 
 /**
@@ -42,7 +47,7 @@ import org.takes.Response;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class Futures implements
-    BiFunc<String, String, Future<Func<String, Response>>> {
+    BiFunc<String, String, Future<Func<String, Response>>>, Text {
 
     /**
      * Original func.
@@ -55,6 +60,11 @@ final class Futures implements
     private final ExecutorService service;
 
     /**
+     * Queue.
+     */
+    private final Collection<String> queue;
+
+    /**
      * Ctor.
      * @param func Original bi-function
      */
@@ -64,14 +74,35 @@ final class Futures implements
             Runtime.getRuntime().availableProcessors(),
             new VerboseThreads(Futures.class)
         );
+        this.queue = new ConcurrentSkipListSet<>();
     }
 
     @Override
     public Future<Func<String, Response>> apply(final String group,
         final String artifact) {
+        final String target = String.format("%s:%s", group, artifact);
+        this.queue.add(target);
         return this.service.submit(
-            () -> this.origin.apply(group, artifact)
+            () -> {
+                final Func<String, Response> func =
+                    this.origin.apply(group, artifact);
+                this.queue.remove(target);
+                return func;
+            }
         );
     }
 
+    @Override
+    public String asString() throws IOException {
+        return String.format(
+            "%d artifacts: %s",
+            this.queue.size(),
+            new JoinedText(", ", this.queue).asString()
+        );
+    }
+
+    @Override
+    public int compareTo(final Text txt) {
+        throw new UnsupportedOperationException("#compareTo()");
+    }
 }

@@ -65,6 +65,14 @@ SOFTWARE.
       <a href="/mistakes">
         <xsl:text>summary</xsl:text>
       </a>
+      <xsl:text>, </xsl:text>
+      <a href="/all">
+        <xsl:text>all artifacts</xsl:text>
+      </a>
+      <xsl:text>, and the </xsl:text>
+      <a href="/queue">
+        <xsl:text>queue</xsl:text>
+      </a>
       <xsl:text>.</xsl:text>
     </p>
     <xsl:apply-templates select="recent"/>

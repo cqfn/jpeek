@@ -106,7 +106,7 @@ final class DyNum extends Number {
      */
     public AttributeValueUpdate update(final AttributeAction action) {
         return new AttributeValueUpdate()
-            .withAction(AttributeAction.PUT)
+            .withAction(action)
             .withValue(
                 new AttributeValue().withN(
                     Long.toString(this.longValue())

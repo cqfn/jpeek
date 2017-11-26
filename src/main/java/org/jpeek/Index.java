@@ -26,7 +26,6 @@ package org.jpeek;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Iterator;
 import java.util.List;
@@ -65,9 +64,10 @@ final class Index implements Scalar<Iterable<Directive>> {
     }
 
     @Override
-    public Iterable<Directive> value() throws IOException {
+    public Iterable<Directive> value() {
         return new Directives()
             .add("index")
+            .attr("artifact", "unknown")
             .append(new Header())
             .append(
                 new Joined<Directive>(

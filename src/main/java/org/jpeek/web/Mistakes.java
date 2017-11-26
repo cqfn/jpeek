@@ -111,6 +111,7 @@ final class Mistakes {
                 .add("nsum").set(new DyNum(item, "nsum").doubleValue()).up()
                 .add("navg").set(new DyNum(item, "navg").doubleValue()).up()
                 .add("avg").set(new DyNum(item, "avg").doubleValue()).up()
+                .add("artifact").set(item.get("artifact").getS()).up()
                 .add("mean").set(new DyNum(item, "mean").doubleValue()).up()
                 .add("sigma").set(new DyNum(item, "sigma").doubleValue()).up()
                 .up(),
@@ -168,6 +169,7 @@ final class Mistakes {
                     .with("nsum", 0L)
                     .with("navg", 0L)
                     .with("avg", 0L)
+                    .with("artifact", "-")
                     .with("mean", 0L)
                     .with("sigma", Integer.MAX_VALUE)
             );
