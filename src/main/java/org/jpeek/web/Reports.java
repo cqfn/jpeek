@@ -78,6 +78,7 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
     }
 
     @Override
+    // @checkstyle ExecutableStatementCountCheck (5 lines)
     public Func<String, Response> apply(final String group,
         final String artifact) throws IOException {
         final String grp = group.replace(".", "/");
