@@ -246,7 +246,7 @@ final class Mistakes {
                 new DyNum(
                     (new DyNum(fin, "pavg").doubleValue() * pos
                     // @checkstyle StringLiteralsConcatenationCheck (1 line)
-                    + new DyNum(fin, "navg").doubleValue()) * neg
+                    + new DyNum(fin, "navg").doubleValue() * neg)
                     / (pos + neg)
                 ).update()
             )

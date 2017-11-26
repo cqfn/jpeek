@@ -23,9 +23,13 @@
  */
 package org.jpeek.web;
 
+import com.jcabi.log.Logger;
+import com.jcabi.log.VerboseCallable;
 import com.jcabi.log.VerboseThreads;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Map;
+import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -33,6 +37,7 @@ import java.util.concurrent.Future;
 import org.cactoos.BiFunc;
 import org.cactoos.Func;
 import org.cactoos.Text;
+import org.cactoos.scalar.AvgOf;
 import org.cactoos.text.JoinedText;
 import org.takes.Response;
 
@@ -62,7 +67,12 @@ final class Futures implements
     /**
      * Queue.
      */
-    private final Collection<String> queue;
+    private final Map<String, Long> queue;
+
+    /**
+     * Long.
+     */
+    private final Collection<Long> times;
 
     /**
      * Ctor.
@@ -74,31 +84,44 @@ final class Futures implements
             Runtime.getRuntime().availableProcessors(),
             new VerboseThreads(Futures.class)
         );
-        this.queue = new CopyOnWriteArrayList<>();
+        this.queue = new ConcurrentSkipListMap<>();
+        this.times = new CopyOnWriteArrayList<>();
     }
 
     @Override
     public Future<Func<String, Response>> apply(final String group,
         final String artifact) {
         final String target = String.format("%s:%s", group, artifact);
-        this.queue.add(target);
+        this.queue.put(target, System.currentTimeMillis());
+        // @checkstyle MagicNumber (1 line)
+        if (this.times.size() > 1000) {
+            this.times.clear();
+        }
         return this.service.submit(
-            () -> {
-                final Func<String, Response> func =
-                    this.origin.apply(group, artifact);
-                this.queue.remove(target);
-                return func;
-            }
+            new VerboseCallable<>(
+                () -> {
+                    final Func<String, Response> func =
+                        this.origin.apply(group, artifact);
+                    this.times.add(
+                        System.currentTimeMillis() - this.queue.remove(target)
+                    );
+                    return func;
+                },
+                true, true
+            )
         );
     }
 
     @Override
     public String asString() throws IOException {
-        return String.format(
-            "%d artifacts, %d threads:\n%s",
+        return Logger.format(
+            "%d artifacts, %d threads, ETA=%[ms]s:\n%s",
             this.queue.size(),
             Runtime.getRuntime().availableProcessors(),
-            new JoinedText(", ", this.queue).asString()
+            new AvgOf(
+                this.times.toArray(new Long[this.times.size()])
+            ).longValue() * (long) this.queue.size(),
+            new JoinedText(", ", this.queue.keySet()).asString()
         );
     }
 
