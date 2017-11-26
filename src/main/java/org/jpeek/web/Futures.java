@@ -26,7 +26,7 @@ package org.jpeek.web;
 import com.jcabi.log.VerboseThreads;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -74,7 +74,7 @@ final class Futures implements
             Runtime.getRuntime().availableProcessors(),
             new VerboseThreads(Futures.class)
         );
-        this.queue = new ConcurrentSkipListSet<>();
+        this.queue = new CopyOnWriteArrayList<>();
     }
 
     @Override
