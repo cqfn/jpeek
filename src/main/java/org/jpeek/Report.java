@@ -36,8 +36,8 @@ import java.nio.file.Path;
 import org.cactoos.io.LengthOf;
 import org.cactoos.io.TeeInput;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.iterable.Reduced;
 import org.cactoos.scalar.IoCheckedScalar;
+import org.cactoos.scalar.Reduced;
 import org.xembly.Directives;
 import org.xembly.Xembler;
 

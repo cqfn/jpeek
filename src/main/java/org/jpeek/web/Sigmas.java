@@ -84,7 +84,7 @@ final class Sigmas {
             index.xpath("/index/metric[1]/classes/text()").get(0)
         );
         // @checkstyle MagicNumber (1 line)
-        if (defects < 0.1d && classes > 100) {
+        if (defects < 0.15d && classes > 200) {
             for (final XML metric : index.nodes("//metric")) {
                 this.add(metric);
             }

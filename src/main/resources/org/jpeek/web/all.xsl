@@ -29,7 +29,7 @@ SOFTWARE.
   <xsl:template match="/page" mode="head">
     <title>
       <xsl:text>All </xsl:text>
-      <xsl:value-of select="count(repo)"/>
+      <xsl:value-of select="count(recent/repo)"/>
     </title>
   </xsl:template>
   <xsl:template match="/page" mode="body">
