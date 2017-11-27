@@ -33,7 +33,7 @@ import javassist.CtClass;
 import org.cactoos.iterable.Filtered;
 import org.cactoos.iterable.LengthOf;
 import org.cactoos.iterable.Mapped;
-import org.cactoos.iterable.Reduced;
+import org.cactoos.scalar.Reduced;
 import org.cactoos.scalar.UncheckedScalar;
 import org.jpeek.Base;
 import org.jpeek.Metric;
