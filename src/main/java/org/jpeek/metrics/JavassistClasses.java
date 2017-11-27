@@ -118,9 +118,9 @@ public final class JavassistClasses implements Metric {
             this::metric,
             new Filtered<>(
                 // @checkstyle BooleanExpressionComplexityCheck (10 lines)
-                ctClass -> !ctClass.isInterface()
+                ctClass -> !ctClass.isAnnotation()
+                    && !ctClass.isInterface()
                     && !ctClass.isEnum()
-                    && !ctClass.isAnnotation()
                     && !ctClass.getName().matches("^.+\\$[0-9]+$")
                     && !ctClass.getName().matches("^.+\\$AjcClosure[0-9]+$"),
                 new Mapped<>(

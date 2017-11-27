@@ -99,6 +99,13 @@ _Coupling and cohesion (towards a valid metrics suite for object-oriented analys
 Object Oriented Systems 3, 1996,
 [PDF](http://www.ibrarian.net/navon/paper/Coupling_and_cohesion__towards_a_valid_metrics_su.pdf?paperid=1090060).
 
+[`izadkhah17`]
+Lack of Cohesion Of Methods [Henderson & Sellers] (**LCOM5**).<br/>
+Habib Izadkhah et al.,<br/>
+_Class Cohesion Metrics for Software Engineering: A Critical Review_,<br/>
+Computer Science Journal of Moldova, vol.25, no.1(73), 2017,
+[PDF](http://www.math.md/files/csjm/v25-n1/v25-n1-(pp44-74).pdf).
+
 ## How to contribute?
 
 Read [`CONTRIBUTING.md`](https://github.com/yegor256/jpeek/blob/master/CONTRIBUTING.md)
