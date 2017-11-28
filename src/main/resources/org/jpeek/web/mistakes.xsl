@@ -87,14 +87,37 @@ SOFTWARE.
             <a href="https://en.wikipedia.org/wiki/Mean">
               <xsl:text>&#x3BC;</xsl:text>
             </a>
+            <a href="#4">
+              <sup>
+                <xsl:text>4</xsl:text>
+              </sup>
+            </a>
           </th>
           <th style="text-align:right;">
             <a href="https://en.wikipedia.org/wiki/Standard_deviation">
               <xsl:text>&#x3C3;</xsl:text>
             </a>
+            <a href="#4">
+              <sup>
+                <xsl:text>4</xsl:text>
+              </sup>
+            </a>
           </th>
           <th>
             <xsl:text>Artifact</xsl:text>
+            <a href="#5">
+              <sup>
+                <xsl:text>5</xsl:text>
+              </sup>
+            </a>
+          </th>
+          <th>
+            <xsl:text>Champions</xsl:text>
+            <a href="#6">
+              <sup>
+                <xsl:text>6</xsl:text>
+              </sup>
+            </a>
           </th>
         </tr>
       </thead>
@@ -120,6 +143,22 @@ SOFTWARE.
       <xsl:text>"Total" is the overall mistake value calculated as
         a square between "Neg" and "Pos" weighed by the total number of
         project they were seen in.</xsl:text>
+      <sup id="4">
+        <xsl:text>4</xsl:text>
+      </sup>
+      <xsl:text>&#x3BC; and &#x3C3; are taken from the projects where
+        the amount of defects is less than 10% and the amount of
+        classes is more than 200.</xsl:text>
+      <sup id="5">
+        <xsl:text>5</xsl:text>
+      </sup>
+      <xsl:text>"Artifact" is the name of the artifact where
+        the best &#x3BC; and &#x3C3; were found.</xsl:text>
+      <sup id="6">
+        <xsl:text>6</xsl:text>
+      </sup>
+      <xsl:text>"Champions" is the amount of projects we've tried
+        in order to select the best &#x3BC; and &#x3C3;.</xsl:text>
     </p>
   </xsl:template>
   <xsl:template match="metric">
@@ -181,6 +220,9 @@ SOFTWARE.
         <code>
           <xsl:value-of select="artifact"/>
         </code>
+      </td>
+      <td style="text-align:right">
+        <xsl:value-of select="champions"/>
       </td>
     </tr>
   </xsl:template>

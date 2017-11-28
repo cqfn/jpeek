@@ -85,7 +85,7 @@ SOFTWARE.
     <dependency>
       <groupId>org.cactoos</groupId>
       <artifactId>cactoos</artifactId>
-      <version>0.24</version>
+      <version>0.25.2</version>
     </dependency>
     <dependency>
       <groupId>org.takes</groupId>

@@ -36,6 +36,7 @@ import org.cactoos.io.ResourceOf;
 import org.cactoos.io.TeeInput;
 import org.cactoos.list.ListOf;
 import org.cactoos.scalar.And;
+import org.cactoos.scalar.AndInThreads;
 import org.cactoos.scalar.IoCheckedScalar;
 import org.jpeek.metrics.cohesion.CAMC;
 import org.jpeek.metrics.cohesion.LCOM;
@@ -95,16 +96,16 @@ public final class App {
         }
         final Base base = new DefaultBase(this.input);
         final Iterable<Report> reports = new ListOf<>(
-            new Report(new CAMC(base), 0.5d, 0.25d),
-            new Report(new LCOM(base), 15.0d, 3.0d),
-            new Report(new OCC(base), 0.5d, -0.25d),
-            new Report(new NHD(base), 0.5d, -0.25d),
-            new Report(new LCOM2(base), 0.5d, -0.25d),
-            new Report(new LCOM3(base), 0.5d, -0.25d),
-            new Report(new MMAC(base), 0.5d, 0.25d)
+            new Report(new CAMC(base), 0.45d, 0.10d),
+            new Report(new LCOM(base), 14.0d, 77.0d),
+            new Report(new LCOM2(base), 0.83d, -0.10d),
+            new Report(new LCOM3(base), 0.96d, -0.11d),
+            new Report(new MMAC(base), 0.08d, 0.11d),
+            new Report(new NHD(base), 0.53d, -0.08d),
+            new Report(new OCC(base), 0.43d, -0.10d)
         );
         new IoCheckedScalar<>(
-            new And(
+            new AndInThreads(
                 report -> {
                     report.save(this.output);
                 },

@@ -23,6 +23,9 @@
  */
 package org.jpeek.web;
 
+import com.amazonaws.services.dynamodbv2.model.AttributeAction;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
 import com.amazonaws.services.dynamodbv2.model.Select;
 import com.jcabi.dynamo.AttributeUpdates;
 import com.jcabi.dynamo.Item;
@@ -124,6 +127,12 @@ final class Sigmas {
             item.put(
                 new AttributeUpdates()
                     .with("artifact", metric.xpath("/index/@artifact").get(0))
+                    .with(
+                        "champions",
+                        new AttributeValueUpdate()
+                            .withValue(new AttributeValue().withN("1"))
+                            .withAction(AttributeAction.ADD)
+                    )
                     .with("mean", new DyNum(mean).update())
                     .with("sigma", new DyNum(sigma).update())
             );
