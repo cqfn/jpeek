@@ -69,7 +69,19 @@ SOFTWARE.
             </a>
           </th>
           <th>
-            <xsl:text>Mean</xsl:text>
+            <a href="https://en.wikipedia.org/wiki/Mean">
+              <xsl:text>&#x3BC;</xsl:text>
+            </a>
+            <a href="#3">
+              <sup>
+                <xsl:text>3</xsl:text>
+              </sup>
+            </a>
+          </th>
+          <th>
+            <a href="https://en.wikipedia.org/wiki/Standard_deviation">
+              <xsl:text>&#x3C3;</xsl:text>
+            </a>
             <a href="#3">
               <sup>
                 <xsl:text>3</xsl:text>
@@ -238,7 +250,10 @@ SOFTWARE.
         <xsl:value-of select="classes"/>
       </td>
       <td style="text-align:right">
-        <xsl:value-of select="format-number(average,'0.00')"/>
+        <xsl:value-of select="format-number(mean,'0.00')"/>
+      </td>
+      <td style="text-align:right">
+        <xsl:value-of select="format-number(sigma,'0.00')"/>
       </td>
       <td style="text-align:right">
         <xsl:choose>

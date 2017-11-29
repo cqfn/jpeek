@@ -130,7 +130,8 @@ public final class TkApp extends TkWrap {
                         "/([^/]+)/([^/]+)(.*)",
                         new TkReport(
                             new AsyncReports(
-                                new SolidBiFunc<>(futures)
+                                // @checkstyle MagicNumber (1 line)
+                                new SolidBiFunc<>(futures, 100)
                             )
                         )
                     )

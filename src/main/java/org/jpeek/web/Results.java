@@ -31,7 +31,6 @@ import com.jcabi.xml.XMLDocument;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.concurrent.TimeUnit;
-import org.cactoos.iterable.Filtered;
 import org.cactoos.iterable.Mapped;
 import org.jpeek.Version;
 import org.xembly.Directive;
@@ -81,28 +80,32 @@ final class Results {
         final XML index = new XMLDocument(
             dir.resolve("index.xml").toFile()
         );
+        final int classes = Integer.parseInt(
+            index.xpath("/index/metric[1]/classes/text()").get(0)
+        );
+        final Number diff = new DyNum(index.xpath("/index/@diff").get(0));
+        final long score = new DyNum(
+            index.xpath("/index/@score").get(0)
+        ).longValue();
+        long rank = score;
+        // @checkstyle MagicNumber (1 line)
+        if (classes < 100) {
+            rank = 0L;
+        } else {
+            rank = (long) ((double) rank * (1.0d - diff.doubleValue()));
+        }
         this.table.put(
             new Attributes()
                 .with("good", "true")
                 .with("artifact", artifact)
-                .with(
-                    "score",
-                    new DyNum(index.xpath("/index/@score").get(0)).longValue()
-                )
-                .with(
-                    "diff",
-                    new DyNum(index.xpath("/index/@diff").get(0)).longValue()
-                )
+                .with("rank", rank)
+                .with("score", score)
+                .with("diff", diff.longValue())
                 .with(
                     "defects",
                     new DyNum(index.xpath("/index/@defects").get(0)).longValue()
                 )
-                .with(
-                    "classes",
-                    Integer.parseInt(
-                        index.xpath("/index/metric[1]/classes/text()").get(0)
-                    )
-                )
+                .with("classes", classes)
                 .with("version", new Version().value())
                 .with("added", System.currentTimeMillis())
                 .with(
@@ -161,6 +164,9 @@ final class Results {
                     .add("repo")
                     .add("group").set(parts[0]).up()
                     .add("artifact").set(parts[1]).up()
+                    .add("rank")
+                    .set(new DyNum(item, "rank").doubleValue())
+                    .up()
                     .add("score")
                     .set(new DyNum(item, "score").doubleValue())
                     .up()
@@ -175,24 +181,20 @@ final class Results {
                     .up()
                     .up();
             },
-            new Filtered<>(
-                // @checkstyle MagicNumber (1 line)
-                item -> Long.parseLong(item.get("classes").getN()) >= 100L,
-                this.table.frame()
-                    .where("version", new Version().value())
-                    .through(
-                        new QueryValve()
-                            .withScanIndexForward(false)
-                            .withIndexName("scores")
-                            .withConsistentRead(false)
-                            // @checkstyle MagicNumber (1 line)
-                            .withLimit(40)
-                            .withAttributesToGet(
-                                "artifact", "score", "diff", "defects",
-                                "classes"
-                            )
-                    )
-            )
+            this.table.frame()
+                .where("version", new Version().value())
+                .through(
+                    new QueryValve()
+                        .withScanIndexForward(false)
+                        .withIndexName("ranks")
+                        .withConsistentRead(false)
+                        // @checkstyle MagicNumber (1 line)
+                        .withLimit(20)
+                        .withAttributesToGet(
+                            "artifact", "score", "diff", "defects",
+                            "classes", "rank"
+                        )
+                )
         );
     }
 

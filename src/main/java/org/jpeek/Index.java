@@ -113,7 +113,6 @@ final class Index implements Scalar<Iterable<Directive>> {
             .add("html").set(String.format("%s.html", name)).up()
             .add("xml").set(String.format("%s.xml", name)).up()
             .add("classes").set(values.size()).up()
-            .add("average").set(new Avg(values).value()).up()
             .add("green").set((int) green).up()
             .add("yellow").set((int) yellow).up()
             .add("red").set((int) red).up()

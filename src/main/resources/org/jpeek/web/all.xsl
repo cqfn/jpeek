@@ -37,7 +37,7 @@ SOFTWARE.
   </xsl:template>
   <xsl:template match="recent">
     <p>
-      <xsl:text>All </xsl:text>
+      <xsl:text>There are </xsl:text>
       <xsl:value-of select="count(repo)"/>
       <xsl:text> artifacts in our database:</xsl:text>
     </p>
@@ -69,7 +69,13 @@ SOFTWARE.
           <xsl:value-of select="artifact"/>
         </code>
       </td>
-      <td style="text-align:right">
+      <td>
+        <xsl:attribute name="style">
+          <xsl:text>text-align:right;</xsl:text>
+          <xsl:if test="classes &gt; 200 and defects &lt; 0.15">
+            <xsl:text>background-color:#ACE1AF;</xsl:text>
+          </xsl:if>
+        </xsl:attribute>
         <a href="/{group}/{artifact}">
           <xsl:value-of select="classes"/>
         </a>
@@ -79,10 +85,10 @@ SOFTWARE.
           <xsl:text>text-align:right;</xsl:text>
           <xsl:text>color:</xsl:text>
           <xsl:choose>
-            <xsl:when test="defects &lt; 0.10">
+            <xsl:when test="defects &lt; 0.15">
               <xsl:text>green</xsl:text>
             </xsl:when>
-            <xsl:when test="defects &lt; 0.20">
+            <xsl:when test="defects &lt; 0.25">
               <xsl:text>orange</xsl:text>
             </xsl:when>
             <xsl:otherwise>
