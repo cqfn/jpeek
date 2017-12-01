@@ -145,7 +145,9 @@ final class Results {
                         .withConsistentRead(false)
                         // @checkstyle MagicNumber (1 line)
                         .withLimit(25)
-                        .withAttributesToGet("artifact", "classes", "defects")
+                        .withAttributesToGet(
+                            "artifact", "classes", "defects", "version"
+                        )
                 )
         );
     }
