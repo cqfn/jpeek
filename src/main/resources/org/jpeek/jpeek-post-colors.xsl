@@ -30,9 +30,9 @@ SOFTWARE.
       <xsl:apply-templates select="node()|@*"/>
       <colors low="{$low}" high="{$high}">
         <xsl:text>[</xsl:text>
-        <xsl:value-of select="$low"/>
+        <xsl:value-of select="format-number($low, '0.0000')"/>
         <xsl:text> .. </xsl:text>
-        <xsl:value-of select="$high"/>
+        <xsl:value-of select="format-number($high, '0.0000')"/>
         <xsl:text>]</xsl:text>
       </colors>
     </xsl:copy>
