@@ -86,8 +86,11 @@ SOFTWARE.
   </xsl:template>
   <xsl:template match="statistics">
     <p>
+      <xsl:text>Elements: </xsl:text>
+      <xsl:value-of select="elements"/>
+      <xsl:text>, </xsl:text>
       <a href="https://en.wikipedia.org/wiki/Mean">
-        <xsl:text>&#x3BC;: </xsl:text>
+        <xsl:text>&#x3BC;</xsl:text>
       </a>
       <xsl:text>: </xsl:text>
       <xsl:value-of select="format-number(mean, '0.0000')"/>

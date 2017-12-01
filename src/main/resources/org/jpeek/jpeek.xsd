@@ -121,6 +121,7 @@ SOFTWARE.
         <xs:element name="statistics" minOccurs="1" maxOccurs="1">
           <xs:complexType>
             <xs:all>
+              <xs:element name="total" type="xs:int" minOccurs="1" maxOccurs="1"/>
               <xs:element name="elements" type="xs:int" minOccurs="1" maxOccurs="1"/>
               <xs:element name="mean" type="xs:double" minOccurs="1" maxOccurs="1"/>
               <xs:element name="variance" type="xs:double" minOccurs="1" maxOccurs="1"/>

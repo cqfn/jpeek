@@ -87,6 +87,7 @@ final class Statistics implements Scalar<XML> {
                 new Directives()
                     .xpath("/metric")
                     .add("statistics")
+                    .add("total").set(this.origin.nodes("//class").size()).up()
                     .add("elements").set((long) total).up()
                     .add("mean").set(Double.toString(mean)).up()
                     .add("sigma").set(Double.toString(sigma)).up()
