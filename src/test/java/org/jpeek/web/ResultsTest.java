@@ -50,7 +50,7 @@ public final class ResultsTest {
         final Path input = Paths.get(".");
         new App(input, output).analyze();
         final Results results = new Results();
-        results.add("org.jpeek:jpeek", output);
+        results.add("org.takes:takes", output);
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
                 new Xembler(
@@ -59,7 +59,7 @@ public final class ResultsTest {
                     )
                 ).xmlQuietly()
             ),
-            XhtmlMatchers.hasXPath("/repos/repo[group='org.jpeek']")
+            XhtmlMatchers.hasXPath("/repos")
         );
     }
 

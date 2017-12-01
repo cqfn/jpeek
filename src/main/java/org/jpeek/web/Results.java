@@ -91,13 +91,9 @@ final class Results {
         final long score = new DyNum(
             index.xpath("/index/@score").get(0)
         ).longValue();
-        long rank = score;
-        // @checkstyle MagicNumber (3 lines)
-        if (classes > 100) {
-            rank = (long) (new DyNum(10L).doubleValue()
-                + (double) rank * (1.0d - diff.doubleValue()));
-        }
-        if (classes > 0) {
+        final long rank = (long) ((double) score * (1.0d - diff.doubleValue()));
+        // @checkstyle MagicNumber (1 line)
+        if (classes >= 100) {
             this.table.put(
                 new Attributes()
                     .with("good", "true")
@@ -178,7 +174,9 @@ final class Results {
                 .where(
                     "classes",
                     new Condition()
-                        .withAttributeValueList(new AttributeValue().withN("0"))
+                        .withAttributeValueList(
+                            new AttributeValue().withN("99")
+                        )
                         .withComparisonOperator(ComparisonOperator.GT)
                 )
                 .through(
