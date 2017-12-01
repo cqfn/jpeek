@@ -90,7 +90,8 @@ final class Results {
         long rank = score;
         // @checkstyle MagicNumber (3 lines)
         if (classes > 100) {
-            rank = 10L + (long) ((double) rank * (1.0d - diff.doubleValue()));
+            rank = (long) (new DyNum(10L).doubleValue()
+                + (double) rank * (1.0d - diff.doubleValue()));
         }
         this.table.put(
             new Attributes()
@@ -124,8 +125,8 @@ final class Results {
             item -> {
                 final String[] parts = item.get("artifact").getS().split(":");
                 return new Directives()
-                    .add("version").set(item.get("version").getS()).up()
                     .add("repo")
+                    .add("version").set(item.get("version").getS()).up()
                     .add("group").set(parts[0]).up()
                     .add("artifact").set(parts[1]).up()
                     .add("defects")
