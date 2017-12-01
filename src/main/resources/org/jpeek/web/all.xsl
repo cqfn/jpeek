@@ -34,12 +34,7 @@ SOFTWARE.
     <script src="https://code.jquery.com/jquery-3.2.1.min.js">
       <!-- nothing -->
     </script>
-  </xsl:template>
-  <xsl:template match="/page" mode="body">
-    <xsl:apply-templates select="recent"/>
-  </xsl:template>
-  <xsl:template match="recent">
-    <script>
+    <script type="text/javascript">
       <xsl:text>
         function ping() {
           $('.ping').each(function() {
@@ -54,6 +49,11 @@ SOFTWARE.
         }
       </xsl:text>
     </script>
+  </xsl:template>
+  <xsl:template match="/page" mode="body">
+    <xsl:apply-templates select="recent"/>
+  </xsl:template>
+  <xsl:template match="recent">
     <p>
       <xsl:text>There are </xsl:text>
       <xsl:value-of select="count(repo)"/>

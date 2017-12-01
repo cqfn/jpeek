@@ -182,7 +182,7 @@ final class Results {
                 .through(
                     new ScanValve()
                         // @checkstyle MagicNumber (1 line)
-                        .withLimit(25)
+                        .withLimit(1000)
                         .withAttributeToGet(
                             "artifact", "classes", "defects", "version"
                         )
