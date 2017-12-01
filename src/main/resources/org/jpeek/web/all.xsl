@@ -37,6 +37,8 @@ SOFTWARE.
   </xsl:template>
   <xsl:template match="/page" mode="body">
     <xsl:apply-templates select="recent"/>
+  </xsl:template>
+  <xsl:template match="recent">
     <script>
       <xsl:text>
         function ping() {
@@ -48,12 +50,10 @@ SOFTWARE.
                 $span.text(status);
               }
             );
-          })
+          });
         }
       </xsl:text>
     </script>
-  </xsl:template>
-  <xsl:template match="recent">
     <p>
       <xsl:text>There are </xsl:text>
       <xsl:value-of select="count(repo)"/>

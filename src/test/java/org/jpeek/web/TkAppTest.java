@@ -79,7 +79,6 @@ public final class TkAppTest {
             "/jpeek.css",
             "/",
             "/mistakes",
-            "/all",
             "/robots.txt",
         };
         final Take app = new TkApp(Files.createTempDirectory("x"));

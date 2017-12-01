@@ -52,7 +52,7 @@ final class TkAll implements Take {
                     "recent",
                     new XeDirectives(
                         new Joined<>(
-                            new Results().recent()
+                            new Results().all()
                         )
                     )
                 )

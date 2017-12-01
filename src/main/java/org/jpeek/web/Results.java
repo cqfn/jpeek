@@ -23,8 +23,12 @@
  */
 package org.jpeek.web;
 
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
+import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.QueryValve;
+import com.jcabi.dynamo.ScanValve;
 import com.jcabi.dynamo.Table;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
@@ -93,27 +97,32 @@ final class Results {
             rank = (long) (new DyNum(10L).doubleValue()
                 + (double) rank * (1.0d - diff.doubleValue()));
         }
-        this.table.put(
-            new Attributes()
-                .with("good", "true")
-                .with("artifact", artifact)
-                .with("rank", rank)
-                .with("score", score)
-                .with("diff", diff.longValue())
-                .with(
-                    "defects",
-                    new DyNum(index.xpath("/index/@defects").get(0)).longValue()
-                )
-                .with("classes", classes)
-                .with("version", new Version().value())
-                .with("added", System.currentTimeMillis())
-                .with(
-                    "ttl",
-                    System.currentTimeMillis() / TimeUnit.SECONDS.toMillis(1L)
-                        // @checkstyle MagicNumber (1 line)
-                        + TimeUnit.DAYS.toSeconds(100L)
-                )
-        );
+        if (classes > 0) {
+            this.table.put(
+                new Attributes()
+                    .with("good", "true")
+                    .with("artifact", artifact)
+                    .with("rank", rank)
+                    .with("score", score)
+                    .with("diff", diff.longValue())
+                    .with(
+                        "defects",
+                        new DyNum(
+                            index.xpath("/index/@defects").get(0)
+                        ).longValue()
+                    )
+                    .with("classes", classes)
+                    .with("version", new Version().value())
+                    .with("added", System.currentTimeMillis())
+                    .with(
+                        "ttl",
+                        System.currentTimeMillis()
+                            / TimeUnit.SECONDS.toMillis(1L)
+                            // @checkstyle MagicNumber (1 line)
+                            + TimeUnit.DAYS.toSeconds(100L)
+                    )
+            );
+        }
     }
 
     /**
@@ -121,6 +130,34 @@ final class Results {
      * @return List of them
      */
     public Iterable<Iterable<Directive>> recent() {
+        return new Mapped<>(
+            item -> {
+                final String[] parts = item.get("artifact").getS().split(":");
+                return new Directives()
+                    .add("repo")
+                    .add("group").set(parts[0]).up()
+                    .add("artifact").set(parts[1]).up()
+                    .up();
+            },
+            this.table.frame()
+                .where("good", "true")
+                .through(
+                    new QueryValve()
+                        .withScanIndexForward(false)
+                        .withIndexName("recent")
+                        .withConsistentRead(false)
+                        // @checkstyle MagicNumber (1 line)
+                        .withLimit(25)
+                        .withAttributesToGet("artifact")
+                )
+        );
+    }
+
+    /**
+     * All of them.
+     * @return List of them
+     */
+    public Iterable<Iterable<Directive>> all() {
         return new Mapped<>(
             item -> {
                 final String[] parts = item.get("artifact").getS().split(":");
@@ -138,15 +175,17 @@ final class Results {
                     .up();
             },
             this.table.frame()
-                .where("good", "true")
+                .where(
+                    "classes",
+                    new Condition()
+                        .withAttributeValueList(new AttributeValue().withN("0"))
+                        .withComparisonOperator(ComparisonOperator.GT)
+                )
                 .through(
-                    new QueryValve()
-                        .withScanIndexForward(false)
-                        .withIndexName("recent")
-                        .withConsistentRead(false)
+                    new ScanValve()
                         // @checkstyle MagicNumber (1 line)
                         .withLimit(25)
-                        .withAttributesToGet(
+                        .withAttributeToGet(
                             "artifact", "classes", "defects", "version"
                         )
                 )
