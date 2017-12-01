@@ -73,6 +73,12 @@ SOFTWARE.
             <xsl:text>Classes</xsl:text>
           </th>
           <th>
+            <xsl:text>Rank</xsl:text>
+          </th>
+          <th>
+            <xsl:text>Score</xsl:text>
+          </th>
+          <th>
             <xsl:text>Defects</xsl:text>
           </th>
           <th>
@@ -104,6 +110,12 @@ SOFTWARE.
         <a href="/{group}/{artifact}">
           <xsl:value-of select="classes"/>
         </a>
+      </td>
+      <td style="text-align:right">
+        <xsl:value-of select="format-number(rank,'0.00')"/>
+      </td>
+      <td style="text-align:right">
+        <xsl:value-of select="format-number(score,'0.00')"/>
       </td>
       <td>
         <xsl:attribute name="style">

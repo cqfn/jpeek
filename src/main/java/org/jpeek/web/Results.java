@@ -162,6 +162,12 @@ final class Results {
                     .add("version").set(item.get("version").getS()).up()
                     .add("group").set(parts[0]).up()
                     .add("artifact").set(parts[1]).up()
+                    .add("rank")
+                    .set(new DyNum(item, "rank").doubleValue())
+                    .up()
+                    .add("score")
+                    .set(new DyNum(item, "score").doubleValue())
+                    .up()
                     .add("defects")
                     .set(new DyNum(item, "defects").doubleValue())
                     .up()
@@ -184,7 +190,8 @@ final class Results {
                         // @checkstyle MagicNumber (1 line)
                         .withLimit(1000)
                         .withAttributeToGet(
-                            "artifact", "classes", "defects", "version"
+                            "artifact", "classes", "defects", "version",
+                            "rank", "score"
                         )
                 )
         );
