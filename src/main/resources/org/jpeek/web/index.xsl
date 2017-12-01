@@ -65,11 +65,7 @@ SOFTWARE.
       <a href="/mistakes">
         <xsl:text>summary</xsl:text>
       </a>
-      <xsl:text>, </xsl:text>
-      <a href="/all">
-        <xsl:text>all artifacts</xsl:text>
-      </a>
-      <xsl:text>, and the </xsl:text>
+      <xsl:text> and the </xsl:text>
       <a href="/queue">
         <xsl:text>queue</xsl:text>
       </a>
@@ -202,8 +198,8 @@ SOFTWARE.
           <xsl:value-of select="artifact"/>
         </a>
       </xsl:for-each>
-      <xsl:text> </xsl:text>
-      <a href="/ping">
+      <xsl:text>, </xsl:text>
+      <a href="/all">
         <xsl:text>...</xsl:text>
       </a>
     </p>

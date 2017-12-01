@@ -79,7 +79,6 @@ public final class TkAppTest {
             "/jpeek.css",
             "/",
             "/mistakes",
-            "/ping",
             "/all",
             "/robots.txt",
         };

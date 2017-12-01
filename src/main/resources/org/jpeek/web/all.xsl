@@ -31,15 +31,37 @@ SOFTWARE.
       <xsl:text>All </xsl:text>
       <xsl:value-of select="count(recent/repo)"/>
     </title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js">
+      <!-- nothing -->
+    </script>
   </xsl:template>
   <xsl:template match="/page" mode="body">
     <xsl:apply-templates select="recent"/>
+    <script>
+      <xsl:text>
+        function ping() {
+          $('.ping').each(function() {
+            var $span = $(this);
+            $.get(
+              $span.attr('data-uri'),
+              function(data, status) {
+                $span.text(status);
+              }
+            );
+          })
+        }
+      </xsl:text>
+    </script>
   </xsl:template>
   <xsl:template match="recent">
     <p>
       <xsl:text>There are </xsl:text>
       <xsl:value-of select="count(repo)"/>
-      <xsl:text> artifacts in our database:</xsl:text>
+      <xsl:text> artifacts in our database (</xsl:text>
+      <a href="#" onclick="ping(); return false;">
+        <xsl:text>ping them all</xsl:text>
+      </a>
+      <xsl:text>):</xsl:text>
     </p>
     <table data-sortable="true">
       <thead>
@@ -103,7 +125,9 @@ SOFTWARE.
         <xsl:text>%</xsl:text>
       </td>
       <td>
-        <xsl:value-of select="version"/>
+        <span class="ping" data-uri="http://i.jpeek.org/{group}/{artifact}/index.html">
+          <xsl:value-of select="version"/>
+        </span>
       </td>
     </tr>
   </xsl:template>
