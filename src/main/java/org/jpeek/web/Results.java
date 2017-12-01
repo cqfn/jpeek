@@ -88,11 +88,9 @@ final class Results {
             index.xpath("/index/@score").get(0)
         ).longValue();
         long rank = score;
-        // @checkstyle MagicNumber (1 line)
-        if (classes < 100) {
-            rank = 0L;
-        } else {
-            rank = (long) ((double) rank * (1.0d - diff.doubleValue()));
+        // @checkstyle MagicNumber (3 lines)
+        if (classes > 100) {
+            rank = 10L + (long) ((double) rank * (1.0d - diff.doubleValue()));
         }
         this.table.put(
             new Attributes()
@@ -126,6 +124,7 @@ final class Results {
             item -> {
                 final String[] parts = item.get("artifact").getS().split(":");
                 return new Directives()
+                    .add("version").set(item.get("version").getS()).up()
                     .add("repo")
                     .add("group").set(parts[0]).up()
                     .add("artifact").set(parts[1]).up()
@@ -145,7 +144,7 @@ final class Results {
                         .withIndexName("recent")
                         .withConsistentRead(false)
                         // @checkstyle MagicNumber (1 line)
-                        .withLimit(50)
+                        .withLimit(25)
                         .withAttributesToGet("artifact", "classes", "defects")
                 )
         );

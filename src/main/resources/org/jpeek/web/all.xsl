@@ -53,6 +53,9 @@ SOFTWARE.
           <th>
             <xsl:text>Defects</xsl:text>
           </th>
+          <th>
+            <xsl:text>Version</xsl:text>
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -98,6 +101,9 @@ SOFTWARE.
         </xsl:attribute>
         <xsl:value-of select="format-number(100 * defects,'#')"/>
         <xsl:text>%</xsl:text>
+      </td>
+      <td>
+        <xsl:value-of select="version"/>
       </td>
     </tr>
   </xsl:template>
