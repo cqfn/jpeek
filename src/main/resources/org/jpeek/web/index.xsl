@@ -93,7 +93,7 @@ SOFTWARE.
       <thead>
         <tr>
           <th>
-            <xsl:text>Rank</xsl:text>
+            <xsl:text>&#xA0;</xsl:text>
           </th>
           <th>
             <xsl:text>Artifact</xsl:text>
