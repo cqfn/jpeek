@@ -60,7 +60,9 @@ final class Statistics implements Scalar<XML> {
     public XML value() {
         final Collection<Double> values = new Mapped<>(
             Double::parseDouble,
-            this.origin.xpath("//class[@value!='NaN']/@value")
+            this.origin.xpath(
+                "//class[@value<=/metric/max and @value>=/metric/min]/@value"
+            )
         );
         final double total = (double) values.size();
         double sum = 0.0d;
@@ -85,6 +87,7 @@ final class Statistics implements Scalar<XML> {
                 new Directives()
                     .xpath("/metric")
                     .add("statistics")
+                    .add("elements").set((long) total).up()
                     .add("mean").set(Double.toString(mean)).up()
                     .add("sigma").set(Double.toString(sigma)).up()
                     .add("variance").set(Double.toString(variance)).up()

@@ -99,6 +99,9 @@ final class Report {
                 Report.class.getResourceAsStream("jpeek-post-colors.xsl")
             ).with("low", mean - sigma).with("high", mean + sigma),
             new XSLDocument(
+                Report.class.getResourceAsStream("jpeek-post-range.xsl")
+            ),
+            new XSLDocument(
                 Report.class.getResourceAsStream("jpeek-post-bars.xsl")
             )
         );

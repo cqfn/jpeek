@@ -77,7 +77,7 @@ public final class ReportTest {
             XhtmlMatchers.hasXPaths(
                 "/metric/app/package/class/vars",
                 "/metric/statistics/mean",
-                "/metric/bars/bar[@x='0' and .='1' and @color='red']"
+                "/metric/bars/bar[@x='0' and .='0' and @color='yellow']"
             )
         );
     }
