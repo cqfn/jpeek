@@ -40,7 +40,11 @@ SOFTWARE.
       <xsl:value-of select="title"/>
     </h1>
     <p>
-      <xsl:text>"Yellow" zone: </xsl:text>
+      <xsl:text>Min: </xsl:text>
+      <xsl:value-of select="format-number(min,'0.0000')"/>
+      <xsl:text>, max: </xsl:text>
+      <xsl:value-of select="format-number(max,'0.0000')"/>
+      <xsl:text>, yellow zone: </xsl:text>
       <code>
         <xsl:value-of select="colors"/>
       </code>
