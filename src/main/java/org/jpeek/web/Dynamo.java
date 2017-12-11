@@ -87,7 +87,7 @@ final class Dynamo implements Region {
                         "jpeek-results",
                         new String[] {"artifact"},
                         "score", "diff", "ttl", "version", "added",
-                        "rank", "good", "classes", "defects"
+                        "rank", "good", "classes", "defects", "elements"
                     )
                     .with(
                         "jpeek-mistakes",

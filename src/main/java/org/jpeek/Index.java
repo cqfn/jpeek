@@ -98,12 +98,18 @@ final class Index implements Scalar<Iterable<Directive>> {
         final List<Double> values = new Sorted<>(
             new org.cactoos.list.Mapped<>(
                 Double::parseDouble,
-                xml.xpath("//class[@value!='NaN']/@value")
+                xml.xpath("//class[@element='true' and @value!='NaN']/@value")
             )
         );
-        final double green = (double) xml.nodes("//*[@color='green']").size();
-        final double yellow = (double) xml.nodes("//*[@color='yellow']").size();
-        final double red = (double) xml.nodes("//*[@color='red']").size();
+        final double green = (double) xml.nodes(
+            "//*[@element='true' and @color='green']"
+        ).size();
+        final double yellow = (double) xml.nodes(
+            "//*[@element='true' and @color='yellow']"
+        ).size();
+        final double red = (double) xml.nodes(
+            "//*[@element='true' and @color='red']"
+        ).size();
         final double score = 10.0d
             * (green + yellow * 0.25d + red * 0.05d)
             / (green + yellow + red);
@@ -112,7 +118,8 @@ final class Index implements Scalar<Iterable<Directive>> {
             .attr("name", name)
             .add("html").set(String.format("%s.html", name)).up()
             .add("xml").set(String.format("%s.xml", name)).up()
-            .add("classes").set(values.size()).up()
+            .add("elements").set(values.size()).up()
+            .add("classes").set(xml.nodes("//class").size()).up()
             .add("green").set((int) green).up()
             .add("yellow").set((int) yellow).up()
             .add("red").set((int) red).up()

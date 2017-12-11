@@ -32,6 +32,7 @@ SOFTWARE.
               <xs:element name="html" type="xs:string" minOccurs="1" maxOccurs="1"/>
               <xs:element name="xml" type="xs:string" minOccurs="1" maxOccurs="1"/>
               <xs:element name="classes" type="xs:int" minOccurs="1" maxOccurs="1"/>
+              <xs:element name="elements" type="xs:int" minOccurs="1" maxOccurs="1"/>
               <xs:element name="green" type="xs:int" minOccurs="1" maxOccurs="1"/>
               <xs:element name="yellow" type="xs:int" minOccurs="1" maxOccurs="1"/>
               <xs:element name="red" type="xs:int" minOccurs="1" maxOccurs="1"/>

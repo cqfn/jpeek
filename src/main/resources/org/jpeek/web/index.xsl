@@ -98,6 +98,9 @@ SOFTWARE.
             <xsl:text>Classes</xsl:text>
           </th>
           <th>
+            <xsl:text>Elements</xsl:text>
+          </th>
+          <th>
             <xsl:text>Rank</xsl:text>
           </th>
           <th>
@@ -136,6 +139,9 @@ SOFTWARE.
       </td>
       <td style="text-align:right">
         <xsl:value-of select="classes"/>
+      </td>
+      <td style="text-align:right">
+        <xsl:value-of select="elements"/>
       </td>
       <td style="text-align:right">
         <xsl:value-of select="format-number(rank,'0.00')"/>

@@ -84,8 +84,8 @@ final class Results {
         final XML index = new XMLDocument(
             dir.resolve("index.xml").toFile()
         );
-        final int classes = Integer.parseInt(
-            index.xpath("/index/metric[1]/classes/text()").get(0)
+        final int elements = Integer.parseInt(
+            index.xpath("/index/metric[1]/elements/text()").get(0)
         );
         final Number diff = new DyNum(index.xpath("/index/@diff").get(0));
         final long score = new DyNum(
@@ -93,7 +93,7 @@ final class Results {
         ).longValue();
         final long rank = (long) ((double) score * (1.0d - diff.doubleValue()));
         // @checkstyle MagicNumber (1 line)
-        if (classes >= 100) {
+        if (elements >= 100) {
             this.table.put(
                 new Attributes()
                     .with("good", "true")
@@ -107,7 +107,15 @@ final class Results {
                             index.xpath("/index/@defects").get(0)
                         ).longValue()
                     )
-                    .with("classes", classes)
+                    .with("elements", elements)
+                    .with(
+                        "classes",
+                        Integer.parseInt(
+                            index.xpath(
+                                "/index/metric[1]/classes/text()"
+                            ).get(0)
+                        )
+                    )
                     .with("version", new Version().value())
                     .with("added", System.currentTimeMillis())
                     .with(
@@ -174,11 +182,14 @@ final class Results {
                     .add("classes")
                     .set(Integer.parseInt(item.get("classes").getN()))
                     .up()
+                    .add("elements")
+                    .set(Integer.parseInt(item.get("elements").getN()))
+                    .up()
                     .up();
             },
             this.table.frame()
                 .where(
-                    "classes",
+                    "elements",
                     new Condition()
                         .withAttributeValueList(
                             new AttributeValue().withN("99")
@@ -191,7 +202,7 @@ final class Results {
                         .withLimit(1000)
                         .withAttributeToGet(
                             "artifact", "classes", "defects", "version",
-                            "rank", "score"
+                            "rank", "score", "elements"
                         )
                 )
         );
@@ -225,6 +236,9 @@ final class Results {
                     .add("classes")
                     .set(Integer.parseInt(item.get("classes").getN()))
                     .up()
+                    .add("elements")
+                    .set(Integer.parseInt(item.get("elements").getN()))
+                    .up()
                     .up();
             },
             this.table.frame()
@@ -238,7 +252,7 @@ final class Results {
                         .withLimit(20)
                         .withAttributesToGet(
                             "artifact", "score", "diff", "defects",
-                            "classes", "rank"
+                            "classes", "elements", "rank"
                         )
                 )
         );
