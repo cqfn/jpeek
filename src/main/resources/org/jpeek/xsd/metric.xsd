@@ -47,6 +47,7 @@ SOFTWARE.
     </xs:sequence>
     <xs:attribute name="id" use="required" type="xs:string"/>
     <xs:attribute name="value" use="optional" type="xs:float"/>
+    <xs:attribute name="element" use="required" type="xs:boolean"/>
     <xs:attribute name="color" use="optional">
       <xs:simpleType>
         <xs:restriction base="xs:string">

@@ -23,6 +23,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
+  <xsl:variable name="min" select="min(//class/@value)"/>
+  <xsl:variable name="max" select="max(//class/@value)"/>
+  <xsl:variable name="all" select="//class[@value!=$min and @value!=$max]"/>
   <xsl:template match="metric">
     <xsl:copy>
       <xsl:apply-templates select="node()|@*"/>
@@ -30,9 +33,6 @@ SOFTWARE.
     </xsl:copy>
   </xsl:template>
   <xsl:template match="metric" mode="range">
-    <xsl:variable name="min" select="min(//class/@value)"/>
-    <xsl:variable name="max" select="max(//class/@value)"/>
-    <xsl:variable name="all" select="//class[@value!=$min and @value!=$max]"/>
     <min>
       <xsl:choose>
         <xsl:when test="$all">
@@ -53,6 +53,14 @@ SOFTWARE.
         </xsl:otherwise>
       </xsl:choose>
     </max>
+  </xsl:template>
+  <xsl:template match="class|package|app">
+    <xsl:copy>
+      <xsl:attribute name="element">
+        <xsl:value-of select="@value &gt; $min and @value &lt; $max"/>
+      </xsl:attribute>
+      <xsl:apply-templates select="node()|@*"/>
+    </xsl:copy>
   </xsl:template>
   <xsl:template match="node()|@*">
     <xsl:copy>
