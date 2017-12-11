@@ -61,7 +61,7 @@ SOFTWARE.
             <xsl:text>Metric</xsl:text>
           </th>
           <th>
-            <xsl:text>Classes</xsl:text>
+            <xsl:text>E/C</xsl:text>
             <a href="#2">
               <sup>
                 <xsl:text>2</xsl:text>
@@ -203,8 +203,9 @@ SOFTWARE.
       <sup id="2">
         <xsl:text>2</xsl:text>
       </sup>
-      <xsl:text>"Classes" shows the total amount of classes measured by this metric,
-        in most cases the number will be the same for all metrics. </xsl:text>
+      <xsl:text>"E/C" shows the total amount of classes measured by this metric,
+        in most cases the number will be the same for all metrics, and the
+        elements our statistics pays attention to (we ignore max and min). </xsl:text>
       <sup id="3">
         <xsl:text>3</xsl:text>
       </sup>
@@ -247,6 +248,8 @@ SOFTWARE.
         </a>
       </td>
       <td style="text-align:right">
+        <xsl:value-of select="elements"/>
+        <xsl:text>/</xsl:text>
         <xsl:value-of select="classes"/>
       </td>
       <td style="text-align:right">
