@@ -57,9 +57,8 @@ final class Sigmas {
 
     /**
      * Ctor.
-     * @throws IOException If fails
      */
-    Sigmas() throws IOException {
+    Sigmas() {
         this(new Dynamo().table("jpeek-mistakes"));
     }
 

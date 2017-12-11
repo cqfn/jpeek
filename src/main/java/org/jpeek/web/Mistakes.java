@@ -63,9 +63,8 @@ final class Mistakes {
 
     /**
      * Ctor.
-     * @throws IOException If fails
      */
-    Mistakes() throws IOException {
+    Mistakes() {
         this(new Dynamo().table("jpeek-mistakes"));
     }
 
