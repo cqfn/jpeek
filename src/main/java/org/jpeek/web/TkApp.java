@@ -39,6 +39,7 @@ import org.takes.facets.fallback.FbStatus;
 import org.takes.facets.fallback.TkFallback;
 import org.takes.facets.fork.FkRegex;
 import org.takes.facets.fork.TkFork;
+import org.takes.facets.forward.RsForward;
 import org.takes.facets.forward.TkForward;
 import org.takes.http.Exit;
 import org.takes.http.FtCli;
@@ -59,6 +60,7 @@ import org.takes.tk.TkWrap;
  * @version $Id$
  * @since 0.5
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @checkstyle ClassFanOutComplexityCheck (500 lines)
  */
 @SuppressWarnings("PMD.UseUtilityClass")
 public final class TkApp extends TkWrap {
@@ -105,6 +107,13 @@ public final class TkApp extends TkWrap {
                     new FkRegex("/", new TkIndex()),
                     new FkRegex("/robots.txt", new TkText("")),
                     new FkRegex("/mistakes", new TkMistakes()),
+                    new FkRegex(
+                        "/flush",
+                        (Take) req -> {
+                            new Results().flush();
+                            return new RsForward("done");
+                        }
+                    ),
                     new FkRegex("/all", new TkAll()),
                     new FkRegex("/queue", new TkQueue(futures)),
                     new FkRegex(

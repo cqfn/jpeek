@@ -27,6 +27,7 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
 import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.jcabi.dynamo.Attributes;
+import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.QueryValve;
 import com.jcabi.dynamo.ScanValve;
 import com.jcabi.dynamo.Table;
@@ -34,6 +35,7 @@ import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 import org.cactoos.iterable.Mapped;
 import org.jpeek.Version;
@@ -71,6 +73,16 @@ final class Results {
      */
     Results(final Table tbl) {
         this.table = tbl;
+    }
+
+    /**
+     * Delete them all.
+     */
+    public void flush() {
+        final Iterator<Item> items = this.table.frame().iterator();
+        while (items.hasNext()) {
+            items.remove();
+        }
     }
 
     /**
