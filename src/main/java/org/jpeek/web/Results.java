@@ -77,13 +77,17 @@ final class Results {
 
     /**
      * Delete them all.
+     * @return How many were deleted
      */
-    public void flush() {
+    public int flush() {
         final Iterator<Item> items = this.table.frame().iterator();
+        int total = 0;
         while (items.hasNext()) {
             items.next();
             items.remove();
+            ++total;
         }
+        return total;
     }
 
     /**

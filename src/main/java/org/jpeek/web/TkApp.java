@@ -39,7 +39,6 @@ import org.takes.facets.fallback.FbStatus;
 import org.takes.facets.fallback.TkFallback;
 import org.takes.facets.fork.FkRegex;
 import org.takes.facets.fork.TkFork;
-import org.takes.facets.forward.RsForward;
 import org.takes.facets.forward.TkForward;
 import org.takes.http.Exit;
 import org.takes.http.FtCli;
@@ -109,10 +108,9 @@ public final class TkApp extends TkWrap {
                     new FkRegex("/mistakes", new TkMistakes()),
                     new FkRegex(
                         "/flush",
-                        (Take) req -> {
-                            new Results().flush();
-                            return new RsForward("done");
-                        }
+                        (Take) req -> new RsText(
+                            String.format("%d flushed", new Results().flush())
+                        )
                     ),
                     new FkRegex("/all", new TkAll()),
                     new FkRegex("/queue", new TkQueue(futures)),
