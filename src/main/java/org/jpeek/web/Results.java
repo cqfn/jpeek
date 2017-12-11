@@ -81,6 +81,7 @@ final class Results {
     public void flush() {
         final Iterator<Item> items = this.table.frame().iterator();
         while (items.hasNext()) {
+            items.next();
             items.remove();
         }
     }
