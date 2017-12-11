@@ -24,8 +24,10 @@
 package org.jpeek;
 
 import com.jcabi.xml.ClasspathSources;
+import com.jcabi.xml.StrictXML;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
+import com.jcabi.xml.XSDDocument;
 import com.jcabi.xml.XSL;
 import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
@@ -57,6 +59,7 @@ import org.xembly.Xembler;
  * @version $Id$
  * @since 0.1
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @checkstyle ClassFanOutComplexityCheck (500 lines)
  */
 public final class App {
 
@@ -112,14 +115,17 @@ public final class App {
                 reports
             )
         ).value();
-        final XML index = App.xsl("index-post-2.xsl").transform(
-            App.xsl("index-post-1.xsl").transform(
-                new XMLDocument(
-                    new Xembler(
-                        new Index(this.output).value()
-                    ).xmlQuietly()
+        final XML index = new StrictXML(
+            App.xsl("index-post-2.xsl").transform(
+                App.xsl("index-post-1.xsl").transform(
+                    new XMLDocument(
+                        new Xembler(
+                            new Index(this.output).value()
+                        ).xmlQuietly()
+                    )
                 )
-            )
+            ),
+            new XSDDocument(App.class.getResourceAsStream("xsd/index.xsd"))
         );
         this.save(index.toString(), "index.xml");
         this.save(
@@ -138,12 +144,15 @@ public final class App {
             App.xsl("index.xsl").transform(index).toString(),
             "index.html"
         );
-        final XML matrix = App.xsl("matrix-post.xsl").transform(
-            new XMLDocument(
-                new Xembler(
-                    new Matrix(this.output).value()
-                ).xmlQuietly()
-            )
+        final XML matrix = new StrictXML(
+            App.xsl("matrix-post.xsl").transform(
+                new XMLDocument(
+                    new Xembler(
+                        new Matrix(this.output).value()
+                    ).xmlQuietly()
+                )
+            ),
+            new XSDDocument(App.class.getResourceAsStream("xsd/matrix.xsd"))
         );
         this.save(matrix.toString(), "matrix.xml");
         this.save(
@@ -154,7 +163,7 @@ public final class App {
         new IoCheckedScalar<>(
             new And(
                 this::copyXsl,
-                new ListOf<>("index", "matrix", "jpeek")
+                new ListOf<>("index", "matrix", "metric")
             )
         ).value();
     }
@@ -179,7 +188,7 @@ public final class App {
      * @throws IOException If fails
      */
     private void copyXsl(final String name) throws IOException {
-        this.copy(String.format("%s.xsl", name));
+        this.copy(String.format("xsl/%s.xsl", name));
     }
 
     /**
@@ -204,7 +213,7 @@ public final class App {
      */
     private static XSL xsl(final String name) {
         return new XSLDocument(
-            App.class.getResourceAsStream(name)
+            App.class.getResourceAsStream(String.format("xsl/%s", name))
         ).with(new ClasspathSources());
     }
 

@@ -73,7 +73,7 @@ final class Index implements Scalar<Iterable<Directive>> {
                 new Joined<Directive>(
                     new Mapped<>(
                         Index::metric,
-                        new Filtered<>(
+                        new Filtered<Path>(
                             path -> path.getFileName().toString().matches(
                                 "^[A-Z].+\\.xml$"
                             ),

@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<!--
+The MIT License (MIT)
+
+Copyright (c) 2017 Yegor Bugayenko
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included
+in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="index">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="metric" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:all>
+              <xs:element name="html" type="xs:string" minOccurs="1" maxOccurs="1"/>
+              <xs:element name="xml" type="xs:string" minOccurs="1" maxOccurs="1"/>
+              <xs:element name="classes" type="xs:int" minOccurs="1" maxOccurs="1"/>
+              <xs:element name="green" type="xs:int" minOccurs="1" maxOccurs="1"/>
+              <xs:element name="yellow" type="xs:int" minOccurs="1" maxOccurs="1"/>
+              <xs:element name="red" type="xs:int" minOccurs="1" maxOccurs="1"/>
+              <xs:element name="score" type="xs:double" minOccurs="1" maxOccurs="1"/>
+              <xs:element name="reverse" type="xs:boolean" minOccurs="1" maxOccurs="1"/>
+              <xs:element name="min" type="xs:double" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="max" type="xs:double" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="defects" type="xs:float" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="sigma" type="xs:float" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="mean" type="xs:float" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="bars" minOccurs="1" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="bar" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:int">
+                            <xs:attribute name="x" use="required" type="xs:double"/>
+                            <xs:attribute name="color" use="required" type="xs:string"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:all>
+            <xs:attribute name="name" use="required" type="xs:string"/>
+            <xs:attribute name="diff" type="xs:float" use="required"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="artifact" type="xs:string" use="required"/>
+      <xs:attribute name="defects" type="xs:float" use="required"/>
+      <xs:attribute name="diff" type="xs:float" use="required"/>
+      <xs:attribute name="score" type="xs:float" use="required"/>
+      <xs:attribute name="date" use="required" type="xs:dateTime"/>
+      <xs:attribute name="version" use="required" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

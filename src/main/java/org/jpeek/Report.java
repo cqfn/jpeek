@@ -57,14 +57,14 @@ final class Report {
      * XSD schema.
      */
     private static final XSD SCHEMA = XSDDocument.make(
-        Report.class.getResourceAsStream("jpeek.xsd")
+        Report.class.getResourceAsStream("xsd/metric.xsd")
     );
 
     /**
      * XSL stylesheet.
      */
     private static final XSL STYLESHEET = XSLDocument.make(
-        Report.class.getResourceAsStream("jpeek.xsl")
+        Report.class.getResourceAsStream("xsl/metric.xsl")
     ).with(new ClasspathSources());
 
     /**
@@ -96,13 +96,13 @@ final class Report {
         this.metric = mtc;
         this.post = new IterableOf<>(
             new XSLDocument(
-                Report.class.getResourceAsStream("jpeek-post-colors.xsl")
+                Report.class.getResourceAsStream("xsl/metric-post-colors.xsl")
             ).with("low", mean - sigma).with("high", mean + sigma),
             new XSLDocument(
-                Report.class.getResourceAsStream("jpeek-post-range.xsl")
+                Report.class.getResourceAsStream("xsl/metric-post-range.xsl")
             ),
             new XSLDocument(
-                Report.class.getResourceAsStream("jpeek-post-bars.xsl")
+                Report.class.getResourceAsStream("xsl/metric-post-bars.xsl")
             )
         );
     }
@@ -160,7 +160,7 @@ final class Report {
         return new XMLDocument(
             new Xembler(
                 new Directives()
-                    .pi("xml-stylesheet", "href='jpeek.xsl' type='text/xsl'")
+                    .pi("xml-stylesheet", "href='metric.xsl' type='text/xsl'")
                     .append(this.metric.xembly())
                     .xpath("/metric")
                     .append(new Header())

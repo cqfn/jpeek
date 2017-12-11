@@ -55,7 +55,8 @@ public final class AppTest {
             Matchers.equalTo(true)
         );
         MatcherAssert.assertThat(
-            XSLDocument.make(this.getClass().getResourceAsStream("jpeek.xsl"))
+            XSLDocument
+                .make(this.getClass().getResourceAsStream("xsl/metric.xsl"))
                 .with(new ClasspathSources())
                 .applyTo(new XMLDocument(output.resolve("LCOM.xml").toFile())),
             XhtmlMatchers.hasXPath("//xhtml:body")
