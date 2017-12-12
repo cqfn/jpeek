@@ -23,9 +23,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
-  <xsl:variable name="min" select="number(min(//class/@value))"/>
-  <xsl:variable name="max" select="number(max(//class/@value))"/>
-  <xsl:variable name="all" select="//class[@value!=$min and @value!=$max]"/>
+  <xsl:variable name="clean" select="//class[@value!='NaN']"/>
+  <xsl:variable name="min" select="number(min($clean/@value))"/>
+  <xsl:variable name="max" select="number(max($clean/@value))"/>
+  <xsl:variable name="all" select="$clean[@value!=$min and @value!=$max]"/>
   <xsl:template match="metric">
     <xsl:copy>
       <xsl:apply-templates select="node()|@*"/>

@@ -35,6 +35,7 @@ import org.jpeek.metrics.cohesion.LCOM;
 import org.jpeek.metrics.cohesion.MMAC;
 import org.jpeek.metrics.cohesion.NHD;
 import org.junit.Test;
+import org.xembly.Directives;
 
 /**
  * Test case for {@link Report}.
@@ -42,7 +43,9 @@ import org.junit.Test;
  * @version $Id$
  * @since 0.4
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class ReportTest {
 
     @Test
@@ -92,6 +95,38 @@ public final class ReportTest {
             ),
             XhtmlMatchers.hasXPaths(
                 "/metric[title='NHD']/bars/bar"
+            )
+        );
+    }
+
+    @Test
+    public void createsFullXmlReport() throws IOException {
+        final Path output = Files.createTempDirectory("");
+        new Report(
+            new Metric.Fixed(
+                new Directives()
+                    .add("metric")
+                    .add("app").attr("id", ".")
+                    .add("package").attr("id", ".")
+                    .add("class").attr("id", "A").attr("value", "0.1").up()
+                    .add("class").attr("id", "B").attr("value", "0.5").up()
+                    .add("class").attr("id", "C").attr("value", "0.6").up()
+                    .add("class").attr("id", "D").attr("value", "0.7").up()
+                    .add("class").attr("id", "E").attr("value", "NaN").up()
+            )
+        ).save(output);
+        MatcherAssert.assertThat(
+            XhtmlMatchers.xhtml(
+                new TextOf(output.resolve("Fixed.xml")).asString()
+            ),
+            XhtmlMatchers.hasXPaths(
+                "/metric[min='0.5' and max='0.6']",
+                "//class[@id='B' and @element='true']",
+                "//class[@id='D' and @element='false']",
+                "//class[@id='E' and @element='false']",
+                "//statistics[total='5']",
+                "//statistics[elements='2']",
+                "//statistics[mean='0.55']"
             )
         );
     }

@@ -44,4 +44,25 @@ public interface Metric {
      */
     Iterable<Directive> xembly() throws IOException;
 
+    /**
+     * Fixed.
+     */
+    final class Fixed implements Metric {
+        /**
+         * Dirs.
+         */
+        private final Iterable<Directive> dirs;
+        /**
+         * Ctor.
+         * @param list List of them
+         */
+        public Fixed(final Iterable<Directive> list) {
+            this.dirs = list;
+        }
+        @Override
+        public Iterable<Directive> xembly() {
+            return this.dirs;
+        }
+    }
+
 }
