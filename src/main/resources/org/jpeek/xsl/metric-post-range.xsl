@@ -23,8 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
-  <xsl:variable name="min" select="min(//class/@value)"/>
-  <xsl:variable name="max" select="max(//class/@value)"/>
+  <xsl:variable name="min" select="number(min(//class/@value))"/>
+  <xsl:variable name="max" select="number(max(//class/@value))"/>
   <xsl:variable name="all" select="//class[@value!=$min and @value!=$max]"/>
   <xsl:template match="metric">
     <xsl:copy>
@@ -57,7 +57,7 @@ SOFTWARE.
   <xsl:template match="class|package|app">
     <xsl:copy>
       <xsl:attribute name="element">
-        <xsl:value-of select="@value &gt; $min and @value &lt; $max"/>
+        <xsl:value-of select="number(@value) &gt; $min and number(@value) &lt; $max"/>
       </xsl:attribute>
       <xsl:apply-templates select="node()|@*"/>
     </xsl:copy>
