@@ -85,6 +85,8 @@ public final class AppTest {
             ),
             XhtmlMatchers.hasXPaths(
                 "/index[@score!='0.0000']",
+                "/index[@score!='NaN']",
+                "/index[@diff!='NaN']",
                 "/index[count(metric)>0]"
             )
         );

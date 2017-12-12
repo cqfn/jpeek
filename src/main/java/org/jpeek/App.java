@@ -116,8 +116,8 @@ public final class App {
             )
         ).value();
         final XML index = new StrictXML(
-            App.xsl("index-post-2.xsl").transform(
-                App.xsl("index-post-1.xsl").transform(
+            App.xsl("index-post-diff-and-defects.xsl").transform(
+                App.xsl("index-post-metric-diff.xsl").transform(
                     new XMLDocument(
                         new Xembler(
                             new Index(this.output).value()

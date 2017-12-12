@@ -110,9 +110,12 @@ final class Index implements Scalar<Iterable<Directive>> {
         final double red = (double) xml.nodes(
             "//*[@element='true' and @color='red']"
         ).size();
+        double all = green + yellow + red;
+        if (all == 0.0d) {
+            all = 1.0d;
+        }
         final double score = 10.0d
-            * (green + yellow * 0.25d + red * 0.05d)
-            / (green + yellow + red);
+            * (green + yellow * 0.25d + red * 0.05d) / all;
         final Directives dirs = new Directives()
             .add("metric")
             .attr("name", name)

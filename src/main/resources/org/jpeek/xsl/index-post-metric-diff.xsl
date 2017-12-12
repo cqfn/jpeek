@@ -29,7 +29,7 @@ SOFTWARE.
         <xsl:value-of select="sum(/index/metric/score) div count(/index/metric)"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:text>0</xsl:text>
+        <xsl:value-of select="0"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
