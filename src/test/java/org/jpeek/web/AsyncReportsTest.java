@@ -55,7 +55,7 @@ public final class AsyncReportsTest {
                 new SolidBiFunc<>(
                     (first, second) -> service.submit(
                         () -> input -> {
-                            TimeUnit.HOURS.sleep(1L);
+                            TimeUnit.DAYS.sleep(1L);
                             return new RsText("done!");
                         }
                     )
@@ -71,6 +71,7 @@ public final class AsyncReportsTest {
             XhtmlMatchers.xhtml(new RsPrint(response).printBody()),
             XhtmlMatchers.hasXPath("//xhtml:body")
         );
+        service.shutdownNow();
     }
 
 }
