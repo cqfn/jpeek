@@ -29,7 +29,6 @@ import java.io.FileNotFoundException;
 import java.nio.file.Path;
 import java.util.Iterator;
 import java.util.List;
-import org.cactoos.Scalar;
 import org.cactoos.collection.Filtered;
 import org.cactoos.collection.Joined;
 import org.cactoos.io.Directory;
@@ -48,7 +47,7 @@ import org.xembly.Directives;
  * @since 0.6
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-final class Index implements Scalar<Iterable<Directive>> {
+final class Index implements Iterable<Directive> {
 
     /**
      * Directory to save index to.
@@ -64,7 +63,7 @@ final class Index implements Scalar<Iterable<Directive>> {
     }
 
     @Override
-    public Iterable<Directive> value() {
+    public Iterator<Directive> iterator() {
         return new Directives()
             .add("index")
             .attr("artifact", "unknown")
@@ -81,7 +80,8 @@ final class Index implements Scalar<Iterable<Directive>> {
                         )
                     )
                 )
-            );
+            )
+            .iterator();
     }
 
     /**

@@ -119,9 +119,7 @@ public final class App {
             App.xsl("index-post-diff-and-defects.xsl").transform(
                 App.xsl("index-post-metric-diff.xsl").transform(
                     new XMLDocument(
-                        new Xembler(
-                            new Index(this.output).value()
-                        ).xmlQuietly()
+                        new Xembler(new Index(this.output)).xmlQuietly()
                     )
                 )
             ),
@@ -147,9 +145,7 @@ public final class App {
         final XML matrix = new StrictXML(
             App.xsl("matrix-post.xsl").transform(
                 new XMLDocument(
-                    new Xembler(
-                        new Matrix(this.output).value()
-                    ).xmlQuietly()
+                    new Xembler(new Matrix(this.output)).xmlQuietly()
                 )
             ),
             new XSDDocument(App.class.getResourceAsStream("xsd/matrix.xsd"))

@@ -24,18 +24,17 @@
 package org.jpeek;
 
 import com.jcabi.xml.XMLDocument;
-import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
-import org.cactoos.Scalar;
 import org.cactoos.collection.Filtered;
 import org.cactoos.collection.Joined;
 import org.cactoos.io.Directory;
 import org.cactoos.iterable.Mapped;
 import org.cactoos.scalar.And;
-import org.cactoos.scalar.IoCheckedScalar;
+import org.cactoos.scalar.UncheckedScalar;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -49,7 +48,7 @@ import org.xembly.Directives;
  * @since 0.6
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-final class Matrix implements Scalar<Iterable<Directive>> {
+final class Matrix implements Iterable<Directive> {
 
     /**
      * Directory to save index to.
@@ -65,9 +64,9 @@ final class Matrix implements Scalar<Iterable<Directive>> {
     }
 
     @Override
-    public Iterable<Directive> value() throws IOException {
+    public Iterator<Directive> iterator() {
         final SortedMap<String, Map<String, String>> matrix = new TreeMap<>();
-        new IoCheckedScalar<>(
+        new UncheckedScalar<>(
             new And(
                 path -> {
                     new And(
@@ -120,7 +119,8 @@ final class Matrix implements Scalar<Iterable<Directive>> {
                         matrix.entrySet()
                     )
                 )
-            );
+            )
+            .iterator();
     }
 
     /**
