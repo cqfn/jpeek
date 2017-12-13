@@ -251,6 +251,12 @@ SOFTWARE.
         <xsl:value-of select="elements"/>
         <xsl:text>/</xsl:text>
         <xsl:value-of select="classes"/>
+        <xsl:if test="classes &gt; 0">
+          <span class="under">
+            <xsl:value-of select="format-number(elements div classes, '0')"/>
+            <xsl:text>%</xsl:text>
+          </span>
+        </xsl:if>
       </td>
       <td style="text-align:right">
         <xsl:value-of select="format-number(mean,'0.00')"/>
