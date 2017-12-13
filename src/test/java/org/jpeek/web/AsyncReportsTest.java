@@ -30,6 +30,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import org.cactoos.BiFunc;
 import org.cactoos.Func;
+import org.cactoos.func.SolidBiFunc;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import org.takes.Response;
@@ -51,11 +52,13 @@ public final class AsyncReportsTest {
         final ExecutorService service = Executors.newSingleThreadExecutor();
         final BiFunc<String, String, Func<String, Response>> bifunc =
             new AsyncReports(
-                (first, second) -> service.submit(
-                    () -> input -> {
-                        TimeUnit.HOURS.sleep(1L);
-                        return new RsText("done!");
-                    }
+                new SolidBiFunc<>(
+                    (first, second) -> service.submit(
+                        () -> input -> {
+                            TimeUnit.HOURS.sleep(1L);
+                            return new RsText("done!");
+                        }
+                    )
                 )
             );
         final Response response =
