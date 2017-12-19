@@ -115,10 +115,13 @@ final class Futures implements
     @Override
     public String asString() throws IOException {
         return Logger.format(
-            "%d artifacts, %d processors, %d threads, ETA=%[ms]s:\n%s",
+            // @checkstyle LineLength (1 line)
+            "artifacts=%d, processors=%d, threads=%d, freeMemory=%d, maxMemory=%d, ETA=%[ms]s:\n%s",
             this.queue.size(),
             Runtime.getRuntime().availableProcessors(),
             Thread.getAllStackTraces().keySet().size(),
+            Runtime.getRuntime().freeMemory(),
+            Runtime.getRuntime().maxMemory(),
             new AvgOf(
                 this.times.toArray(new Long[this.times.size()])
             ).longValue() * (long) this.queue.size(),
