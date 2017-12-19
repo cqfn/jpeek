@@ -37,6 +37,7 @@ import java.util.concurrent.Future;
 import org.cactoos.BiFunc;
 import org.cactoos.Func;
 import org.cactoos.Text;
+import org.cactoos.collection.Mapped;
 import org.cactoos.scalar.AvgOf;
 import org.cactoos.text.JoinedText;
 import org.takes.Response;
@@ -116,7 +117,7 @@ final class Futures implements
     public String asString() throws IOException {
         return Logger.format(
             // @checkstyle LineLength (1 line)
-            "artifacts=%d, processors=%d, threads=%d, freeMemory=%d, maxMemory=%d, ETA=%[ms]s:\n%s",
+            "Artifacts=%d, processors=%d, threads=%d, freeMemory=%d, maxMemory=%d, ETA=%[ms]s:\n%s\n\nThreads: %s",
             this.queue.size(),
             Runtime.getRuntime().availableProcessors(),
             Thread.getAllStackTraces().keySet().size(),
@@ -125,7 +126,14 @@ final class Futures implements
             new AvgOf(
                 this.times.toArray(new Long[this.times.size()])
             ).longValue() * (long) this.queue.size(),
-            new JoinedText(", ", this.queue.keySet()).asString()
+            new JoinedText(", ", this.queue.keySet()).asString(),
+            new JoinedText(
+                ", ",
+                new Mapped<>(
+                    Thread::getName,
+                    Thread.getAllStackTraces().keySet()
+                )
+            ).asString()
         );
     }
 
