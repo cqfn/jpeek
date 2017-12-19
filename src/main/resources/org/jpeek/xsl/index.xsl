@@ -127,7 +127,7 @@ SOFTWARE.
             </a>
           </th>
           <th>
-            <xsl:text>Error</xsl:text>
+            <xsl:text>Defects</xsl:text>
             <a href="#6">
               <sup>
                 <xsl:text>6</xsl:text>
@@ -236,7 +236,7 @@ SOFTWARE.
       <sup id="6">
         <xsl:text>6</xsl:text>
       </sup>
-      <xsl:text>"Error" is the percentage of classes that fall out
+      <xsl:text>"Defects" is the percentage of classes that fall out
         of one-sigma standard deviation interval.</xsl:text>
     </p>
   </xsl:template>
