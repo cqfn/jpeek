@@ -117,12 +117,14 @@ final class Futures implements
     public String asString() throws IOException {
         return Logger.format(
             // @checkstyle LineLength (1 line)
-            "Artifacts=%d, processors=%d, threads=%d, freeMemory=%d, maxMemory=%d, ETA=%[ms]s:\n%s\n\nThreads: %s",
+            "Artifacts=%d, processors=%d, threads=%d, freeMemory=%dM, maxMemory=%dM, totalMemory=%dM, ETA=%[ms]s:\n%s\n\nThreads: %s",
             this.queue.size(),
             Runtime.getRuntime().availableProcessors(),
             Thread.getAllStackTraces().keySet().size(),
-            Runtime.getRuntime().freeMemory(),
-            Runtime.getRuntime().maxMemory(),
+            // @checkstyle MagicNumber (3 lines)
+            Runtime.getRuntime().freeMemory() / (1024L << 10),
+            Runtime.getRuntime().maxMemory() / (1024L << 10),
+            Runtime.getRuntime().totalMemory() / (1024L << 10),
             new AvgOf(
                 this.times.toArray(new Long[this.times.size()])
             ).longValue() * (long) this.queue.size(),
