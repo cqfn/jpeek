@@ -24,6 +24,7 @@
 package org.jpeek;
 
 import com.jcabi.matchers.XhtmlMatchers;
+import com.jcabi.xml.XMLDocument;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,11 +32,9 @@ import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.jpeek.metrics.FakeBase;
-import org.jpeek.metrics.cohesion.LCOM;
-import org.jpeek.metrics.cohesion.MMAC;
-import org.jpeek.metrics.cohesion.NHD;
 import org.junit.Test;
 import org.xembly.Directives;
+import org.xembly.Xembler;
 
 /**
  * Test case for {@link Report}.
@@ -51,7 +50,7 @@ public final class ReportTest {
     @Test
     public void createsXmlReport() throws IOException {
         final Path output = Files.createTempDirectory("");
-        new Report(new LCOM(new FakeBase("Foo"))).save(output);
+        new Report(new Skeleton(new FakeBase("Foo")).xml(), "LCOM").save(output);
         MatcherAssert.assertThat(
             Files.exists(output.resolve("LCOM.xml")),
             Matchers.equalTo(true)
@@ -66,12 +65,13 @@ public final class ReportTest {
     public void createsXmlReportWithXpaths() throws IOException {
         final Path output = Files.createTempDirectory("");
         new Report(
-            new MMAC(
+            new Skeleton(
                 new FakeBase(
                     "NoMethods", "Bar", "OverloadMethods",
                     "OnlyOneMethodWithParams", "WithoutAttributes"
                 )
-            )
+            ).xml(),
+            "MMAC"
         ).save(output);
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
@@ -88,7 +88,7 @@ public final class ReportTest {
     @Test
     public void createsXmlReportWithEmptyProject() throws IOException {
         final Path output = Files.createTempDirectory("");
-        new Report(new NHD(new FakeBase())).save(output);
+        new Report(new Skeleton(new FakeBase()).xml(), "NHD").save(output);
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
                 new TextOf(output.resolve("NHD.xml")).asString()
@@ -103,17 +103,20 @@ public final class ReportTest {
     public void createsFullXmlReport() throws IOException {
         final Path output = Files.createTempDirectory("");
         new Report(
-            new Metric.Fixed(
-                new Directives()
-                    .add("metric")
-                    .add("app").attr("id", ".")
-                    .add("package").attr("id", ".")
-                    .add("class").attr("id", "A").attr("value", "0.1").up()
-                    .add("class").attr("id", "B").attr("value", "0.5").up()
-                    .add("class").attr("id", "C").attr("value", "0.6").up()
-                    .add("class").attr("id", "D").attr("value", "0.7").up()
-                    .add("class").attr("id", "E").attr("value", "NaN").up()
-            )
+            new XMLDocument(
+                new Xembler(
+                    new Directives()
+                        .add("metric")
+                        .add("app").attr("id", ".")
+                        .add("package").attr("id", ".")
+                        .add("class").attr("id", "A").attr("value", "0.1").up()
+                        .add("class").attr("id", "B").attr("value", "0.5").up()
+                        .add("class").attr("id", "C").attr("value", "0.6").up()
+                        .add("class").attr("id", "D").attr("value", "0.7").up()
+                        .add("class").attr("id", "E").attr("value", "NaN").up()
+                ).xmlQuietly()
+            ),
+            ""
         ).save(output);
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(

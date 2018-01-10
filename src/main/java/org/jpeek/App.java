@@ -40,13 +40,6 @@ import org.cactoos.list.ListOf;
 import org.cactoos.scalar.And;
 import org.cactoos.scalar.AndInThreads;
 import org.cactoos.scalar.IoCheckedScalar;
-import org.jpeek.metrics.cohesion.CAMC;
-import org.jpeek.metrics.cohesion.LCOM;
-import org.jpeek.metrics.cohesion.LCOM2;
-import org.jpeek.metrics.cohesion.LCOM3;
-import org.jpeek.metrics.cohesion.MMAC;
-import org.jpeek.metrics.cohesion.NHD;
-import org.jpeek.metrics.cohesion.OCC;
 import org.xembly.Directives;
 import org.xembly.Xembler;
 
@@ -98,14 +91,16 @@ public final class App {
             );
         }
         final Base base = new DefaultBase(this.input);
+        final XML skeleton = new Skeleton(base).xml();
+        this.save(skeleton.toString(), "skeleton.xml");
         final Iterable<Report> reports = new ListOf<>(
-            new Report(new CAMC(base), 0.45d, 0.10d),
-            new Report(new LCOM(base), 14.0d, 77.0d),
-            new Report(new LCOM2(base), 0.83d, -0.10d),
-            new Report(new LCOM3(base), 0.96d, -0.11d),
-            new Report(new MMAC(base), 0.08d, 0.11d),
-            new Report(new NHD(base), 0.53d, -0.08d),
-            new Report(new OCC(base), 0.43d, -0.10d)
+            new Report(skeleton, "CAMC", 0.45d, 0.10d),
+            new Report(skeleton, "LCOM", 14.0d, 77.0d),
+            new Report(skeleton, "LCOM2", 0.83d, -0.10d),
+            new Report(skeleton, "LCOM3", 0.96d, -0.11d),
+            new Report(skeleton, "MMAC", 0.08d, 0.11d),
+            new Report(skeleton, "NHD", 0.53d, -0.08d),
+            new Report(skeleton, "OCC", 0.43d, -0.10d)
         );
         new IoCheckedScalar<>(
             new AndInThreads(
@@ -170,10 +165,12 @@ public final class App {
      * @throws IOException If fails
      */
     private void copy(final String name) throws IOException {
-        new LengthOf(
-            new TeeInput(
-                new ResourceOf(String.format("org/jpeek/%s", name)),
-                this.output.resolve(name)
+        new IoCheckedScalar<>(
+            new LengthOf(
+                new TeeInput(
+                    new ResourceOf(String.format("org/jpeek/%s", name)),
+                    this.output.resolve(name)
+                )
             )
         ).value();
     }
@@ -194,10 +191,12 @@ public final class App {
      * @throws IOException If fails
      */
     private void save(final String data, final String name) throws IOException {
-        new LengthOf(
-            new TeeInput(
-                data,
-                this.output.resolve(name)
+        new IoCheckedScalar<>(
+            new LengthOf(
+                new TeeInput(
+                    data,
+                    this.output.resolve(name)
+                )
             )
         ).value();
     }

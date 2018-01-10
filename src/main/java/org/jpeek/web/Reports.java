@@ -33,6 +33,7 @@ import org.cactoos.BiFunc;
 import org.cactoos.Func;
 import org.cactoos.io.LengthOf;
 import org.cactoos.io.TeeInput;
+import org.cactoos.scalar.IoCheckedScalar;
 import org.cactoos.text.TextOf;
 import org.jpeek.App;
 import org.takes.Response;
@@ -103,15 +104,17 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
             ).asString()
         ).xpath("/metadata/versioning/latest/text()").get(0);
         final String name = String.format("%s-%s.jar", artifact, version);
-        new LengthOf(
-            new TeeInput(
-                new URL(
-                    String.format(
-                        "http://repo1.maven.org/maven2/%s/%s/%s/%s",
-                        grp, artifact, version, name
-                    )
-                ),
-                input.resolve(name)
+        new IoCheckedScalar<>(
+            new LengthOf(
+                new TeeInput(
+                    new URL(
+                        String.format(
+                            "http://repo1.maven.org/maven2/%s/%s/%s/%s",
+                            grp, artifact, version, name
+                        )
+                    ),
+                    input.resolve(name)
+                )
             )
         ).value();
         try {

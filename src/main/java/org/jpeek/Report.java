@@ -24,9 +24,9 @@
 package org.jpeek;
 
 import com.jcabi.xml.ClasspathSources;
+import com.jcabi.xml.Sources;
 import com.jcabi.xml.StrictXML;
 import com.jcabi.xml.XML;
-import com.jcabi.xml.XMLDocument;
 import com.jcabi.xml.XSD;
 import com.jcabi.xml.XSDDocument;
 import com.jcabi.xml.XSL;
@@ -36,10 +36,12 @@ import java.nio.file.Path;
 import org.cactoos.io.LengthOf;
 import org.cactoos.io.TeeInput;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.map.MapEntry;
+import org.cactoos.map.MapOf;
 import org.cactoos.scalar.IoCheckedScalar;
 import org.cactoos.scalar.Reduced;
-import org.xembly.Directives;
-import org.xembly.Xembler;
+import org.cactoos.text.TextOf;
+import org.cactoos.time.DateAsText;
 
 /**
  * Single report.
@@ -68,9 +70,14 @@ final class Report {
     ).with(new ClasspathSources());
 
     /**
+     * The skeleton.
+     */
+    private final XML skeleton;
+
+    /**
      * The metric.
      */
-    private final Metric metric;
+    private final String metric;
 
     /**
      * Post processing XSLs.
@@ -79,21 +86,24 @@ final class Report {
 
     /**
      * Ctor.
-     * @param mtc Metric
+     * @param xml Skeleton
+     * @param name Name of the metric
      */
-    Report(final Metric mtc) {
-        // @checkstyle MagicNumber (1 line)
-        this(mtc, 0.5d, 0.25d);
+    Report(final XML xml, final String name) {
+        this(xml, name, 0.5d, 0.1d);
     }
 
     /**
      * Ctor.
-     * @param mtc Metric
+     * @param xml Skeleton
+     * @param name Name of the metric
      * @param mean Mean
      * @param sigma Sigma
      */
-    Report(final Metric mtc, final double mean, final double sigma) {
-        this.metric = mtc;
+    Report(final XML xml, final String name,
+        final double mean, final double sigma) {
+        this.skeleton = xml;
+        this.metric = name;
         this.post = new IterableOf<>(
             new XSLDocument(
                 Report.class.getResourceAsStream("xsl/metric-post-colors.xsl")
@@ -135,7 +145,7 @@ final class Report {
                     )
                 )
             )
-        ).value();
+        ).intValue();
         new LengthOf(
             new TeeInput(
                 Report.STYLESHEET.transform(xml).toString(),
@@ -146,7 +156,7 @@ final class Report {
                     )
                 )
             )
-        ).value();
+        ).intValue();
     }
 
     /**
@@ -155,18 +165,18 @@ final class Report {
      * @throws IOException If fails
      */
     private XML xml() throws IOException {
-        return new XMLDocument(
-            new Xembler(
-                new Directives()
-                    .pi("xml-stylesheet", "href='metric.xsl' type='text/xsl'")
-                    .append(this.metric.xembly())
-                    .xpath("/metric")
-                    .append(new Header())
-                    .add("title")
-                    .set(this.metric.getClass().getSimpleName())
-                    .up()
-            ).xmlQuietly()
-        );
+        return new XSLDocument(
+            new TextOf(
+                this.getClass().getResource(
+                    String.format("metrics/%s.xsl", this.metric)
+                )
+            ).asString(),
+            Sources.DUMMY,
+            new MapOf<>(
+                new MapEntry<>("version", new Version().value()),
+                new MapEntry<>("date", new DateAsText())
+            )
+        ).transform(this.skeleton);
     }
 
 }
