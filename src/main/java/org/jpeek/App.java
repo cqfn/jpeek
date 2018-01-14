@@ -148,7 +148,13 @@ public final class App {
         new IoCheckedScalar<>(
             new And(
                 this::copyXsl,
-                new ListOf<>("index", "matrix", "metric")
+                new ListOf<>("index", "matrix", "metric", "skeleton")
+            )
+        ).value();
+        new IoCheckedScalar<>(
+            new And(
+                this::copyXsl,
+                new ListOf<>("index", "matrix", "metric", "skeleton")
             )
         ).value();
     }
@@ -203,6 +209,17 @@ public final class App {
     private static XSL xsl(final String name) {
         return new XSLDocument(
             App.class.getResourceAsStream(String.format("xsl/%s", name))
+        ).with(new ClasspathSources());
+    }
+
+    /**
+     * Make XSL.
+     * @param name The name of XSL file
+     * @return XSL document
+     */
+    private static XSL xsd(final String name) {
+        return new XSLDocument(
+            App.class.getResourceAsStream(String.format("xsd/%s", name))
         ).with(new ClasspathSources());
     }
 
