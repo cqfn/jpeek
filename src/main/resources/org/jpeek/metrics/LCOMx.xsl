@@ -26,26 +26,15 @@ SOFTWARE.
   <xsl:template match="skeleton">
     <metric>
       <xsl:apply-templates select="@*"/>
-      <title>LCOM</title>
+      <title>LCOMx</title>
       <description>
-        <xsl:text>LCOM is calculated as the number of pairs of methods
-          operating on disjoint sets of instance variables,
-          reduced by the number of method pairs acting on at
-          least one shared instance variable.
-          Say, there are 5 methods in a class. This means that there are 10
-          pairs of methods (`5 * 4 / 2`). Now, we need to see how many of these
-          pairs are using at least one and the same attribute (Nonempty) and how many
-          of them are not using any similar attributes (Empty). Then, we
-          just do `LCOM = Empty - Nonempty`. The metric can be really big,
-          starting from zero and up to any possible number. The bigger the
-          value the least cohesive is the class. A perfect design would have
-          `LCOM=0`.</xsl:text>
+        <xsl:text>LCOM with constructors</xsl:text>
       </description>
       <xsl:apply-templates select="node()"/>
     </metric>
   </xsl:template>
   <xsl:template match="class">
-    <xsl:variable name="methods" select="methods/method[@ctor='false']"/>
+    <xsl:variable name="methods" select="methods/method"/>
     <xsl:variable name="pairs">
       <xsl:for-each select="$methods">
         <xsl:variable name="i" select="position()"/>

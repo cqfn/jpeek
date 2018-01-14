@@ -61,15 +61,15 @@ public final class MetricsTest {
     @Parameterized.Parameters(name = "{0}:{1}:{2}")
     public static Collection<Object[]> targets() {
         return new CollectionOf<>(
-            new Object[] {"Bar", "LCOM", 6.0d},
-            new Object[] {"Foo", "LCOM", 1.0d},
-            new Object[] {"MethodsWithDiffParamTypes", "LCOM", 15.0d},
+            new Object[] {"Bar", "LCOM", 3.0d},
+            new Object[] {"Foo", "LCOM", 0.0d},
+            new Object[] {"MethodsWithDiffParamTypes", "LCOM", 9.0d},
             new Object[] {"NoMethods", "LCOM", 0.0d},
-            new Object[] {"OneVoidMethodWithoutParams", "LCOM", 1.0d},
+            new Object[] {"OneVoidMethodWithoutParams", "LCOM", 0.0d},
             new Object[] {"OverloadMethods", "LCOM", 0.0d},
-            new Object[] {"TwoCommonAttributes", "LCOM", 6.0d},
-            new Object[] {"WithoutAttributes", "LCOM", 1.0d},
-            new Object[] {"OneMethodCreatesLambda", "LCOM", 3.0d}
+            new Object[] {"TwoCommonAttributes", "LCOM", 3.0d},
+            new Object[] {"WithoutAttributes", "LCOM", 0.0d},
+            new Object[] {"OneMethodCreatesLambda", "LCOM", 1.0d}
         );
     }
 
