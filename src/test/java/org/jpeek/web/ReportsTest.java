@@ -31,6 +31,7 @@ import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.takes.facets.hamcrest.HmRsStatus;
 
@@ -53,6 +54,7 @@ public final class ReportsTest {
     }
 
     @Test
+    @Ignore
     public void rendersOneReport() throws Exception {
         MatcherAssert.assertThat(
             new Reports(

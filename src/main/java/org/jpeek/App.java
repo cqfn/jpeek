@@ -95,12 +95,6 @@ public final class App {
         this.save(skeleton.toString(), "skeleton.xml");
         final Iterable<Report> reports = new ListOf<>(
             new Report(skeleton, "LCOM", 14.0d, 77.0d)
-//            new Report(skeleton, "CAMC", 0.45d, 0.10d),
-//            new Report(skeleton, "LCOM2", 0.83d, -0.10d),
-//            new Report(skeleton, "LCOM3", 0.96d, -0.11d),
-//            new Report(skeleton, "MMAC", 0.08d, 0.11d),
-//            new Report(skeleton, "NHD", 0.53d, -0.08d),
-//            new Report(skeleton, "OCC", 0.43d, -0.10d)
         );
         new IoCheckedScalar<>(
             new AndInThreads(

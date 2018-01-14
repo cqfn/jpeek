@@ -87,6 +87,7 @@ final class Report {
      * @param name Name of the metric
      */
     Report(final XML xml, final String name) {
+        // @checkstyle MagicNumberCheck (1 line)
         this(xml, name, 0.5d, 0.1d);
     }
 
@@ -96,6 +97,7 @@ final class Report {
      * @param name Name of the metric
      * @param mean Mean
      * @param sigma Sigma
+     * @checkstyle ParameterNumberCheck (10 lines)
      */
     Report(final XML xml, final String name,
         final double mean, final double sigma) {

@@ -28,6 +28,7 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
 import com.amazonaws.services.dynamodbv2.model.Select;
 import com.jcabi.dynamo.AttributeUpdates;
+import com.jcabi.dynamo.Attributes;
 import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.QueryValve;
 import com.jcabi.dynamo.Table;
@@ -35,6 +36,7 @@ import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Iterator;
 import org.jpeek.Version;
 
 /**
@@ -99,7 +101,8 @@ final class Sigmas {
      * @throws IOException If fails
      */
     private void add(final XML metric) throws IOException {
-        final Item item = this.table.frame()
+        final Item item;
+        final Iterator<Item> items = this.table.frame()
             .through(
                 new QueryValve()
                     .withLimit(1)
@@ -107,8 +110,21 @@ final class Sigmas {
             )
             .where("metric", metric.xpath("@name").get(0))
             .where("version", new Version().value())
-            .iterator()
-            .next();
+            .iterator();
+        if (items.hasNext()) {
+            item = items.next();
+        } else {
+            item = this.table.put(
+                new Attributes()
+                    .with("metric", metric.xpath("@name").get(0))
+                    .with("version", new Version().value())
+                    .with("artifact", "?")
+                    .with("champions", 0L)
+                    // @checkstyle MagicNumber (2 lines)
+                    .with("mean", new DyNum(0.5d).longValue())
+                    .with("sigma", new DyNum(0.1d).longValue())
+            );
+        }
         final double mean = Double.parseDouble(
             metric.xpath("mean/text()").get(0)
         );

@@ -41,8 +41,12 @@ import org.junit.runners.Parameterized;
  * @version $Id$
  * @since 0.23
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle VisibilityModifierCheck (500 lines)
+ * @checkstyle JavadocVariableCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
 @RunWith(Parameterized.class)
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class MetricsTest {
 
     @Parameterized.Parameter(0)
@@ -57,7 +61,7 @@ public final class MetricsTest {
     @Parameterized.Parameters(name = "{0}:{1}:{2}")
     public static Collection<Object[]> targets() {
         return new CollectionOf<>(
-            new Object[] {"Bar", "LCOM", 2.0d},
+            new Object[] {"Bar", "LCOM", 6.0d},
             new Object[] {"Foo", "LCOM", 1.0d},
             new Object[] {"MethodsWithDiffParamTypes", "LCOM", 15.0d},
             new Object[] {"NoMethods", "LCOM", 0.0d},

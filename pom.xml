@@ -274,7 +274,7 @@ SOFTWARE.
                         <limit>
                           <counter>BRANCH</counter>
                           <value>COVEREDRATIO</value>
-                          <minimum>0.69</minimum>
+                          <minimum>0.54</minimum>
                         </limit>
                         <limit>
                           <counter>COMPLEXITY</counter>
