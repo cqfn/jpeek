@@ -30,7 +30,7 @@ SOFTWARE.
       <description>
         <xsl:text>LCOM is calculated as the number of pairs of methods
           operating on disjoint sets of instance variables,
-          educed by the number of method pairs acting on at
+          reduced by the number of method pairs acting on at
           least one shared instance variable.
           Say, there are 5 methods in a class. This means that there are 10
           pairs of methods (`5 * 4 / 2`). Now, we need to see how many of these
@@ -45,15 +45,50 @@ SOFTWARE.
     </metric>
   </xsl:template>
   <xsl:template match="class">
+    <xsl:variable name="class" select="."/>
+    <xsl:variable name="pairs">
+      <xsl:for-each select="$class/methods/method">
+        <xsl:variable name="i" select="position()"/>
+        <xsl:variable name="left" select="."/>
+        <xsl:variable name="left_ops" select="$left/ops/op[@code='get' or @code='put']"/>
+        <xsl:for-each select="$class/methods/method">
+          <xsl:if test="position() &gt; $i">
+            <xsl:variable name="right" select="."/>
+            <xsl:variable name="right_ops" select="$right/ops/op[@code='get' or @code='put']"/>
+            <pair>
+              <xsl:value-of select="count($left_ops[.=$right_ops])"/>
+            </pair>
+          </xsl:if>
+        </xsl:for-each>
+      </xsl:for-each>
+    </xsl:variable>
+    <xsl:variable name="empty" select="count($pairs/pair[.=0])"/>
+    <xsl:variable name="nonempty" select="count($pairs/pair[.!=0])"/>
     <xsl:copy>
       <xsl:attribute name="value">
-        <xsl:text>0</xsl:text>
+        <xsl:choose>
+          <xsl:when test="$nonempty &gt; $empty">
+            <xsl:text>0</xsl:text>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="$empty - $nonempty"/>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:attribute>
       <xsl:apply-templates select="@*"/>
       <vars>
-        <var id="sum">0</var>
-        <var id="methods">0</var>
-        <var id="attrs">0</var>
+        <var id="methods">
+          <xsl:value-of select="count($class/methods/method)"/>
+        </var>
+        <var id="pairs">
+          <xsl:value-of select="count($pairs/pair)"/>
+        </var>
+        <var id="empty">
+          <xsl:value-of select="$empty"/>
+        </var>
+        <var id="nonempty">
+          <xsl:value-of select="$nonempty"/>
+        </var>
       </vars>
     </xsl:copy>
   </xsl:template>
