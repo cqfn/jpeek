@@ -23,22 +23,22 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml" version="2.0">
-    <xsl:template match="class">
-        <xsl:copy>
-            <xsl:attribute name="value">
-                <xsl:text>0</xsl:text>
-            </xsl:attribute>
-            <xsl:apply-templates select="@*"/>
-            <vars>
-                <var id="sum">0</var>
-                <var id="methods">0</var>
-                <var id="attrs">0</var>
-            </vars>
-        </xsl:copy>
-    </xsl:template>
-    <xsl:template match="node()|@*">
-        <xsl:copy>
-            <xsl:apply-templates select="node()|@*"/>
-        </xsl:copy>
-    </xsl:template>
+  <xsl:template match="class">
+    <xsl:copy>
+      <xsl:attribute name="value">
+        <xsl:text>0</xsl:text>
+      </xsl:attribute>
+      <xsl:apply-templates select="@*"/>
+      <vars>
+        <var id="sum">0</var>
+        <var id="methods">0</var>
+        <var id="attrs">0</var>
+      </vars>
+    </xsl:copy>
+  </xsl:template>
+  <xsl:template match="node()|@*">
+    <xsl:copy>
+      <xsl:apply-templates select="node()|@*"/>
+    </xsl:copy>
+  </xsl:template>
 </xsl:stylesheet>

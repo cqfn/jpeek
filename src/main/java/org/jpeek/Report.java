@@ -24,7 +24,6 @@
 package org.jpeek;
 
 import com.jcabi.xml.ClasspathSources;
-import com.jcabi.xml.Sources;
 import com.jcabi.xml.StrictXML;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XSD;
@@ -32,16 +31,14 @@ import com.jcabi.xml.XSDDocument;
 import com.jcabi.xml.XSL;
 import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Path;
 import org.cactoos.io.LengthOf;
 import org.cactoos.io.TeeInput;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.map.MapEntry;
-import org.cactoos.map.MapOf;
 import org.cactoos.scalar.IoCheckedScalar;
 import org.cactoos.scalar.Reduced;
 import org.cactoos.text.TextOf;
-import org.cactoos.time.DateAsText;
 
 /**
  * Single report.
@@ -165,17 +162,15 @@ final class Report {
      * @throws IOException If fails
      */
     private XML xml() throws IOException {
+        final String name = String.format("metrics/%s.xsl", this.metric);
+        final URL res = this.getClass().getResource(name);
+        if (res == null) {
+            throw new IllegalArgumentException(
+                String.format("XSL not found: %s", name)
+            );
+        }
         return new XSLDocument(
-            new TextOf(
-                this.getClass().getResource(
-                    String.format("metrics/%s.xsl", this.metric)
-                )
-            ).asString(),
-            Sources.DUMMY,
-            new MapOf<>(
-                new MapEntry<>("version", new Version().value()),
-                new MapEntry<>("date", new DateAsText())
-            )
+            new TextOf(res).asString()
         ).transform(this.skeleton);
     }
 

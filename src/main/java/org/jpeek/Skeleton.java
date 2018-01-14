@@ -23,13 +23,18 @@
  */
 package org.jpeek;
 
+import com.jcabi.xml.StrictXML;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
+import com.jcabi.xml.XSD;
+import com.jcabi.xml.XSDDocument;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import javassist.CannotCompileException;
 import javassist.ClassPool;
@@ -65,6 +70,13 @@ import org.xembly.Xembler;
 final class Skeleton {
 
     /**
+     * XSD schema.
+     */
+    private static final XSD SCHEMA = XSDDocument.make(
+        Report.class.getResourceAsStream("xsd/skeleton.xsd")
+    );
+
+    /**
      * The base.
      */
     private final Base base;
@@ -89,25 +101,29 @@ final class Skeleton {
      * @throws IOException If fails
      */
     public XML xml() throws IOException {
-        return new XMLDocument(
-            new Xembler(
-                new Directives()
-                    .add("metric")
-                    .add("app")
-                    .attr("id", this.base)
-                    .append(
-                        new Joined<Directive>(
-                            new Mapped<>(
-                                ent -> new Directives()
-                                    .add("package")
-                                    .attr("id", ent.getKey())
-                                    .append(ent.getValue())
-                                    .up(),
-                                this.metrics()
+        return new StrictXML(
+            new XMLDocument(
+                new Xembler(
+                    new Directives()
+                        .add("skeleton")
+                        .append(new Header())
+                        .add("app")
+                        .attr("id", this.base)
+                        .append(
+                            new Joined<Directive>(
+                                new Mapped<>(
+                                    ent -> new Directives()
+                                        .add("package")
+                                        .attr("id", ent.getKey())
+                                        .append(ent.getValue())
+                                        .up(),
+                                    this.metrics()
+                                )
                             )
                         )
-                    )
-            ).xmlQuietly()
+                ).xmlQuietly()
+            ),
+            Skeleton.SCHEMA
         );
     }
 
@@ -186,50 +202,75 @@ final class Skeleton {
         } catch (final IOException | CannotCompileException ex) {
             throw new IllegalStateException(ex);
         }
-        final Directives dirs = new Directives();
+        final Directives dirs = new Directives().add("methods");
         reader.accept(
             new ClassVisitor(Opcodes.ASM6) {
                 @Override
                 public MethodVisitor visitMethod(final int access,
                     final String mtd, final String desc,
                     final String signature, final String[] exceptions) {
-                    super.visitMethod(access, mtd, desc, signature, exceptions);
-                    System.out.println(desc);
                     dirs.add("method")
                         .attr("name", mtd)
                         .attr("desc", desc)
-                        .up();
-                    return new MethodVisitor(Opcodes.ASM6) {
+                        .attr(
+                            "ctor",
+                            "<init>".equals(mtd)
+                        )
+                        .attr(
+                            "static",
+                            (access & Opcodes.ACC_STATIC) == Opcodes.ACC_STATIC
+                        )
+                        .attr(
+                            "abstract",
+                            (access & Opcodes.ACC_ABSTRACT) == Opcodes.ACC_ABSTRACT
+                        )
+                        .attr(
+                            "public",
+                            (access & Opcodes.ACC_PUBLIC) == Opcodes.ACC_PUBLIC
+                        );
+                    final Collection<String> types = new LinkedList<>();
+                    new SignatureReader(desc).accept(
+                        new SignatureVisitor(Opcodes.ASM6) {
+                            @Override
+                            public void visitClassType(final String name) {
+                                super.visitClassType(name);
+                                types.add(String.format("L%s", name));
+                            }
+                            @Override
+                            public void visitBaseType(final char name) {
+                                super.visitBaseType(name);
+                                types.add(String.format("%s", name));
+                            }
+                        }
+                    );
+                    dirs.add("args");
+                    for (final String type : types) {
+                        dirs.add("arg").set("?").attr("type", type).up();
+                    }
+                    dirs.up().up();
+                    return new MethodVisitor(
+                        Opcodes.ASM6, super.visitMethod(
+                            access, mtd, desc, signature, exceptions
+                        )
+                    ) {
                         @Override
                         public void visitFieldInsn(final int opcode,
                             final String owner, final String attr,
-                            final String details) {
-                            super.visitFieldInsn(opcode, owner, attr, details);
+                            final String dsc) {
+                            super.visitFieldInsn(opcode, owner, attr, dsc);
                             dirs.xpath(
-                                String.format(
-                                    "method[@desc='%s']", desc
-                                )
-                            ).strict(1).add("argument").set(attr);
-                            new SignatureReader(desc).accept(
-                                new SignatureVisitor(Opcodes.ASM6) {
-                                    @Override
-                                    public void visitClassType(final String name) {
-                                        super.visitClassType(name);
-                                        dirs.attr("type", name);
-                                    }
-                                    @Override
-                                    public void visitBaseType(final char name) {
-                                        super.visitBaseType(name);
-                                        if ('V' != name) {
-                                            dirs.attr(
-                                                "type",
-                                                String.format(".%s", name)
-                                            );
-                                        }
-                                    }
-                                }
-                            );
-                            dirs.up().up();
+                                String.format("methods/method[@desc='%s']", desc)
+                            ).addIf("ops").add("op");
+                            if (opcode == Opcodes.GETFIELD) {
+                                dirs.attr("code", "get");
+                            } else if (opcode == Opcodes.PUTFIELD) {
+                                dirs.attr("code", "put");
+                            } else if (opcode == Opcodes.GETSTATIC) {
+                                dirs.attr("code", "get_static");
+                            } else if (opcode == Opcodes.PUTSTATIC) {
+                                dirs.attr("code", "put_static");
+                            }
+                            dirs.set(attr).up().up();
                         }
                     };
                 }

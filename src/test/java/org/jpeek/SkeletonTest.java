@@ -42,7 +42,9 @@ public final class SkeletonTest {
     public void createsXml() throws IOException {
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
-                new Skeleton(new FakeBase("OverloadMethods")).xml().toString()
+                new Skeleton(
+                    new FakeBase("OverloadMethods", "Bar")
+                ).xml().toString()
             ),
             XhtmlMatchers.hasXPaths("/skeleton")
         );
