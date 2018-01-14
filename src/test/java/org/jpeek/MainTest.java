@@ -23,6 +23,7 @@
  */
 package org.jpeek;
 
+import com.beust.jcommander.ParameterException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -44,14 +45,14 @@ public final class MainTest {
     public void createsXmlReports() throws IOException {
         final Path output = Files.createTempDirectory("").resolve("x3");
         final Path input = Paths.get(".");
-        Main.main(input.toString(), output.toString());
+        Main.main("--sources", input.toString(), "--target", output.toString());
         MatcherAssert.assertThat(
             Files.exists(output.resolve("LCOM.xml")),
             Matchers.equalTo(true)
         );
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = ParameterException.class)
     public void crashesIfInvalidInput() throws IOException {
         Main.main("hello");
     }

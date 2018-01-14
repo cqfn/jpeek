@@ -23,8 +23,11 @@
  */
 package org.jpeek;
 
+import com.beust.jcommander.JCommander;
+import com.beust.jcommander.Parameter;
+import com.beust.jcommander.converters.FileConverter;
+import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,8 +39,31 @@ import java.util.Map;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
+ * @checkstyle JavadocVariableCheck (500 lines)
  */
 public final class Main {
+
+    @Parameter(
+        names = { "--sources", "-s" },
+        converter = FileConverter.class,
+        required = true,
+        description = "Directory with .class files"
+    )
+    private File sources;
+
+    @Parameter(
+        names = { "--target", "-t" },
+        converter = FileConverter.class,
+        required = true,
+        description = "Output directory"
+    )
+    private File target;
+
+    @Parameter(
+        names = "--include-ctors",
+        description = "Include constructors into all formulas"
+    )
+    private boolean ctors;
 
     /**
      * Ctor.
@@ -52,17 +78,24 @@ public final class Main {
      * @throws IOException If fails
      */
     public static void main(final String... args) throws IOException {
-        if (args.length != 2) {
-            throw new IllegalArgumentException(
-                "Exactly two arguments required: source and output directory"
-            );
-        }
+        final Main main = new Main();
+        JCommander.newBuilder()
+            .addObject(main)
+            .build()
+            .parse(args);
+        main.run();
+    }
+
+    /**
+     * Run it.
+     * @throws IOException If fails
+     */
+    private void run() throws IOException {
         final Map<String, Object> params = new HashMap<>(0);
-        new App(
-            Paths.get(args[0]),
-            Paths.get(args[1]),
-            params
-        ).analyze();
+        if (this.ctors) {
+            params.put("ctors", 1);
+        }
+        new App(this.sources.toPath(), this.target.toPath(), params).analyze();
     }
 
 }

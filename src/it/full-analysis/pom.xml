@@ -91,7 +91,9 @@ SOFTWARE.
                   <arguments>
                     <argument>-jar</argument>
                     <argument>${project.build.directory}/jpeek.jar</argument>
+                    <argument>--sources</argument>
                     <argument>.</argument>
+                    <argument>--target</argument>
                     <argument>${project.build.directory}/jpeek</argument>
                   </arguments>
                 </configuration>

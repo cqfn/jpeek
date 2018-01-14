@@ -33,7 +33,7 @@ book series make sense.
 Load [this JAR file](http://repo1.maven.org/maven2/org/jpeek/jpeek/0.5/jpeek-0.5-jar-with-dependencies.jar) and then:
 
 ```bash
-$ java -jar jpeek-0.5-jar-with-dependencies.jar . ./jpeek
+$ java -jar jpeek-0.5-jar-with-dependencies.jar --sources=. --target=./jpeek
 ```
 
 jPeek will analyze Java files in the current directory.
