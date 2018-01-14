@@ -25,6 +25,8 @@ package org.jpeek;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Main entry point.
@@ -55,9 +57,11 @@ public final class Main {
                 "Exactly two arguments required: source and output directory"
             );
         }
+        final Map<String, Object> params = new HashMap<>(0);
         new App(
             Paths.get(args[0]),
-            Paths.get(args[1])
+            Paths.get(args[1]),
+            params
         ).analyze();
     }
 

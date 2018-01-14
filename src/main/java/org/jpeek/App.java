@@ -33,12 +33,12 @@ import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 import org.cactoos.io.LengthOf;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.io.TeeInput;
 import org.cactoos.list.ListOf;
-import org.cactoos.map.MapEntry;
-import org.cactoos.map.MapOf;
 import org.cactoos.scalar.And;
 import org.cactoos.scalar.AndInThreads;
 import org.cactoos.scalar.IoCheckedScalar;
@@ -70,13 +70,30 @@ public final class App {
     private final Path output;
 
     /**
+     * XSL params.
+     */
+    private final Map<String, Object> params;
+
+    /**
      * Ctor.
      * @param source Source directory
      * @param target Target dir
      */
     public App(final Path source, final Path target) {
+        this(source, target, new HashMap<>(0));
+    }
+
+    /**
+     * Ctor.
+     * @param source Source directory
+     * @param target Target dir
+     * @param args XSL params
+     */
+    public App(final Path source, final Path target,
+        final Map<String, Object> args) {
         this.input = source;
         this.output = target;
+        this.params = args;
     }
 
     /**
@@ -97,11 +114,7 @@ public final class App {
         final XML skeleton = new Skeleton(base).xml();
         this.save(skeleton.toString(), "skeleton.xml");
         final Iterable<Report> reports = new ListOf<>(
-            new Report(
-                skeleton, "LCOM",
-                new MapOf<String, Object>(new MapEntry<>("ctors", 0)),
-                25.0d, -10.0d
-            )
+            new Report(skeleton, "LCOM", this.params, 25.0d, -10.0d)
         );
         new IoCheckedScalar<>(
             new AndInThreads(
