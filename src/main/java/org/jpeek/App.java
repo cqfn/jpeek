@@ -37,6 +37,8 @@ import org.cactoos.io.LengthOf;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.io.TeeInput;
 import org.cactoos.list.ListOf;
+import org.cactoos.map.MapEntry;
+import org.cactoos.map.MapOf;
 import org.cactoos.scalar.And;
 import org.cactoos.scalar.AndInThreads;
 import org.cactoos.scalar.IoCheckedScalar;
@@ -95,7 +97,11 @@ public final class App {
         final XML skeleton = new Skeleton(base).xml();
         this.save(skeleton.toString(), "skeleton.xml");
         final Iterable<Report> reports = new ListOf<>(
-            new Report(skeleton, "LCOM", 25.0d, -10.0d)
+            new Report(
+                skeleton, "LCOM",
+                new MapOf<String, Object>(new MapEntry<>("ctors", 0)),
+                25.0d, -10.0d
+            )
         );
         new IoCheckedScalar<>(
             new AndInThreads(

@@ -24,6 +24,7 @@
 package org.jpeek;
 
 import com.jcabi.xml.ClasspathSources;
+import com.jcabi.xml.Sources;
 import com.jcabi.xml.StrictXML;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XSD;
@@ -33,6 +34,8 @@ import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 import org.cactoos.io.LengthOf;
 import org.cactoos.io.TeeInput;
 import org.cactoos.iterable.IterableOf;
@@ -82,27 +85,35 @@ final class Report {
     private final Iterable<XSL> post;
 
     /**
+     * XSL params.
+     */
+    private final Map<String, Object> params;
+
+    /**
      * Ctor.
      * @param xml Skeleton
      * @param name Name of the metric
      */
     Report(final XML xml, final String name) {
         // @checkstyle MagicNumberCheck (1 line)
-        this(xml, name, 0.5d, 0.1d);
+        this(xml, name, new HashMap<>(0), 0.5d, 0.1d);
     }
 
     /**
      * Ctor.
      * @param xml Skeleton
      * @param name Name of the metric
+     * @param args Params for XSL
      * @param mean Mean
      * @param sigma Sigma
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     Report(final XML xml, final String name,
+        final Map<String, Object> args,
         final double mean, final double sigma) {
         this.skeleton = xml;
         this.metric = name;
+        this.params = args;
         this.post = new IterableOf<>(
             new XSLDocument(
                 Report.class.getResourceAsStream("xsl/metric-post-colors.xsl")
@@ -166,7 +177,9 @@ final class Report {
             );
         }
         return new XSLDocument(
-            new TextOf(res).asString()
+            new TextOf(res).asString(),
+            Sources.DUMMY,
+            this.params
         ).transform(this.skeleton);
     }
 
