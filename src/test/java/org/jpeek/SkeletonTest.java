@@ -46,7 +46,13 @@ public final class SkeletonTest {
                     new FakeBase("OverloadMethods", "Bar")
                 ).xml().toString()
             ),
-            XhtmlMatchers.hasXPaths("/skeleton")
+            XhtmlMatchers.hasXPaths(
+                "/skeleton/app/package[count(class)=2]",
+                "//class[@id='Bar']/methods[count(method)=4]",
+                "//class[@id='OverloadMethods']/methods[count(method)=5]",
+                "//method[@name='<init>' and @ctor='true']",
+                "//class[@id='Bar']//method[@name='<i nit>']/ops[count(op)=2]"
+            )
         );
     }
 

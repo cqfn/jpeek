@@ -45,6 +45,7 @@ import org.cactoos.iterable.Mapped;
 import org.cactoos.map.MapEntry;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
+import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.signature.SignatureReader;
@@ -62,7 +63,7 @@ import org.xembly.Xembler;
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @see <a href="http://www.pitt.edu/~ckemerer/CK%20research%20papers/MetricForOOD_ChidamberKemerer94.pdf">A metrics suite for object oriented design</a>
+ * @see <a href="http://www.pitt.edu/~ckemerer/CK%20research%20papers/MetricForOOD_ChidamberKemerer94.pdf">A packages suite for object oriented design</a>
  * @since 0.23
  * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
@@ -117,7 +118,7 @@ final class Skeleton {
                                         .attr("id", ent.getKey())
                                         .append(ent.getValue())
                                         .up(),
-                                    this.metrics()
+                                    this.packages()
                                 )
                             )
                         )
@@ -128,16 +129,16 @@ final class Skeleton {
     }
 
     /**
-     * Calculate metrics for all classes.
-     * @return Metrics
+     * Calculate Xembly for all packages.
+     * @return XML for all packages (one by one)
      * @throws IOException If fails
      */
     @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
-    private Iterable<Map.Entry<String, Directives>> metrics()
+    private Iterable<Map.Entry<String, Directives>> packages()
         throws IOException {
         final Map<String, Directives> map = new HashMap<>(0);
         final Iterable<Map.Entry<String, Directives>> all = new Mapped<>(
-            Skeleton::metric,
+            Skeleton::xembly,
             new Filtered<>(
                 // @checkstyle BooleanExpressionComplexityCheck (10 lines)
                 ctClass -> !ctClass.isInterface()
@@ -148,7 +149,7 @@ final class Skeleton {
                 new Mapped<>(
                     path -> {
                         try (InputStream stream =
-                                 new FileInputStream(path.toFile())) {
+                            new FileInputStream(path.toFile())) {
                             return this.pool.makeClassIfNew(stream);
                         }
                     },
@@ -168,11 +169,11 @@ final class Skeleton {
     }
 
     /**
-     * Calculate metrics for a single .class file.
+     * Calculate Xembly for a single .class file.
      * @param ctc The class
      * @return Metrics
      */
-    private static Map.Entry<String, Directives> metric(final CtClass ctc) {
+    private static Map.Entry<String, Directives> xembly(final CtClass ctc) {
         ctc.defrost();
         String pkg = ctc.getPackageName();
         if (pkg == null) {
@@ -183,7 +184,7 @@ final class Skeleton {
             new Directives()
                 .add("class")
                 .attr("id", ctc.getSimpleName())
-                .append(Skeleton.xembly(ctc))
+                .append(Skeleton.details(ctc))
                 .up()
         );
     }
@@ -195,21 +196,41 @@ final class Skeleton {
      * @checkstyle ParameterNumberCheck (200 lines)
      * @checkstyle AnonInnerLengthCheck (200 lines)
      */
-    private static Iterable<Directive> xembly(final CtClass ctc) {
+    private static Iterable<Directive> details(final CtClass ctc) {
         final ClassReader reader;
         try {
             reader = new ClassReader(ctc.toBytecode());
         } catch (final IOException | CannotCompileException ex) {
             throw new IllegalStateException(ex);
         }
-        final Directives dirs = new Directives().add("methods");
+        final Directives dirs = new Directives();
         reader.accept(
             new ClassVisitor(Opcodes.ASM6) {
+                @Override
+                public FieldVisitor visitField(final int access,
+                    final String name, final String desc,
+                    final String signature, final Object value) {
+                    dirs.addIf("attributes")
+                        .add("attribute")
+                        .set(name)
+                        .attr("type", desc.replaceAll(";$", ""))
+                        .attr(
+                            "public",
+                            (access & Opcodes.ACC_PUBLIC) == Opcodes.ACC_PUBLIC
+                        )
+                        .attr(
+                            "static",
+                            (access & Opcodes.ACC_STATIC) == Opcodes.ACC_STATIC
+                        )
+                        .up().up();
+                    return super.visitField(access, name, desc, signature, value);
+                }
                 @Override
                 public MethodVisitor visitMethod(final int access,
                     final String mtd, final String desc,
                     final String signature, final String[] exceptions) {
-                    dirs.add("method")
+                    dirs.addIf("methods")
+                        .add("method")
                         .attr("name", mtd)
                         .attr("desc", desc)
                         .attr(
@@ -247,7 +268,7 @@ final class Skeleton {
                     for (final String type : types) {
                         dirs.add("arg").set("?").attr("type", type).up();
                     }
-                    dirs.up().up();
+                    dirs.up().up().up();
                     return new MethodVisitor(
                         Opcodes.ASM6, super.visitMethod(
                             access, mtd, desc, signature, exceptions
@@ -259,8 +280,11 @@ final class Skeleton {
                             final String dsc) {
                             super.visitFieldInsn(opcode, owner, attr, dsc);
                             dirs.xpath(
-                                String.format("methods/method[@desc='%s']", desc)
-                            ).addIf("ops").add("op");
+                                String.format(
+                                    "methods/method[@name='%s' and @desc='%s']",
+                                    mtd, desc
+                                )
+                            ).strict(1).addIf("ops").add("op");
                             if (opcode == Opcodes.GETFIELD) {
                                 dirs.attr("code", "get");
                             } else if (opcode == Opcodes.PUTFIELD) {
@@ -270,7 +294,7 @@ final class Skeleton {
                             } else if (opcode == Opcodes.PUTSTATIC) {
                                 dirs.attr("code", "put_static");
                             }
-                            dirs.set(attr).up().up();
+                            dirs.set(attr).up().up().up().up();
                         }
                     };
                 }

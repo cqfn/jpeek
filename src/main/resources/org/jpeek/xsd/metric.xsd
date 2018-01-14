@@ -84,6 +84,7 @@ SOFTWARE.
   <xs:element name="metric">
     <xs:complexType>
       <xs:all>
+        <xs:element name="description" type="xs:string" minOccurs="1" maxOccurs="1"/>
         <xs:element name="app" type="app" minOccurs="0" maxOccurs="1">
           <xs:unique name="packageUnique">
             <xs:selector xpath="./package"/>

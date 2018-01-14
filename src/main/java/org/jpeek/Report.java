@@ -136,10 +136,7 @@ final class Report {
             new TeeInput(
                 xml.toString(),
                 target.resolve(
-                    String.format(
-                        "%s.xml",
-                        this.metric.getClass().getSimpleName()
-                    )
+                    String.format("%s.xml", this.metric)
                 )
             )
         ).intValue();
@@ -147,10 +144,7 @@ final class Report {
             new TeeInput(
                 Report.STYLESHEET.transform(xml).toString(),
                 target.resolve(
-                    String.format(
-                        "%s.html",
-                        this.metric.getClass().getSimpleName()
-                    )
+                    String.format("%s.html", this.metric)
                 )
             )
         ).intValue();

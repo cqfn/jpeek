@@ -25,6 +25,23 @@ SOFTWARE.
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:complexType name="class">
     <xs:all>
+      <xs:element name="attributes" minOccurs="0" maxOccurs="1">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="attribute" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType>
+                <xs:simpleContent>
+                  <xs:extension base="xs:string">
+                    <xs:attribute name="type" use="required" type="xs:string"/>
+                    <xs:attribute name="public" use="required" type="xs:boolean"/>
+                    <xs:attribute name="static" use="required" type="xs:boolean"/>
+                  </xs:extension>
+                </xs:simpleContent>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
       <xs:element name="methods" minOccurs="0" maxOccurs="1">
         <xs:complexType>
           <xs:sequence>
@@ -49,7 +66,7 @@ SOFTWARE.
                   <xs:element name="ops" minOccurs="0" maxOccurs="1">
                     <xs:complexType>
                       <xs:sequence>
-                        <xs:element name="op" minOccurs="0" maxOccurs="1">
+                        <xs:element name="op" minOccurs="0" maxOccurs="unbounded">
                           <xs:complexType>
                             <xs:simpleContent>
                               <xs:extension base="xs:string">

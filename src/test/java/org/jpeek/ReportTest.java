@@ -50,7 +50,7 @@ public final class ReportTest {
     @Test
     public void createsXmlReport() throws IOException {
         final Path output = Files.createTempDirectory("");
-        new Report(new Skeleton(new FakeBase("Foo")).xml(), "LCOM").save(output);
+        new Report(new Skeleton(new FakeBase()).xml(), "LCOM").save(output);
         MatcherAssert.assertThat(
             Files.exists(output.resolve("LCOM.xml")),
             Matchers.equalTo(true)
@@ -106,7 +106,8 @@ public final class ReportTest {
             new XMLDocument(
                 new Xembler(
                     new Directives()
-                        .add("metric")
+                        .add("skeleton")
+                        .append(new Header())
                         .add("app").attr("id", ".")
                         .add("package").attr("id", ".")
                         .add("class").attr("id", "A").attr("value", "0.1").up()
@@ -116,11 +117,11 @@ public final class ReportTest {
                         .add("class").attr("id", "E").attr("value", "NaN").up()
                 ).xmlQuietly()
             ),
-            ""
+            "LCOM"
         ).save(output);
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
-                new TextOf(output.resolve("Fixed.xml")).asString()
+                new TextOf(output.resolve("LCOM.xml")).asString()
             ),
             XhtmlMatchers.hasXPaths(
                 "/metric[min='0.5' and max='0.6']",
