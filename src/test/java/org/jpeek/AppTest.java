@@ -51,7 +51,7 @@ public final class AppTest {
         final Path input = Paths.get(".");
         new App(input, output).analyze();
         MatcherAssert.assertThat(
-            Files.exists(output.resolve("OCC.xml")),
+            Files.exists(output.resolve("LCOM.xml")),
             Matchers.equalTo(true)
         );
         MatcherAssert.assertThat(

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.jpeek.metrics;
+package org.jpeek;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -34,8 +34,6 @@ import org.cactoos.iterable.Mapped;
 import org.cactoos.list.ListOf;
 import org.cactoos.scalar.And;
 import org.cactoos.scalar.IoCheckedScalar;
-import org.jpeek.Base;
-import org.jpeek.DefaultBase;
 
 /**
  * Fake base for tests.
@@ -82,7 +80,7 @@ public final class FakeBase implements Base {
                     new LengthOf(
                         new TeeInput(
                             new ResourceOf(
-                                String.format("org/jpeek/metrics/%s", java)
+                                String.format("org/jpeek/samples/%s", java)
                             ),
                             temp.resolve(java)
                         )

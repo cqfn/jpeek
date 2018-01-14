@@ -26,7 +26,6 @@ package org.jpeek;
 import com.jcabi.matchers.XhtmlMatchers;
 import java.io.IOException;
 import org.hamcrest.MatcherAssert;
-import org.jpeek.metrics.FakeBase;
 import org.junit.Test;
 
 /**
@@ -51,7 +50,7 @@ public final class SkeletonTest {
                 "//class[@id='Bar']/methods[count(method)=4]",
                 "//class[@id='OverloadMethods']/methods[count(method)=5]",
                 "//method[@name='<init>' and @ctor='true']",
-                "//class[@id='Bar']//method[@name='<i nit>']/ops[count(op)=2]"
+                "//class[@id='Bar']//method[@name='<init>']/ops[count(op)=2]"
             )
         );
     }

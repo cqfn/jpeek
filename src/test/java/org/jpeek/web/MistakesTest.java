@@ -59,7 +59,7 @@ public final class MistakesTest {
                     )
                 ).xmlQuietly()
             ),
-            XhtmlMatchers.hasXPath("/metrics/metric[@id='CAMC']/avg")
+            XhtmlMatchers.hasXPath("/metrics/metric[@id='LCOM']/avg")
         );
     }
 

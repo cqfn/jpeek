@@ -31,7 +31,6 @@ import java.nio.file.Path;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.jpeek.metrics.FakeBase;
 import org.junit.Test;
 import org.xembly.Directives;
 import org.xembly.Xembler;
@@ -71,11 +70,11 @@ public final class ReportTest {
                     "OnlyOneMethodWithParams", "WithoutAttributes"
                 )
             ).xml(),
-            "MMAC"
+            "LCOM"
         ).save(output);
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
-                new TextOf(output.resolve("MMAC.xml")).asString()
+                new TextOf(output.resolve("LCOM.xml")).asString()
             ),
             XhtmlMatchers.hasXPaths(
                 "/metric/app/package/class/vars",
@@ -88,13 +87,13 @@ public final class ReportTest {
     @Test
     public void createsXmlReportWithEmptyProject() throws IOException {
         final Path output = Files.createTempDirectory("");
-        new Report(new Skeleton(new FakeBase()).xml(), "NHD").save(output);
+        new Report(new Skeleton(new FakeBase()).xml(), "LCOM").save(output);
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
-                new TextOf(output.resolve("NHD.xml")).asString()
+                new TextOf(output.resolve("LCOM.xml")).asString()
             ),
             XhtmlMatchers.hasXPaths(
-                "/metric[title='NHD']/bars/bar"
+                "/metric[title='LCOM']/bars/bar"
             )
         );
     }
