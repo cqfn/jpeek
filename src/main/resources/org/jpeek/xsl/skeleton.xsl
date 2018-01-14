@@ -25,7 +25,7 @@ SOFTWARE.
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml" version="2.0">
   <xsl:import href="/org/jpeek/templates.xsl"/>
   <xsl:template match="/">
-      <xsl:apply-templates select="skeleton"/>
+    <xsl:apply-templates select="skeleton"/>
   </xsl:template>
   <xsl:template match="skeleton">
     <xsl:apply-templates select="//class"/>

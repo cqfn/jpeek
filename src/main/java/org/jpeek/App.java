@@ -54,6 +54,7 @@ import org.xembly.Xembler;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @checkstyle ClassFanOutComplexityCheck (500 lines)
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class App {
 
     /**
@@ -153,7 +154,7 @@ public final class App {
         ).value();
         new IoCheckedScalar<>(
             new And(
-                this::copyXsl,
+                this::copyXsd,
                 new ListOf<>("index", "matrix", "metric", "skeleton")
             )
         ).value();
@@ -185,6 +186,15 @@ public final class App {
     }
 
     /**
+     * Copy XSL.
+     * @param name The name of resource
+     * @throws IOException If fails
+     */
+    private void copyXsd(final String name) throws IOException {
+        this.copy(String.format("xsd/%s.xsd", name));
+    }
+
+    /**
      * Save file.
      * @param data Content
      * @param name The name of destination file
@@ -209,17 +219,6 @@ public final class App {
     private static XSL xsl(final String name) {
         return new XSLDocument(
             App.class.getResourceAsStream(String.format("xsl/%s", name))
-        ).with(new ClasspathSources());
-    }
-
-    /**
-     * Make XSL.
-     * @param name The name of XSL file
-     * @return XSL document
-     */
-    private static XSL xsd(final String name) {
-        return new XSLDocument(
-            App.class.getResourceAsStream(String.format("xsd/%s", name))
         ).with(new ClasspathSources());
     }
 
