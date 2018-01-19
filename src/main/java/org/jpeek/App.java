@@ -114,7 +114,8 @@ public final class App {
         final XML skeleton = new Skeleton(base).xml();
         this.save(skeleton.toString(), "skeleton.xml");
         final Iterable<Report> reports = new ListOf<>(
-            new Report(skeleton, "LCOM", this.params, 10.0d, -5.0d)
+            new Report(skeleton, "LCOM", this.params, 10.0d, -5.0d),
+            new Report(skeleton, "NHD")
         );
         new IoCheckedScalar<>(
             new AndInThreads(
