@@ -55,4 +55,22 @@ public final class SkeletonTest {
         );
     }
 
+    @Test
+    public void findsMethodsAndArgs() throws IOException {
+        MatcherAssert.assertThat(
+            XhtmlMatchers.xhtml(
+                new Skeleton(
+                    new FakeBase("MethodsWithDiffParamTypes")
+                ).xml().toString()
+            ),
+            XhtmlMatchers.hasXPaths(
+                "//class/methods[count(method)=7]",
+                "//method[@name='methodSix']/args[count(arg)=1]",
+                // @checkstyle LineLength (1 line)
+                "//method[@name='methodSix']/args/arg[@type='Ljava/sql/Timestamp']",
+                "//method[@name='methodSix' and return='Ljava/util/Date']"
+            )
+        );
+    }
+
 }
