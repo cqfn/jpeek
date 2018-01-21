@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -69,7 +69,16 @@ public final class MetricsTest {
             new Object[] {"OverloadMethods", "LCOM", 0.0d},
             new Object[] {"TwoCommonAttributes", "LCOM", 3.0d},
             new Object[] {"WithoutAttributes", "LCOM", 0.0d},
-            new Object[] {"OneMethodCreatesLambda", "LCOM", 1.0d}
+            new Object[] {"OneMethodCreatesLambda", "LCOM", 1.0d},
+            new Object[] {"Bar", "MMAC", 1.0d},
+            new Object[] {"Foo", "MMAC", 1.0d},
+            new Object[] {"MethodsWithDiffParamTypes", "MMAC", 0.037d},
+            new Object[] {"NoMethods", "MMAC", 0.0d},
+            new Object[] {"OneVoidMethodWithoutParams", "MMAC", 0.0d},
+            new Object[] {"OverloadMethods", "MMAC", 0.7222d},
+            new Object[] {"TwoCommonAttributes", "MMAC", 0.3333d},
+            new Object[] {"WithoutAttributes", "MMAC", 1.0d},
+            new Object[] {"OneMethodCreatesLambda", "MMAC", 0.0d}
         );
     }
 
