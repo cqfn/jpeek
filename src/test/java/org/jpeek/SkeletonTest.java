@@ -64,11 +64,13 @@ public final class SkeletonTest {
                 ).xml().toString()
             ),
             XhtmlMatchers.hasXPaths(
+                // @checkstyle LineLength (10 lines)
                 "//class/methods[count(method)=7]",
                 "//method[@name='methodSix']/args[count(arg)=1]",
-                // @checkstyle LineLength (1 line)
                 "//method[@name='methodSix']/args/arg[@type='Ljava/sql/Timestamp']",
-                "//method[@name='methodSix' and return='Ljava/util/Date']"
+                "//method[@name='methodSix' and return='Ljava/util/Date']",
+                "//method[@name='methodTwo' and return='V']",
+                "//method[@name='methodOne']/args/arg[@type='Ljava/lang/Object']"
             )
         );
     }
