@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,6 +36,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.CtClass;
@@ -68,7 +69,15 @@ import org.xembly.Xembler;
  * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-@SuppressWarnings({ "PMD.AvoidDuplicateLiterals", "PMD.ExcessiveImports" })
+@SuppressWarnings(
+    {
+        "PMD.AvoidDuplicateLiterals",
+        "PMD.ExcessiveImports",
+        "PMD.CyclomaticComplexity",
+        "PMD.StdCyclomaticComplexity",
+        "PMD.ModifiedCyclomaticComplexity"
+    }
+)
 final class Skeleton {
 
     /**
@@ -272,17 +281,35 @@ final class Skeleton {
                     (access & Opcodes.ACC_PUBLIC) == Opcodes.ACC_PUBLIC
                 );
             final Collection<String> types = new LinkedList<>();
+            final AtomicBoolean ret = new AtomicBoolean();
             new SignatureReader(desc).accept(
                 new SignatureVisitor(Opcodes.ASM6) {
                     @Override
+                    public SignatureVisitor visitReturnType() {
+                        ret.set(true);
+                        return super.visitReturnType();
+                    }
+                    @Override
                     public void visitClassType(final String name) {
                         super.visitClassType(name);
-                        types.add(String.format("L%s", name));
+                        final String type = String.format("L%s", name);
+                        if (ret.compareAndSet(true, false)) {
+                            Skeleton.Visitor.this.dirs.add("return")
+                                .set(type).up();
+                        } else {
+                            types.add(type);
+                        }
                     }
                     @Override
                     public void visitBaseType(final char name) {
                         super.visitBaseType(name);
-                        types.add(String.format("%s", name));
+                        final String type = String.format("%s", name);
+                        if (ret.compareAndSet(true, false)) {
+                            Skeleton.Visitor.this.dirs.add("return")
+                                .set(type).up();
+                        } else {
+                            types.add(type);
+                        }
                     }
                 }
             );

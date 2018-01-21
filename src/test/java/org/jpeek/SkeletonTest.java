@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -51,6 +51,26 @@ public final class SkeletonTest {
                 "//class[@id='OverloadMethods']/methods[count(method)=5]",
                 "//method[@name='<init>' and @ctor='true']",
                 "//class[@id='Bar']//method[@name='<init>']/ops[count(op)=3]"
+            )
+        );
+    }
+
+    @Test
+    public void findsMethodsAndArgs() throws IOException {
+        MatcherAssert.assertThat(
+            XhtmlMatchers.xhtml(
+                new Skeleton(
+                    new FakeBase("MethodsWithDiffParamTypes")
+                ).xml().toString()
+            ),
+            XhtmlMatchers.hasXPaths(
+                // @checkstyle LineLength (10 lines)
+                "//class/methods[count(method)=7]",
+                "//method[@name='methodSix']/args[count(arg)=1]",
+                "//method[@name='methodSix']/args/arg[@type='Ljava/sql/Timestamp']",
+                "//method[@name='methodSix' and return='Ljava/util/Date']",
+                "//method[@name='methodTwo' and return='V']",
+                "//method[@name='methodOne']/args/arg[@type='Ljava/lang/Object']"
             )
         );
     }

@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -115,6 +115,7 @@ public final class App {
         this.save(skeleton.toString(), "skeleton.xml");
         final Iterable<Report> reports = new ListOf<>(
             new Report(skeleton, "LCOM", this.params, 10.0d, -5.0d),
+            new Report(skeleton, "MMAC", this.params, 0.5d, 0.25d),
             new Report(skeleton, "NHD")
         );
         new IoCheckedScalar<>(

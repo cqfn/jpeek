@@ -2,14 +2,13 @@ public final class MethodsWithDiffParamTypes {
 
   private int num;
 
-  public double methodOne(final String src) {
+  public <T> double methodOne(final T src) {
     ++num;
     return num * 2.4d;
   }
 
-  public double methodTwo(final long count) {
+  public void methodTwo(final long count) {
     ++num;
-    return num * count;
   }
 
   public char methodThree(final String src, final int count) {
