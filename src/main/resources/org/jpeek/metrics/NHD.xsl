@@ -62,7 +62,7 @@ SOFTWARE.
           </xsl:when>
           <xsl:otherwise>
             <xsl:variable name="coefficient" select="2 div ($types_count * $methods_count * ($methods_count - 1))"/>
-            <xsl:value-of select="format-number(1 - ($coefficient * sum($types_agreement/value)), '0.##')"/>
+            <xsl:value-of select="format-number(1 - ($coefficient * sum($types_agreement/value)), '0.####')"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:attribute>

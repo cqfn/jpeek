@@ -78,7 +78,10 @@ public final class MetricsTest {
             new Object[] {"OverloadMethods", "MMAC", 0.3889d},
             new Object[] {"TwoCommonAttributes", "MMAC", 0.3333d},
             new Object[] {"WithoutAttributes", "MMAC", 1.0d},
-            new Object[] {"OneMethodCreatesLambda", "MMAC", 0.0d}
+            new Object[] {"OneMethodCreatesLambda", "MMAC", 0.0d},
+            new Object[] {"Bar", "NHD", 0.3333d},
+            new Object[] {"Foo", "NHD", 1.0d},
+            new Object[] {"MethodsWithDiffParamTypes", "NHD", 0.6667d}
         );
     }
 
