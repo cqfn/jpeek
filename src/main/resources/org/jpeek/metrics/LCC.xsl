@@ -60,9 +60,9 @@ SOFTWARE.
     </xsl:variable>
     <!--
     @todo #9: `indirectly-related-pairs` are pairs of methods, which are through other directly connected methods.
-    https://pdfs.semanticscholar.org/672e/de6e3e600eafd84036a0b983b88e481ac626.pdf
-    Right now it is stubbed because information about method-method communication is yet to be provided in skeleton.xml
-    (issue #106).
+     https://pdfs.semanticscholar.org/672e/de6e3e600eafd84036a0b983b88e481ac626.pdf
+     Right now it is stubbed because information about method-method communication is yet to be provided in skeleton.xml
+     (issue #106).
     -->
     <!--<xsl:variable name="indirectly-related-pairs">
     </xsl:variable>

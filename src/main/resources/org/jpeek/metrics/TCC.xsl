@@ -46,8 +46,8 @@ SOFTWARE.
       <xsl:for-each select="$methods">
         <!--
         @todo #9: `directly-related-pairs` currently don't take into account cases when two methods are
-        directly related through calling the third one. This could be possible to take into account only when
-        skeleton will be able to provide method-method relation information (issue #106)
+         directly related through calling the third one. This could be possible to take into account only when
+         skeleton will be able to provide method-method relation information (issue #106)
         -->
         <xsl:variable name="i" select="position()"/>
         <xsl:variable name="left" select="."/>
