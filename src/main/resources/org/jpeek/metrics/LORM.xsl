@@ -86,9 +86,7 @@ SOFTWARE.
       </xsl:choose>
     </xsl:variable>
     <xsl:copy>
-      <xsl:attribute name="value">
-          <xsl:value-of select="$LORM"/>
-      </xsl:attribute>
+      <xsl:attribute name="value" select="$LORM"/>
       <xsl:apply-templates select="@*"/>
       <vars>
         <var id="R">
