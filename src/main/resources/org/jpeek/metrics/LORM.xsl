@@ -37,7 +37,7 @@ SOFTWARE.
           belong to the method to or from the set of concepts
           belonging to another method in the class.
           N = total number of member functions (methods)
-          RN - Total number of possible relations. RN = N * (N − 1) / 2
+          RN - Total number of possible relations. RN = N * (N - 1) / 2
         ]]></xsl:text>
       </description>
       <xsl:apply-templates select="node()"/>
