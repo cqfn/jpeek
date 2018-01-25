@@ -29,7 +29,8 @@ SOFTWARE.
       <xsl:apply-templates select="@*"/>
       <title>LCOM</title>
       <description>
-        <xsl:text>LORM = (R / RN) where,
+        <xsl:text><![CDATA[
+          LORM = (R / RN) where,
           R = number of pairs of methods in the class for which
           one method contains conceptual relations forming
           external links out of the set of concepts that
@@ -37,7 +38,7 @@ SOFTWARE.
           belonging to another method in the class.
           N = total number of member functions (methods)
           RN - Total number of possible relations. RN = N * (N − 1) / 2
-        </xsl:text>
+        ]]></xsl:text>
       </description>
       <xsl:apply-templates select="node()"/>
     </metric>
@@ -95,9 +96,6 @@ SOFTWARE.
         </var>
         <var id="RN">
           <xsl:value-of select="$RN"/>
-        </var>
-        <var id="LORM">
-          <xsl:value-of select="$LORM"/>
         </var>
       </vars>
     </xsl:copy>
