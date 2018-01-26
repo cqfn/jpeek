@@ -22,19 +22,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/xsl/transform" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
   <xsl:param name="ctors" select="0"/>
   <xsl:template match="skeleton">
     <metric>
       <xsl:apply-templates select="@*"/>
       <title>LCOM5</title>
       <description>
-        <xsl:text>'LCOM5' is a 1996 revision by B. Henderson-Sellers, 
+        <xsl:text>'LCOM5' is a 1996 revision by B. Henderson-Sellers,
           L. L. Constantine, and I. M. Graham, of the initial LCOM metric
           proposed by MIT researchers.
           The values for LCOM5 are defined in the real interval [0, 1] where
           '0' describes "perfect cohesion" and '1' describes "no cohesion".
-          Two problems with the original definition are addressed: 
+          Two problems with the original definition are addressed:
             a) LCOM5 has the ability to give values across the full range and
                no specific value has a higher probability of attainment than
                any other (the original LCOM has a preference towards the
@@ -47,49 +47,35 @@ SOFTWARE.
     </metric>
   </xsl:template>
   <xsl:template match="class">
-    <xsl:variable name="methods" select="methods/method[($ctors=0 and @ctor='false') or $ctors=1]"/>
-    <xsl:variable name="pairs">
-      <xsl:for-each select="$methods">
-        <xsl:variable name="i" select="position()"/>
-        <xsl:variable name="left" select="."/>
-        <xsl:variable name="left_ops" select="$left/ops/op[@code='get' or @code='put']"/>
-        <xsl:for-each select="$methods">
-          <xsl:if test="position() &gt; $i">
-            <xsl:variable name="right" select="."/>
-            <xsl:variable name="right_ops" select="$right/ops/op[@code='get' or @code='put']"/>
-            <pair>
-              <xsl:value-of select="count($left_ops[.=$right_ops])"/>
-            </pair>
-          </xsl:if>
-        </xsl:for-each>
+    <xsl:variable name="methods" select="methods/method[($ctors=1 and @ctors='true') or @ctor='false']"/>
+    <xsl:variable name="methods_count" select="count($methods)"/>
+    <xsl:variable name="attributes" select="attributes/attribute/text()"/>
+    <xsl:variable name="attributes_use">
+      <xsl:for-each select="$attributes">
+        <xsl:variable name="attr" select="."/>
+        <count>
+          <xsl:value-of select="count($methods/ops/op[text() = $attr])"/>
+        </count>
       </xsl:for-each>
     </xsl:variable>
-    <xsl:variable name="empty" select="count($pairs/pair[.=0])"/>
-    <xsl:variable name="nonempty" select="count($pairs/pair[.!=0])"/>
     <xsl:copy>
       <xsl:attribute name="value">
         <xsl:choose>
-          <xsl:when test="$nonempty &gt; $empty">
-            <xsl:text>0</xsl:text>
+          <xsl:when test="count($attributes) = 0 or $methods_count = 1">
+            <xsl:text>NaN</xsl:text>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:value-of select="$empty - $nonempty"/>
+            <xsl:value-of select="(((1 div count($attributes)) * sum($attributes_use/count)) - $methods_count) div (1-$methods_count)"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:attribute>
       <xsl:apply-templates select="@*"/>
       <vars>
         <var id="methods">
-          <xsl:value-of select="count($methods)"/>
+          <xsl:value-of select="$methods_count"/>
         </var>
-        <var id="pairs">
-          <xsl:value-of select="count($pairs/pair)"/>
-        </var>
-        <var id="empty">
-          <xsl:value-of select="$empty"/>
-        </var>
-        <var id="nonempty">
-          <xsl:value-of select="$nonempty"/>
+        <var id="attributes">
+          <xsl:value-of select="count($attributes)"/>
         </var>
       </vars>
     </xsl:copy>
