@@ -65,7 +65,13 @@ SOFTWARE.
     @todo #15:30min `conceptual-relations` are pairs of methods in the class
      for which one method contains conceptual relations forming external
      links out of the set of concepts that belong to the method to or from
-     the set of concepts belonging to another method in the class.
+     the set of concepts belonging to another method in the class
+     (quoted from here: https://github.com/yegor256/jpeek/blob/master/papers/izadkhah17.pdf).
+     Right now it is stubbed because information about the method's conceptual
+     relations are not available anywhere in the project. Collect
+     more information on what these conceptual relations are in LORM, ensure that
+     JPeek core collects information on such relations and unstub the lines commented
+     below.
     -->
     <!--
      <xsl:variable name="possible_relations"/>
