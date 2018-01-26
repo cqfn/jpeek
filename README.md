@@ -99,6 +99,58 @@ _Coupling and cohesion (towards a valid metrics suite for object-oriented analys
 Object Oriented Systems 3, 1996,
 [PDF](http://www.ibrarian.net/navon/paper/Coupling_and_cohesion__towards_a_valid_metrics_su.pdf?paperid=1090060).
 
+## How it works?
+
+First, `Skeleton` parses Java bytecode using Javaassit and ASM, in order to produce
+`skeleton.xml`. This XML document contains information about each class, which
+is necessary for the metrics calculations. For example, this simple Java
+class:
+
+```java
+class Book {
+  private int id;
+  int getId() {
+    return this.id;
+  }
+}
+```
+
+Will look like this in the `skeleton.xml`:
+
+```xml
+<class id='Book'>
+  <attributes>
+   <attribute public='false' static='false' type='I'>id</attribute>
+  </attributes>
+  <methods>
+    <method abstract='false' ctor='true' desc='()I' name='getId' public='true' static='false'>
+      <return>I</return>
+      <args/>
+    </method>
+  </methods>
+</class>
+```
+
+Then, we have a collection of XSL stylesheets, one per each metric. For example,
+`LCOM.xsl` transforms `skeleton.xml` into `LCOM.xml`, which may look like this:
+
+```xml
+<metric>
+  <title>MMAC</title>
+  <app>
+    <class id='InstantiatorProvider' value='1'/>
+    <class id='InstantationException' value='0'/>
+    <class id='AnswersValidator' value='0.0583'/>
+    <class id='ClassNode' value='0.25'/>
+    [... skipped ...]
+  </app>
+</metric>
+```
+
+Thus, all calculations happen inside the XSLT files. We decided to implement
+it this way after a less successful attempt to do it all in Java. It seems
+that XSL is much more suitable for manipulations with data than Java.
+
 ## How to contribute?
 
 Read [`CONTRIBUTING.md`](https://github.com/yegor256/jpeek/blob/master/CONTRIBUTING.md)
