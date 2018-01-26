@@ -31,8 +31,12 @@ SOFTWARE.
       <description>
         <xsl:text>The NHD (Normalized Hamming Distance) class cohesion metric
           is based on the "Hamming distance" from information theory. Here,
-          we measure the degree to which the types of the parameters of
-          the methods of a class coincide.</xsl:text>
+          we measure the similarity in all methods of a class in terms of
+          the types of their arguments. A class in which all methods accept
+          the same set of types of parameters is said to be in "perfect
+          parameter agreement" (NHD score "1"), whereas a class in which all
+          methods accept unique parameter types not shared by others has
+          no parameter agreement (NHD score "0").</xsl:text>
       </description>
       <xsl:apply-templates select="node()"/>
     </metric>
@@ -54,11 +58,11 @@ SOFTWARE.
     <xsl:copy>
       <xsl:attribute name="value">
         <xsl:choose>
-          <xsl:when test="$types_count = 0 or $methods_count = 0">
-            <xsl:text>0</xsl:text>
+          <xsl:when test="$methods_count = 0 or $methods_count = 1">
+            <xsl:text>NaN</xsl:text>
           </xsl:when>
-          <xsl:when test="$methods_count = 1">
-            <xsl:text>1</xsl:text>
+          <xsl:when test="$types_count = 0">
+            <xsl:text>NaN</xsl:text>
           </xsl:when>
           <xsl:otherwise>
             <xsl:variable name="coefficient" select="2 div ($types_count * $methods_count * ($methods_count - 1))"/>
