@@ -68,9 +68,8 @@ SOFTWARE.
      the set of concepts belonging to another method in the class
      (quoted from here: https://github.com/yegor256/jpeek/blob/master/papers/izadkhah17.pdf).
      Right now it is stubbed because information about the method's conceptual
-     relations are not available anywhere in the project. Collect
-     more information on what these conceptual relations are in LORM, ensure that
-     JPeek core collects information on such relations and unstub the lines commented
+     relations are not available anywhere in the project. Ensure that
+     JPeek core collects information on such relations (#110) and unstub the lines commented
      below.
     -->
     <!--
