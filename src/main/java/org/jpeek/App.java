@@ -65,6 +65,11 @@ import org.xembly.Xembler;
  *  Once they are resolved, cover the metric with autotests and add it
  *  to reports list.
  *  (details on how to test the metrics are to be negotiated here - #107)
+ *
+ * @todo #15:30min LORM metric has impediments (see puzzles in LORM.xml).
+ *  Once they are resolved, cover the metric with autotests and add it
+ *  to reports list.
+ *  (details on how to test the metrics are to be negotiated here - #107)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class App {
