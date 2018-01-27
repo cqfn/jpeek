@@ -50,22 +50,23 @@ SOFTWARE.
     <xsl:variable name="methods" select="methods/method[($ctors=1 and @ctors='true') or @ctor='false']"/>
     <xsl:variable name="methods_count" select="count($methods)"/>
     <xsl:variable name="attributes" select="attributes/attribute/text()"/>
+    <xsl:variable name="attributes_count" select="count($attributes)"/>
     <xsl:variable name="attributes_use">
       <xsl:for-each select="$attributes">
         <xsl:variable name="attr" select="."/>
         <count>
-          <xsl:value-of select="count($methods/ops/op[text() = $attr])"/>
+          <xsl:value-of select="count($methods[ops/op = $attr])"/>
         </count>
       </xsl:for-each>
     </xsl:variable>
     <xsl:copy>
       <xsl:attribute name="value">
         <xsl:choose>
-          <xsl:when test="count($attributes) = 0 or $methods_count = 1">
+          <xsl:when test="$attributes_count = 0 or $methods_count = 1">
             <xsl:text>NaN</xsl:text>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:value-of select="(((1 div count($attributes)) * sum($attributes_use/count)) - $methods_count) div (1-$methods_count)"/>
+            <xsl:value-of select="(((1 div $attributes_count) * sum($attributes_use/count)) - $methods_count) div (1 - $methods_count)"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:attribute>
@@ -75,7 +76,7 @@ SOFTWARE.
           <xsl:value-of select="$methods_count"/>
         </var>
         <var id="attributes">
-          <xsl:value-of select="count($attributes)"/>
+          <xsl:value-of select="$attributes_count"/>
         </var>
       </vars>
     </xsl:copy>
