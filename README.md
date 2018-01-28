@@ -161,6 +161,7 @@ Read [`CONTRIBUTING.md`](https://github.com/yegor256/jpeek/blob/master/CONTRIBUT
   - [@alayor](https://github.com/alayor) as Alonso A. Ortega ([Blog](http://www.alayor.com))
   - [@memoyil](https://github.com/memoyil) as Mehmet Yildirim
   - [@sergey-karazhenets](https://github.com/sergey-karazhenets) as Sergey Karazhenets
+  - [@llorllale](https://github.com/llorllale) as George Aristy
 
 Don't hesitate to add your name to this list in your next pull request.
 
