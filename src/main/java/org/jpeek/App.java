@@ -55,6 +55,21 @@ import org.xembly.Xembler;
  * @since 0.1
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @checkstyle ClassFanOutComplexityCheck (500 lines)
+ *
+ * @todo #9:30min TCC metric has impediments (see puzzles in TCC.xml).
+ *  Once they are resolved, cover the metric with autotests and add it
+ *  to reports list.
+ *  (details on how to test the metrics are to be negotiated here - #107)
+ *
+ * @todo #9:30min LCC metric has impediments (see puzzles in LCC.xml).
+ *  Once they are resolved, cover the metric with autotests and add it
+ *  to reports list.
+ *  (details on how to test the metrics are to be negotiated here - #107)
+ *
+ * @todo #15:30min LORM metric has impediments (see puzzles in LORM.xml).
+ *  Once they are resolved, cover the metric with autotests and add it
+ *  to reports list.
+ *  (details on how to test the metrics are to be negotiated here - #107)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class App {
