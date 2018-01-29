@@ -56,6 +56,16 @@ import org.xembly.Xembler;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @checkstyle ClassFanOutComplexityCheck (500 lines)
  *
+ * @todo #9:30min TCC metric has impediments (see puzzles in TCC.xml).
+ *  Once they are resolved, cover the metric with autotests and add it
+ *  to reports list.
+ *  (details on how to test the metrics are to be negotiated here - #107)
+ *
+ * @todo #9:30min LCC metric has impediments (see puzzles in LCC.xml).
+ *  Once they are resolved, cover the metric with autotests and add it
+ *  to reports list.
+ *  (details on how to test the metrics are to be negotiated here - #107)
+ *
  * @todo #15:30min LORM metric has impediments (see puzzles in LORM.xml).
  *  Once they are resolved, cover the metric with autotests and add it
  *  to reports list.
@@ -121,7 +131,8 @@ public final class App {
         final Iterable<Report> reports = new ListOf<>(
             new Report(skeleton, "LCOM", this.params, 10.0d, -5.0d),
             new Report(skeleton, "MMAC", this.params, 0.5d, 0.25d),
-            new Report(skeleton, "LCOM5", this.params, 0.5d, 0.1d)
+            new Report(skeleton, "LCOM5", this.params, 0.5d, 0.1d),
+            new Report(skeleton, "NHD")
         );
         new IoCheckedScalar<>(
             new AndInThreads(

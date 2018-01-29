@@ -41,6 +41,12 @@ import org.junit.runners.Parameterized;
 // @todo #18:30min Impediment: test for LCOM5 with "Bar" is not working
 //  because the generated skeleton.xml is not including all attributes
 //  being used by a method. See #114.
+// @todo #93:30min NHD needs to be tested against the following after #103 is
+//  fixed: NoMethods, OneVoidMethodWithoutParams, WithoutAttributes,
+//  OneMethodCreatesLambda. NHD score for all these is "NaN".
+// @todo #93:30min NHD calculation needs to take into account the method's
+//  visibility, which should be configurable and implemented after #101 is
+//  fixed.
 /**
  * Tests for all metrics.
  * @author Yegor Bugayenko (yegor256@gmail.com)
@@ -88,7 +94,12 @@ public final class MetricsTest {
             new Object[] {"Foo", "LCOM5", 0.0d},
             new Object[] {"MethodsWithDiffParamTypes", "LCOM5", 0.6d},
             new Object[] {"OverloadMethods", "LCOM5", 0.0d},
-            new Object[] {"TwoCommonAttributes", "LCOM5", 1.0d}
+            new Object[] {"TwoCommonAttributes", "LCOM5", 1.0d},
+            new Object[] {"Bar", "NHD", 0.3333d},
+            new Object[] {"Foo", "NHD", 1.0d},
+            new Object[] {"MethodsWithDiffParamTypes", "NHD", 0.6667d},
+            new Object[] {"OverloadMethods", "NHD", 0.6111d},
+            new Object[] {"TwoCommonAttributes", "NHD", 0.3333d}
         );
     }
 
