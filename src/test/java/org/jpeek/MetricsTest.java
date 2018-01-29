@@ -37,8 +37,8 @@ import org.junit.runners.Parameterized;
 
 // @todo #18:30min Impediment: #103 must be fixed before LCOM5 is tested
 //  against: NoMethods, OneVoidMethodWithoutParams, WithoutAttributes,
-//  OneMethodCreatesLambda
-// @todo: #18:30min Impediment: test for LCOM5 with "Bar" is not working
+//  OneMethodCreatesLambda. The LCOM5 value for these will be "NaN".
+// @todo #18:30min Impediment: test for LCOM5 with "Bar" is not working
 //  because the generated skeleton.xml is not including all attributes
 //  being used by a method. See #114.
 /**
