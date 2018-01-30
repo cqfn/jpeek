@@ -99,6 +99,13 @@ _Coupling and cohesion (towards a valid metrics suite for object-oriented analys
 Object Oriented Systems 3, 1996,
 [PDF](http://www.ibrarian.net/navon/paper/Coupling_and_cohesion__towards_a_valid_metrics_su.pdf?paperid=1090060).
 
+[`fernandez06`]
+A Sensitive Metric of Class Cohesion (**SCOM**).<br/>
+Luis Fernández et al.,<br/>
+_[A] new metric [...] yielding meaningful values [...] more sensitive than those previously reported_,<br/>
+International Journal "Information Theories & Applications" Vol.13, 2006,
+[PDF](http://citeseerx.ist.psu.edu/viewdoc/download;jsessionid=55D08270F99333F15E0937AF137F4468?doi=10.1.1.84.1506&rep=rep1&type=pdf).
+
 ## How it works?
 
 First, `Skeleton` parses Java bytecode using Javaassit and ASM, in order to produce
