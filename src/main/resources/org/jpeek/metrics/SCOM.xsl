@@ -54,8 +54,7 @@ SOFTWARE.
     </metric>
   </xsl:template>
   <xsl:template match="class">
-    <xsl:variable name="methods"
-                  select="methods/method[($ctors=1 and @ctors='true') or @ctor='false']"/>
+    <xsl:variable name="methods" select="methods/method[($ctors=1 and @ctors='true') or @ctor='false']"/>
     <xsl:variable name="methods_count" select="count($methods)"/>
     <xsl:variable name="attributes" select="attributes/attribute/text()"/>
     <xsl:variable name="attributes_count" select="count($attributes)"/>
@@ -69,7 +68,7 @@ SOFTWARE.
               <xsl:for-each select="$attributes">
                 <xsl:variable name="attr" select="."/>
                 <match>
-                  <xsl:value-of select="count($method/ops[op = $attr]) > 0 and count($other/ops[op = $attr]) > 0"/>
+                  <xsl:value-of select="count($method/ops[op = $attr]) &gt; 0 and count($other/ops[op = $attr]) &gt; 0"/>
                 </match>
               </xsl:for-each>
             </xsl:variable>
@@ -78,7 +77,7 @@ SOFTWARE.
                 <xsl:when test="count($intersections/match[text() = 'true']) = 0">
                   <xsl:text>0</xsl:text>
                 </xsl:when>
-                <xsl:when test="min((count($method/ops/op), count($other/ops/op))) > 0">
+                <xsl:when test="min((count($method/ops/op), count($other/ops/op))) &gt; 0">
                   <xsl:value-of select="count($intersections/match[text() = 'true']) div min((count(distinct-values($method/ops/op)), count(distinct-values($other/ops/op))))"/>
                 </xsl:when>
                 <xsl:otherwise>
@@ -88,7 +87,7 @@ SOFTWARE.
             </intensity>
             <weight>
               <xsl:choose>
-                <xsl:when test="$attributes_count > 0">
+                <xsl:when test="$attributes_count &gt; 0">
                   <xsl:value-of select="count(distinct-values($method/ops/op/text() | $other/ops/op/text())) div $attributes_count"/>
                 </xsl:when>
                 <xsl:otherwise>
