@@ -54,6 +54,14 @@ import org.cactoos.text.TextOf;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class Report {
+    /**
+     * Default mean.
+     */
+    private static final double DEFAULT_MEAN = 0.5d;
+    /**
+     * Default sigma.
+     */
+    private static final double DEFAULT_SIGMA = 0.1d;
 
     /**
      * XSD schema.
@@ -95,8 +103,29 @@ final class Report {
      * @param name Name of the metric
      */
     Report(final XML xml, final String name) {
-        // @checkstyle MagicNumberCheck (1 line)
-        this(xml, name, new HashMap<>(0), 0.5d, 0.1d);
+        this(
+            xml,
+            name,
+            new HashMap<>(0),
+            Report.DEFAULT_MEAN,
+            Report.DEFAULT_SIGMA
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param xml Skeleton
+     * @param name Name of metric
+     * @param args Params for XSL
+     */
+    Report(final XML xml, final String name, final Map<String, Object> args) {
+        this(
+            xml,
+            name,
+            args,
+            Report.DEFAULT_MEAN,
+            Report.DEFAULT_SIGMA
+        );
     }
 
     /**
