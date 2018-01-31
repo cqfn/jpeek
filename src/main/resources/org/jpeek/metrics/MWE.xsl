@@ -47,7 +47,7 @@ SOFTWARE.
     @todo #17:30min The current implementation of MWE metric expects information
      about LDA topics and their probability in skeleton.xml by xpath `class/methods/method/topics/topic`.
      `topic` items must have two mandatory attributes - `@name` (topic unique identifier) and `@p` (probability of the
-     topic's occurence in the method). Due to #129, this part of information is missing.
+     topic's occurence in the method). Currently this part of information is missing in skeleton.xml.
      Ensure that the core part of JPeek provides the information about topics and their probability
      and update the metric in accordance with the provided XML structure.
     -->
@@ -75,7 +75,7 @@ SOFTWARE.
       @todo #17:30min Di value is supposed to be calculated by formula:
        Di = sum( -Qdi * log(Qdi) ) / log(n).
        See the MWE metric description for details.
-       However, logarithm function is currently not available in XSL (issue #128), that's why it is stubbed.
+       However, logarithm function is currently not available in XSL, that's why it is stubbed.
        Ensure that there is a way to define logarithm in metrics XSL and unstub Di calculation.
       -->
       <xsl:variable name="cur" select="."/>
