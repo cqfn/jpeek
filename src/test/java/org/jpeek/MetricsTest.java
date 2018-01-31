@@ -51,9 +51,9 @@ import org.junit.runners.Parameterized;
 //  be tested in MetricsTest when the resulting value is "NaN". Affected
 //  tests are: NoMethods, OneVoidMethodWithoutParams, WithoutAttributes,
 //  OneMethodCreatesLambda.
-// @todo #68:30min SCOM has an impediment on issue #114: the skeleton
-//  for "Bar" is incorrectly excluding some attributes from some methods
-//  that are using them.
+// @todo #68:30min SCOM has an impediment on issue #114: cannot currently
+//  be tested against "Bar" because the skeleton is incorrectly excluding
+//  some attributes from some methods that are using them.
 /**
  * Tests for all metrics.
  * @author Yegor Bugayenko (yegor256@gmail.com)
