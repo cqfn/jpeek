@@ -104,11 +104,8 @@ final class Report {
      */
     Report(final XML xml, final String name) {
         this(
-            xml,
-            name,
-            new HashMap<>(0),
-            Report.DEFAULT_MEAN,
-            Report.DEFAULT_SIGMA
+            xml, name, new HashMap<>(0),
+            Report.DEFAULT_MEAN, Report.DEFAULT_SIGMA
         );
     }
 
@@ -120,11 +117,8 @@ final class Report {
      */
     Report(final XML xml, final String name, final Map<String, Object> args) {
         this(
-            xml,
-            name,
-            args,
-            Report.DEFAULT_MEAN,
-            Report.DEFAULT_SIGMA
+            xml, name, args,
+            Report.DEFAULT_MEAN, Report.DEFAULT_SIGMA
         );
     }
 
