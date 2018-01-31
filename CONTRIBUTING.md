@@ -1,11 +1,17 @@
 # Contributing
 
+Install Java 8,
+[Maven](https://maven.apache.org/) and
+[xcop](http://www.yegor256.com/2017/08/29/xcop.html).
+
 Fork and clone the repository:
+
 ```
 git clone git@github.com:your-username/jpeek.git
 ```
 
 Make changes and run Maven build:
+
 ```
 mvn clean install -Pqulice
 ```
