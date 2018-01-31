@@ -47,9 +47,12 @@ import org.junit.runners.Parameterized;
 // @todo #93:30min NHD calculation needs to take into account the method's
 //  visibility, which should be configurable and implemented after #101 is
 //  fixed.
-// @todo #92:30min Impediment: test for LCOM2 with "Bar" is not working
+// @todo #92:30min Impediment: test for LCOM2/3 with "Bar" is not working
 //  because the generated skeleton.xml is not including all attributes
 //  being used by a method. See #114.
+// @todo #92:30min Impediment: test for LCOM3 with "OneMethodCreatesLambda"
+//  does not work because the skeleton.xml creates a <method> for the
+//  lambda with no way to discriminate it from regular methods.
 /**
  * Tests for all metrics.
  * @author Yegor Bugayenko (yegor256@gmail.com)
@@ -110,7 +113,14 @@ public final class MetricsTest {
             new Object[] {"OverloadMethods", "LCOM2", 0.0d},
             new Object[] {"TwoCommonAttributes", "LCOM2", 0.6667d},
             new Object[] {"WithoutAttributes", "LCOM2", 0.0d},
-            new Object[] {"OneMethodCreatesLambda", "LCOM2", 1.0d}
+            new Object[] {"OneMethodCreatesLambda", "LCOM2", 1.0d},
+            new Object[] {"Foo", "LCOM3", 0.0d},
+            new Object[] {"MethodsWithDiffParamTypes", "LCOM3", 0.6d},
+            new Object[] {"NoMethods", "LCOM3", 0.0d},
+            new Object[] {"OneVoidMethodWithoutParams", "LCOM3", 0.0d},
+            new Object[] {"OverloadMethods", "LCOM3", 0.0d},
+            new Object[] {"TwoCommonAttributes", "LCOM3", 1.0d},
+            new Object[] {"WithoutAttributes", "LCOM3", 0.0d}
         );
     }
 
