@@ -99,6 +99,13 @@ _Coupling and cohesion (towards a valid metrics suite for object-oriented analys
 Object Oriented Systems 3, 1996,
 [PDF](http://www.ibrarian.net/navon/paper/Coupling_and_cohesion__towards_a_valid_metrics_su.pdf?paperid=1090060).
 
+[`wasiq01`]
+Class Connection Metric (**CCM**).<br/>
+M. Wasiq<br/>
+_Measuring Class Cohesion in Object-Oriented Systems_,<br/>
+Master Thesis at the King Fahd University of Petroleum & Minerals, 2001,
+[PDF](http://eprints.kfupm.edu.sa/10437/1/10437.pdf).
+
 ## How it works?
 
 First, `Skeleton` parses Java bytecode using Javaassit and ASM, in order to produce

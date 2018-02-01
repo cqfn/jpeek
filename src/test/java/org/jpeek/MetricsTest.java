@@ -99,7 +99,8 @@ public final class MetricsTest {
             new Object[] {"Foo", "NHD", 1.0d},
             new Object[] {"MethodsWithDiffParamTypes", "NHD", 0.6667d},
             new Object[] {"OverloadMethods", "NHD", 0.6111d},
-            new Object[] {"TwoCommonAttributes", "NHD", 0.3333d}
+            new Object[] {"TwoCommonAttributes", "NHD", 0.3333d},
+            new Object[] {"MethodsWithDiffParamTypes", "CCM", 0.0667d}
         );
     }
 
