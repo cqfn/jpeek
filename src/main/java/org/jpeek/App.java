@@ -66,6 +66,11 @@ import org.xembly.Xembler;
  *  to reports list.
  *  (details on how to test the metrics are to be negotiated here - #107)
  *
+ * @todo #17:30min MWE metric has impediments (see puzzles in MWE.xml).
+ *  Once they are resolved, cover the metric with autotests and add it
+ *  to reports list.
+ *  (details on how to test the metrics are to be negotiated here - #107)
+ *
  * @todo #15:30min LORM metric has impediments (see puzzles in LORM.xml).
  *  Once they are resolved, cover the metric with autotests and add it
  *  to reports list.
