@@ -47,6 +47,13 @@ import org.junit.runners.Parameterized;
 // @todo #93:30min NHD calculation needs to take into account the method's
 //  visibility, which should be configurable and implemented after #101 is
 //  fixed.
+// @todo #68:30min SCOM has an impediment on issue #103: cannot currently
+//  be tested in MetricsTest when the resulting value is "NaN". Affected
+//  tests are: NoMethods, OneVoidMethodWithoutParams, WithoutAttributes,
+//  OneMethodCreatesLambda.
+// @todo #68:30min SCOM has an impediment on issue #114: cannot currently
+//  be tested against "Bar" because the skeleton is incorrectly excluding
+//  some attributes from some methods that are using them.
 // @todo #92:30min Impediment: test for LCOM2/3 with "Bar" is not working
 //  because the generated skeleton.xml is not including all attributes
 //  being used by a method. See #114.
@@ -107,6 +114,10 @@ public final class MetricsTest {
             new Object[] {"OverloadMethods", "NHD", 0.6111d},
             new Object[] {"TwoCommonAttributes", "NHD", 0.3333d},
             new Object[] {"MethodsWithDiffParamTypes", "CCM", 0.0667d},
+            new Object[] {"Foo", "SCOM", 1.0d},
+            new Object[] {"MethodsWithDiffParamTypes", "SCOM", 0.2d},
+            new Object[] {"OverloadMethods", "SCOM", 1.0d},
+            new Object[] {"TwoCommonAttributes", "SCOM", 0.0d},
             new Object[] {"Foo", "LCOM2", 0.0d},
             new Object[] {"MethodsWithDiffParamTypes", "LCOM2", 0.5d},
             new Object[] {"NoMethods", "LCOM2", 0.0d},

@@ -106,6 +106,13 @@ _Measuring Class Cohesion in Object-Oriented Systems_,<br/>
 Master Thesis at the King Fahd University of Petroleum & Minerals, 2001,
 [PDF](http://eprints.kfupm.edu.sa/10437/1/10437.pdf).
 
+[`fernandez06`]
+A Sensitive Metric of Class Cohesion (**SCOM**).<br/>
+Luis Fernández et al.,<br/>
+_[A] new metric [...] yielding meaningful values [...] more sensitive than those previously reported_,<br/>
+International Journal "Information Theories & Applications" Vol.13, 2006,
+[PDF](http://citeseerx.ist.psu.edu/viewdoc/download;jsessionid=55D08270F99333F15E0937AF137F4468?doi=10.1.1.84.1506&rep=rep1&type=pdf).
+
 ## How it works?
 
 First, `Skeleton` parses Java bytecode using Javaassit and ASM, in order to produce

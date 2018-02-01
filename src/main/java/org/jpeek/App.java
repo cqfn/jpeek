@@ -66,6 +66,11 @@ import org.xembly.Xembler;
  *  to reports list.
  *  (details on how to test the metrics are to be negotiated here - #107)
  *
+ * @todo #17:30min MWE metric has impediments (see puzzles in MWE.xml).
+ *  Once they are resolved, cover the metric with autotests and add it
+ *  to reports list.
+ *  (details on how to test the metrics are to be negotiated here - #107)
+ *
  * @todo #15:30min LORM metric has impediments (see puzzles in LORM.xml).
  *  Once they are resolved, cover the metric with autotests and add it
  *  to reports list.
@@ -137,7 +142,8 @@ public final class App {
             new Report(skeleton, "LCOM5", this.params),
             new Report(skeleton, "NHD"),
             new Report(skeleton, "LCOM2", this.params),
-            new Report(skeleton, "LCOM3", this.params)
+            new Report(skeleton, "LCOM3", this.params),
+            new Report(skeleton, "SCOM", this.params)
         );
         new IoCheckedScalar<>(
             new AndInThreads(
