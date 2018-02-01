@@ -131,9 +131,11 @@ public final class App {
         final Iterable<Report> reports = new ListOf<>(
             new Report(skeleton, "LCOM", this.params, 10.0d, -5.0d),
             new Report(skeleton, "MMAC", this.params, 0.5d, 0.25d),
-            new Report(skeleton, "LCOM5", this.params, 0.5d, 0.1d),
+            new Report(skeleton, "LCOM5", this.params),
             new Report(skeleton, "NHD"),
-            new Report(skeleton, "SCOM", this.params, 0.5d, 0.1d)
+            new Report(skeleton, "LCOM2", this.params),
+            new Report(skeleton, "LCOM3", this.params),
+            new Report(skeleton, "SCOM", this.params)
         );
         new IoCheckedScalar<>(
             new AndInThreads(
