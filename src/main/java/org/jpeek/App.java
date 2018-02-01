@@ -114,6 +114,11 @@ public final class App {
     /**
      * Analyze sources.
      * @throws IOException If fails
+     * 
+     * @todo #66:15min Add the CCM metric report here when all the puzzles
+     *  about it are resolved, most importantly the missing information
+     *  in skeleton.xml that is required and consequently adding the 
+     *  corresponding xpath condition to the CCM stylesheet.
      */
     @SuppressWarnings("PMD.ExcessiveMethodLength")
     public void analyze() throws IOException {
@@ -132,8 +137,7 @@ public final class App {
             new Report(skeleton, "LCOM", this.params, 10.0d, -5.0d),
             new Report(skeleton, "MMAC", this.params, 0.5d, 0.25d),
             new Report(skeleton, "LCOM5", this.params, 0.5d, 0.1d),
-            new Report(skeleton, "NHD"),
-            new Report(skeleton, "CCM", this.params, 0.5d, 0.1d)
+            new Report(skeleton, "NHD")
         );
         new IoCheckedScalar<>(
             new AndInThreads(
