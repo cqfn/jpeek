@@ -133,7 +133,6 @@ public final class App {
             new Report(skeleton, "MMAC", this.params, 0.5d, 0.25d),
             new Report(skeleton, "LCOM5", this.params, 0.5d, 0.1d),
             new Report(skeleton, "NHD"),
-            new Report(skeleton, "LCOM2", this.params, 0.5d, 0.1d),
             new Report(skeleton, "CCM", this.params, 0.5d, 0.1d)
         );
         new IoCheckedScalar<>(
