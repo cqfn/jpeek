@@ -64,6 +64,15 @@ SOFTWARE.
                       </xs:sequence>
                     </xs:complexType>
                   </xs:element>
+                  <!--
+                   @todo #106:30min Refactor <ops>.
+                    This whole structure needs refactoring. First we need to
+                    somehow include <method_calls> inside <ops> and without
+                    breaking stuff. This would likely require using xs:all
+                    instead of xs:sequence and adding a new parent element for
+                    all <op>. Keep in mind that operations on fields and methods
+                    need to be distinguished somehow.
+                  -->
                   <xs:element name="ops" minOccurs="0" maxOccurs="1">
                     <xs:complexType>
                       <xs:sequence>
@@ -74,6 +83,18 @@ SOFTWARE.
                                 <xs:attribute name="code" use="required" type="xs:string"/>
                               </xs:extension>
                             </xs:simpleContent>
+                          </xs:complexType>
+                        </xs:element>
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="method_calls" minOccurs="0">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="method" minOccurs="0" maxOccurs="unbounded">
+                          <xs:complexType>
+                            <xs:attribute name="owner" type="xs:string" use="required"/>
+                            <xs:attribute name="name" type="xs:string" use="required"/>
                           </xs:complexType>
                         </xs:element>
                       </xs:sequence>

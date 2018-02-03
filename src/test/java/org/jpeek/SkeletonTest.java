@@ -35,6 +35,7 @@ import org.junit.Test;
  * @since 0.23
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class SkeletonTest {
 
     @Test
@@ -71,6 +72,26 @@ public final class SkeletonTest {
                 "//method[@name='methodSix' and return='Ljava/util/Date']",
                 "//method[@name='methodTwo' and return='V']",
                 "//method[@name='methodOne']/args/arg[@type='Ljava/lang/Object']"
+            )
+        );
+    }
+
+    @Test
+    public void findsMethodCalls() throws IOException {
+        MatcherAssert.assertThat(
+            XhtmlMatchers.xhtml(
+                new Skeleton(
+                    new FakeBase("Bar", "Foo")
+                ).xml().toString()
+            ),
+            XhtmlMatchers.hasXPaths(
+                // @checkstyle LineLength (10 lines)
+                "//class[@id='Bar']/methods/method[@name='<init>' and @ctor='true']/method_calls/method[@name='<init>' and @owner='java.lang.Object']",
+                "//class[@id='Bar']/methods/method[@name='getKey']/method_calls/method[@name='length' and @owner='java.lang.String']",
+                "//class[@id='Bar']/methods/method[@name='getValue']/method_calls/method[@name='length' and @owner='java.lang.String']",
+                "//class[@id='Bar']/methods/method[@name='setValue']/method_calls/method[@name='<init>' and @owner='java.lang.UnsupportedOperationException']",
+                "//class[@id='Foo']/methods/method[@name='methodOne']/method_calls/method[@name='methodTwo' and @owner='Foo']",
+                "//class[@id='Foo']/methods/method[@name='methodTwo']/method_calls/method[@name='methodOne' and @owner='Foo']"
             )
         );
     }
