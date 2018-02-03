@@ -31,7 +31,6 @@ import com.jcabi.xml.XSDDocument;
 import com.jcabi.xml.XSL;
 import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
@@ -125,14 +124,6 @@ public final class App {
      */
     @SuppressWarnings("PMD.ExcessiveMethodLength")
     public void analyze() throws IOException {
-        if (Files.exists(this.output)) {
-            throw new IllegalStateException(
-                String.format(
-                    "Directory/file already exists: %s",
-                    this.output.normalize().toAbsolutePath()
-                )
-            );
-        }
         final Base base = new DefaultBase(this.input);
         final XML skeleton = new Skeleton(base).xml();
         this.save(skeleton.toString(), "skeleton.xml");
