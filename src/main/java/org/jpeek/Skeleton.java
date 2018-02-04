@@ -339,7 +339,7 @@ final class Skeleton {
                             "methods/method[@name='%s' and @desc='%s']",
                             mtd, desc
                         )
-                    ).addIf("ops").add("op");
+                    ).strict(1).addIf("ops").add("op");
                     if (opcode == Opcodes.GETFIELD) {
                         Skeleton.Visitor.this.dirs.attr("code", "get");
                     } else if (opcode == Opcodes.PUTFIELD) {
@@ -362,7 +362,7 @@ final class Skeleton {
                             "methods/method[@name='%s' and @desc='%s']",
                             mtd, desc
                         )
-                    ).addIf("method_calls").add("method");
+                    ).strict(1).addIf("method_calls").add("method");
                     Skeleton.Visitor.this.dirs
                         .attr("owner", owner.replace("/", "."))
                         .attr("name", name)
