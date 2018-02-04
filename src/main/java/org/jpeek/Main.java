@@ -72,7 +72,8 @@ public final class Main {
 
     @Parameter(
         names = "--overwrite",
-        description = "Overwrite the target directory if it exists"
+        // @checkstyle LineLength (1 line)
+        description = "Overwrite the target directory if it exists (otherwise an error is raised)"
     )
     private boolean overwrite;
 
@@ -100,6 +101,10 @@ public final class Main {
     /**
      * Run it.
      * @throws IOException If fails
+     * @todo #104:30min The logic for overwriting the target directory is very
+     *  procedural and needs to be refactored. Suggestion: 'target' should be
+     *  its own animated object where the logic is triggered in its 'toPath'
+     *  method.
      */
     private void run() throws IOException {
         if (this.target.exists()) {
