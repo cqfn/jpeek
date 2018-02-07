@@ -73,15 +73,13 @@ SOFTWARE.
      which means that additional input must inserted into the LORM method - that is, a set of
      possible concepts - which are then recognized in a particular method/piece of code. This set
      of possible concepts depends on the `domain` that the class is in.
-
-     One way of interpreting what the `domain` is (this is not defined in the original paper), is
-     the business domain the class is used for. Another definition of `domain` also comes to mind -
-     the programming language being used. Concepts could be defined as all reserved Java keywords
-     and "semantic processing" recognizes which reserved keywords are used in a particular method.
-     Hence, if two methods use same reserved keywords, they have a `conceptual-relation`. Using
-     this definition would require no additional input by the user of the LORM method.
-
-     Right now it is stubbed because NLP/semantic processing is not implemented yet. Ensure that
+         One way of interpreting what the `domain` is (this is not defined in the original paper),
+     is the business domain the class is used for. Another definition of `domain` also comes to
+     mind - the programming language being used. Concepts could be defined as all reserved Java
+     keywords and "semantic processing" recognizes which reserved keywords are used in a particular
+     method. Hence, if two methods use same reserved keywords, they have a `conceptual-relation`.
+     Using this definition would require no additional input by the user of the LORM method.
+         Right now it is stubbed because NLP/semantic processing is not implemented yet. Ensure that
      JPeek core implements these techniques, collects information on such relations and
      unstub the lines commented below.
     -->
