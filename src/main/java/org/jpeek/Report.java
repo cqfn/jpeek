@@ -51,6 +51,9 @@ import org.cactoos.text.TextOf;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
+ * @todo #100:30min Add constructors which should accept Structure intead of
+ *  XML, so we can compose the Structures better when instantiating reports
+ *  inside App.
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class Report {
