@@ -67,12 +67,12 @@ SOFTWARE.
     @todo #112:30min Implement natural language processing techniques to analyze conceptual
      similarity of methods. Two methods have a `conceptual-relation` if they contain at least
      one same `concept`. `concepts` are identified by semantic processing of the class/method,
-     as being associated in the knowledge-base with that class or method (original paper in
+     as being associated in the knowledge-base with that class/method (original paper in
      /papers/etzkorn00.pdf). The original paper does not explicitly define the implementation of
      semantic processing, or which NLP methods are being used, but it is knowledge-based system,
-     which means that additional input must inserted into the method - a set of possible concepts -
-     which are then recognized in a particular method. This set of possible concepts depends
-     on the `domain` that the class is in.
+     which means that additional input must inserted into the LORM method - that is, a set of
+     possible concepts - which are then recognized in a particular method/piece of code. This set
+     of possible concepts depends on the `domain` that the class is in.
 
      One way of interpreting what the `domain` is (this is not defined in the original paper), is
      the business domain the class is used for. Another definition of `domain` also comes to mind -
