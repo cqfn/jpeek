@@ -63,7 +63,7 @@ import org.junit.runners.Parameterized;
 // @todo #103:30min NaN-based assertions introduced in #103 made complexity
 //  of `testsTarget` higher. Potentially, if more possible invariants will be
 //  introduced, enlarging complexity may become real problem for this method.
-//  That's why parametrized tests as a generic way of testing all metircs is
+//  That's why parametrized tests as a generic way of testing all metrics is
 //  proposed to be refactored. Possible alternatives are either classical
 //  JUnit modules, one per test, or wrapping parameters to reusable test case
 //  objects, like described here - https://github.com/yegor256/cactoos-test
