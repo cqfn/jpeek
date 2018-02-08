@@ -323,25 +323,50 @@ final class Skeleton {
                 super.visitMethod(access, mtd, desc, signature, exceptions)
             ) {
                 @Override
+                public void visitMethodInsn(int opcode, String owner,
+                                            String name, String descInner,
+                                            boolean itf) {
+                    super.visitMethodInsn(opcode, owner, name, descInner, itf);
+                    if (opcode == Opcodes.INVOKEVIRTUAL) {
+                        // @todo #114:30min Find and include the name of the
+                        //  variable the method is called by, if possible.
+                        //  Currently, only name of the method is retrieved.
+                        //  Example 1: `Bar.NAME.length();`
+                        //      Here, `length` is retrieved from the param
+                        //      `name`, but the word `NAME` is not included in
+                        //      any of the `visitMethodInsn` arguments.
+                        //  Example 2: `src.length();`
+                        //      Here, `length` is retrieved from param `name`,
+                        //      but the word `src` is not included in any of
+                        //      the `visitMethodInsn` arguments.
+                        addOp("invoke_virtual", name);
+                    }
+                }
+
+                @Override
                 public void visitFieldInsn(final int opcode,
                     final String owner, final String attr,
                     final String dsc) {
                     super.visitFieldInsn(opcode, owner, attr, dsc);
-                    Skeleton.Visitor.this.dirs.xpath(
-                        String.format(
-                            "methods/method[@name='%s' and @desc='%s']",
-                            mtd, desc
-                        )
-                    ).strict(1).addIf("ops").add("op");
                     if (opcode == Opcodes.GETFIELD) {
-                        Skeleton.Visitor.this.dirs.attr("code", "get");
+                        addOp("get", attr);
                     } else if (opcode == Opcodes.PUTFIELD) {
-                        Skeleton.Visitor.this.dirs.attr("code", "put");
+                        addOp("put", attr);
                     } else if (opcode == Opcodes.GETSTATIC) {
-                        Skeleton.Visitor.this.dirs.attr("code", "get_static");
+                        addOp("get_status", attr);
                     } else if (opcode == Opcodes.PUTSTATIC) {
-                        Skeleton.Visitor.this.dirs.attr("code", "put_static");
+                        addOp("put_static", attr);
                     }
+                }
+
+                private void addOp(String code, String attr) {
+                    Skeleton.Visitor.this.dirs.xpath(
+                            String.format(
+                                    "methods/method[@name='%s' and @desc='%s']",
+                                    mtd, desc
+                            )
+                    ).strict(1).addIf("ops").add("op");
+                    Skeleton.Visitor.this.dirs.attr("code", code);
                     Skeleton.Visitor.this.dirs.set(attr).up().up().up().up();
                 }
             };

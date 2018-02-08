@@ -50,7 +50,10 @@ public final class SkeletonTest {
                 "//class[@id='Bar']/methods[count(method)=5]",
                 "//class[@id='OverloadMethods']/methods[count(method)=5]",
                 "//method[@name='<init>' and @ctor='true']",
-                "//class[@id='Bar']//method[@name='<init>']/ops[count(op)=3]"
+                "//class[@id='Bar']//method[@name='getKey']/ops[count(op)=3]",
+                "//method[@name='getKey']/ops/op[@code='put_static' and .='singleton']",
+                "//method[@name='getKey']/ops/op[@code='invoke_virtual' and .='length']",
+                "//method[@name='getKey']/ops/op[@code='get' and .='key']"
             )
         );
     }
