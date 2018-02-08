@@ -29,11 +29,13 @@ import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import com.jcabi.xml.XSDDocument;
 import com.jcabi.xml.XSL;
+import com.jcabi.xml.XSLChain;
 import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
+import org.cactoos.collection.CollectionOf;
 import org.cactoos.io.LengthOf;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.io.TeeInput;
@@ -145,11 +147,14 @@ public final class App {
             )
         ).value();
         final XML index = new StrictXML(
-            App.xsl("index-post-diff-and-defects.xsl").transform(
-                App.xsl("index-post-metric-diff.xsl").transform(
-                    new XMLDocument(
-                        new Xembler(new Index(this.output)).xmlQuietly()
-                    )
+            new XSLChain(
+                new CollectionOf<>(
+                    App.xsl("index-post-metric-diff.xsl"),
+                    App.xsl("index-post-diff-and-defects.xsl")
+                )
+            ).transform(
+                new XMLDocument(
+                    new Xembler(new Index(this.output)).xmlQuietly()
                 )
             ),
             new XSDDocument(App.class.getResourceAsStream("xsd/index.xsd"))
