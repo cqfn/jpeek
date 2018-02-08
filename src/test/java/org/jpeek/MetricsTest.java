@@ -86,6 +86,7 @@ public final class MetricsTest {
     @Parameterized.Parameters(name = "{0}:{1}:{2}")
     public static Collection<Object[]> targets() {
         return new CollectionOf<>(
+            new Object[] {"NoMethods", "NHD", Double.NaN},
             new Object[] {"Bar", "LCOM", 3.0d},
             new Object[] {"Foo", "LCOM", 0.0d},
             new Object[] {"MethodsWithDiffParamTypes", "LCOM", 9.0d},
@@ -143,6 +144,12 @@ public final class MetricsTest {
             new Skeleton(new FakeBase(this.target)).xml(),
             this.metric
         ).save(output);
+        final String xpath;
+        if (Double.isNaN(this.value)) {
+            xpath = "//class[@id='%s' and @value='NaN']";
+        } else {
+            xpath = "//class[@id='%s' and number(@value)=%.4f]";
+        }
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
                 new TextOf(
@@ -151,11 +158,10 @@ public final class MetricsTest {
             ),
             XhtmlMatchers.hasXPaths(
                 String.format(
-                    "//class[@id='%s' and number(@value)=%.4f]",
+                    xpath,
                     this.target, this.value
                 )
             )
         );
     }
-
 }
