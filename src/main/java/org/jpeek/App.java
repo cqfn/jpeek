@@ -77,7 +77,7 @@ import org.xembly.Xembler;
  *  to reports list.
  *  (details on how to test the metrics are to be negotiated here - #107)
  *
- * @todo #64:30min LORM metric has impediments (see puzzles in C3.xls).
+ * @todo #64:30min C3 metric has impediments (see puzzles in C3.xls).
  *  Once they are resolved, cover the metric with autotests and add it
  *  to reports list.
  */
