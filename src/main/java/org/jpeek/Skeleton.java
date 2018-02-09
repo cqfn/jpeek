@@ -362,10 +362,10 @@ final class Skeleton {
                             "methods/method[@name='%s' and @desc='%s']",
                             mtd, desc
                         )
-                    ).strict(1).addIf("method_calls").add("method");
+                    ).strict(1).addIf("ops").add("op");
                     Skeleton.Visitor.this.dirs
-                        .attr("owner", owner.replace("/", "."))
-                        .attr("name", name)
+                        .attr("code", "call")
+                        .set(owner.replace("/", ".").concat(".").concat(name))
                         .up().up().up().up();
                 }
             };

@@ -51,7 +51,7 @@ public final class SkeletonTest {
                 "//class[@id='Bar']/methods[count(method)=5]",
                 "//class[@id='OverloadMethods']/methods[count(method)=5]",
                 "//method[@name='<init>' and @ctor='true']",
-                "//class[@id='Bar']//method[@name='<init>']/ops[count(op)=3]"
+                "//class[@id='Bar']//method[@name='<init>']/ops[count(op)=4]"
             )
         );
     }
@@ -86,12 +86,12 @@ public final class SkeletonTest {
             ),
             XhtmlMatchers.hasXPaths(
                 // @checkstyle LineLength (10 lines)
-                "//class[@id='Bar']/methods/method[@name='<init>' and @ctor='true']/method_calls/method[@name='<init>' and @owner='java.lang.Object']",
-                "//class[@id='Bar']/methods/method[@name='getKey']/method_calls/method[@name='length' and @owner='java.lang.String']",
-                "//class[@id='Bar']/methods/method[@name='getValue']/method_calls/method[@name='length' and @owner='java.lang.String']",
-                "//class[@id='Bar']/methods/method[@name='setValue']/method_calls/method[@name='<init>' and @owner='java.lang.UnsupportedOperationException']",
-                "//class[@id='Foo']/methods/method[@name='methodOne']/method_calls/method[@name='methodTwo' and @owner='Foo']",
-                "//class[@id='Foo']/methods/method[@name='methodTwo']/method_calls/method[@name='methodOne' and @owner='Foo']"
+                "//class[@id='Bar']/methods/method[@name='<init>' and @ctor='true']/ops[op = 'java.lang.Object.<init>']",
+                "//class[@id='Bar']/methods/method[@name='getKey']/ops[op = 'java.lang.String.length']",
+                "//class[@id='Bar']/methods/method[@name='getValue']/ops[op = 'java.lang.String.length']",
+                "//class[@id='Bar']/methods/method[@name='setValue']/ops[op ='java.lang.UnsupportedOperationException.<init>']",
+                "//class[@id='Foo']/methods/method[@name='methodOne']/ops[op = 'Foo.methodTwo']",
+                "//class[@id='Foo']/methods/method[@name='methodTwo']/ops[op = 'Foo.methodOne']"
             )
         );
     }

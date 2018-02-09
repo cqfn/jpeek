@@ -64,15 +64,6 @@ SOFTWARE.
                       </xs:sequence>
                     </xs:complexType>
                   </xs:element>
-                  <!--
-                   @todo #106:30min Refactor <ops>.
-                    This whole structure needs refactoring. First we need to
-                    somehow include <method_calls> inside <ops> and without
-                    breaking stuff. This would likely require using xs:all
-                    instead of xs:sequence and adding a new parent element for
-                    all <op>. Keep in mind that operations on fields and methods
-                    need to be distinguished somehow.
-                  -->
                   <xs:element name="ops" minOccurs="0" maxOccurs="1">
                     <xs:complexType>
                       <xs:sequence>
