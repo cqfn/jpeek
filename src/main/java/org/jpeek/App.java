@@ -76,10 +76,6 @@ import org.xembly.Xembler;
  *  Once they are resolved, cover the metric with autotests and add it
  *  to reports list.
  *  (details on how to test the metrics are to be negotiated here - #107)
- *
- * @todo #64:30min C3 metric has impediments (see puzzles in C3.xls).
- *  Once they are resolved, cover the metric with autotests and add it
- *  to reports list.
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class App {

@@ -63,7 +63,7 @@ SOFTWARE.
       </xsl:for-each>
     </xsl:variable>
     <!--
-    @todo #64:30min Implement the C3 method according to the description.
+    @todo #64:30min Implement the C3 method according to the description above.
      The variable names and comments have to be extracted into a set of words.
      JPeek core will have to provide all comments for each method so words
      can be extracted and LSI calculated for each method.
