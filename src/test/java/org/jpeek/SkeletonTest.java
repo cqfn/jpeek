@@ -46,6 +46,7 @@ public final class SkeletonTest {
                 ).xml().toString()
             ),
             XhtmlMatchers.hasXPaths(
+                // @checkstyle LineLength (10 lines)
                 "/skeleton/app/package[count(class)=2]",
                 "//class[@id='Bar']/methods[count(method)=5]",
                 "//class[@id='OverloadMethods']/methods[count(method)=5]",
