@@ -56,9 +56,11 @@ import org.xembly.Directives;
 import org.xembly.Xembler;
 
 /**
- * Base structure, the skeleton of the classes.
+ * Structure of the classes in XML.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>We take into account only classes. Interfaces are ignored.</p>
+ *
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
@@ -76,7 +78,7 @@ import org.xembly.Xembler;
         "PMD.ModifiedCyclomaticComplexity"
     }
 )
-final class Skeleton implements Structure {
+final class Skeleton {
 
     /**
      * XSD schema.
@@ -104,7 +106,11 @@ final class Skeleton implements Structure {
         this.pool = new ClassPool();
     }
 
-    @Override
+    /**
+     * As XMl.
+     * @return XML structure.
+     * @throws IOException If something goes wrong.
+     */
     public XML xml() throws IOException {
         return new StrictXML(
             new XMLDocument(

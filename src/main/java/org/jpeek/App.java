@@ -33,6 +33,7 @@ import com.jcabi.xml.XSLChain;
 import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import org.cactoos.collection.CollectionOf;
@@ -123,6 +124,11 @@ public final class App {
      * @todo #66:15min Add the CCM metric report here when all the puzzles
      *  about it are resolved. It requires 'params' to be passed in in order
      *  to properly include or exclude ctors.
+     * @todo #100:30min The skeleton for each Report is transformed by applying
+     *  various changes via XSLChain. This mechanism is for stuff that does not
+     *  apply to all the metrics and shouldn't necessarily be in the common
+     *  skeleton. Start implementing and applying stylesheets (where needed),
+     *  as required in the initial ticket (#100).
      */
     @SuppressWarnings("PMD.ExcessiveMethodLength")
     public void analyze() throws IOException {
@@ -130,13 +136,34 @@ public final class App {
         final XML skeleton = new Skeleton(base).xml();
         this.save(skeleton.toString(), "skeleton.xml");
         final Iterable<Report> reports = new ListOf<>(
-            new Report(skeleton, "LCOM", this.params, 10.0d, -5.0d),
-            new Report(skeleton, "MMAC", this.params, 0.5d, 0.25d),
-            new Report(skeleton, "LCOM5", this.params),
-            new Report(skeleton, "NHD"),
-            new Report(skeleton, "LCOM2", this.params),
-            new Report(skeleton, "LCOM3", this.params),
-            new Report(skeleton, "SCOM", this.params)
+            new Report(
+                new XSLChain(Arrays.asList()).transform(skeleton),
+                "LCOM", this.params, 10.0d, -5.0d
+            ),
+            new Report(
+                new XSLChain(Arrays.asList()).transform(skeleton),
+                "MMAC", this.params, 0.5d, 0.25d
+            ),
+            new Report(
+                new XSLChain(Arrays.asList()).transform(skeleton),
+                "LCOM5", this.params
+            ),
+            new Report(
+                new XSLChain(Arrays.asList()).transform(skeleton),
+                "NHD"
+            ),
+            new Report(
+                new XSLChain(Arrays.asList()).transform(skeleton),
+                "LCOM2", this.params
+            ),
+            new Report(
+                new XSLChain(Arrays.asList()).transform(skeleton),
+                "LCOM3", this.params
+            ),
+            new Report(
+                new XSLChain(Arrays.asList()).transform(skeleton),
+                "SCOM", this.params
+            )
         );
         new IoCheckedScalar<>(
             new AndInThreads(
