@@ -56,7 +56,7 @@ import org.xembly.Directives;
 import org.xembly.Xembler;
 
 /**
- * Structure of the classes in XML.
+ * Classes into XML.
  *
  * <p>We take into account only classes. Interfaces are ignored.</p>
  *
@@ -107,7 +107,7 @@ final class Skeleton {
     }
 
     /**
-     * As XMl.
+     * As XML.
      * @return XML structure.
      * @throws IOException If something goes wrong.
      */
