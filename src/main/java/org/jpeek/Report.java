@@ -30,17 +30,16 @@ import com.jcabi.xml.XML;
 import com.jcabi.xml.XSD;
 import com.jcabi.xml.XSDDocument;
 import com.jcabi.xml.XSL;
+import com.jcabi.xml.XSLChain;
 import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
+import org.cactoos.collection.CollectionOf;
 import org.cactoos.io.LengthOf;
 import org.cactoos.io.TeeInput;
-import org.cactoos.iterable.IterableOf;
-import org.cactoos.scalar.IoCheckedScalar;
-import org.cactoos.scalar.Reduced;
 import org.cactoos.text.TextOf;
 
 /**
@@ -93,7 +92,7 @@ final class Report {
     /**
      * Post processing XSLs.
      */
-    private final Iterable<XSL> post;
+    private final XSL post;
 
     /**
      * XSL params.
@@ -140,15 +139,23 @@ final class Report {
         this.skeleton = xml;
         this.metric = name;
         this.params = args;
-        this.post = new IterableOf<>(
-            new XSLDocument(
-                Report.class.getResourceAsStream("xsl/metric-post-colors.xsl")
-            ).with("low", mean - sigma).with("high", mean + sigma),
-            new XSLDocument(
-                Report.class.getResourceAsStream("xsl/metric-post-range.xsl")
-            ),
-            new XSLDocument(
-                Report.class.getResourceAsStream("xsl/metric-post-bars.xsl")
+        this.post = new XSLChain(
+            new CollectionOf<>(
+                new XSLDocument(
+                    Report.class.getResourceAsStream(
+                        "xsl/metric-post-colors.xsl"
+                    )
+                ).with("low", mean - sigma).with("high", mean + sigma),
+                new XSLDocument(
+                    Report.class.getResourceAsStream(
+                        "xsl/metric-post-range.xsl"
+                    )
+                ),
+                new XSLDocument(
+                    Report.class.getResourceAsStream(
+                        "xsl/metric-post-bars.xsl"
+                    )
+                )
             )
         );
     }
@@ -161,13 +168,7 @@ final class Report {
     public void save(final Path target) throws IOException {
         final XML xml = new StrictXML(
             new ReportWithStatistics(
-                new IoCheckedScalar<>(
-                    new Reduced<>(
-                        this.xml(),
-                        (doc, xsl) -> xsl.transform(doc),
-                        this.post
-                    )
-                ).value()
+                this.post.transform(this.xml())
             ),
             Report.SCHEMA
         );

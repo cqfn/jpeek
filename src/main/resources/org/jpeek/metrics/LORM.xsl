@@ -36,6 +36,8 @@ SOFTWARE.
           external links out of the set of concepts that
           belong to the method to or from the set of concepts
           belonging to another method in the class.
+          Concepts/conceptual relations are identified by
+          semantic processing techniques.
           N = total number of member functions (methods)
           RN - Total number of possible relations. RN = N * (N - 1) / 2
         ]]></xsl:text>
@@ -62,15 +64,28 @@ SOFTWARE.
       </xsl:for-each>
     </xsl:variable>
     <!--
-    @todo #15:30min `conceptual-relations` are pairs of methods in the class
-     for which one method contains conceptual relations forming external
-     links out of the set of concepts that belong to the method to or from
-     the set of concepts belonging to another method in the class
-     (quoted from here: https://github.com/yegor256/jpeek/blob/master/papers/izadkhah17.pdf).
-     Right now it is stubbed because information about the method's conceptual
-     relations are not available anywhere in the project. Ensure that
-     JPeek core collects information on such relations (#110) and unstub the lines commented
-     below.
+    @todo #112:30min Implement natural language processing techniques to analyze
+     conceptual similarity of methods. Two methods have a `conceptual-relation`
+     if they contain at least one same `concept`. `concepts` are identified by
+     semantic processing of the class/method, as being associated in the
+     knowledge-base with that class/method (original paper in
+     /papers/etzkorn00.pdf). The original paper does not explicitly define the
+     implementation of semantic processing, or which NLP methods are being used,
+     but it is a knowledge-based system, which means that additional input must
+     inserted into the LORM method - that is, a set of possible concepts -
+     which are then recognized in a particular method/piece of code. This set of
+     possible concepts depends on the `domain` that the class is in.
+     One way of interpreting what the `domain` is (this is not defined in the
+     original paper), is the business domain the class is used for. Another
+     definition of `domain` also comes to mind - the programming language being
+     used. Concepts could be defined as all reserved Java keywords and "semantic
+     processing" recognizes which reserved keywords are used in a particular
+     method. Hence, if two methods use same reserved keywords, they have a
+     `conceptual-relation`. Using this definition would require no additional
+     input by the user of the LORM method. Right now it is stubbed because
+     NLP/semantic processing is not implemented yet.k
+     Ensure that JPeek core implements these techniques, collects information on
+     such relations and unstub the lines commented below.
     -->
     <!--
      <xsl:variable name="possible_relations"/>
