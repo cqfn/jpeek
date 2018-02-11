@@ -47,9 +47,9 @@ SOFTWARE.
   </xsl:template>
   <xsl:template match="class">
     <xsl:variable name="methods" select="methods/method"/>
-    <xsl:variable name="methods_count" select="count($methods)"/>
+    <xsl:variable name="m" select="count($methods)"/>
     <xsl:variable name="attributes" select="attributes/attribute/text()"/>
-    <xsl:variable name="attributes_count" select="count($attributes)"/>
+    <xsl:variable name="a" select="count($attributes)"/>
     <xsl:variable name="attributes_use">
       <xsl:for-each select="$attributes">
         <xsl:variable name="attr" select="."/>
@@ -61,21 +61,21 @@ SOFTWARE.
     <xsl:copy>
       <xsl:attribute name="value">
         <xsl:choose>
-          <xsl:when test="$attributes_count = 0 or $methods_count = 1">
+          <xsl:when test="$a = 0 or $m = 1">
             <xsl:text>NaN</xsl:text>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:value-of select="(((1 div $attributes_count) * sum($attributes_use/count)) - $methods_count) div (1 - $methods_count)"/>
+            <xsl:value-of select="(((1 div $a) * sum($attributes_use/count)) - $m) div (1 - $m)"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:attribute>
       <xsl:apply-templates select="@*"/>
       <vars>
-        <var id="methods">
-          <xsl:value-of select="$methods_count"/>
+        <var id="m">
+          <xsl:value-of select="$m"/>
         </var>
-        <var id="attributes">
-          <xsl:value-of select="$attributes_count"/>
+        <var id="a">
+          <xsl:value-of select="$a"/>
         </var>
       </vars>
     </xsl:copy>
