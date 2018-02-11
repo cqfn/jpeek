@@ -23,7 +23,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
-  <xsl:param name="ctors" select="0"/>
   <xsl:template match="skeleton">
     <metric>
       <xsl:apply-templates select="@*"/>
@@ -43,13 +42,13 @@ SOFTWARE.
   </xsl:template>
   <xsl:template match="class">
     <xsl:variable name="class" select="."/>
-    <xsl:variable name="types" select="distinct-values($class/methods/method[($ctors=0 and @ctor='false') or $ctors=1]/args/arg[@type!='V']/@type)"/>
+    <xsl:variable name="types" select="distinct-values($class/methods/method/args/arg[@type!='V']/@type)"/>
     <xsl:variable name="types_count" select="count($types)"/>
-    <xsl:variable name="methods_count" select="count($class/methods/method[($ctors=0 and @ctor='false') or $ctors=1])"/>
+    <xsl:variable name="methods_count" select="count($class/methods/method)"/>
     <xsl:variable name="types_agreement">
       <xsl:for-each select="$types">
         <xsl:variable name="type" select="."/>
-        <xsl:variable name="type_count" select="count($class/methods/method[(($ctors=0 and @ctor='false') or $ctors=1) and args/arg/@type=$type])"/>
+        <xsl:variable name="type_count" select="count($class/methods/method[args/arg/@type=$type])"/>
         <value>
           <xsl:value-of select="$type_count * ($methods_count - $type_count)"/>
         </value>

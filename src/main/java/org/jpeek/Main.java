@@ -71,6 +71,12 @@ public final class Main {
     private boolean ctors;
 
     @Parameter(
+        names = "--include-static-methods",
+        description = "Include static methods into all formulas"
+    )
+    private boolean statics;
+
+    @Parameter(
         names = "--overwrite",
         // @checkstyle LineLength (1 line)
         description = "Overwrite the target directory if it exists (otherwise an error is raised)"
@@ -121,7 +127,10 @@ public final class Main {
         }
         final Map<String, Object> params = new HashMap<>(0);
         if (this.ctors) {
-            params.put("ctors", 1);
+            params.put("include-ctors", 1);
+        }
+        if (this.statics) {
+            params.put("include-static-methods", 1);
         }
         new App(this.sources.toPath(), this.target.toPath(), params).analyze();
     }

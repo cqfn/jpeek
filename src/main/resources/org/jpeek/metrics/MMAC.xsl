@@ -45,13 +45,13 @@ SOFTWARE.
   </xsl:template>
   <xsl:template match="class">
     <xsl:variable name="class" select="."/>
-    <xsl:variable name="methods_count" select="count($class/methods/method[@ctor='false'])"/>
+    <xsl:variable name="methods_count" select="count($class/methods/method)"/>
     <xsl:variable name="types" select="distinct-values($class/methods/method/args/arg[@type!='V']/@type)"/>
     <xsl:variable name="types_count" select="count($types)"/>
     <xsl:variable name="type_methods">
       <xsl:for-each select="$types">
         <xsl:variable name="type" select="."/>
-        <xsl:variable name="count" select="count($class/methods/method[@ctor='false' and args/arg/@type=$type])"/>
+        <xsl:variable name="count" select="count($class/methods/method[args/arg/@type=$type])"/>
         <count>
           <xsl:value-of select="$count * ($count - 1)"/>
         </count>
