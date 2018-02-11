@@ -33,7 +33,9 @@ import com.jcabi.xml.XSLChain;
 import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import org.cactoos.collection.CollectionOf;
 import org.cactoos.io.LengthOf;
@@ -56,6 +58,7 @@ import org.xembly.Xembler;
  * @since 0.1
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @checkstyle ClassFanOutComplexityCheck (500 lines)
+ * @checkstyle ExecutableStatementCountCheck (500 lines)
  *
  * @todo #9:30min TCC metric has impediments (see puzzles in TCC.xml).
  *  Once they are resolved, cover the metric with autotests and add it
@@ -128,15 +131,44 @@ public final class App {
     public void analyze() throws IOException {
         final Base base = new DefaultBase(this.input);
         final XML skeleton = new Skeleton(base).xml();
+        final Collection<XSL> layers = new LinkedList<>();
+        if (this.params.get("include-ctors") == null) {
+            layers.add(App.xsl("layers/no-ctors.xsl"));
+        }
+        if (this.params.get("include-static-methods") == null) {
+            layers.add(App.xsl("layers/no-static-methods.xsl"));
+        }
+        final XSL chain = new XSLChain(layers);
         this.save(skeleton.toString(), "skeleton.xml");
         final Iterable<Report> reports = new ListOf<>(
-            new Report(skeleton, "LCOM", this.params, 10.0d, -5.0d),
-            new Report(skeleton, "MMAC", this.params, 0.5d, 0.25d),
-            new Report(skeleton, "LCOM5", this.params),
-            new Report(skeleton, "NHD"),
-            new Report(skeleton, "LCOM2", this.params),
-            new Report(skeleton, "LCOM3", this.params),
-            new Report(skeleton, "SCOM", this.params)
+            new Report(
+                chain.transform(skeleton),
+                "LCOM", this.params, 10.0d, -5.0d
+            ),
+            new Report(
+                chain.transform(skeleton),
+                "MMAC", this.params, 0.5d, 0.25d
+            ),
+            new Report(
+                chain.transform(skeleton),
+                "LCOM5", this.params
+            ),
+            new Report(
+                chain.transform(skeleton),
+                "NHD"
+            ),
+            new Report(
+                chain.transform(skeleton),
+                "LCOM2", this.params
+            ),
+            new Report(
+                chain.transform(skeleton),
+                "LCOM3", this.params
+            ),
+            new Report(
+                chain.transform(skeleton),
+                "SCOM", this.params
+            )
         );
         new IoCheckedScalar<>(
             new AndInThreads(
