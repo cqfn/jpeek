@@ -110,7 +110,7 @@ Master Thesis at the King Fahd University of Petroleum & Minerals, 2001,
 A Sensitive Metric of Class Cohesion (**SCOM**).<br/>
 Luis Fernández et al.,<br/>
 _[A] new metric [...] yielding meaningful values [...] more sensitive than those previously reported_,<br/>
-International Journal "Information Theories & Applications" Vol.13, 2006,
+International Journal "Information Theories & Applications", Volume 13, 2006,
 [PDF](http://citeseerx.ist.psu.edu/viewdoc/download;jsessionid=55D08270F99333F15E0937AF137F4468?doi=10.1.1.84.1506&rep=rep1&type=pdf).
 
 ## How it works?
