@@ -23,7 +23,7 @@
  */
 package org.jpeek;
 
-import com.jcabi.matchers.XhtmlMatchers;
+import com.jcabi.xml.XMLDocument;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,6 +31,7 @@ import java.util.Collection;
 import org.cactoos.collection.CollectionOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -90,48 +91,51 @@ public final class MetricsTest {
     @Parameterized.Parameters(name = "{0}:{1}:{2}")
     public static Collection<Object[]> targets() {
         return new CollectionOf<>(
-            new Object[] {"Bar", "LCOM", 3.0d},
-            new Object[] {"Foo", "LCOM", 0.0d},
-            new Object[] {"MethodsWithDiffParamTypes", "LCOM", 9.0d},
+            new Object[] {"Bar", "LCOM", 6.0d},
+            new Object[] {"Foo", "LCOM", 1.0d},
+            new Object[] {"MethodsWithDiffParamTypes", "LCOM", 15.0d},
             new Object[] {"NoMethods", "LCOM", 0.0d},
-            new Object[] {"OneVoidMethodWithoutParams", "LCOM", 0.0d},
+            new Object[] {"OneVoidMethodWithoutParams", "LCOM", 1.0d},
             new Object[] {"OverloadMethods", "LCOM", 0.0d},
-            new Object[] {"TwoCommonAttributes", "LCOM", 3.0d},
-            new Object[] {"WithoutAttributes", "LCOM", 0.0d},
-            new Object[] {"OneMethodCreatesLambda", "LCOM", 1.0d},
-            new Object[] {"Bar", "MMAC", 0.0d},
-            new Object[] {"Foo", "MMAC", 1.0d},
+            new Object[] {"TwoCommonAttributes", "LCOM", 6.0d},
+            new Object[] {"WithoutAttributes", "LCOM", 1.0d},
+            new Object[] {"OneMethodCreatesLambda", "LCOM", 3.0d},
+            new Object[] {"Bar", "MMAC", 0.1d},
+            new Object[] {"Foo", "MMAC", 0.3333d},
             new Object[] {"MethodsWithDiffParamTypes", "MMAC", 0.0d},
             new Object[] {"NoMethods", "MMAC", 0.0d},
             new Object[] {"OneVoidMethodWithoutParams", "MMAC", 0.0d},
-            new Object[] {"OverloadMethods", "MMAC", 0.3889d},
-            new Object[] {"TwoCommonAttributes", "MMAC", 0.3333d},
-            new Object[] {"WithoutAttributes", "MMAC", 1.0d},
+            new Object[] {"OverloadMethods", "MMAC", 0.2333d},
+            new Object[] {"TwoCommonAttributes", "MMAC", 0.1667d},
+            new Object[] {"WithoutAttributes", "MMAC", 0.0d},
             new Object[] {"OneMethodCreatesLambda", "MMAC", 0.0d},
-            new Object[] {"Foo", "LCOM5", 0.0d},
-            new Object[] {"MethodsWithDiffParamTypes", "LCOM5", 0.6d},
-            new Object[] {"OverloadMethods", "LCOM5", 0.0d},
+            new Object[] {"Foo", "LCOM5", 0.5d},
+            new Object[] {"MethodsWithDiffParamTypes", "LCOM5", 0.6667d},
+            new Object[] {"OverloadMethods", "LCOM5", 0.25d},
             new Object[] {"TwoCommonAttributes", "LCOM5", 1.0d},
-            new Object[] {"Bar", "NHD", 0.3333d},
-            new Object[] {"Foo", "NHD", 1.0d},
-            new Object[] {"MethodsWithDiffParamTypes", "NHD", 0.6667d},
-            new Object[] {"OverloadMethods", "NHD", 0.6111d},
+            new Object[] {"Bar", "NHD", 0.4d},
+            new Object[] {"Foo", "NHD", 0.3333d},
+            new Object[] {"MethodsWithDiffParamTypes", "NHD", 0.7143d},
+            new Object[] {"OverloadMethods", "NHD", 0.5333d},
             new Object[] {"TwoCommonAttributes", "NHD", 0.3333d},
-            new Object[] {"MethodsWithDiffParamTypes", "CCM", 0.0667d},
+            new Object[] {"MethodsWithDiffParamTypes", "CCM", 0.0476d},
+            new Object[] {"Foo", "SCOM", 0.3333d},
+            new Object[] {"MethodsWithDiffParamTypes", "SCOM", 0.1429d},
+            new Object[] {"OverloadMethods", "SCOM", 0.6d},
             new Object[] {"TwoCommonAttributes", "SCOM", 0.0d},
-            new Object[] {"Foo", "LCOM2", 0.0d},
-            new Object[] {"MethodsWithDiffParamTypes", "LCOM2", 0.5d},
-            new Object[] {"NoMethods", "LCOM2", 0.0d},
-            new Object[] {"OneVoidMethodWithoutParams", "LCOM2", 0.0d},
-            new Object[] {"OverloadMethods", "LCOM2", 0.0d},
-            new Object[] {"TwoCommonAttributes", "LCOM2", 0.6667d},
+            new Object[] {"Foo", "LCOM2", 0.3333d},
+            new Object[] {"MethodsWithDiffParamTypes", "LCOM2", 0.5714d},
+            new Object[] {"NoMethods", "LCOM2", 1.0d},
+            new Object[] {"OneVoidMethodWithoutParams", "LCOM2", 0.5d},
+            new Object[] {"OverloadMethods", "LCOM2", 0.2d},
+            new Object[] {"TwoCommonAttributes", "LCOM2", 0.75d},
             new Object[] {"WithoutAttributes", "LCOM2", 0.0d},
             new Object[] {"OneMethodCreatesLambda", "LCOM2", 1.0d},
-            new Object[] {"Foo", "LCOM3", 0.0d},
-            new Object[] {"MethodsWithDiffParamTypes", "LCOM3", 0.6d},
+            new Object[] {"Foo", "LCOM3", 0.5d},
+            new Object[] {"MethodsWithDiffParamTypes", "LCOM3", 0.6667d},
             new Object[] {"NoMethods", "LCOM3", 0.0d},
-            new Object[] {"OneVoidMethodWithoutParams", "LCOM3", 0.0d},
-            new Object[] {"OverloadMethods", "LCOM3", 0.0d},
+            new Object[] {"OneVoidMethodWithoutParams", "LCOM3", 1.0d},
+            new Object[] {"OverloadMethods", "LCOM3", 0.25d},
             new Object[] {"TwoCommonAttributes", "LCOM3", 1.0d},
             new Object[] {"WithoutAttributes", "LCOM3", 0.0d}
         );
@@ -144,18 +148,18 @@ public final class MetricsTest {
             new Skeleton(new FakeBase(this.target)).xml(),
             this.metric
         ).save(output);
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
+        final double actual = Double.parseDouble(
+            new XMLDocument(
                 new TextOf(
                     output.resolve(String.format("%s.xml", this.metric))
                 ).asString()
-            ),
-            XhtmlMatchers.hasXPaths(
-                String.format(
-                    "//class[@id='%s' and number(@value)=%.4f]",
-                    this.target, this.value
-                )
-            )
+            ).xpath(
+                String.format("//class[@id='%s']/@value", this.target)
+            ).get(0)
+        );
+        MatcherAssert.assertThat(
+            String.format("%.4f", actual),
+            Matchers.equalTo(String.format("%.4f", this.value))
         );
     }
 

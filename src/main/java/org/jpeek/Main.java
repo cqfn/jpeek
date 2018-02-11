@@ -28,6 +28,11 @@ import com.beust.jcommander.Parameter;
 import com.beust.jcommander.converters.FileConverter;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,6 +70,19 @@ public final class Main {
     )
     private boolean ctors;
 
+    @Parameter(
+        names = "--include-static-methods",
+        description = "Include static methods into all formulas"
+    )
+    private boolean statics;
+
+    @Parameter(
+        names = "--overwrite",
+        // @checkstyle LineLength (1 line)
+        description = "Overwrite the target directory if it exists (otherwise an error is raised)"
+    )
+    private boolean overwrite;
+
     /**
      * Ctor.
      */
@@ -89,13 +107,59 @@ public final class Main {
     /**
      * Run it.
      * @throws IOException If fails
+     * @todo #104:30min The logic for overwriting the target directory is very
+     *  procedural and needs to be refactored. Suggestion: 'target' should be
+     *  its own animated object where the logic is triggered in its 'toPath'
+     *  method.
      */
     private void run() throws IOException {
+        if (this.target.exists()) {
+            if (this.overwrite) {
+                Main.deleteDir(this.target);
+            } else {
+                throw new IllegalStateException(
+                    String.format(
+                        "Directory/file already exists: %s",
+                        this.target.getAbsolutePath()
+                    )
+                );
+            }
+        }
         final Map<String, Object> params = new HashMap<>(0);
         if (this.ctors) {
-            params.put("ctors", 1);
+            params.put("include-ctors", 1);
+        }
+        if (this.statics) {
+            params.put("include-static-methods", 1);
         }
         new App(this.sources.toPath(), this.target.toPath(), params).analyze();
     }
 
+    /**
+     * Deletes the directory recursively.
+     * @param dir The directory
+     * @throws IOException If an I/O error occurs
+     */
+    private static void deleteDir(final File dir) throws IOException {
+        Files.walkFileTree(
+            dir.toPath(),
+            new SimpleFileVisitor<Path>() {
+                @Override
+                public FileVisitResult visitFile(
+                    final Path file,
+                    final BasicFileAttributes attrs) throws IOException {
+                    Files.delete(file);
+                    return FileVisitResult.CONTINUE;
+                }
+
+                @Override
+                public FileVisitResult postVisitDirectory(
+                    final Path dir,
+                    final IOException error) throws IOException {
+                    Files.delete(dir);
+                    return FileVisitResult.CONTINUE;
+                }
+            }
+        );
+    }
 }

@@ -39,6 +39,7 @@ import org.junit.Test;
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class MainTest {
 
     @Test
@@ -57,4 +58,27 @@ public final class MainTest {
         Main.main("hello");
     }
 
+    @Test(expected = IllegalStateException.class)
+    public void crashesIfNoOverwriteAndTargetExists() throws IOException {
+        final Path target = Files.createTempDirectory("");
+        Main.main(
+            "--sources", Paths.get(".").toString(),
+            "--target", target.toString()
+        );
+    }
+
+    @Test
+    public void createsXmlReportsIfOverwriteAndTargetExists()
+        throws IOException {
+        final Path target = Files.createTempDirectory("");
+        Main.main(
+            "--sources", Paths.get(".").toString(),
+            "--target", target.toString(),
+            "--overwrite"
+        );
+        MatcherAssert.assertThat(
+            Files.exists(target.resolve("LCOM.xml")),
+            Matchers.equalTo(true)
+        );
+    }
 }

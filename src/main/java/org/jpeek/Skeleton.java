@@ -60,7 +60,7 @@ import org.xembly.Xembler;
  *
  * <p>We take into account only classes. Interfaces are ignored.</p>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
@@ -109,8 +109,8 @@ final class Skeleton {
 
     /**
      * As XML.
-     * @return XML
-     * @throws IOException If fails
+     * @return XML structure.
+     * @throws IOException If something goes wrong.
      */
     public XML xml() throws IOException {
         return new StrictXML(
