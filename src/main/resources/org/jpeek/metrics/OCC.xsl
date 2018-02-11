@@ -41,52 +41,58 @@ SOFTWARE.
     </metric>
   </xsl:template>
   <xsl:template match="class">
-    <xsl:variable name="class_fqn" select="concat(parent::@id, '.', @id)"/>
-    <xsl:variable name="attrs" select="attributes/attribute/text()"/>
-    <xsl:variable name="methods" select="methods/method"/>
-    <xsl:variable name="n" select="count($methods)"/>
-    <xsl:variable name="Rw">
-      <xsl:for-each select="$methods">
+    <xsl:variable name="A" select="attributes/attribute/text()"/>
+    <xsl:variable name="M" select="methods/method"/>
+    <xsl:variable name="n" select="count($M)"/>
+    <xsl:variable name="connections">
+      <xsl:for-each select="$M">
         <xsl:variable name="this" select="."/>
-        <xsl:variable name="attrs_used_by_this" select="$attrs[concat($class_fqn, '.', .) = $this/ops/op/text()]"/>
-          <pair anchor="$this/@name">
+        <xsl:variable name="attrs_used_by_this" select="$A[. = $this/ops/op/text()]"/>
+          <Rw from="$this/@name">
             <xsl:for-each select="$this/following-sibling::method">
               <xsl:variable name="other" select="."/>
-              <xsl:variable name="attrs_used_by_other" select="$attrs[concat($class_fqn, '.', .) = $other/ops/op/text()]"/>
-              <xsl:if test="count($attrs_used_by_this[. = $attrs_used_by_other]) > 0">
-                <with_method>
+              <xsl:variable name="attrs_used_by_other" select="$A[. = $other/ops/op/text()]"/>
+              <xsl:if test="$attrs_used_by_this[. = $attrs_used_by_other]">
+                <reachable>
                   <xsl:value-of select="$other/@name"/>
-                </with_method>
+                </reachable>
               </xsl:if>
             </xsl:for-each>
-          </pair> 
+          </Rw>
+      </xsl:for-each>
+    </xsl:variable>
+    <xsl:variable name="Rw_scalar">
+      <xsl:for-each select="$connections/Rw">
+        <Rw>
+          <xsl:choose>
+            <xsl:when test="$n != 1">
+              <xsl:value-of select="count(./reachable) div ($n - 1)"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>0</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+        </Rw>
       </xsl:for-each>
     </xsl:variable>
     <xsl:copy>
-      <xsl:variable name="max_Rw" select="max($Rw/pair)"/>
+      <xsl:variable name="Rw_max" select="max($Rw_scalar/Rw)"/>
       <xsl:attribute name="value">
-        <xsl:choose>
-          <xsl:when test="$n = 1">
-            <xsl:text>0</xsl:text>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="format-number($max_Rw div (n - 1), '0.####')"/>
-          </xsl:otherwise>
-        </xsl:choose>
+        <xsl:value-of select="format-number($Rw_max, '0.####')"/>
       </xsl:attribute>
       <xsl:apply-templates select="@*"/>
       <vars>
-        <var id="methods">
+        <var id="n">
           <xsl:value-of select="$n"/>
         </var>
-        <var id="pairs">
-          <xsl:value-of select="count($Rw/pair)"/>
+        <var id="A">
+          <xsl:value-of select="count($A)"/>
         </var>
-        <var id="attributes">
-          <xsl:value-of select="count($attrs)"/>
+        <var id="Rw_total">
+          <xsl:value-of select="count($connections/Rw/to)"/>
         </var>
-        <var id="max_Rw">
-          <xsl:value-of select="$max_Rw"/>
+        <var id="Rw_max">
+          <xsl:value-of select="$Rw_max"/>
         </var>
       </vars>
     </xsl:copy>
