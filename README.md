@@ -167,7 +167,9 @@ that XSL is much more suitable for manipulations with data than Java.
 
 ## How to contribute?
 
-Read [`CONTRIBUTING.md`](https://github.com/yegor256/jpeek/blob/master/CONTRIBUTING.md)
+Just fork, make changes, run `mvn clean install -Pqulice` and submit
+a pull request; read [this](http://www.yegor256.com/2014/04/15/github-guidelines.html),
+if lost.
 
 ## Contributors
 
