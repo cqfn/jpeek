@@ -66,8 +66,7 @@ SOFTWARE.
     <xsl:copy>
       <xsl:attribute name="value">
         <xsl:choose>
-          <xsl:when test="$methods_count le 1">
-            <xsl:text>0</xsl:text>0</xsl:when>
+          <xsl:when test="$methods_count le 1"><xsl:text>0</xsl:text>0</xsl:when>
           <xsl:otherwise>
             <xsl:value-of select="$NDC div $NC"/>
           </xsl:otherwise>
