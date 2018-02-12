@@ -67,7 +67,8 @@ SOFTWARE.
             <xsl:text>1</xsl:text>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:value-of select="format-number(sum($type_methods/count) div ($k * $l * ($k - 1)), '0.####')"/>
+            <xsl:variable name="mmac" select="sum($type_methods/count) div ($k * $l * ($k - 1))"/>
+            <xsl:value-of select="format-number($mmac, '0.####')"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:attribute>
