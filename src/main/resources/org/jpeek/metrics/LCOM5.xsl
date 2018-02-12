@@ -65,7 +65,8 @@ SOFTWARE.
             <xsl:text>NaN</xsl:text>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:value-of select="(((1 div $a) * sum($attributes_use/count)) - $m) div (1 - $m)"/>
+            <xsl:variable name="lcom" select="(((1 div $a) * sum($attributes_use/count)) - $m) div (1 - $m)"/>
+            <xsl:value-of select="format-number($lcom, '0.####')"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:attribute>
