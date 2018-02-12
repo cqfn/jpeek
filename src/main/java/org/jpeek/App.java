@@ -168,6 +168,10 @@ public final class App {
             new Report(
                 chain.transform(skeleton),
                 "SCOM", this.params
+            ),
+            new Report(
+                chain.transform(skeleton),
+                "OCC"
             )
         );
         new IoCheckedScalar<>(

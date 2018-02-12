@@ -48,17 +48,17 @@ SOFTWARE.
       <xsl:for-each select="$M">
         <xsl:variable name="this" select="."/>
         <xsl:variable name="attrs_used_by_this" select="$A[. = $this/ops/op/text()]"/>
-          <Rw from="$this/@name">
-            <xsl:for-each select="$this/following-sibling::method">
-              <xsl:variable name="other" select="."/>
-              <xsl:variable name="attrs_used_by_other" select="$A[. = $other/ops/op/text()]"/>
-              <xsl:if test="$attrs_used_by_this[. = $attrs_used_by_other]">
-                <reachable>
-                  <xsl:value-of select="$other/@name"/>
-                </reachable>
-              </xsl:if>
-            </xsl:for-each>
-          </Rw>
+        <Rw from="$this/@name">
+          <xsl:for-each select="$this/following-sibling::method">
+            <xsl:variable name="other" select="."/>
+            <xsl:variable name="attrs_used_by_other" select="$A[. = $other/ops/op/text()]"/>
+            <xsl:if test="$attrs_used_by_this[. = $attrs_used_by_other]">
+              <reachable>
+                <xsl:value-of select="$other/@name"/>
+              </reachable>
+            </xsl:if>
+          </xsl:for-each>
+        </Rw>
       </xsl:for-each>
     </xsl:variable>
     <xsl:variable name="Rw_scalar">
@@ -89,11 +89,13 @@ SOFTWARE.
           <xsl:value-of select="count($A)"/>
         </var>
         <var id="Rw_total">
-          <xsl:value-of select="count($connections/Rw/to)"/>
+          <xsl:value-of select="count($connections/Rw/reachable)"/>
         </var>
-        <var id="Rw_max">
-          <xsl:value-of select="$Rw_max"/>
-        </var>
+        <xsl:if test="$Rw_max">
+          <var id="Rw_max">
+            <xsl:value-of select="$Rw_max"/>
+          </var>
+        </xsl:if>
       </vars>
     </xsl:copy>
   </xsl:template>
