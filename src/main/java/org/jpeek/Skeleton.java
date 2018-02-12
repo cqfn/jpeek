@@ -75,7 +75,8 @@ import org.xembly.Xembler;
         "PMD.ExcessiveImports",
         "PMD.CyclomaticComplexity",
         "PMD.StdCyclomaticComplexity",
-        "PMD.ModifiedCyclomaticComplexity"
+        "PMD.ModifiedCyclomaticComplexity",
+        "PMD.TooManyMethods"
     }
 )
 final class Skeleton {
@@ -256,7 +257,13 @@ final class Skeleton {
             );
         }
         @Override
-        @SuppressWarnings({ "PMD.UseVarargs", "PMD.UseObjectForClearerAPI" })
+        @SuppressWarnings(
+            {
+                "PMD.UseVarargs",
+                "PMD.UseObjectForClearerAPI",
+                "PMD.ExcessiveMethodLength"
+            }
+        )
         public MethodVisitor visitMethod(final int access,
             final String mtd, final String desc,
             final String signature, final String[] exceptions) {
@@ -343,6 +350,23 @@ final class Skeleton {
                         Skeleton.Visitor.this.dirs.attr("code", "put_static");
                     }
                     Skeleton.Visitor.this.dirs.set(attr).up().up().up().up();
+                }
+
+                @Override
+                public void visitMethodInsn(final int opcode,
+                    final String owner, final String name,
+                    final String dsc, final boolean itf) {
+                    super.visitMethodInsn(opcode, owner, name, desc, itf);
+                    Skeleton.Visitor.this.dirs.xpath(
+                        String.format(
+                            "methods/method[@name='%s' and @desc='%s']",
+                            mtd, desc
+                        )
+                    ).strict(1).addIf("ops").add("op");
+                    Skeleton.Visitor.this.dirs
+                        .attr("code", "call")
+                        .set(owner.replace("/", ".").concat(".").concat(name))
+                        .up().up().up().up();
                 }
             };
         }
