@@ -72,7 +72,7 @@ IEEE Transactions on Software Engineering, vol.20, no.6, 1994,
 [PDF](http://www.pitt.edu/~ckemerer/CK%20research%20papers/MetricForOOD_ChidamberKemerer94.pdf).
 
 [`aman04`]
-Optimistic Class Cohesion (**OCC**).<br/>
+Optimistic Class Cohesion (**OCC**) and Pessimistic Class Cohesion (**PCC**).<br/>
 Hirohisa Aman et al.,<br/>
 _A proposal of class cohesion metrics using sizes of cohesive parts_,<br/>
 Proc. of Fifth Joint Conference on Knowledge-based Software Engineering, 2002,

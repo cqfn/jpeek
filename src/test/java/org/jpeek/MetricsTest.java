@@ -70,6 +70,8 @@ import org.junit.runners.Parameterized;
  * @checkstyle VisibilityModifierCheck (500 lines)
  * @checkstyle JavadocVariableCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
+ * @todo #67:30min PCC: add the rest of the test cases for this metric. Could
+ *  only fit test case for MethodsWithDiffParamTypes within budget.
  */
 @RunWith(Parameterized.class)
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
@@ -133,7 +135,8 @@ public final class MetricsTest {
             new Object[] {"OneVoidMethodWithoutParams", "LCOM3", 1.0d},
             new Object[] {"OverloadMethods", "LCOM3", 0.25d},
             new Object[] {"TwoCommonAttributes", "LCOM3", 1.0d},
-            new Object[] {"WithoutAttributes", "LCOM3", 0.0d}
+            new Object[] {"WithoutAttributes", "LCOM3", 0.0d},
+            new Object[] {"MethodsWithDiffParamTypes", "PCC", 0.3333d}
         );
     }
 
