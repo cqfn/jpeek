@@ -62,6 +62,7 @@ import org.xembly.Xembler;
  * @checkstyle ExecutableStatementCountCheck (500 lines)
  * @checkstyle NPathComplexityCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
+ * @checkstyle CyclomaticComplexityCheck (500 lines)
  *
  * @todo #9:30min TCC metric has impediments (see puzzles in TCC.xml).
  *  Once they are resolved, cover the metric with autotests and add it
@@ -170,6 +171,14 @@ public final class App {
                 new Report(
                     chain.transform(skeleton),
                     "LCOM", this.params, 10.0d, -5.0d
+                )
+            );
+        }
+        if (this.params.containsKey("CAMC")) {
+            reports.add(
+                new Report(
+                    chain.transform(skeleton),
+                    "CAMC", this.params
                 )
             );
         }
