@@ -22,8 +22,16 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-for i in $(shuf ./2017)
+home=$(pwd)
+jar="${home}/../../target/jpeek-jar-with-dependencies.jar"
+if [ ! -e "${jar}" ]; then
+  echo "${jar} doesn't exist, please run 'mvn clean install' first"
+  exit -1
+fi
+
+while read line
 do
-  curl --silent http://i.jpeek.org/${i}/index.html > /dev/null
-  echo $i
-done
+  IFS=',' read -ra parts <<< "${line}"
+  echo "${parts[0]}..."
+  "${home}/get-sigma-and-mu.sh" "${jar}" "${parts[0]}" "${home}/metrics.txt"
+done < "${home}/../03-filter-out-artifacts/target-926.csv"

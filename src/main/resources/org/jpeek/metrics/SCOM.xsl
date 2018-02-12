@@ -119,7 +119,8 @@ SOFTWARE.
             <xsl:text>NaN</xsl:text>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:value-of select="(2 div ($m * ($m - 1))) * sum($scores/score)"/>
+            <xsl:variable name="scom" select="(2 div ($m * ($m - 1))) * sum($scores/score)"/>
+            <xsl:value-of select="format-number($scom, '0.####')"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:attribute>
