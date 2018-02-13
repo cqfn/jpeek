@@ -23,7 +23,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
-  <xsl:param name="ctors" select="0"/>
   <xsl:template match="skeleton">
     <metric>
       <xsl:apply-templates select="@*"/>
@@ -39,7 +38,7 @@ SOFTWARE.
     </metric>
   </xsl:template>
   <xsl:template match="class">
-    <xsl:variable name="methods" select="methods/method[($ctors=0 and @ctor='false') or $ctors=1]"/>
+    <xsl:variable name="methods" select="methods/method"/>
     <xsl:variable name="methods_count" select="count($methods)"/>
     <xsl:variable name="NC" select="$methods_count * ($methods_count - 1) div 2"/>
     <xsl:variable name="directly-related-pairs">
@@ -73,9 +72,12 @@ SOFTWARE.
     <xsl:copy>
       <xsl:attribute name="value">
         <xsl:choose>
-          <xsl:when test="$methods_count le 1">0</xsl:when>
+          <xsl:when test="$methods_count le 1">
+            <xsl:text>0</xsl:text>
+          </xsl:when>
           <xsl:otherwise>
-            <xsl:value-of select="($NDC + $NIC) div $NC"/>
+            <xsl:variable name="lcc" select="($NDC + $NIC) div $NC"/>
+            <xsl:value-of select="format-number($lcc, '0.####')"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:attribute>

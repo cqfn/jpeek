@@ -71,6 +71,19 @@ public final class Main {
     private boolean ctors;
 
     @Parameter(
+        names = "--include-static-methods",
+        description = "Include static methods into all formulas"
+    )
+    private boolean statics;
+
+    @SuppressWarnings("PMD.ImmutableField")
+    @Parameter(
+        names = "--metrics",
+        description = "Comma-separated list of metrics to include"
+    )
+    private String metrics;
+
+    @Parameter(
         names = "--overwrite",
         // @checkstyle LineLength (1 line)
         description = "Overwrite the target directory if it exists (otherwise an error is raised)"
@@ -81,7 +94,7 @@ public final class Main {
      * Ctor.
      */
     private Main() {
-        // intentionally
+        this.metrics = "LCOM5,NHD,MMAC,SCOM,CAMC";
     }
 
     /**
@@ -121,7 +134,18 @@ public final class Main {
         }
         final Map<String, Object> params = new HashMap<>(0);
         if (this.ctors) {
-            params.put("ctors", 1);
+            params.put("include-ctors", 1);
+        }
+        if (this.statics) {
+            params.put("include-static-methods", 1);
+        }
+        for (final String metric : this.metrics.split(",")) {
+            if (!metric.matches("[A-Z]+[0-9]?")) {
+                throw new IllegalArgumentException(
+                    String.format("Invalid metric name: '%s'", metric)
+                );
+            }
+            params.put(metric, true);
         }
         new App(this.sources.toPath(), this.target.toPath(), params).analyze();
     }

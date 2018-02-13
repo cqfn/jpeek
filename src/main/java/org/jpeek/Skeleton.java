@@ -32,10 +32,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 import javassist.CannotCompileException;
 import javassist.ClassPool;
@@ -44,6 +46,8 @@ import org.cactoos.iterable.Filtered;
 import org.cactoos.iterable.Joined;
 import org.cactoos.iterable.Mapped;
 import org.cactoos.map.MapEntry;
+import org.cactoos.scalar.AndInThreads;
+import org.cactoos.scalar.UncheckedScalar;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.FieldVisitor;
@@ -60,7 +64,7 @@ import org.xembly.Xembler;
  *
  * <p>We take into account only classes. Interfaces are ignored.</p>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
@@ -110,8 +114,8 @@ final class Skeleton {
 
     /**
      * As XML.
-     * @return XML
-     * @throws IOException If fails
+     * @return XML structure.
+     * @throws IOException If something goes wrong.
      */
     public XML xml() throws IOException {
         return new StrictXML(
@@ -148,31 +152,38 @@ final class Skeleton {
     @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
     private Iterable<Map.Entry<String, Directives>> packages()
         throws IOException {
-        final Map<String, Directives> map = new HashMap<>(0);
-        final Iterable<Map.Entry<String, Directives>> all = new Mapped<>(
-            Skeleton::xembly,
-            new Filtered<>(
-                // @checkstyle BooleanExpressionComplexityCheck (10 lines)
-                ctClass -> !ctClass.isInterface()
-                    && !ctClass.isEnum()
-                    && !ctClass.isAnnotation()
-                    && !ctClass.getName().matches("^.+\\$[0-9]+$")
-                    && !ctClass.getName().matches("^.+\\$AjcClosure[0-9]+$"),
-                new Mapped<>(
-                    path -> {
-                        try (InputStream stream =
-                            new FileInputStream(path.toFile())) {
-                            return this.pool.makeClassIfNew(stream);
-                        }
-                    },
-                    new Filtered<>(
-                        path -> Files.isRegularFile(path)
-                            && path.toString().endsWith(".class"),
-                        this.base.files()
-                    )
+        final Iterable<CtClass> classes = new Filtered<>(
+            // @checkstyle BooleanExpressionComplexityCheck (10 lines)
+            ctClass -> !ctClass.isInterface()
+                && !ctClass.isEnum()
+                && !ctClass.isAnnotation()
+                && !ctClass.getName().matches("^.+\\$[0-9]+$")
+                && !ctClass.getName().matches("^.+\\$AjcClosure[0-9]+$"),
+            new Mapped<>(
+                path -> {
+                    try (InputStream stream =
+                        new FileInputStream(path.toFile())) {
+                        return this.pool.makeClassIfNew(stream);
+                    }
+                },
+                new Filtered<Path>(
+                    path -> Files.isRegularFile(path)
+                        && path.toString().endsWith(".class"),
+                    this.base.files()
                 )
             )
         );
+        final Collection<Map.Entry<String, Directives>> all =
+            new CopyOnWriteArrayList<>();
+        new UncheckedScalar<>(
+            new AndInThreads(
+                new Mapped<>(
+                    clz -> () -> all.add(Skeleton.xembly(clz)),
+                    classes
+                )
+            )
+        ).value();
+        final Map<String, Directives> map = new HashMap<>(0);
         for (final Map.Entry<String, Directives> ent : all) {
             map.putIfAbsent(ent.getKey(), new Directives());
             map.get(ent.getKey()).append(ent.getValue());
@@ -270,7 +281,13 @@ final class Skeleton {
         //  - the `visitMethodInsn` arguments.
         //  This is currently implemented in `visitMethodInsn` down below.
         @Override
-        @SuppressWarnings({ "PMD.UseVarargs", "PMD.UseObjectForClearerAPI" })
+        @SuppressWarnings(
+            {
+                "PMD.UseVarargs",
+                "PMD.UseObjectForClearerAPI",
+                "PMD.ExcessiveMethodLength"
+            }
+        )
         public MethodVisitor visitMethod(final int access,
             final String mtd, final String desc,
             final String signature, final String[] exceptions) {
@@ -371,6 +388,23 @@ final class Skeleton {
                     ).strict(1).addIf("ops").add("op");
                     Skeleton.Visitor.this.dirs.attr("code", code);
                     Skeleton.Visitor.this.dirs.set(attr).up().up().up().up();
+                }
+
+                @Override
+                public void visitMethodInsn(final int opcode,
+                    final String owner, final String name,
+                    final String dsc, final boolean itf) {
+                    super.visitMethodInsn(opcode, owner, name, desc, itf);
+                    Skeleton.Visitor.this.dirs.xpath(
+                        String.format(
+                            "methods/method[@name='%s' and @desc='%s']",
+                            mtd, desc
+                        )
+                    ).strict(1).addIf("ops").add("op");
+                    Skeleton.Visitor.this.dirs
+                        .attr("code", "call")
+                        .set(owner.replace("/", ".").concat(".").concat(name))
+                        .up().up().up().up();
                 }
             };
         }

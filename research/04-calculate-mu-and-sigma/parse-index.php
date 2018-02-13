@@ -1,4 +1,4 @@
-#!/bin/bash
+<?php
 #
 # The MIT License (MIT)
 #
@@ -22,8 +22,14 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-for i in $(shuf ./2017)
-do
-  curl --silent http://i.jpeek.org/${i}/index.html > /dev/null
-  echo $i
-done
+$xml = simplexml_load_file($argv[1]);
+$line = $argv[2] . ' ';
+foreach ($xml->xpath('/index/metric') as $metric) {
+  $line .= $metric['name']
+    . '='
+    . $metric->mean
+    . '/'
+    . $metric->sigma
+    . '; ';
+}
+print $line . "\n";

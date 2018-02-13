@@ -23,7 +23,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
-  <xsl:param name="ctors" select="0"/>
   <xsl:template match="skeleton">
     <metric>
       <xsl:apply-templates select="@*"/>
@@ -43,40 +42,40 @@ SOFTWARE.
   </xsl:template>
   <xsl:template match="class">
     <xsl:variable name="class" select="."/>
-    <xsl:variable name="types" select="distinct-values($class/methods/method[($ctors=0 and @ctor='false') or $ctors=1]/args/arg[@type!='V']/@type)"/>
-    <xsl:variable name="types_count" select="count($types)"/>
-    <xsl:variable name="methods_count" select="count($class/methods/method[($ctors=0 and @ctor='false') or $ctors=1])"/>
-    <xsl:variable name="types_agreement">
+    <xsl:variable name="types" select="distinct-values($class/methods/method/args/arg[@type!='V']/@type)"/>
+    <xsl:variable name="l" select="count($types)"/>
+    <xsl:variable name="k" select="count($class/methods/method)"/>
+    <xsl:variable name="c">
       <xsl:for-each select="$types">
         <xsl:variable name="type" select="."/>
-        <xsl:variable name="type_count" select="count($class/methods/method[(($ctors=0 and @ctor='false') or $ctors=1) and args/arg/@type=$type])"/>
+        <xsl:variable name="cj" select="count($class/methods/method[args/arg/@type=$type])"/>
         <value>
-          <xsl:value-of select="$type_count * ($methods_count - $type_count)"/>
+          <xsl:value-of select="$cj * ($k - $cj)"/>
         </value>
       </xsl:for-each>
     </xsl:variable>
     <xsl:copy>
       <xsl:attribute name="value">
         <xsl:choose>
-          <xsl:when test="$methods_count = 0 or $methods_count = 1">
+          <xsl:when test="$k = 0 or $k = 1">
             <xsl:text>NaN</xsl:text>
           </xsl:when>
-          <xsl:when test="$types_count = 0">
+          <xsl:when test="$l = 0">
             <xsl:text>NaN</xsl:text>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:variable name="coefficient" select="2 div ($types_count * $methods_count * ($methods_count - 1))"/>
-            <xsl:value-of select="format-number(1 - ($coefficient * sum($types_agreement/value)), '0.####')"/>
+            <xsl:variable name="nhd" select="1 - (2 div ($l * $k * ($k - 1)) * sum($c/value))"/>
+            <xsl:value-of select="format-number($nhd, '0.####')"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:attribute>
       <xsl:apply-templates select="@*"/>
       <vars>
-        <var id="methods">
-          <xsl:value-of select="$methods_count"/>
+        <var id="k">
+          <xsl:value-of select="$k"/>
         </var>
-        <var id="types">
-          <xsl:value-of select="$types_count"/>
+        <var id="l">
+          <xsl:value-of select="$l"/>
         </var>
       </vars>
     </xsl:copy>

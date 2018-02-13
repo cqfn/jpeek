@@ -35,6 +35,7 @@ import org.junit.Test;
  * @since 0.23
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class SkeletonTest {
 
     @Test
@@ -54,7 +55,8 @@ public final class SkeletonTest {
                 "//class[@id='Bar']//method[@name='getKey']/ops[count(op)=3]",
                 "//class[@id='Bar']//method[@name='getKey']/ops/op[@code='put_static' and .='singleton']",
                 "//class[@id='Bar']//method[@name='getKey']/ops/op[@code='invoke_virtual' and .='length']",
-                "//class[@id='Bar']//method[@name='getKey']/ops/op[@code='get' and .='key']"
+                "//class[@id='Bar']//method[@name='getKey']/ops/op[@code='get' and .='key']",
+                "//class[@id='Bar']//method[@name='<init>']/ops[count(op)=4]"
             )
         );
     }
@@ -75,6 +77,26 @@ public final class SkeletonTest {
                 "//method[@name='methodSix' and return='Ljava/util/Date']",
                 "//method[@name='methodTwo' and return='V']",
                 "//method[@name='methodOne']/args/arg[@type='Ljava/lang/Object']"
+            )
+        );
+    }
+
+    @Test
+    public void findsMethodCalls() throws IOException {
+        MatcherAssert.assertThat(
+            XhtmlMatchers.xhtml(
+                new Skeleton(
+                    new FakeBase("Bar", "Foo")
+                ).xml().toString()
+            ),
+            XhtmlMatchers.hasXPaths(
+                // @checkstyle LineLength (10 lines)
+                "//class[@id='Bar']/methods/method[@name='<init>' and @ctor='true']/ops[op = 'java.lang.Object.<init>']",
+                "//class[@id='Bar']/methods/method[@name='getKey']/ops[op = 'java.lang.String.length']",
+                "//class[@id='Bar']/methods/method[@name='getValue']/ops[op = 'java.lang.String.length']",
+                "//class[@id='Bar']/methods/method[@name='setValue']/ops[op ='java.lang.UnsupportedOperationException.<init>']",
+                "//class[@id='Foo']/methods/method[@name='methodOne']/ops[op = 'Foo.methodTwo']",
+                "//class[@id='Foo']/methods/method[@name='methodTwo']/ops[op = 'Foo.methodOne']"
             )
         );
     }

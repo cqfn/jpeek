@@ -29,15 +29,20 @@ import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import com.jcabi.xml.XSDDocument;
 import com.jcabi.xml.XSL;
+import com.jcabi.xml.XSLChain;
 import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.HashMap;
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.Map;
+import org.cactoos.collection.CollectionOf;
 import org.cactoos.io.LengthOf;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.io.TeeInput;
 import org.cactoos.list.ListOf;
+import org.cactoos.map.MapEntry;
+import org.cactoos.map.MapOf;
 import org.cactoos.scalar.And;
 import org.cactoos.scalar.AndInThreads;
 import org.cactoos.scalar.IoCheckedScalar;
@@ -54,6 +59,10 @@ import org.xembly.Xembler;
  * @since 0.1
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @checkstyle ClassFanOutComplexityCheck (500 lines)
+ * @checkstyle ExecutableStatementCountCheck (500 lines)
+ * @checkstyle NPathComplexityCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
+ * @checkstyle CyclomaticComplexityCheck (500 lines)
  *
  * @todo #9:30min TCC metric has impediments (see puzzles in TCC.xml).
  *  Once they are resolved, cover the metric with autotests and add it
@@ -75,7 +84,16 @@ import org.xembly.Xembler;
  *  to reports list.
  *  (details on how to test the metrics are to be negotiated here - #107)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+@SuppressWarnings
+    (
+        {
+            "PMD.AvoidDuplicateLiterals",
+            "PMD.NPathComplexity",
+            "PMD.CyclomaticComplexity",
+            "PMD.StdCyclomaticComplexity",
+            "PMD.ModifiedCyclomaticComplexity"
+        }
+    )
 public final class App {
 
     /**
@@ -99,7 +117,19 @@ public final class App {
      * @param target Target dir
      */
     public App(final Path source, final Path target) {
-        this(source, target, new HashMap<>(0));
+        this(
+            source, target,
+            new MapOf<String, Object>(
+                new MapEntry<>("LCOM", true),
+                new MapEntry<>("LCOM2", true),
+                new MapEntry<>("LCOM3", true),
+                new MapEntry<>("LCOM4", true),
+                new MapEntry<>("LCOM5", true),
+                new MapEntry<>("SCOM", true),
+                new MapEntry<>("NHD", true),
+                new MapEntry<>("MMAC", true)
+            )
+        );
     }
 
     /**
@@ -126,16 +156,80 @@ public final class App {
     public void analyze() throws IOException {
         final Base base = new DefaultBase(this.input);
         final XML skeleton = new Skeleton(base).xml();
+        final Collection<XSL> layers = new LinkedList<>();
+        if (!this.params.containsKey("include-ctors")) {
+            layers.add(App.xsl("layers/no-ctors.xsl"));
+        }
+        if (!this.params.containsKey("include-static-methods")) {
+            layers.add(App.xsl("layers/no-static-methods.xsl"));
+        }
+        final XSL chain = new XSLChain(layers);
         this.save(skeleton.toString(), "skeleton.xml");
-        final Iterable<Report> reports = new ListOf<>(
-            new Report(skeleton, "LCOM", this.params, 10.0d, -5.0d),
-            new Report(skeleton, "MMAC", this.params, 0.5d, 0.25d),
-            new Report(skeleton, "LCOM5", this.params),
-            new Report(skeleton, "NHD"),
-            new Report(skeleton, "LCOM2", this.params),
-            new Report(skeleton, "LCOM3", this.params),
-            new Report(skeleton, "SCOM", this.params)
-        );
+        final Collection<Report> reports = new LinkedList<>();
+        if (this.params.containsKey("LCOM")) {
+            reports.add(
+                new Report(
+                    chain.transform(skeleton),
+                    "LCOM", this.params, 10.0d, -5.0d
+                )
+            );
+        }
+        if (this.params.containsKey("CAMC")) {
+            reports.add(
+                new Report(
+                    chain.transform(skeleton),
+                    "CAMC", this.params
+                )
+            );
+        }
+        if (this.params.containsKey("MMAC")) {
+            reports.add(
+                new Report(
+                    chain.transform(skeleton),
+                    "MMAC", this.params, 0.5d, 0.25d
+                )
+            );
+        }
+        if (this.params.containsKey("LCOM5")) {
+            reports.add(
+                new Report(
+                    chain.transform(skeleton),
+                    "LCOM5", this.params
+                )
+            );
+        }
+        if (this.params.containsKey("NHD")) {
+            reports.add(
+                new Report(
+                    chain.transform(skeleton),
+                    "NHD"
+                )
+            );
+        }
+        if (this.params.containsKey("LCOM2")) {
+            reports.add(
+                new Report(
+                    chain.transform(skeleton),
+                    "LCOM2", this.params
+                )
+            );
+        }
+        if (this.params.containsKey("LCOM3")) {
+            reports.add(
+                new Report(
+                    chain.transform(skeleton),
+                    "LCOM3", this.params
+                )
+            );
+        }
+        if (this.params.containsKey("SCOM")) {
+            reports.add(
+                new Report(
+                    chain.transform(skeleton),
+                    "SCOM", this.params
+                )
+            );
+        }
         new IoCheckedScalar<>(
             new AndInThreads(
                 report -> {
@@ -145,11 +239,14 @@ public final class App {
             )
         ).value();
         final XML index = new StrictXML(
-            App.xsl("index-post-diff-and-defects.xsl").transform(
-                App.xsl("index-post-metric-diff.xsl").transform(
-                    new XMLDocument(
-                        new Xembler(new Index(this.output)).xmlQuietly()
-                    )
+            new XSLChain(
+                new CollectionOf<>(
+                    App.xsl("index-post-metric-diff.xsl"),
+                    App.xsl("index-post-diff-and-defects.xsl")
+                )
+            ).transform(
+                new XMLDocument(
+                    new Xembler(new Index(this.output)).xmlQuietly()
                 )
             ),
             new XSDDocument(App.class.getResourceAsStream("xsd/index.xsd"))
