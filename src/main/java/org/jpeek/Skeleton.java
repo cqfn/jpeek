@@ -80,8 +80,7 @@ import org.xembly.Xembler;
         "PMD.CyclomaticComplexity",
         "PMD.StdCyclomaticComplexity",
         "PMD.ModifiedCyclomaticComplexity",
-        "PMD.TooManyMethods",
-        "PMD.ExcessiveMethodLength"
+        "PMD.TooManyMethods"
     }
 )
 final class Skeleton {
