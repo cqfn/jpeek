@@ -354,39 +354,24 @@ final class Skeleton {
                 super.visitMethod(access, mtd, desc, signature, exceptions)
             ) {
                 @Override
-                public void visitMethodInsn(final int opcode,
-                    final String owner, final String name,
-                    final String dsc, final boolean itf) {
-                    super.visitMethodInsn(opcode, owner, name, dsc, itf);
-                    if (opcode == Opcodes.INVOKEVIRTUAL) {
-                        addOp("invoke_virtual", name);
-                    }
-                }
-
-                @Override
-                public void visitFieldInsn(final int opcode,
-                    final String owner, final String attr,
-                    final String dsc) {
+                public void visitFieldInsn(final int opcode, final String owner,
+                    final String attr, final String dsc) {
                     super.visitFieldInsn(opcode, owner, attr, dsc);
-                    if (opcode == Opcodes.GETFIELD) {
-                        addOp("get", attr);
-                    } else if (opcode == Opcodes.PUTFIELD) {
-                        addOp("put", attr);
-                    } else if (opcode == Opcodes.GETSTATIC) {
-                        addOp("get_status", attr);
-                    } else if (opcode == Opcodes.PUTSTATIC) {
-                        addOp("put_static", attr);
-                    }
-                }
-
-                private void addOp(final String code, final String attr) {
                     Skeleton.Visitor.this.dirs.xpath(
                         String.format(
                             "methods/method[@name='%s' and @desc='%s']",
                             mtd, desc
                         )
                     ).strict(1).addIf("ops").add("op");
-                    Skeleton.Visitor.this.dirs.attr("code", code);
+                    if (opcode == Opcodes.GETFIELD) {
+                        Skeleton.Visitor.this.dirs.attr("code", "get");
+                    } else if (opcode == Opcodes.PUTFIELD) {
+                        Skeleton.Visitor.this.dirs.attr("code", "put");
+                    } else if (opcode == Opcodes.GETSTATIC) {
+                        Skeleton.Visitor.this.dirs.attr("code", "get_static");
+                    } else if (opcode == Opcodes.PUTSTATIC) {
+                        Skeleton.Visitor.this.dirs.attr("code", "put_static");
+                    }
                     Skeleton.Visitor.this.dirs.set(attr).up().up().up().up();
                 }
 

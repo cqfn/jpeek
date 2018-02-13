@@ -54,7 +54,7 @@ public final class SkeletonTest {
                 "//method[@name='<init>' and @ctor='true']",
                 "//class[@id='Bar']//method[@name='getKey']/ops[count(op)=3]",
                 "//class[@id='Bar']//method[@name='getKey']/ops/op[@code='put_static' and .='singleton']",
-                "//class[@id='Bar']//method[@name='getKey']/ops/op[@code='invoke_virtual' and .='length']",
+                "//class[@id='Bar']//method[@name='getKey']/ops/op[@code='call' and .='java.lang.String.length']",
                 "//class[@id='Bar']//method[@name='getKey']/ops/op[@code='get' and .='key']",
                 "//class[@id='Bar']//method[@name='<init>']/ops[count(op)=4]"
             )

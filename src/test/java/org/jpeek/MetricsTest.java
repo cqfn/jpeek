@@ -88,11 +88,6 @@ public final class MetricsTest {
     @Parameterized.Parameter(2)
     public double value;
 
-    // @todo #114:30min Because <op> `invoke_virtual` is now generated from
-    //  Skeleton, certain tests now fail which have previously succeeded.
-    //  They are the following: Foo/SCOM, MethodsWithDiffParamTypes/SCOM,
-    //  and OverloadMethods/SCOM. Figure out what the new correct values are
-    //  and add the tests back to the collection below.
     @Parameterized.Parameters(name = "{0}:{1}:{2}")
     public static Collection<Object[]> targets() {
         return new CollectionOf<>(
