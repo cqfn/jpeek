@@ -23,7 +23,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
-  <xsl:param name="ctors" select="0"/>
   <xsl:template match="skeleton">
     <metric>
       <xsl:apply-templates select="@*"/>
@@ -46,7 +45,7 @@ SOFTWARE.
     </metric>
   </xsl:template>
   <xsl:template match="class">
-    <xsl:variable name="methods" select="methods/method[($ctors=0 and @ctor='false') or $ctors=1]"/>
+    <xsl:variable name="methods" select="methods/method"/>
     <xsl:variable name="possible_relations">
       <xsl:for-each select="$methods">
         <xsl:variable name="i" select="position()"/>

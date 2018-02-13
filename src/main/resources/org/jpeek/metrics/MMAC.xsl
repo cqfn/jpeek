@@ -30,7 +30,7 @@ SOFTWARE.
       <description>
         Method-Method through Attributes Cohesion (MMAC).
         The MMAC is the average cohesion of all pairs of methods.
-        In simple words this metric shows how much methods have the
+        In simple words this metric shows how many methods have the
         same parameters or return types. When class has some number
         of methods and most of them operate the same parameters it
         assumes better. It looks like class contains overloaded
@@ -45,13 +45,13 @@ SOFTWARE.
   </xsl:template>
   <xsl:template match="class">
     <xsl:variable name="class" select="."/>
-    <xsl:variable name="methods_count" select="count($class/methods/method[@ctor='false'])"/>
+    <xsl:variable name="k" select="count($class/methods/method)"/>
     <xsl:variable name="types" select="distinct-values($class/methods/method/args/arg[@type!='V']/@type)"/>
-    <xsl:variable name="types_count" select="count($types)"/>
+    <xsl:variable name="l" select="count($types)"/>
     <xsl:variable name="type_methods">
       <xsl:for-each select="$types">
         <xsl:variable name="type" select="."/>
-        <xsl:variable name="count" select="count($class/methods/method[@ctor='false' and args/arg/@type=$type])"/>
+        <xsl:variable name="count" select="count($class/methods/method[args/arg/@type=$type])"/>
         <count>
           <xsl:value-of select="$count * ($count - 1)"/>
         </count>
@@ -60,24 +60,25 @@ SOFTWARE.
     <xsl:copy>
       <xsl:attribute name="value">
         <xsl:choose>
-          <xsl:when test="$methods_count = 0 or $types_count = 0">
+          <xsl:when test="$k = 0 or $l = 0">
             <xsl:text>0</xsl:text>
           </xsl:when>
-          <xsl:when test="$methods_count = 1">
+          <xsl:when test="$k = 1">
             <xsl:text>1</xsl:text>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:value-of select="format-number(sum($type_methods/count) div ($methods_count * $types_count * ($methods_count - 1)), '0.####')"/>
+            <xsl:variable name="mmac" select="sum($type_methods/count) div ($k * $l * ($k - 1))"/>
+            <xsl:value-of select="format-number($mmac, '0.####')"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:attribute>
       <xsl:apply-templates select="@*"/>
       <vars>
         <var id="methods">
-          <xsl:value-of select="$methods_count"/>
+          <xsl:value-of select="$k"/>
         </var>
         <var id="types">
-          <xsl:value-of select="$types_count"/>
+          <xsl:value-of select="$l"/>
         </var>
       </vars>
     </xsl:copy>

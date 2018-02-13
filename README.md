@@ -110,7 +110,7 @@ Master Thesis at the King Fahd University of Petroleum & Minerals, 2001,
 A Sensitive Metric of Class Cohesion (**SCOM**).<br/>
 Luis Fernández et al.,<br/>
 _[A] new metric [...] yielding meaningful values [...] more sensitive than those previously reported_,<br/>
-International Journal "Information Theories & Applications" Vol.13, 2006,
+International Journal "Information Theories & Applications", Volume 13, 2006,
 [PDF](http://citeseerx.ist.psu.edu/viewdoc/download;jsessionid=55D08270F99333F15E0937AF137F4468?doi=10.1.1.84.1506&rep=rep1&type=pdf).
 
 ## How it works?
@@ -167,7 +167,9 @@ that XSL is much more suitable for manipulations with data than Java.
 
 ## How to contribute?
 
-Read [`CONTRIBUTING.md`](https://github.com/yegor256/jpeek/blob/master/CONTRIBUTING.md)
+Just fork, make changes, run `mvn clean install -Pqulice` and submit
+a pull request; read [this](http://www.yegor256.com/2014/04/15/github-guidelines.html),
+if lost.
 
 ## Contributors
 

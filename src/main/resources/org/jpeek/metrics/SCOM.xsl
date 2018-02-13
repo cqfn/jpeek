@@ -23,7 +23,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
-  <xsl:param name="ctors" select="0"/>
   <xsl:template match="skeleton">
     <metric>
       <xsl:apply-templates select="@*"/>
@@ -54,11 +53,11 @@ SOFTWARE.
     </metric>
   </xsl:template>
   <xsl:template match="class">
-    <xsl:variable name="methods" select="methods/method[($ctors=1 and @ctors='true') or @ctor='false']"/>
-    <xsl:variable name="methods_count" select="count($methods)"/>
+    <xsl:variable name="methods" select="methods/method"/>
+    <xsl:variable name="m" select="count($methods)"/>
     <xsl:variable name="attributes" select="attributes/attribute/text()"/>
-    <xsl:variable name="attributes_count" select="count($attributes)"/>
-    <xsl:variable name="method_pairs">
+    <xsl:variable name="a" select="count($attributes)"/>
+    <xsl:variable name="pairs">
       <xsl:for-each select="$methods">
         <xsl:variable name="method" select="."/>
         <xsl:for-each select="$method/following-sibling::method">
@@ -72,7 +71,7 @@ SOFTWARE.
                 </match>
               </xsl:for-each>
             </xsl:variable>
-            <intensity>
+            <c>
               <xsl:choose>
                 <xsl:when test="count($intersections/match[text() = 'true']) = 0">
                   <xsl:text>0</xsl:text>
@@ -84,27 +83,27 @@ SOFTWARE.
                   <xsl:text>NaN</xsl:text>
                 </xsl:otherwise>
               </xsl:choose>
-            </intensity>
-            <weight>
+            </c>
+            <alpha>
               <xsl:choose>
-                <xsl:when test="$attributes_count &gt; 0">
-                  <xsl:value-of select="count(distinct-values($method/ops/op/text() | $other/ops/op/text())) div $attributes_count"/>
+                <xsl:when test="$a &gt; 0">
+                  <xsl:value-of select="count(distinct-values($method/ops/op/text() | $other/ops/op/text())) div $a"/>
                 </xsl:when>
                 <xsl:otherwise>
                   <xsl:text>NaN</xsl:text>
                 </xsl:otherwise>
               </xsl:choose>
-            </weight>
+            </alpha>
           </pair>
         </xsl:for-each>
       </xsl:for-each>
     </xsl:variable>
-    <xsl:variable name="method_pair_scores">
-      <xsl:for-each select="$method_pairs/pair">
+    <xsl:variable name="scores">
+      <xsl:for-each select="$pairs/pair">
         <score>
           <xsl:choose>
-            <xsl:when test="intensity != 'NaN' and weight != 'NaN'">
-              <xsl:value-of select="intensity * weight"/>
+            <xsl:when test="c != 'NaN' and alpha != 'NaN'">
+              <xsl:value-of select="c * alpha"/>
             </xsl:when>
             <xsl:otherwise>
               <xsl:text>NaN</xsl:text>
@@ -116,11 +115,12 @@ SOFTWARE.
     <xsl:copy>
       <xsl:attribute name="value">
         <xsl:choose>
-          <xsl:when test="$methods_count = 0 or $methods_count = 1 or $attributes_count = 0">
+          <xsl:when test="$m = 0 or $m = 1 or $a = 0">
             <xsl:text>NaN</xsl:text>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:value-of select="(2 div ($methods_count * ($methods_count - 1))) * sum($method_pair_scores/score)"/>
+            <xsl:variable name="scom" select="(2 div ($m * ($m - 1))) * sum($scores/score)"/>
+            <xsl:value-of select="format-number($scom, '0.####')"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:attribute>
@@ -131,14 +131,14 @@ SOFTWARE.
          to determine whether a class needs to be split into several classes.
       -->
       <vars>
-        <var id="methods">
-          <xsl:value-of select="$methods_count"/>
+        <var id="m">
+          <xsl:value-of select="$m"/>
         </var>
-        <var id="method_pairs">
-          <xsl:value-of select="count($method_pairs/pair)"/>
+        <var id="pairs">
+          <xsl:value-of select="count($pairs/pair)"/>
         </var>
-        <var id="attributes">
-          <xsl:value-of select="$attributes_count"/>
+        <var id="a">
+          <xsl:value-of select="$a"/>
         </var>
       </vars>
     </xsl:copy>
