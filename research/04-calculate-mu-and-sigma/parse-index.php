@@ -32,4 +32,4 @@ foreach ($xml->xpath('/index/metric') as $metric) {
     . $metric->sigma
     . '; ';
 }
-print $line;
+print $line . "\n";
