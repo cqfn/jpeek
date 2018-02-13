@@ -76,6 +76,13 @@ public final class Main {
     )
     private boolean statics;
 
+    @SuppressWarnings("PMD.ImmutableField")
+    @Parameter(
+        names = "--metrics",
+        description = "Comma-separated list of metrics to include"
+    )
+    private String metrics;
+
     @Parameter(
         names = "--overwrite",
         // @checkstyle LineLength (1 line)
@@ -87,7 +94,7 @@ public final class Main {
      * Ctor.
      */
     private Main() {
-        // intentionally
+        this.metrics = "LCOM5,NHD,MMAC,SCOM,CAMC";
     }
 
     /**
@@ -131,6 +138,14 @@ public final class Main {
         }
         if (this.statics) {
             params.put("include-static-methods", 1);
+        }
+        for (final String metric : this.metrics.split(",")) {
+            if (!metric.matches("[A-Z]+[0-9]?")) {
+                throw new IllegalArgumentException(
+                    String.format("Invalid metric name: '%s'", metric)
+                );
+            }
+            params.put(metric, true);
         }
         new App(this.sources.toPath(), this.target.toPath(), params).analyze();
     }

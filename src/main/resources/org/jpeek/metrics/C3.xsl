@@ -23,68 +23,51 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
+  <xsl:param name="ctors" select="0"/>
   <xsl:template match="skeleton">
     <metric>
       <xsl:apply-templates select="@*"/>
-      <title>TCC</title>
+      <title>C3</title>
       <description>
-        <xsl:text>TCC(C) = NDC(C) / NP(C), where C is the class, NP(C) is a
-          maximal possible number of direct or indirect connections - N * (N - 1) / 2,
-          NDC(C) is a number of direct connections. Value of the metric is in range [0, 1],
-          greater is better.
-        </xsl:text>
+        <xsl:text><![CDATA[
+          C3(c) = ACMS(c) if ACMS(c) > 0 else 0; where c is a class
+          ACSM(c) = average CSM(c) for all method pairs in c (skip identity
+                    pairs, i.e. a method pairing with itself)
+          CSM(m1, m2) = cosine between LSI(m1) and LSI(m2)
+
+          LSI is a vector, defined as:
+          1) For each function, collect all unique words from variable
+          names and comments (split variable names such as `myDatabaseBook` into
+          words `my`, `database`, and `book.
+          2) Extract frequency information and build co-occurrence matrix.
+          3) Reduce matrix with SVD.
+          More info on LSI: https://en.wikipedia.org/wiki/Latent_semantic_analysis#Latent_semantic_indexing
+
+          The original paper is at /papers/marcus05.pdf.
+        ]]></xsl:text>
       </description>
       <xsl:apply-templates select="node()"/>
     </metric>
   </xsl:template>
   <xsl:template match="class">
-    <xsl:variable name="methods" select="methods/method"/>
-    <xsl:variable name="methods_count" select="count($methods)"/>
-    <xsl:variable name="NC" select="$methods_count * ($methods_count - 1) div 2"/>
-    <xsl:variable name="directly-related-pairs">
+    <xsl:variable name="methods" select="methods/method[($ctors=0 and @ctor='false') or $ctors=1]"/>
+    <xsl:variable name="possible_relations">
       <xsl:for-each select="$methods">
-        <!--
-        @todo #9:30min `directly-related-pairs` currently don't take into account cases when two methods are
-         directly related through calling the third one. This could be possible to take into account only when
-         skeleton will be able to provide method-method relation information (issue #106)
-        -->
         <xsl:variable name="i" select="position()"/>
         <xsl:variable name="left" select="."/>
-        <xsl:variable name="left_ops" select="$left/ops/op[@code='get' or @code='put']"/>
         <xsl:for-each select="$methods">
           <xsl:if test="position() &gt; $i">
             <xsl:variable name="right" select="."/>
-            <xsl:variable name="right_ops" select="$right/ops/op[@code='get' or @code='put']"/>
-            <pair>
-              <xsl:value-of select="count($left_ops[.=$right_ops])"/>
-            </pair>
           </xsl:if>
         </xsl:for-each>
       </xsl:for-each>
     </xsl:variable>
-    <xsl:variable name="NDC" select="count($directly-related-pairs)"/>
-    <xsl:copy>
-      <xsl:attribute name="value">
-        <xsl:choose>
-          <xsl:when test="$methods_count le 1"><xsl:text>0</xsl:text>0</xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="$NDC div $NC"/>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:attribute>
-      <xsl:apply-templates select="@*"/>
-      <vars>
-        <var id="methods">
-          <xsl:value-of select="count($methods)"/>
-        </var>
-        <var id="NC">
-          <xsl:value-of select="$NC"/>
-        </var>
-        <var id="NDC">
-          <xsl:value-of select="$NDC"/>
-        </var>
-      </vars>
-    </xsl:copy>
+    <!--
+    @todo #64:30min Implement the C3 method according to the description above.
+     The variable names and comments have to be extracted into a set of words.
+     JPeek core will have to provide all comments for each method so words
+     can be extracted and LSI calculated for each method.
+    -->
   </xsl:template>
   <xsl:template match="node()|@*">
     <xsl:copy>

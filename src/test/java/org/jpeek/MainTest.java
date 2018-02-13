@@ -48,7 +48,7 @@ public final class MainTest {
         final Path input = Paths.get(".");
         Main.main("--sources", input.toString(), "--target", output.toString());
         MatcherAssert.assertThat(
-            Files.exists(output.resolve("LCOM.xml")),
+            Files.exists(output.resolve("LCOM5.xml")),
             Matchers.equalTo(true)
         );
     }
@@ -77,7 +77,7 @@ public final class MainTest {
             "--overwrite"
         );
         MatcherAssert.assertThat(
-            Files.exists(target.resolve("LCOM.xml")),
+            Files.exists(target.resolve("LCOM5.xml")),
             Matchers.equalTo(true)
         );
     }
