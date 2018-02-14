@@ -38,7 +38,7 @@ SOFTWARE.
     </metric>
   </xsl:template>
   <xsl:template match="class">
-    <xsl:variable name="class_fqn" select="concat(../@id, '.', @id)"/>
+    <xsl:variable name="class_fqn" select="replace(string-join(../@id | @id, '.'), '^\.', '')"/>
     <xsl:variable name="methods" select="methods/method"/>
     <xsl:variable name="methods_count" select="count($methods)"/>
     <xsl:variable name="NC" select="$methods_count * ($methods_count - 1) div 2"/>
@@ -58,20 +58,20 @@ SOFTWARE.
         <xsl:variable name="i" select="position()"/>
         <xsl:variable name="left" select="."/>
         <xsl:variable name="left_ops" select="$left/ops/op[@code='get' or @code='put']"/>
-        <xsl:variable name="left_method_calls" select="distinct-values($left/ops/op[@code='call' and matches(replace(., $class_fqn, ''), '^\.[^\.]+$')])"/>
+        <xsl:variable name="left_method_calls" select="$left/ops/op[@code='call' and matches(replace(., $class_fqn, ''), '^\.[^\.]+$')]"/>
         <xsl:for-each select="$methods">
           <xsl:if test="position() &gt; $i">
             <xsl:variable name="right" select="."/>
             <xsl:variable name="right_ops" select="$right/ops/op[@code='get' or @code='put']"/>
-            <xsl:variable name="right_method_calls" select="distinct-values($right/ops/op[@code='call' and matches(replace(., $class_fqn, ''), '^\.[^\.]+$')])"/>
-            <pair>
-              <xsl:value-of select="count($left_ops[.=$right_ops]) + count($left_method_calls[.=$right_method_calls])"/>
-            </pair>
+            <xsl:variable name="right_method_calls" select="$right/ops/op[@code='call' and matches(replace(., $class_fqn, ''), '^\.[^\.]+$')]"/>
+            <xsl:if test="exists($left_ops[.=$right_ops]) or exists($left_method_calls[.=$right_method_calls])">
+              <pair/>
+            </xsl:if>
           </xsl:if>
         </xsl:for-each>
       </xsl:for-each>
     </xsl:variable>
-    <xsl:variable name="NDC" select="count($directly-related-pairs)"/>
+    <xsl:variable name="NDC" select="count($directly-related-pairs/pair)"/>
     <xsl:copy>
       <xsl:attribute name="value">
         <xsl:choose>
