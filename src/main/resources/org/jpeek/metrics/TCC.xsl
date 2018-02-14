@@ -38,25 +38,34 @@ SOFTWARE.
     </metric>
   </xsl:template>
   <xsl:template match="class">
+    <xsl:variable name="class_fqn" select="concat(../@id, '.', @id)"/>
     <xsl:variable name="methods" select="methods/method"/>
     <xsl:variable name="methods_count" select="count($methods)"/>
     <xsl:variable name="NC" select="$methods_count * ($methods_count - 1) div 2"/>
     <xsl:variable name="directly-related-pairs">
       <xsl:for-each select="$methods">
         <!--
-        @todo #9:30min `directly-related-pairs` currently don't take into account cases when two methods are
-         directly related through calling the third one. This could be possible to take into account only when
-         skeleton will be able to provide method-method relation information (issue #106)
+        @todo #120:30min TCC: need to come back and refactor the following after
+         #156 is fixed. The ops for fields must be properly filtered to ensure
+         that they belong to the enclosing class.
+        -->
+        <!--
+        @todo #120:30min TCC: skeleton currently does not provide enough information
+         to distinguish between calls to different method overloads. If TCC is impacted
+         by this then the info needs to be added to the skeleton and then taken
+         into account in these calculations.
         -->
         <xsl:variable name="i" select="position()"/>
         <xsl:variable name="left" select="."/>
         <xsl:variable name="left_ops" select="$left/ops/op[@code='get' or @code='put']"/>
+        <xsl:variable name="left_method_calls" select="distinct-values($left/ops/op[@code='call' and matches(replace(., $class_fqn, ''), '^\.[^\.]+$')])"/>
         <xsl:for-each select="$methods">
           <xsl:if test="position() &gt; $i">
             <xsl:variable name="right" select="."/>
             <xsl:variable name="right_ops" select="$right/ops/op[@code='get' or @code='put']"/>
+            <xsl:variable name="right_method_calls" select="distinct-values($right/ops/op[@code='call' and matches(replace(., $class_fqn, ''), '^\.[^\.]+$')])"/>
             <pair>
-              <xsl:value-of select="count($left_ops[.=$right_ops])"/>
+              <xsl:value-of select="count($left_ops[.=$right_ops]) + count($left_method_calls[.=$right_method_calls])"/>
             </pair>
           </xsl:if>
         </xsl:for-each>
