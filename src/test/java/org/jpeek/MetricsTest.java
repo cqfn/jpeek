@@ -23,7 +23,7 @@
  */
 package org.jpeek;
 
-import com.jcabi.xml.XMLDocument;
+import com.jcabi.matchers.XhtmlMatchers;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,7 +31,6 @@ import java.util.Collection;
 import org.cactoos.collection.CollectionOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -61,6 +60,13 @@ import org.junit.runners.Parameterized;
 // @todo #92:30min Impediment: test for LCOM3 with "OneMethodCreatesLambda"
 //  does not work because the skeleton.xml creates a <method> for the
 //  lambda with no way to discriminate it from regular methods.
+// @todo #103:30min NaN-based assertions introduced in #103 made complexity
+//  of `testsTarget` higher. Potentially, if more possible invariants will be
+//  introduced, enlarging complexity may become real problem for this method.
+//  That's why parametrized tests as a generic way of testing all metrics is
+//  proposed to be refactored. Possible alternatives are either classical
+//  JUnit modules, one per test, or wrapping parameters to reusable test case
+//  objects, like described here - https://github.com/yegor256/cactoos-test
 /**
  * Tests for all metrics.
  * @author Yegor Bugayenko (yegor256@gmail.com)
@@ -91,6 +97,7 @@ public final class MetricsTest {
     @Parameterized.Parameters(name = "{0}:{1}:{2}")
     public static Collection<Object[]> targets() {
         return new CollectionOf<>(
+            new Object[] {"NoMethods", "NHD", Double.NaN},
             new Object[] {"Bar", "LCOM", 6.0d},
             new Object[] {"Foo", "LCOM", 1.0d},
             new Object[] {"MethodsWithDiffParamTypes", "LCOM", 15.0d},
@@ -147,19 +154,24 @@ public final class MetricsTest {
             new Skeleton(new FakeBase(this.target)).xml(),
             this.metric
         ).save(output);
-        final double actual = Double.parseDouble(
-            new XMLDocument(
+        final String xpath;
+        if (Double.isNaN(this.value)) {
+            xpath = "//class[@id='%s' and @value='NaN']";
+        } else {
+            xpath = "//class[@id='%s' and number(@value)=%.4f]";
+        }
+        MatcherAssert.assertThat(
+            XhtmlMatchers.xhtml(
                 new TextOf(
                     output.resolve(String.format("%s.xml", this.metric))
                 ).asString()
-            ).xpath(
-                String.format("//class[@id='%s']/@value", this.target)
-            ).get(0)
-        );
-        MatcherAssert.assertThat(
-            String.format("%.4f", actual),
-            Matchers.equalTo(String.format("%.4f", this.value))
+            ),
+            XhtmlMatchers.hasXPaths(
+                String.format(
+                    xpath,
+                    this.target, this.value
+                )
+            )
         );
     }
-
 }
