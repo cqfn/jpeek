@@ -22,42 +22,58 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-$f = fopen($argv[1], 'r');
-if (!$f) {
-  throw new Exception('Cannot open first file');
-}
-$diffs = [];
-while (!feof($f)) {
-  $line = fgets($f);
-  $parts = explode(' ', $line);
-  if (count($parts) != 3) {
-    continue;
-  }
-  $artifact = $parts[0];
-  $rank = floatval($parts[1]);
-  $pos = intval($parts[2]);
-  $diffs[$artifact] = $pos;
-}
-fclose($f);
 $f = fopen($argv[2], 'r');
 if (!$f) {
-  throw new Exception('Cannot open second file');
+  throw new Exception('Cannot open counts file');
 }
+$counts = [];
 while (!feof($f)) {
   $line = fgets($f);
-  $parts = explode(' ', $line);
-  if (count($parts) != 3) {
+  $parts = explode(',', $line);
+  if (count($parts) != 2) {
     continue;
   }
   $artifact = $parts[0];
-  $rank = floatval($parts[1]);
-  $pos = intval($parts[2]);
-  $diffs[$artifact] = $diffs[$artifact] - $pos;
+  $count = intval($parts[1]);
+  $counts[$artifact] = $count;
 }
 fclose($f);
-$f = fopen($argv[3], 'w+');
-foreach ($diffs as $a => $d) {
-  fputs($f, "${a} ${d}\n");
-  ++$pos;
+
+$diffs = fopen($argv[1], 'r');
+if (!$diffs) {
+  throw new Exception('Cannot open diff file');
 }
-fclose($f);
+$x = [];
+$y = [];
+while (!feof($diffs)) {
+  $line = fgets($diffs);
+  $parts = explode(' ', $line);
+  if (count($parts) != 2) {
+    continue;
+  }
+  $artifact = $parts[0];
+  $diff = intval($parts[1]);
+  $classes = $counts[$artifact];
+  $x[] = $diff;
+  $y[] = $classes;
+}
+fclose($diffs);
+
+$tex = fopen($argv[3], 'w+');
+if (!$tex) {
+  throw new Exception('Cannot open .tex file');
+}
+fputs(
+  $tex,
+  "\\begin{tikzpicture}\n"
+  . "\\begin{axis}[axis lines=middle, xlabel=\$d_a\$, ylabel={classes},\n"
+  . "x post scale=1.2,"
+  . "xmin=" . min($x) . ", xmax=" . max($x) . ", ymin=" . min($y) . ", ymax=" . max($y). "]\n"
+  . "\\addplot [only marks] table {\n"
+);
+for ($i = 0; $i < count($x); ++$i) {
+  fputs($tex, "${x[$i]} ${y[$i]}\n");
+}
+fputs($tex, "};\n\\end{axis}\n");
+fputs($tex, "\\end{tikzpicture}\n");
+fclose($tex);
