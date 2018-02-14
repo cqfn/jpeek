@@ -1,4 +1,4 @@
-<?php
+#!/bin/bash
 #
 # The MIT License (MIT)
 #
@@ -22,40 +22,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-$input = fopen('../05-filter-out-non-normal/filtered.txt', 'r');
-if (!$input) {
-  throw new Exception('Cannot open input file');
-}
-$ranks = [];
-while (!feof($input)) {
-  $line = fgets($input);
-  $parts = explode(' ', $line);
-  if (count($parts) < 2) {
-    continue;
-  }
-  $artifact = $parts[0];
-  $sum = 0;
-  for ($i = 1; $i < count($parts); ++$i) {
-    preg_match('/([A-Z0-9]+)=([\\.\\d]+)\\/([\\.\\d]+)/', $parts[$i], $matches);
-    $metric = $matches[1];
-    $mu = floatval($matches[2]);
-    if ($metric == 'LCOM') {
-      $mu = 1 - $mu;
-    }
-    $sum += $mu;
-  }
-  $rank = $sum / (count($parts) - 1);
-  $ranks[$artifact] = $rank;
-}
-arsort($ranks);
-$output = fopen('./ranked.txt', 'w+');
-if (!$output) {
-  throw new Exception('Cannot open output file');
-}
-$pos = 0;
-foreach ($ranks as $a => $r) {
-  fputs($output, "${a} ${r} ${pos}\n");
-  ++$pos;
-}
-fclose($input);
-fclose($output);
+home=$(pwd)
+php "${home}/rank.php" ../05-filter-out-non-normal/filtered-1.txt ranked-1.txt
+php "${home}/rank.php" ../05-filter-out-non-normal/filtered-2.txt ranked-2.txt

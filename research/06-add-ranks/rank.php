@@ -22,32 +22,40 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-$input = fopen('../04-calculate-mu-and-sigma/metrics.txt', 'r');
+$input = fopen($argv[1], 'r');
 if (!$input) {
   throw new Exception('Cannot open input file');
 }
-$output = fopen('./filtered.txt', 'w+');
-if (!$output) {
-  throw new Exception('Cannot open output file');
-}
+$ranks = [];
 while (!feof($input)) {
   $line = fgets($input);
   $parts = explode(' ', $line);
+  if (count($parts) < 2) {
+    continue;
+  }
   $artifact = $parts[0];
-  $off = false;
+  $sum = 0;
   for ($i = 1; $i < count($parts); ++$i) {
     preg_match('/([A-Z0-9]+)=([\\.\\d]+)\\/([\\.\\d]+)/', $parts[$i], $matches);
     $metric = $matches[1];
     $mu = floatval($matches[2]);
-    $sigma = floatval($matches[3]);
-    if ($sigma < $mu * 0.31) {
-      $off = true;
-      break;
+    if ($metric == 'LCOM') {
+      $mu = 1 - $mu;
     }
+    $sum += $mu;
   }
-  if (!$off) {
-    fputs($output, $line);
-  }
+  $rank = $sum / (count($parts) - 1);
+  $ranks[$artifact] = $rank;
+}
+arsort($ranks);
+$output = fopen($argv[2], 'w+');
+if (!$output) {
+  throw new Exception('Cannot open output file');
+}
+$pos = 0;
+foreach ($ranks as $a => $r) {
+  fputs($output, "${a} ${r} ${pos}\n");
+  ++$pos;
 }
 fclose($input);
 fclose($output);

@@ -33,5 +33,6 @@ while read line
 do
   IFS=',' read -ra parts <<< "${line}"
   echo "${parts[0]}..."
-  "${home}/get-sigma-and-mu.sh" "${jar}" "${parts[0]}" "${home}/metrics.txt"
+  "${home}/get-sigma-and-mu.sh" "${jar}" "${parts[0]}" "${home}/metrics-1.txt"
+  "${home}/get-sigma-and-mu.sh" "${jar}" "${parts[0]}" "${home}/metrics-2.txt" "--include-ctors"
 done < "${home}/../03-filter-out-artifacts/target-926.csv"
