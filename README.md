@@ -39,6 +39,52 @@ $ java -jar jpeek-0.5-jar-with-dependencies.jar --sources . --target ./jpeek
 jPeek will analyze Java files in the current directory.
 XML reports will be generated in the `./jpeek` directory. Enjoy.
 
+You can also deploy it as a web service to your own platform. Just compile it
+with `mvn clean package --settings settings.xml` and then run, as `Procfile` suggests.
+You will need to have `settings.xml` with the following data:
+
+```xml
+<settings>
+  <profiles>
+    <profile>
+      <id>jpeek-heroku</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <sentry.dsn>https://...</sentry.dsn>
+        <dynamo.key>AKIAI..........LNN6A</dynamo.key>
+        <dynamo.secret>6560KMv5+8Ti....................Qdwob63Z</dynamo.secret>
+      </properties>
+    </profile>
+  </profiles>
+</settings>
+```
+
+You will also need these tables in DynamoDB (all indexes must deliver `ALL` attributes):
+
+```
+jpeek-mistakes:
+  metric (HASH/String)
+  version (RANGE/String)
+  indexes:
+    mistakes (GSI):
+      version (HASH/String),
+      avg (RANGE/Number)
+jpeek-results:
+  artifact (HASH/String)
+  indexes:
+    ranks (GSI):
+      version (HASH/String)
+      rank (RANGE/Number)
+    scores (GSI):
+      version (HASH/String)
+      score (RANGE/Number)
+    recent (GSI):
+      good (HASH/String)
+      added (RANGE/Number)
+```
+
 ## Cohesion Metrics
 
 These papers provide a pretty good summary of cohesion metrics:
