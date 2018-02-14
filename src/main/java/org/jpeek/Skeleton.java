@@ -267,6 +267,18 @@ final class Skeleton {
                 access, name, desc, signature, value
             );
         }
+        // @todo #114:30min Find and include the name of the variable the
+        //  method is called on, if possible. Currently, only the name of called
+        //  method is retrieved. This is currently implemented in
+        //  `visitMethodInsn` down below.
+        //  Example 1: `Bar.NAME.length();`
+        //  - Here, `length` is retrieved from the method `visitMethodInsn`'s
+        //  - param `name`, but the word `NAME` itself is not included in any of
+        //  - the `visitMethodInsn` arguments.
+        //  Example 2: `src.length();`
+        //  - Here, `length` is retrieved from the method `visitMethodInsn`'s
+        //  - param `name` but the word `src` itself is not included in any of
+        //  - the `visitMethodInsn` arguments.
         @Override
         @SuppressWarnings(
             {
@@ -341,9 +353,8 @@ final class Skeleton {
                 super.visitMethod(access, mtd, desc, signature, exceptions)
             ) {
                 @Override
-                public void visitFieldInsn(final int opcode,
-                    final String owner, final String attr,
-                    final String dsc) {
+                public void visitFieldInsn(final int opcode, final String owner,
+                    final String attr, final String dsc) {
                     super.visitFieldInsn(opcode, owner, attr, dsc);
                     Skeleton.Visitor.this.dirs.xpath(
                         String.format(
