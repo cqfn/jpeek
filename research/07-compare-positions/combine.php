@@ -1,4 +1,4 @@
-#!/bin/bash
+<?php
 #
 # The MIT License (MIT)
 #
@@ -22,29 +22,44 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-# This script calculates sigma and mu of a Maven artifact.
-# Just give it artifact location as the second command line argument:
-# ./get-sigma-and-mu.sh jpeek-jar-with-dependencies.jar org.cactoos/cactoos
-
-set -e
-
-jar=$1
-output=$3
-path=${2//.//}
-opts=$4
-meta=$(curl --fail --silent "http://repo1.maven.org/maven2/${path}/maven-metadata.xml")
-version=$(echo ${meta} | xmllint --xpath '/metadata/versioning/latest/text()' -)
-group=$(echo ${meta} | xmllint --xpath '/metadata/groupId/text()' -)
-artifact=$(echo ${meta} | xmllint --xpath '/metadata/artifactId/text()' -)
-
-home=$(pwd)
-dir=$(mktemp -d /tmp/jpeek-XXXX)
-trap "rm -rf ${dir}" EXIT
-curl --fail --silent "http://repo1.maven.org/maven2/${path}/${version}/${artifact}-${version}.jar" > "${dir}/${artifact}.jar"
-cd "${dir}"
-mkdir "${artifact}"
-unzip -q -d "${artifact}" "${artifact}.jar"
-java -jar "${jar}" --sources "${artifact}" --target ./target ${opts} --quiet
-php "${home}/parse-index.php" target/index.xml $2 >> "${output}"
-cd
-rm -rf ${dir}
+$f = fopen($argv[1], 'r');
+if (!$f) {
+  throw new Exception('Cannot open first file');
+}
+$diffs = [];
+while (!feof($f)) {
+  $line = fgets($f);
+  $parts = explode(' ', $line);
+  if (count($parts) != 3) {
+    continue;
+  }
+  $artifact = $parts[0];
+  $classes = intval($parts[1]);
+  $rank = floatval($parts[2]);
+  $pos = intval($parts[3]);
+  $diffs[$artifact] = $pos;
+}
+fclose($f);
+$f = fopen($argv[2], 'r');
+if (!$f) {
+  throw new Exception('Cannot open second file');
+}
+while (!feof($f)) {
+  $line = fgets($f);
+  $parts = explode(' ', $line);
+  if (count($parts) != 3) {
+    continue;
+  }
+  $artifact = $parts[0];
+  $classes = intval($parts[1]);
+  $rank = floatval($parts[2]);
+  $pos = intval($parts[3]);
+  $diffs[$artifact] = $diffs[$artifact] - $pos;
+}
+fclose($f);
+$f = fopen($argv[3], 'w+');
+foreach ($diffs as $a => $d) {
+  fputs($f, "${a} ${d}\n");
+  ++$pos;
+}
+fclose($f);

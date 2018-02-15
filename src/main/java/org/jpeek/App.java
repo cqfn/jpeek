@@ -23,6 +23,7 @@
  */
 package org.jpeek;
 
+import com.jcabi.log.Logger;
 import com.jcabi.xml.ClasspathSources;
 import com.jcabi.xml.StrictXML;
 import com.jcabi.xml.XML;
@@ -46,6 +47,7 @@ import org.cactoos.map.MapOf;
 import org.cactoos.scalar.And;
 import org.cactoos.scalar.AndInThreads;
 import org.cactoos.scalar.IoCheckedScalar;
+import org.jpeek.skeleton.Skeleton;
 import org.xembly.Directives;
 import org.xembly.Xembler;
 
@@ -63,6 +65,8 @@ import org.xembly.Xembler;
  * @checkstyle NPathComplexityCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  * @checkstyle CyclomaticComplexityCheck (500 lines)
+ * @checkstyle MethodLengthCheck (500 lines)
+ * @checkstyle JavaNCSSCheck (500 lines)
  *
  * @todo #9:30min TCC metric has impediments (see puzzles in TCC.xml).
  *  Once they are resolved, cover the metric with autotests and add it
@@ -157,11 +161,17 @@ public final class App {
         final Base base = new DefaultBase(this.input);
         final XML skeleton = new Skeleton(base).xml();
         final Collection<XSL> layers = new LinkedList<>();
-        if (!this.params.containsKey("include-ctors")) {
+        if (this.params.containsKey("include-ctors")) {
+            Logger.info(this, "Constructors will be included");
+        } else {
             layers.add(App.xsl("layers/no-ctors.xsl"));
+            Logger.info(this, "Constructors will be ignored");
         }
-        if (!this.params.containsKey("include-static-methods")) {
+        if (this.params.containsKey("include-static-methods")) {
+            Logger.info(this, "Static methods will be included");
+        } else {
             layers.add(App.xsl("layers/no-static-methods.xsl"));
+            Logger.info(this, "Static methods will be ignored");
         }
         final XSL chain = new XSLChain(layers);
         this.save(skeleton.toString(), "skeleton.xml");
@@ -186,7 +196,7 @@ public final class App {
             reports.add(
                 new Report(
                     chain.transform(skeleton),
-                    "MMAC", this.params, 0.5d, 0.25d
+                    "MMAC", this.params, 0.5d, 0.1d
                 )
             );
         }
@@ -194,7 +204,7 @@ public final class App {
             reports.add(
                 new Report(
                     chain.transform(skeleton),
-                    "LCOM5", this.params
+                    "LCOM5", this.params, 0.5d, -0.1d
                 )
             );
         }
@@ -238,6 +248,7 @@ public final class App {
                 reports
             )
         ).value();
+        Logger.info(this, "%d XML reports created", reports.size());
         final XML index = new StrictXML(
             new XSLChain(
                 new CollectionOf<>(
@@ -276,6 +287,7 @@ public final class App {
             ),
             new XSDDocument(App.class.getResourceAsStream("xsd/matrix.xsd"))
         );
+        Logger.info(this, "Matrix generated");
         this.save(matrix.toString(), "matrix.xml");
         this.save(
             App.xsl("matrix.xsl").transform(matrix).toString(),

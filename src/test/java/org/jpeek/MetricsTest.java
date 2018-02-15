@@ -31,6 +31,7 @@ import java.util.Collection;
 import org.cactoos.collection.CollectionOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
+import org.jpeek.skeleton.Skeleton;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -85,7 +86,7 @@ import org.junit.runners.Parameterized;
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class MetricsTest {
 
-    @Parameterized.Parameter(0)
+    @Parameterized.Parameter
     public String target;
 
     @Parameterized.Parameter(1)
@@ -112,8 +113,8 @@ public final class MetricsTest {
             new Object[] {"Bar", "MMAC", 0.1d},
             new Object[] {"Foo", "MMAC", 0.3333d},
             new Object[] {"MethodsWithDiffParamTypes", "MMAC", 0.0d},
-            new Object[] {"NoMethods", "MMAC", 0.0d},
-            new Object[] {"OneVoidMethodWithoutParams", "MMAC", 0.0d},
+            new Object[] {"NoMethods", "MMAC", Double.NaN},
+            new Object[] {"OneVoidMethodWithoutParams", "MMAC", Double.NaN},
             new Object[] {"OverloadMethods", "MMAC", 0.2333d},
             new Object[] {"TwoCommonAttributes", "MMAC", 0.1667d},
             new Object[] {"WithoutAttributes", "MMAC", 0.0d},

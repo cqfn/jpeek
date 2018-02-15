@@ -31,6 +31,7 @@ import java.nio.file.Path;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.jpeek.skeleton.Skeleton;
 import org.junit.Test;
 import org.xembly.Directives;
 import org.xembly.Xembler;

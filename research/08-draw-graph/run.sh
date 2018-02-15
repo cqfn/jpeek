@@ -22,8 +22,5 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-for i in $(shuf ./2017)
-do
-  curl --silent http://i.jpeek.org/${i}/index.html > /dev/null
-  echo $i
-done
+home=$(pwd)
+php "${home}/draw.php" ../07-compare-positions/diffs.txt graph.tex
