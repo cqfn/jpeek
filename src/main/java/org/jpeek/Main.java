@@ -35,6 +35,9 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.log4j.ConsoleAppender;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PatternLayout;
 
 /**
  * Main entry point.
@@ -90,6 +93,12 @@ public final class Main {
     )
     private boolean overwrite;
 
+    @Parameter(
+        names = "--quiet",
+        description = "Turn logging off"
+    )
+    private boolean quiet;
+
     /**
      * Ctor.
      */
@@ -120,6 +129,12 @@ public final class Main {
      *  method.
      */
     private void run() throws IOException {
+        final ConsoleAppender console = new ConsoleAppender();
+        if (!this.quiet) {
+            console.setLayout(new PatternLayout("%t %c: %m%n"));
+            console.activateOptions();
+            Logger.getRootLogger().addAppender(console);
+        }
         if (this.target.exists()) {
             if (this.overwrite) {
                 Main.deleteDir(this.target);
@@ -148,6 +163,9 @@ public final class Main {
             params.put(metric, true);
         }
         new App(this.sources.toPath(), this.target.toPath(), params).analyze();
+        if (!this.quiet) {
+            Logger.getRootLogger().removeAppender(console);
+        }
     }
 
     /**
@@ -176,5 +194,6 @@ public final class Main {
                 }
             }
         );
+        com.jcabi.log.Logger.info(Main.class, "Directory %s deleted", dir);
     }
 }

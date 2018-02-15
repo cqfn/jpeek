@@ -23,6 +23,7 @@
  */
 package org.jpeek;
 
+import com.jcabi.log.Logger;
 import com.jcabi.xml.ClasspathSources;
 import com.jcabi.xml.StrictXML;
 import com.jcabi.xml.XML;
@@ -63,6 +64,8 @@ import org.xembly.Xembler;
  * @checkstyle NPathComplexityCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  * @checkstyle CyclomaticComplexityCheck (500 lines)
+ * @checkstyle MethodLengthCheck (500 lines)
+ * @checkstyle JavaNCSSCheck (500 lines)
  *
  * @todo #9:30min TCC metric has impediments (see puzzles in TCC.xml).
  *  Once they are resolved, cover the metric with autotests and add it
@@ -157,11 +160,17 @@ public final class App {
         final Base base = new DefaultBase(this.input);
         final XML skeleton = new Skeleton(base).xml();
         final Collection<XSL> layers = new LinkedList<>();
-        if (!this.params.containsKey("include-ctors")) {
+        if (this.params.containsKey("include-ctors")) {
+            Logger.info(this, "Constructors will be included");
+        } else {
             layers.add(App.xsl("layers/no-ctors.xsl"));
+            Logger.info(this, "Constructors will be ignored");
         }
-        if (!this.params.containsKey("include-static-methods")) {
+        if (this.params.containsKey("include-static-methods")) {
+            Logger.info(this, "Static methods will be included");
+        } else {
             layers.add(App.xsl("layers/no-static-methods.xsl"));
+            Logger.info(this, "Static methods will be ignored");
         }
         final XSL chain = new XSLChain(layers);
         this.save(skeleton.toString(), "skeleton.xml");
@@ -173,6 +182,7 @@ public final class App {
                     "LCOM", this.params, 10.0d, -5.0d
                 )
             );
+            Logger.info(this, "LCOM metric will be included");
         }
         if (this.params.containsKey("CAMC")) {
             reports.add(
@@ -181,22 +191,25 @@ public final class App {
                     "CAMC", this.params
                 )
             );
+            Logger.info(this, "CAMC metric will be included");
         }
         if (this.params.containsKey("MMAC")) {
             reports.add(
                 new Report(
                     chain.transform(skeleton),
-                    "MMAC", this.params, 0.5d, 0.25d
+                    "MMAC", this.params, 0.5d, 0.1d
                 )
             );
+            Logger.info(this, "MMAC metric will be included");
         }
         if (this.params.containsKey("LCOM5")) {
             reports.add(
                 new Report(
                     chain.transform(skeleton),
-                    "LCOM5", this.params
+                    "LCOM5", this.params, 0.5d, -0.1d
                 )
             );
+            Logger.info(this, "LCOM5 metric will be included");
         }
         if (this.params.containsKey("NHD")) {
             reports.add(
@@ -205,6 +218,7 @@ public final class App {
                     "NHD"
                 )
             );
+            Logger.info(this, "NHD metric will be included");
         }
         if (this.params.containsKey("LCOM2")) {
             reports.add(
@@ -213,6 +227,7 @@ public final class App {
                     "LCOM2", this.params
                 )
             );
+            Logger.info(this, "LCOM2 metric will be included");
         }
         if (this.params.containsKey("LCOM3")) {
             reports.add(
@@ -221,6 +236,7 @@ public final class App {
                     "LCOM3", this.params
                 )
             );
+            Logger.info(this, "LCOM2 metric will be included");
         }
         if (this.params.containsKey("SCOM")) {
             reports.add(
@@ -229,6 +245,7 @@ public final class App {
                     "SCOM", this.params
                 )
             );
+            Logger.info(this, "SCOM metric will be included");
         }
         new IoCheckedScalar<>(
             new AndInThreads(
@@ -238,6 +255,7 @@ public final class App {
                 reports
             )
         ).value();
+        Logger.info(this, "%d XML reports created", reports.size());
         final XML index = new StrictXML(
             new XSLChain(
                 new CollectionOf<>(
@@ -276,6 +294,7 @@ public final class App {
             ),
             new XSDDocument(App.class.getResourceAsStream("xsd/matrix.xsd"))
         );
+        Logger.info(this, "Matrix generated");
         this.save(matrix.toString(), "matrix.xml");
         this.save(
             App.xsl("matrix.xsl").transform(matrix).toString(),

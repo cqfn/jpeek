@@ -23,6 +23,7 @@
  */
 package org.jpeek;
 
+import com.jcabi.log.Logger;
 import com.jcabi.xml.ClasspathSources;
 import com.jcabi.xml.Sources;
 import com.jcabi.xml.StrictXML;
@@ -163,6 +164,7 @@ final class Report {
      * @throws IOException If fails
      */
     public void save(final Path target) throws IOException {
+        final long start = System.currentTimeMillis();
         final XML xml = new StrictXML(
             new ReportWithStatistics(
                 this.post.transform(this.xml())
@@ -185,6 +187,10 @@ final class Report {
                 )
             )
         ).intValue();
+        Logger.info(
+            this, "%s generated in %[ms]s",
+            this.metric, System.currentTimeMillis() - start
+        );
     }
 
     /**

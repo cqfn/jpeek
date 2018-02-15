@@ -23,6 +23,7 @@
  */
 package org.jpeek;
 
+import com.jcabi.log.Logger;
 import com.jcabi.xml.StrictXML;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
@@ -117,7 +118,8 @@ final class Skeleton {
      * @throws IOException If something goes wrong.
      */
     public XML xml() throws IOException {
-        return new StrictXML(
+        final long start = System.currentTimeMillis();
+        final XML xml = new StrictXML(
             new XMLDocument(
                 new Xembler(
                     new Directives()
@@ -141,6 +143,17 @@ final class Skeleton {
             ),
             Skeleton.SCHEMA
         );
+        final long total = Long.parseLong(xml.xpath("count(//class)").get(0));
+        final long time = System.currentTimeMillis() - start;
+        if (total == 0L) {
+            Logger.info(this, "No classes parsed in %[ms]s", time);
+        } else {
+            Logger.info(
+                this, "%d bytecode classes parsed in %[ms]s (%[ms]s per class)",
+                total, time, time / total
+            );
+        }
+        return xml;
     }
 
     /**
