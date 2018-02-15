@@ -23,5 +23,7 @@
 # SOFTWARE.
 
 home=$(pwd)
-php "${home}/rank.php" ../05-filter-out-non-normal/filtered-1.txt ranked-1.txt
-php "${home}/rank.php" ../05-filter-out-non-normal/filtered-2.txt ranked-2.txt
+
+rm -f "${home}/ranked.txt"
+
+php "${home}/join-and-rank.php" ../05-filter-out-non-normal/filtered-1.txt ../05-filter-out-non-normal/filtered-2.txt ranked.txt
