@@ -32,7 +32,15 @@ SOFTWARE.
               <xs:complexType>
                 <xs:simpleContent>
                   <xs:extension base="xs:string">
-                    <xs:attribute name="type" use="required" type="xs:string"/>
+                    <xs:attribute name="type" use="required" type="xs:string">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Currently the attribute's descriptor as defined in the bytecode. For example,
+                          if the field is of type "java.net.URL" then its @type will be "Ljava/net/URL".
+                          See https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.3.
+                        </xs:documentation>
+                      </xs:annotation>
+                    </xs:attribute>
                     <xs:attribute name="public" use="required" type="xs:boolean"/>
                     <xs:attribute name="static" use="required" type="xs:boolean"/>
                   </xs:extension>
@@ -48,15 +56,34 @@ SOFTWARE.
             <xs:element name="method" minOccurs="0" maxOccurs="unbounded">
               <xs:complexType>
                 <xs:all>
-                  <xs:element name="return" minOccurs="1" maxOccurs="1" type="xs:string"/>
+                  <xs:element name="return" minOccurs="1" maxOccurs="1" type="xs:string">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The descriptor for the method's return type as found in the bytecode. For example,
+                        if the return type is "java.net.URL" then this value will be "Ljava/net/URL".
+                        See https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.3.
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
                   <xs:element name="args" minOccurs="0" maxOccurs="1">
+                    <xs:annotation>
+                      <xs:documentation>The arguments defined in the method's signature.</xs:documentation>
+                    </xs:annotation>
                     <xs:complexType>
                       <xs:sequence>
                         <xs:element name="arg" minOccurs="0" maxOccurs="unbounded">
                           <xs:complexType>
                             <xs:simpleContent>
                               <xs:extension base="xs:string">
-                                <xs:attribute name="type" use="required" type="xs:string"/>
+                                <xs:attribute name="type" use="required" type="xs:string">
+                                  <xs:annotation>
+                                    <xs:documentation>
+                                      The descriptor for the arg's type as found in the bytecode. For example,
+                                      if the arg's type is "java.net.URL" then its @type will be "Ljava/net/URL".
+                                      See https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.3.
+                                    </xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
                               </xs:extension>
                             </xs:simpleContent>
                           </xs:complexType>
@@ -65,13 +92,37 @@ SOFTWARE.
                     </xs:complexType>
                   </xs:element>
                   <xs:element name="ops" minOccurs="0" maxOccurs="1">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The instructions (or "operations") found inside the method's body.
+                        This includes things like access to fields and calls to methods.
+                      </xs:documentation>
+                    </xs:annotation>
                     <xs:complexType>
                       <xs:sequence>
                         <xs:element name="op" minOccurs="0" maxOccurs="unbounded">
                           <xs:complexType>
                             <xs:simpleContent>
                               <xs:extension base="xs:string">
-                                <xs:attribute name="code" use="required" type="xs:string"/>
+                                <xs:annotation>
+                                  <xs:documentation>
+                                    The identifier of the 'thing' that is being operated on. If a method is being
+                                    called, then this would be the method's name. If a field is being read or written,
+                                    then the field's name would be here.
+                                  </xs:documentation>
+                                </xs:annotation>
+                                <xs:attribute name="code" use="required" type="xs:string">
+                                  <xs:annotation>
+                                    <xs:documentation>
+                                      Value depends on what the instruction is doing. Currently:
+                                      - "get": if an instance field is being read
+                                      - "get_static": if a static field  is being read
+                                      - "put": if an instance field is being written to
+                                      - "put_static": if a static field is being written to
+                                      - "call": if calling a method
+                                    </xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
                               </xs:extension>
                             </xs:simpleContent>
                           </xs:complexType>
@@ -81,7 +132,16 @@ SOFTWARE.
                   </xs:element>
                 </xs:all>
                 <xs:attribute name="name" use="required" type="xs:string"/>
-                <xs:attribute name="desc" use="required" type="xs:string"/>
+                <xs:attribute name="desc" use="required" type="xs:string">
+                  <xs:annotation>
+                    <xs:documentation>
+                      The method's descriptor as found in the bytecode as defined here:
+                      https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.3.3.
+                      So for example, if you have a method with signature 'int foo(Thread thread)'
+                      then its @desc will be '(Ljava/lang/Thread;)I'.
+                    </xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
                 <xs:attribute name="ctor" use="required" type="xs:boolean"/>
                 <xs:attribute name="abstract" use="required" type="xs:boolean"/>
                 <xs:attribute name="public" use="required" type="xs:boolean"/>
@@ -96,15 +156,29 @@ SOFTWARE.
         </xs:complexType>
       </xs:element>
     </xs:all>
-    <xs:attribute name="id" use="required" type="xs:string"/>
+    <xs:attribute name="id" use="required" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>The simple name of the class.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
   </xs:complexType>
   <xs:complexType name="package">
+    <xs:annotation>
+      <xs:documentation>A java package.</xs:documentation>
+    </xs:annotation>
     <xs:sequence>
       <xs:element name="class" type="class" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
-    <xs:attribute name="id" use="required" type="xs:string"/>
+    <xs:attribute name="id" use="required" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>The full name of the package.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
   </xs:complexType>
   <xs:complexType name="app">
+    <xs:annotation>
+      <xs:documentation>The application for which the code is being analyzed.</xs:documentation>
+    </xs:annotation>
     <xs:sequence>
       <xs:element name="package" type="package" minOccurs="0" maxOccurs="unbounded">
         <xs:unique name="classUnique">
@@ -113,9 +187,18 @@ SOFTWARE.
         </xs:unique>
       </xs:element>
     </xs:sequence>
-    <xs:attribute name="id" use="required" type="xs:string"/>
+    <xs:attribute name="id" use="required" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>
+          An arbitrary ID set for the app. Currently set to the app's root directory.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
   </xs:complexType>
   <xs:element name="skeleton">
+    <xs:annotation>
+      <xs:documentation>Root element.</xs:documentation>
+    </xs:annotation>
     <xs:complexType>
       <xs:all>
         <xs:element name="app" type="app" minOccurs="0" maxOccurs="1">
@@ -125,8 +208,16 @@ SOFTWARE.
           </xs:unique>
         </xs:element>
       </xs:all>
-      <xs:attribute name="date" use="required" type="xs:dateTime"/>
-      <xs:attribute name="version" use="required" type="xs:string"/>
+      <xs:attribute name="date" use="required" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>Date when the skeleton was generated.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="version" use="required" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Version of jpeek when the skeleton was generated.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
     </xs:complexType>
   </xs:element>
 </xs:schema>

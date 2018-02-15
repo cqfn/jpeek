@@ -22,6 +22,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
+<!--
+@todo #134:30min Metric.xsd: add `xsd:documentation` tags as per issue #134. We need to
+ document the schemas in src/resources/org/jpeek/xsd so that the semantics of
+ the generated XML documents is transparent for maintainers.
+-->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:complexType name="class">
     <xs:sequence>
