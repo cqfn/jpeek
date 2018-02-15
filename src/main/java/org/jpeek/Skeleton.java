@@ -43,9 +43,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.CtClass;
-import org.cactoos.iterable.Filtered;
-import org.cactoos.iterable.Joined;
-import org.cactoos.iterable.Mapped;
+import org.cactoos.collection.CollectionOf;
+import org.cactoos.collection.Filtered;
+import org.cactoos.collection.Joined;
+import org.cactoos.collection.Mapped;
 import org.cactoos.map.MapEntry;
 import org.cactoos.scalar.AndInThreads;
 import org.cactoos.scalar.UncheckedScalar;
@@ -164,7 +165,38 @@ final class Skeleton {
     @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
     private Iterable<Map.Entry<String, Directives>> packages()
         throws IOException {
-        final Iterable<CtClass> classes = new Filtered<>(
+        final long start = System.currentTimeMillis();
+        final Collection<Map.Entry<String, Directives>> all =
+            new CopyOnWriteArrayList<>();
+        new UncheckedScalar<>(
+            new AndInThreads(
+                new Mapped<>(
+                    clz -> () -> all.add(Skeleton.xembly(clz)),
+                    this.classes()
+                )
+            )
+        ).value();
+        final Map<String, Directives> map = new HashMap<>(0);
+        for (final Map.Entry<String, Directives> ent : all) {
+            map.putIfAbsent(ent.getKey(), new Directives());
+            map.get(ent.getKey()).append(ent.getValue());
+        }
+        Logger.info(
+            this, "%d classes parsed via ASM in %[ms]s",
+            map.size(), System.currentTimeMillis() - start
+        );
+        return map.entrySet();
+    }
+
+    /**
+     * Calculate Xembly for all packages.
+     * @return XML for all packages (one by one)
+     * @throws IOException If fails
+     */
+    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
+    private Iterable<CtClass> classes() throws IOException {
+        final long start = System.currentTimeMillis();
+        final Collection<CtClass> classes = new Filtered<>(
             // @checkstyle BooleanExpressionComplexityCheck (10 lines)
             ctClass -> !ctClass.isInterface()
                 && !ctClass.isEnum()
@@ -181,26 +213,15 @@ final class Skeleton {
                 new Filtered<Path>(
                     path -> Files.isRegularFile(path)
                         && path.toString().endsWith(".class"),
-                    this.base.files()
+                    new CollectionOf<>(this.base.files())
                 )
             )
         );
-        final Collection<Map.Entry<String, Directives>> all =
-            new CopyOnWriteArrayList<>();
-        new UncheckedScalar<>(
-            new AndInThreads(
-                new Mapped<>(
-                    clz -> () -> all.add(Skeleton.xembly(clz)),
-                    classes
-                )
-            )
-        ).value();
-        final Map<String, Directives> map = new HashMap<>(0);
-        for (final Map.Entry<String, Directives> ent : all) {
-            map.putIfAbsent(ent.getKey(), new Directives());
-            map.get(ent.getKey()).append(ent.getValue());
-        }
-        return map.entrySet();
+        Logger.info(
+            this, "%d classes found and parsed via Javassist in %[ms]s",
+            classes.size(), System.currentTimeMillis() - start
+        );
+        return classes;
     }
 
     /**

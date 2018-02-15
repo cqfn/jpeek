@@ -131,7 +131,7 @@ public final class Main {
     private void run() throws IOException {
         final ConsoleAppender console = new ConsoleAppender();
         if (!this.quiet) {
-            console.setLayout(new PatternLayout("%t %c: %m%n"));
+            console.setLayout(new PatternLayout("%m%n"));
             console.activateOptions();
             Logger.getRootLogger().addAppender(console);
         }
