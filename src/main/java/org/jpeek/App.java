@@ -183,7 +183,6 @@ public final class App {
                     "LCOM", this.params, 10.0d, -5.0d
                 )
             );
-            Logger.info(this, "LCOM metric will be included");
         }
         if (this.params.containsKey("CAMC")) {
             reports.add(
@@ -192,7 +191,6 @@ public final class App {
                     "CAMC", this.params
                 )
             );
-            Logger.info(this, "CAMC metric will be included");
         }
         if (this.params.containsKey("MMAC")) {
             reports.add(
@@ -201,7 +199,6 @@ public final class App {
                     "MMAC", this.params, 0.5d, 0.1d
                 )
             );
-            Logger.info(this, "MMAC metric will be included");
         }
         if (this.params.containsKey("LCOM5")) {
             reports.add(
@@ -210,7 +207,6 @@ public final class App {
                     "LCOM5", this.params, 0.5d, -0.1d
                 )
             );
-            Logger.info(this, "LCOM5 metric will be included");
         }
         if (this.params.containsKey("NHD")) {
             reports.add(
@@ -219,7 +215,6 @@ public final class App {
                     "NHD"
                 )
             );
-            Logger.info(this, "NHD metric will be included");
         }
         if (this.params.containsKey("LCOM2")) {
             reports.add(
@@ -228,7 +223,6 @@ public final class App {
                     "LCOM2", this.params
                 )
             );
-            Logger.info(this, "LCOM2 metric will be included");
         }
         if (this.params.containsKey("LCOM3")) {
             reports.add(
@@ -237,7 +231,6 @@ public final class App {
                     "LCOM3", this.params
                 )
             );
-            Logger.info(this, "LCOM2 metric will be included");
         }
         if (this.params.containsKey("SCOM")) {
             reports.add(
@@ -246,7 +239,6 @@ public final class App {
                     "SCOM", this.params
                 )
             );
-            Logger.info(this, "SCOM metric will be included");
         }
         new IoCheckedScalar<>(
             new AndInThreads(
