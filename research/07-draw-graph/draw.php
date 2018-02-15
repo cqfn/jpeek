@@ -22,44 +22,41 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-$f = fopen($argv[1], 'r');
-if (!$f) {
-  throw new Exception('Cannot open first file');
+$diffs = fopen($argv[1], 'r');
+if (!$diffs) {
+  throw new Exception('Cannot open diff file');
 }
-$diffs = [];
-while (!feof($f)) {
-  $line = fgets($f);
+$x = [];
+$y = [];
+while (!feof($diffs)) {
+  $line = fgets($diffs);
   $parts = explode(' ', $line);
-  if (count($parts) != 3) {
+  if (count($parts) < 3) {
     continue;
   }
   $artifact = $parts[0];
-  $classes = intval($parts[1]);
-  $rank = floatval($parts[2]);
-  $pos = intval($parts[3]);
-  $diffs[$artifact] = $pos;
+  $diff = intval($parts[1]);
+  $classes = intval($parts[2]);
+  $x[] = $diff;
+  $y[] = $classes;
 }
-fclose($f);
-$f = fopen($argv[2], 'r');
-if (!$f) {
-  throw new Exception('Cannot open second file');
+fclose($diffs);
+
+$tex = fopen($argv[2], 'w+');
+if (!$tex) {
+  throw new Exception('Cannot open .tex file');
 }
-while (!feof($f)) {
-  $line = fgets($f);
-  $parts = explode(' ', $line);
-  if (count($parts) != 3) {
-    continue;
-  }
-  $artifact = $parts[0];
-  $classes = intval($parts[1]);
-  $rank = floatval($parts[2]);
-  $pos = intval($parts[3]);
-  $diffs[$artifact] = $diffs[$artifact] - $pos;
+fputs(
+  $tex,
+  "\\begin{tikzpicture}\n"
+  . "\\begin{axis}[axis lines=middle, xlabel=\$d_a\$, ylabel={classes},\n"
+  . "x post scale=1.2,"
+  . "xmin=" . min($x) . ", xmax=" . max($x) . ", ymin=" . min($y) . ", ymax=" . max($y). "]\n"
+  . "\\addplot [only marks] table {\n"
+);
+for ($i = 0; $i < count($x); ++$i) {
+  fputs($tex, "${x[$i]} ${y[$i]}\n");
 }
-fclose($f);
-$f = fopen($argv[3], 'w+');
-foreach ($diffs as $a => $d) {
-  fputs($f, "${a} ${d}\n");
-  ++$pos;
-}
-fclose($f);
+fputs($tex, "};\n\\end{axis}\n");
+fputs($tex, "\\end{tikzpicture}\n");
+fclose($tex);

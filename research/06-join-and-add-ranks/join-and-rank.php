@@ -87,11 +87,15 @@ $all = array_filter(
 order($all, 1);
 order($all, 2);
 
+foreach ($all as &$h) {
+  $h['diff'] = $h['pos1'] - $h['pos2'];
+}
+
 $output = fopen($argv[3], 'w+');
 if (!$output) {
   throw new Exception('Cannot open output file');
 }
 foreach ($all as $a => $h) {
-  fputs($output, "${a} ${h['classes']} ${h['avg1']} ${h['pos1']} ${h['avg2']} ${h['pos2']}\n");
+  fputs($output, "${a} ${h['diff']} ${h['classes']} ${h['avg1']} ${h['pos1']} ${h['avg2']} ${h['pos2']}\n");
 }
 fclose($output);
