@@ -188,7 +188,7 @@ final class Report {
             )
         ).intValue();
         Logger.info(
-            this, "%s generated in %[ms]s",
+            this, "%s.xml generated in %[ms]s",
             this.metric, System.currentTimeMillis() - start
         );
     }
