@@ -23,4 +23,7 @@
 # SOFTWARE.
 
 home=$(pwd)
-php "${home}/draw.php" ../07-compare-positions/diffs.txt graph.tex
+
+rm -f "${home}/graph.tex"
+
+php "${home}/draw.php" ../06-join-and-add-ranks/ranked.txt graph.tex

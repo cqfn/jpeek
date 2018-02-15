@@ -23,5 +23,9 @@
 # SOFTWARE.
 
 home=$(pwd)
+
+rm -f "${home}/filtered-1.txt"
+rm -f "${home}/filtered-2.txt"
+
 php "${home}/filter.php" '../04-calculate-mu-and-sigma/metrics-1.txt' './filtered-1.txt'
-php "${home}/filter.php" '../04-calculate-mu-and-sigma/metrics-2.txt' './filtered-2.txt'
+cp '../04-calculate-mu-and-sigma/metrics-2.txt' './filtered-2.txt'

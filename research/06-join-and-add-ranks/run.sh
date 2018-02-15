@@ -1,4 +1,4 @@
-<?php
+#!/bin/bash
 #
 # The MIT License (MIT)
 #
@@ -22,44 +22,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-$f = fopen($argv[1], 'r');
-if (!$f) {
-  throw new Exception('Cannot open first file');
-}
-$diffs = [];
-while (!feof($f)) {
-  $line = fgets($f);
-  $parts = explode(' ', $line);
-  if (count($parts) != 3) {
-    continue;
-  }
-  $artifact = $parts[0];
-  $classes = intval($parts[1]);
-  $rank = floatval($parts[2]);
-  $pos = intval($parts[3]);
-  $diffs[$artifact] = $pos;
-}
-fclose($f);
-$f = fopen($argv[2], 'r');
-if (!$f) {
-  throw new Exception('Cannot open second file');
-}
-while (!feof($f)) {
-  $line = fgets($f);
-  $parts = explode(' ', $line);
-  if (count($parts) != 3) {
-    continue;
-  }
-  $artifact = $parts[0];
-  $classes = intval($parts[1]);
-  $rank = floatval($parts[2]);
-  $pos = intval($parts[3]);
-  $diffs[$artifact] = $diffs[$artifact] - $pos;
-}
-fclose($f);
-$f = fopen($argv[3], 'w+');
-foreach ($diffs as $a => $d) {
-  fputs($f, "${a} ${d}\n");
-  ++$pos;
-}
-fclose($f);
+home=$(pwd)
+
+rm -f "${home}/ranked.txt"
+
+php "${home}/join-and-rank.php" ../05-filter-out-non-normal/filtered-1.txt ../05-filter-out-non-normal/filtered-2.txt ranked.txt

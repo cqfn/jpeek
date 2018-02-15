@@ -22,21 +22,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-$input = fopen($argv[1], 'r');
-if (!$input) {
-  throw new Exception('Cannot open input file');
-}
-$ranks = [];
-$counts = [];
-while (!feof($input)) {
-  $line = fgets($input);
+function avg($line) {
   $parts = explode(' ', $line);
-  if (count($parts) < 2) {
-    continue;
-  }
-  $artifact = $parts[0];
-  $classes = intval($parts[1]);
-  $counts[$artifact] = $classes;
   $sum = 0;
   for ($i = 2; $i < count($parts); ++$i) {
     preg_match('/([A-Z0-9]+)=([\\.\\d]+)\\/([\\.\\d]+)/', $parts[$i], $matches);
@@ -47,18 +34,68 @@ while (!feof($input)) {
     }
     $sum += $mu;
   }
-  $rank = $sum / (count($parts) - 1);
-  $ranks[$artifact] = $rank;
+  return $sum / (count($parts) - 1);
 }
-arsort($ranks);
-$output = fopen($argv[2], 'w+');
+
+function load($path, &$array, $idx) {
+  $f = fopen($path, 'r');
+  if (!$f) {
+    throw new Exception('Cannot open input file');
+  }
+  while (!feof($f)) {
+    $line = fgets($f);
+    $parts = explode(' ', $line);
+    if (count($parts) < 2) {
+      continue;
+    }
+    $artifact = $parts[0];
+    $classes = intval($parts[1]);
+    $avg = avg($line);
+    if (!array_key_exists($artifact, $array)) {
+      $array[$artifact] = array('classes' => $classes);
+    }
+    $array[$artifact]['avg' . $idx] = $avg;
+  }
+  fclose($f);
+}
+
+function order(&$array, $idx) {
+  uasort(
+    $array,
+    function ($a, $b) {
+      return $a['avg' . $idx] < $b['avg' . $idx];
+    }
+  );
+  $pos = 0;
+  foreach ($array as &$h) {
+    $h['pos' . $idx] = $pos;
+    ++$pos;
+  }
+}
+
+$all = array();
+load($argv[1], $all, 1);
+load($argv[2], $all, 2);
+
+$all = array_filter(
+  $all,
+  function ($h) {
+    return array_key_exists('avg1', $h) && array_key_exists('avg2', $h);
+  }
+);
+
+order($all, 1);
+order($all, 2);
+
+foreach ($all as &$h) {
+  $h['diff'] = $h['pos1'] - $h['pos2'];
+}
+
+$output = fopen($argv[3], 'w+');
 if (!$output) {
   throw new Exception('Cannot open output file');
 }
-$pos = 0;
-foreach ($ranks as $a => $r) {
-  fputs($output, "${a} ${counts[$a]} ${r} ${pos}\n");
-  ++$pos;
+foreach ($all as $a => $h) {
+  fputs($output, "${a} ${h['diff']} ${h['classes']} ${h['avg1']} ${h['pos1']} ${h['avg2']} ${h['pos2']}\n");
 }
-fclose($input);
 fclose($output);

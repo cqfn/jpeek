@@ -1,4 +1,4 @@
-#!/bin/bash
+<?php
 #
 # The MIT License (MIT)
 #
@@ -22,6 +22,41 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-home=$(pwd)
-php "${home}/rank.php" ../05-filter-out-non-normal/filtered-1.txt ranked-1.txt
-php "${home}/rank.php" ../05-filter-out-non-normal/filtered-2.txt ranked-2.txt
+$diffs = fopen($argv[1], 'r');
+if (!$diffs) {
+  throw new Exception('Cannot open diff file');
+}
+$x = [];
+$y = [];
+while (!feof($diffs)) {
+  $line = fgets($diffs);
+  $parts = explode(' ', $line);
+  if (count($parts) < 3) {
+    continue;
+  }
+  $artifact = $parts[0];
+  $diff = intval($parts[1]);
+  $classes = intval($parts[2]);
+  $x[] = $diff;
+  $y[] = $classes;
+}
+fclose($diffs);
+
+$tex = fopen($argv[2], 'w+');
+if (!$tex) {
+  throw new Exception('Cannot open .tex file');
+}
+fputs(
+  $tex,
+  "\\begin{tikzpicture}\n"
+  . "\\begin{axis}[axis lines=middle, xlabel=\$d_a\$, ylabel={classes},\n"
+  . "x post scale=1.2,"
+  . "xmin=" . min($x) . ", xmax=" . max($x) . ", ymin=" . min($y) . ", ymax=" . max($y). "]\n"
+  . "\\addplot [only marks] table {\n"
+);
+for ($i = 0; $i < count($x); ++$i) {
+  fputs($tex, "${x[$i]} ${y[$i]}\n");
+}
+fputs($tex, "};\n\\end{axis}\n");
+fputs($tex, "\\end{tikzpicture}\n");
+fclose($tex);
