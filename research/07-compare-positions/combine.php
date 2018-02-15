@@ -34,8 +34,9 @@ while (!feof($f)) {
     continue;
   }
   $artifact = $parts[0];
-  $rank = floatval($parts[1]);
-  $pos = intval($parts[2]);
+  $classes = intval($parts[1]);
+  $rank = floatval($parts[2]);
+  $pos = intval($parts[3]);
   $diffs[$artifact] = $pos;
 }
 fclose($f);
@@ -50,8 +51,9 @@ while (!feof($f)) {
     continue;
   }
   $artifact = $parts[0];
-  $rank = floatval($parts[1]);
-  $pos = intval($parts[2]);
+  $classes = intval($parts[1]);
+  $rank = floatval($parts[2]);
+  $pos = intval($parts[3]);
   $diffs[$artifact] = $diffs[$artifact] - $pos;
 }
 fclose($f);

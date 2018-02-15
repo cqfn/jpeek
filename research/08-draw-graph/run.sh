@@ -23,4 +23,4 @@
 # SOFTWARE.
 
 home=$(pwd)
-php "${home}/draw.php" ../07-compare-positions/diffs.txt ../02-count-classes/all-with-counts.csv graph.tex
+php "${home}/draw.php" ../07-compare-positions/diffs.txt graph.tex

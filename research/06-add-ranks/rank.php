@@ -27,6 +27,7 @@ if (!$input) {
   throw new Exception('Cannot open input file');
 }
 $ranks = [];
+$counts = [];
 while (!feof($input)) {
   $line = fgets($input);
   $parts = explode(' ', $line);
@@ -34,8 +35,10 @@ while (!feof($input)) {
     continue;
   }
   $artifact = $parts[0];
+  $classes = intval($parts[1]);
+  $counts[$artifact] = $classes;
   $sum = 0;
-  for ($i = 1; $i < count($parts); ++$i) {
+  for ($i = 2; $i < count($parts); ++$i) {
     preg_match('/([A-Z0-9]+)=([\\.\\d]+)\\/([\\.\\d]+)/', $parts[$i], $matches);
     $metric = $matches[1];
     $mu = floatval($matches[2]);
@@ -54,7 +57,7 @@ if (!$output) {
 }
 $pos = 0;
 foreach ($ranks as $a => $r) {
-  fputs($output, "${a} ${r} ${pos}\n");
+  fputs($output, "${a} ${counts[$a]} ${r} ${pos}\n");
   ++$pos;
 }
 fclose($input);

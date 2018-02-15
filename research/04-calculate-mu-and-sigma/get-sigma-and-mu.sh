@@ -44,7 +44,7 @@ curl --fail --silent "http://repo1.maven.org/maven2/${path}/${version}/${artifac
 cd "${dir}"
 mkdir "${artifact}"
 unzip -q -d "${artifact}" "${artifact}.jar"
-java -jar "${jar}" --sources "${artifact}" --target ./target ${opts}
+java -jar "${jar}" --sources "${artifact}" --target ./target ${opts} --quiet
 php "${home}/parse-index.php" target/index.xml $2 >> "${output}"
 cd
 rm -rf ${dir}

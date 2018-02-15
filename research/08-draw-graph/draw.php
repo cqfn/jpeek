@@ -22,23 +22,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-$f = fopen($argv[2], 'r');
-if (!$f) {
-  throw new Exception('Cannot open counts file');
-}
-$counts = [];
-while (!feof($f)) {
-  $line = fgets($f);
-  $parts = explode(',', $line);
-  if (count($parts) != 2) {
-    continue;
-  }
-  $artifact = $parts[0];
-  $count = intval($parts[1]);
-  $counts[$artifact] = $count;
-}
-fclose($f);
-
 $diffs = fopen($argv[1], 'r');
 if (!$diffs) {
   throw new Exception('Cannot open diff file');
@@ -52,14 +35,14 @@ while (!feof($diffs)) {
     continue;
   }
   $artifact = $parts[0];
-  $diff = intval($parts[1]);
-  $classes = $counts[$artifact];
+  $classes = intval($parts[1]);
+  $diff = intval($parts[2]);
   $x[] = $diff;
   $y[] = $classes;
 }
 fclose($diffs);
 
-$tex = fopen($argv[3], 'w+');
+$tex = fopen($argv[2], 'w+');
 if (!$tex) {
   throw new Exception('Cannot open .tex file');
 }

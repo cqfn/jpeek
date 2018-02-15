@@ -34,8 +34,9 @@ while (!feof($input)) {
   $line = fgets($input);
   $parts = explode(' ', $line);
   $artifact = $parts[0];
+  $classes = intval($parts[1]);
   $off = false;
-  for ($i = 1; $i < count($parts); ++$i) {
+  for ($i = 2; $i < count($parts); ++$i) {
     preg_match('/([A-Z0-9]+)=([\\.\\d]+)\\/([\\.\\d]+)/', $parts[$i], $matches);
     $metric = $matches[1];
     $mu = floatval($matches[2]);
