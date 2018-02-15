@@ -47,6 +47,7 @@ import org.cactoos.map.MapOf;
 import org.cactoos.scalar.And;
 import org.cactoos.scalar.AndInThreads;
 import org.cactoos.scalar.IoCheckedScalar;
+import org.jpeek.skeleton.Skeleton;
 import org.xembly.Directives;
 import org.xembly.Xembler;
 

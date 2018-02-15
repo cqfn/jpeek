@@ -93,4 +93,11 @@ public final class AppTest {
         );
     }
 
+    @Test
+    public void createsRealXml() throws IOException {
+        final Path output = Files.createTempDirectory("").resolve("x7");
+        final Path input = Paths.get("/code/temp/jpeek/org");
+        new App(input, output).analyze();
+    }
+
 }

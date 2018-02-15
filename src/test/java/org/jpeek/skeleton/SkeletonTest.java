@@ -21,11 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.jpeek;
+package org.jpeek.skeleton;
 
 import com.jcabi.matchers.XhtmlMatchers;
 import java.io.IOException;
 import org.hamcrest.MatcherAssert;
+import org.jpeek.FakeBase;
 import org.junit.Test;
 
 /**
@@ -39,7 +40,7 @@ import org.junit.Test;
 public final class SkeletonTest {
 
     @Test
-    public void createsXml() throws IOException {
+    public void createsXml() {
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
                 new Skeleton(

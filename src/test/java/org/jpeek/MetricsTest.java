@@ -31,6 +31,7 @@ import java.util.Collection;
 import org.cactoos.collection.CollectionOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
+import org.jpeek.skeleton.Skeleton;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
