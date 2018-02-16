@@ -40,6 +40,9 @@ while (!feof($input)) {
     preg_match('/([A-Z0-9]+)=([\\.\\d]+)\\/([\\.\\d]+)/', $parts[$i], $matches);
     $metric = $matches[1];
     $mu = floatval($matches[2]);
+    if ($metric == 'LCOM5') {
+      $mu = 1 - $mu;
+    }
     $sigma = floatval($matches[3]);
     if ($sigma < $mu * 0.31) {
       $off = true;

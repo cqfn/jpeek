@@ -29,7 +29,7 @@ function avg($line) {
     preg_match('/([A-Z0-9]+)=([\\.\\d]+)\\/([\\.\\d]+)/', $parts[$i], $matches);
     $metric = $matches[1];
     $mu = floatval($matches[2]);
-    if ($metric == 'LCOM') {
+    if ($metric == 'LCOM5') {
       $mu = 1 - $mu;
     }
     $sum += $mu;
