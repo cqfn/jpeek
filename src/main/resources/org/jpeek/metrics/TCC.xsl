@@ -38,35 +38,47 @@ SOFTWARE.
     </metric>
   </xsl:template>
   <xsl:template match="class">
-    <xsl:variable name="methods" select="methods/method"/>
+    <!--
+    @todo #120:30min TCC: inclusion of inherited attributes and methods in the analysis
+     should be configurable. Come back here after #187 is fixed and adjust the xpath
+     for `attrs` and `methods` accordingly.
+    -->
+    <xsl:variable name="attrs" select="attributes/attribute[@static='false']/text()"/>
+    <!--
+    @todo #120:30min TCC: this metric needs to exclude private methods from the analysis.
+     Adjust the xpath for `methods` accordingly after #188 is fixed.
+    -->
+    <xsl:variable name="methods" select="methods/method[@abstract='false' and @ctor='false']"/>
     <xsl:variable name="methods_count" select="count($methods)"/>
     <xsl:variable name="NC" select="$methods_count * ($methods_count - 1) div 2"/>
     <xsl:variable name="directly-related-pairs">
       <xsl:for-each select="$methods">
         <!--
-        @todo #9:30min `directly-related-pairs` currently don't take into account cases when two methods are
-         directly related through calling the third one. This could be possible to take into account only when
-         skeleton will be able to provide method-method relation information (issue #106)
+        @todo #120:30min TCC: need to come back and refactor the following after
+         #156 is fixed. The ops for fields must be properly filtered to ensure
+         that they belong to the enclosing class.
         -->
         <xsl:variable name="i" select="position()"/>
         <xsl:variable name="left" select="."/>
-        <xsl:variable name="left_ops" select="$left/ops/op[@code='get' or @code='put']"/>
+        <xsl:variable name="left_attrs" select="$attrs[. = $left/ops/op/text()]"/>
         <xsl:for-each select="$methods">
           <xsl:if test="position() &gt; $i">
             <xsl:variable name="right" select="."/>
-            <xsl:variable name="right_ops" select="$right/ops/op[@code='get' or @code='put']"/>
-            <pair>
-              <xsl:value-of select="count($left_ops[.=$right_ops])"/>
-            </pair>
+            <xsl:variable name="right_attrs" select="$attrs[. = $right/ops/op/text()]"/>
+            <xsl:if test="exists($left_attrs[. = $right_attrs])">
+              <pair/>
+            </xsl:if>
           </xsl:if>
         </xsl:for-each>
       </xsl:for-each>
     </xsl:variable>
-    <xsl:variable name="NDC" select="count($directly-related-pairs)"/>
+    <xsl:variable name="NDC" select="count($directly-related-pairs/pair)"/>
     <xsl:copy>
       <xsl:attribute name="value">
         <xsl:choose>
-          <xsl:when test="$methods_count le 1"><xsl:text>0</xsl:text>0</xsl:when>
+          <xsl:when test="$methods_count le 1">
+            <xsl:text>0</xsl:text>
+          </xsl:when>
           <xsl:otherwise>
             <xsl:value-of select="$NDC div $NC"/>
           </xsl:otherwise>
@@ -74,6 +86,9 @@ SOFTWARE.
       </xsl:attribute>
       <xsl:apply-templates select="@*"/>
       <vars>
+        <var id="attributes">
+          <xsl:value-of select="count($attrs)"/>
+        </var>
         <var id="methods">
           <xsl:value-of select="count($methods)"/>
         </var>
