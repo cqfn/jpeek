@@ -52,8 +52,11 @@ SOFTWARE.
     <xsl:copy>
       <xsl:attribute name="value">
         <xsl:choose>
-          <xsl:when test="$k = 0 or $l = 0">
-            <xsl:text>0</xsl:text>
+          <xsl:when test="$k = 0">
+            <xsl:text>NaN</xsl:text>
+          </xsl:when>
+          <xsl:when test="$l = 0">
+            <xsl:text>NaN</xsl:text>
           </xsl:when>
           <xsl:otherwise>
             <xsl:variable name="camc" select="sum($p/p) div ($k * $l)"/>

@@ -31,6 +31,7 @@ import java.util.Collection;
 import org.cactoos.collection.CollectionOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
+import org.jpeek.skeleton.Skeleton;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -38,9 +39,6 @@ import org.junit.runners.Parameterized;
 // @todo #18:30min Impediment: #103 must be fixed before LCOM5 is tested
 //  against: NoMethods, OneVoidMethodWithoutParams, WithoutAttributes,
 //  OneMethodCreatesLambda. The LCOM5 value for these will be "NaN".
-// @todo #18:30min Impediment: test for LCOM5 with "Bar" is not working
-//  because the generated skeleton.xml is not including all attributes
-//  being used by a method. See #114.
 // @todo #93:30min NHD needs to be tested against the following after #103 is
 //  fixed: NoMethods, OneVoidMethodWithoutParams, WithoutAttributes,
 //  OneMethodCreatesLambda. NHD score for all these is "NaN".
@@ -87,7 +85,7 @@ import org.junit.runners.Parameterized;
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class MetricsTest {
 
-    @Parameterized.Parameter(0)
+    @Parameterized.Parameter
     public String target;
 
     @Parameterized.Parameter(1)
@@ -114,13 +112,14 @@ public final class MetricsTest {
             new Object[] {"Bar", "MMAC", 0.1d},
             new Object[] {"Foo", "MMAC", 0.3333d},
             new Object[] {"MethodsWithDiffParamTypes", "MMAC", 0.0d},
-            new Object[] {"NoMethods", "MMAC", 0.0d},
-            new Object[] {"OneVoidMethodWithoutParams", "MMAC", 0.0d},
+            new Object[] {"NoMethods", "MMAC", Double.NaN},
+            new Object[] {"OneVoidMethodWithoutParams", "MMAC", Double.NaN},
             new Object[] {"OverloadMethods", "MMAC", 0.2333d},
             new Object[] {"TwoCommonAttributes", "MMAC", 0.1667d},
             new Object[] {"WithoutAttributes", "MMAC", 0.0d},
             new Object[] {"OneMethodCreatesLambda", "MMAC", 0.0d},
             new Object[] {"Foo", "LCOM5", 0.5d},
+            new Object[] {"Bar", "LCOM5", 0.8125d},
             new Object[] {"MethodsWithDiffParamTypes", "LCOM5", 0.6667d},
             new Object[] {"OverloadMethods", "LCOM5", 0.25d},
             new Object[] {"TwoCommonAttributes", "LCOM5", 1.0d},
@@ -146,7 +145,9 @@ public final class MetricsTest {
             new Object[] {"OverloadMethods", "LCOM3", 0.25d},
             new Object[] {"TwoCommonAttributes", "LCOM3", 1.0d},
             new Object[] {"WithoutAttributes", "LCOM3", 0.0d},
-            new Object[] {"MethodsWithDiffParamTypes", "PCC", 0.3333d}
+            new Object[] {"MethodsWithDiffParamTypes", "PCC", 0.3333d},
+            new Object[] {"Foo", "TCC", 1.0d},
+            new Object[] {"MethodsWithDiffParamTypes", "TCC", 0.2d}
         );
     }
 

@@ -63,19 +63,18 @@ final class TkReport implements TkRegex {
     public Response act(final RqRegex req) throws IOException {
         final Matcher matcher = req.matcher();
         // @checkstyle MagicNumber (1 line)
-        String path = matcher.group(3);
+        final String path = matcher.group(3);
         if (path.isEmpty()) {
             throw new RsForward(
                 String.format("%s/index.html", matcher.group(0))
             );
         }
-        path = path.substring(1);
         return new IoCheckedFunc<>(
             new IoCheckedBiFunc<>(this.reports).apply(
                 matcher.group(1),
                 matcher.group(2)
             )
-        ).apply(path);
+        ).apply(path.substring(1));
     }
 
 }

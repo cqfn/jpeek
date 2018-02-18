@@ -159,6 +159,13 @@ _[A] new metric [...] yielding meaningful values [...] more sensitive than those
 International Journal "Information Theories & Applications", Volume 13, 2006,
 [PDF](http://citeseerx.ist.psu.edu/viewdoc/download;jsessionid=55D08270F99333F15E0937AF137F4468?doi=10.1.1.84.1506&rep=rep1&type=pdf).
 
+[`bieman95`]
+Tight Class Cohesion (**TCC**).<br/>
+James M. Bieman et al.,<br/>
+Cohesion and Reuse in an Object-Oriented System,<br/>
+Department of Computer Science, Colorado State University, 1995,
+[PDF](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.53.2683).
+
 ## How it works?
 
 First, `Skeleton` parses Java bytecode using Javaassit and ASM, in order to produce

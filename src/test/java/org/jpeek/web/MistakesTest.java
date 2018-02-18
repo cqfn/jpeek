@@ -30,6 +30,7 @@ import java.nio.file.Paths;
 import org.cactoos.collection.Joined;
 import org.hamcrest.MatcherAssert;
 import org.jpeek.App;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.xembly.Directive;
 import org.xembly.Directives;
@@ -45,6 +46,7 @@ import org.xembly.Xembler;
 public final class MistakesTest {
 
     @Test
+    @Ignore
     public void acceptsAndRenders() throws Exception {
         final Path output = Files.createTempDirectory("").resolve("x2");
         final Path input = Paths.get(".");
