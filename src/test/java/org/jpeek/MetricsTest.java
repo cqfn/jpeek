@@ -55,9 +55,6 @@ import org.junit.runners.Parameterized;
 // @todo #92:30min Impediment: test for LCOM2/3 with "Bar" is not working
 //  because the generated skeleton.xml is not including all attributes
 //  being used by a method. See #114.
-// @todo #92:30min Impediment: test for LCOM3 with "OneMethodCreatesLambda"
-//  does not work because the skeleton.xml creates a <method> for the
-//  lambda with no way to discriminate it from regular methods.
 // @todo #103:30min NaN-based assertions introduced in #103 made complexity
 //  of `testsTarget` higher. Potentially, if more possible invariants will be
 //  introduced, enlarging complexity may become real problem for this method.
