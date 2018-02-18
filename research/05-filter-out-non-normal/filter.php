@@ -22,11 +22,11 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-$input = fopen('../04-calculate-mu-and-sigma/metrics.txt', 'r');
+$input = fopen($argv[1], 'r');
 if (!$input) {
   throw new Exception('Cannot open input file');
 }
-$output = fopen('./filtered.txt', 'w+');
+$output = fopen($argv[2], 'w+');
 if (!$output) {
   throw new Exception('Cannot open output file');
 }
@@ -34,11 +34,15 @@ while (!feof($input)) {
   $line = fgets($input);
   $parts = explode(' ', $line);
   $artifact = $parts[0];
+  $classes = intval($parts[1]);
   $off = false;
-  for ($i = 1; $i < count($parts); ++$i) {
+  for ($i = 2; $i < count($parts); ++$i) {
     preg_match('/([A-Z0-9]+)=([\\.\\d]+)\\/([\\.\\d]+)/', $parts[$i], $matches);
     $metric = $matches[1];
     $mu = floatval($matches[2]);
+    if ($metric == 'LCOM5') {
+      $mu = 1 - $mu;
+    }
     $sigma = floatval($matches[3]);
     if ($sigma < $mu * 0.31) {
       $off = true;

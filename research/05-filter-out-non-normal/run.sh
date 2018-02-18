@@ -22,8 +22,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-for i in $(shuf ./2017)
-do
-  curl --silent http://i.jpeek.org/${i}/index.html > /dev/null
-  echo $i
-done
+home=$(pwd)
+
+rm -f "${home}/filtered-1.txt"
+rm -f "${home}/filtered-2.txt"
+
+php "${home}/filter.php" '../04-calculate-mu-and-sigma/metrics-1.txt' './filtered-1.txt'
+cp '../04-calculate-mu-and-sigma/metrics-2.txt' './filtered-2.txt'

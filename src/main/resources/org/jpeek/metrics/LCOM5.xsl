@@ -61,7 +61,10 @@ SOFTWARE.
     <xsl:copy>
       <xsl:attribute name="value">
         <xsl:choose>
-          <xsl:when test="$a = 0 or $m = 1">
+          <xsl:when test="$a = 0">
+            <xsl:text>NaN</xsl:text>
+          </xsl:when>
+          <xsl:when test="$m = 1">
             <xsl:text>NaN</xsl:text>
           </xsl:when>
           <xsl:otherwise>
