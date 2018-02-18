@@ -39,9 +39,13 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import org.cactoos.collection.CollectionOf;
+import org.cactoos.io.InputOf;
 import org.cactoos.io.LengthOf;
 import org.cactoos.io.TeeInput;
+import org.cactoos.map.MapEntry;
+import org.cactoos.map.MapOf;
 import org.cactoos.text.TextOf;
+import org.cactoos.text.UncheckedText;
 
 /**
  * Single report.
@@ -64,10 +68,15 @@ final class Report {
     private static final double DEFAULT_SIGMA = 0.1d;
 
     /**
+     * Location to the schema file.
+     */
+    private static final String SCHEMA_FILE = "xsd/metric.xsd";
+
+    /**
      * XSD schema.
      */
     private static final XSD SCHEMA = XSDDocument.make(
-        Report.class.getResourceAsStream("xsd/metric.xsd")
+        Report.class.getResourceAsStream(Report.SCHEMA_FILE)
     );
 
     /**
@@ -130,15 +139,36 @@ final class Report {
      * @param mean Mean
      * @param sigma Sigma
      * @checkstyle ParameterNumberCheck (10 lines)
+     * @todo #135:30min Make Report save 'metric.xsd' itself. Currently, Report
+     *  is setting the schema's location on the output metric XML based on the
+     *  assumption that App will always save it to a relative subdirectory
+     *  'xsd' and with the same filename 'metric.xsd'. This promise is best
+     *  kept if Report class has the responsibility of saving metric.xsd itself.
      */
+    @SuppressWarnings("unchecked")
     Report(final XML xml, final String name,
         final Map<String, Object> args,
         final double mean, final double sigma) {
         this.skeleton = xml;
         this.metric = name;
-        this.params = args;
+        this.params = new MapOf<>(
+            // @checkstyle LineLength (1 line)
+            args, new MapEntry<>("schemaLocation", Report.SCHEMA_FILE)
+        );
         this.post = new XSLChain(
             new CollectionOf<>(
+                new XSLDocument(
+                    new UncheckedText(
+                        new TextOf(
+                            new InputOf(
+                                // @checkstyle LineLength (1 line)
+                                Report.class.getResourceAsStream("xsl/metric-post-schemaloc.xsl")
+                            )
+                        )
+                    ).asString(),
+                    Sources.DUMMY,
+                    this.params
+                ),
                 new XSLDocument(
                     Report.class.getResourceAsStream(
                         "xsl/metric-post-colors.xsl"

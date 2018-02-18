@@ -135,4 +135,18 @@ public final class ReportTest {
         );
     }
 
+    @Test
+    public void setsCorrectschemaLocation() throws IOException {
+        final Path output = Files.createTempDirectory("");
+        new Report(new Skeleton(new FakeBase()).xml(), "LCOM").save(output);
+        MatcherAssert.assertThat(
+            XhtmlMatchers.xhtml(
+                new TextOf(output.resolve("LCOM.xml")).asString()
+            ),
+            XhtmlMatchers.hasXPaths(
+                // @checkstyle LineLength (1 line)
+                "/metric[@xsi:noNamespaceSchemaLocation = 'xsd/metric.xsd']"
+            )
+        );
+    }
 }

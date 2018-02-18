@@ -22,6 +22,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
+<!--
+@todo #135:30min Skeleton.xsd: add a reference to this schema from the generated
+ skeleton.xml. Schemas from src/resources/org/jpeek/xsd must be referenced in
+ generated XMLs.
+-->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:complexType name="class">
     <xs:all>
