@@ -23,7 +23,7 @@
 # SOFTWARE.
 
 $xml = simplexml_load_file($argv[1]);
-$line = $argv[2] . ' ';
+$line = $argv[2] . ' ' . $xml->xpath('/index/metric/classes')[0] . ' ';
 foreach ($xml->xpath('/index/metric') as $metric) {
   $line .= $metric['name']
     . '='
@@ -32,4 +32,4 @@ foreach ($xml->xpath('/index/metric') as $metric) {
     . $metric->sigma
     . '; ';
 }
-print $line;
+print $line . "\n";

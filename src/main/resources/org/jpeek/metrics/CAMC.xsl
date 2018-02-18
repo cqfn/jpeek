@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <!--
 The MIT License (MIT)
 
@@ -26,60 +26,51 @@ SOFTWARE.
   <xsl:template match="skeleton">
     <metric>
       <xsl:apply-templates select="@*"/>
-      <title>LCOM5</title>
+      <title>CAMC</title>
       <description>
-        <xsl:text>'LCOM5' is a 1996 revision by B. Henderson-Sellers,
-          L. L. Constantine, and I. M. Graham, of the initial LCOM metric
-          proposed by MIT researchers.
-          The values for LCOM5 are defined in the real interval [0, 1] where
-          '0' describes "perfect cohesion" and '1' describes "no cohesion".
-          Two problems with the original definition are addressed:
-            a) LCOM5 has the ability to give values across the full range and
-               no specific value has a higher probability of attainment than
-               any other (the original LCOM has a preference towards the
-               value "0")
-            b) Following on from the previous point, the values can be uniquely
-               interpreted in terms of cohesion, suggesting that they be treated
-               as percentages of the "no cohesion" score '1'</xsl:text>
-      </description>
+                The Cohesion Among Methods in Class (CAMC) measures
+                the extent of intersections of individual method
+                parameter type lists with the parameter type list of all
+                methods in the class.
+            </description>
       <xsl:apply-templates select="node()"/>
     </metric>
   </xsl:template>
   <xsl:template match="class">
-    <xsl:variable name="methods" select="methods/method"/>
-    <xsl:variable name="m" select="count($methods)"/>
-    <xsl:variable name="attributes" select="attributes/attribute/text()"/>
-    <xsl:variable name="a" select="count($attributes)"/>
-    <xsl:variable name="attributes_use">
-      <xsl:for-each select="$attributes">
-        <xsl:variable name="attr" select="."/>
-        <count>
-          <xsl:value-of select="count($methods[ops/op = $attr])"/>
-        </count>
+    <xsl:variable name="class" select="."/>
+    <xsl:variable name="methods" select="$class/methods/method"/>
+    <xsl:variable name="k" select="count($methods)"/>
+    <xsl:variable name="types" select="distinct-values($class/methods/method/args/arg[@type!='V']/@type)"/>
+    <xsl:variable name="l" select="count($types)"/>
+    <xsl:variable name="p">
+      <xsl:for-each select="$methods">
+        <p>
+          <xsl:value-of select="count(distinct-values(./args/arg[@type!='V']/@type))"/>
+        </p>
       </xsl:for-each>
     </xsl:variable>
     <xsl:copy>
       <xsl:attribute name="value">
         <xsl:choose>
-          <xsl:when test="$a = 0">
+          <xsl:when test="$k = 0">
             <xsl:text>NaN</xsl:text>
           </xsl:when>
-          <xsl:when test="$m = 1">
+          <xsl:when test="$l = 0">
             <xsl:text>NaN</xsl:text>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:variable name="lcom" select="(((1 div $a) * sum($attributes_use/count)) - $m) div (1 - $m)"/>
-            <xsl:value-of select="format-number($lcom, '0.####')"/>
+            <xsl:variable name="camc" select="sum($p/p) div ($k * $l)"/>
+            <xsl:value-of select="format-number($camc, '0.####')"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:attribute>
       <xsl:apply-templates select="@*"/>
       <vars>
-        <var id="m">
-          <xsl:value-of select="$m"/>
+        <var id="k">
+          <xsl:value-of select="$k"/>
         </var>
-        <var id="a">
-          <xsl:value-of select="$a"/>
+        <var id="l">
+          <xsl:value-of select="$l"/>
         </var>
       </vars>
     </xsl:copy>

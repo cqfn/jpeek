@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.cactoos.BiFunc;
 import org.cactoos.func.SolidBiFunc;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.iterable.PropertiesOf;
@@ -135,9 +136,13 @@ public final class TkApp extends TkWrap {
                     new FkRegex(
                         "/([^/]+)/([^/]+)(.*)",
                         new TkReport(
-                            new AsyncReports(
-                                // @checkstyle MagicNumber (1 line)
-                                new SolidBiFunc<>(futures, 100)
+                            new BiFunc.NoNulls<>(
+                                new AsyncReports(
+                                    new BiFunc.NoNulls<>(
+                                        // @checkstyle MagicNumber (1 line)
+                                        new SolidBiFunc<>(futures, 100)
+                                    )
+                                )
                             )
                         )
                     )

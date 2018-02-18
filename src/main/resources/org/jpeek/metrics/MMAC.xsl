@@ -60,11 +60,14 @@ SOFTWARE.
     <xsl:copy>
       <xsl:attribute name="value">
         <xsl:choose>
-          <xsl:when test="$k = 0 or $l = 0">
-            <xsl:text>0</xsl:text>
+          <xsl:when test="$k = 0">
+            <xsl:text>NaN</xsl:text>
+          </xsl:when>
+          <xsl:when test="$l = 0">
+            <xsl:text>NaN</xsl:text>
           </xsl:when>
           <xsl:when test="$k = 1">
-            <xsl:text>1</xsl:text>
+            <xsl:text>NaN</xsl:text>
           </xsl:when>
           <xsl:otherwise>
             <xsl:variable name="mmac" select="sum($type_methods/count) div ($k * $l * ($k - 1))"/>
@@ -74,10 +77,10 @@ SOFTWARE.
       </xsl:attribute>
       <xsl:apply-templates select="@*"/>
       <vars>
-        <var id="methods">
+        <var id="k">
           <xsl:value-of select="$k"/>
         </var>
-        <var id="types">
+        <var id="l">
           <xsl:value-of select="$l"/>
         </var>
       </vars>

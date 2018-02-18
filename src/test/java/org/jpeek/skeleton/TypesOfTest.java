@@ -21,56 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.jpeek;
+package org.jpeek.skeleton;
 
 import com.jcabi.matchers.XhtmlMatchers;
-import java.io.IOException;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.xembly.Directives;
+import org.xembly.Xembler;
 
 /**
- * Test case for {@link Skeleton}.
+ * Test case for {@link TypesOf}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.23
+ * @since 0.27
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class SkeletonTest {
+public final class TypesOfTest {
 
     @Test
-    public void createsXml() throws IOException {
+    public void parsesSignature() {
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
-                new Skeleton(
-                    new FakeBase("OverloadMethods", "Bar")
-                ).xml().toString()
+                new Xembler(
+                    new Directives().add("method").append(
+                        new TypesOf("(Ljava/lang/String;Lorg/jpeek/Test;)Z")
+                    )
+                ).xmlQuietly()
             ),
             XhtmlMatchers.hasXPaths(
-                "/skeleton/app/package[count(class)=2]",
-                "//class[@id='Bar']/methods[count(method)=5]",
-                "//class[@id='OverloadMethods']/methods[count(method)=5]",
-                "//method[@name='<init>' and @ctor='true']",
-                "//class[@id='Bar']//method[@name='<init>']/ops[count(op)=3]"
-            )
-        );
-    }
-
-    @Test
-    public void findsMethodsAndArgs() throws IOException {
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
-                new Skeleton(
-                    new FakeBase("MethodsWithDiffParamTypes")
-                ).xml().toString()
-            ),
-            XhtmlMatchers.hasXPaths(
-                // @checkstyle LineLength (10 lines)
-                "//class/methods[count(method)=7]",
-                "//method[@name='methodSix']/args[count(arg)=1]",
-                "//method[@name='methodSix']/args/arg[@type='Ljava/sql/Timestamp']",
-                "//method[@name='methodSix' and return='Ljava/util/Date']",
-                "//method[@name='methodTwo' and return='V']",
-                "//method[@name='methodOne']/args/arg[@type='Ljava/lang/Object']"
+                "/method/args[count(arg) = 2]",
+                "/method/args/arg[@type = 'Ljava/lang/String']",
+                "/method[return='Z']"
             )
         );
     }

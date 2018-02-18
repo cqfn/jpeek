@@ -21,47 +21,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.jpeek.web;
+package org.jpeek.skeleton;
 
 import com.jcabi.matchers.XhtmlMatchers;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import org.cactoos.collection.Joined;
 import org.hamcrest.MatcherAssert;
-import org.jpeek.App;
-import org.junit.Ignore;
+import org.jpeek.FakeBase;
 import org.junit.Test;
-import org.xembly.Directive;
 import org.xembly.Directives;
 import org.xembly.Xembler;
 
 /**
- * Test case for {@link Results}.
+ * Test case for {@link XmlClass}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.16
+ * @since 0.27
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ResultsTest {
+public final class XmlClassTest {
 
     @Test
-    @Ignore
-    public void acceptsAndRenders() throws Exception {
-        final Path output = Files.createTempDirectory("").resolve("x2");
-        final Path input = Paths.get(".");
-        new App(input, output).analyze();
-        final Results results = new Results();
-        results.add("org.takes:takes", output);
+    public void parsesClass() {
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
                 new Xembler(
-                    new Directives().add("repos").append(
-                        new Joined<Directive>(results.recent())
+                    new Directives().add("class").append(
+                        new XmlClass(
+                            new Classes(
+                                new FakeBase("Bar")
+                            ).iterator().next()
+                        )
                     )
                 ).xmlQuietly()
             ),
-            XhtmlMatchers.hasXPath("/repos")
+            XhtmlMatchers.hasXPaths(
+                "/class/methods[count(method) = 5]",
+                "/class/attributes[count(attribute) = 4]"
+            )
         );
     }
 
