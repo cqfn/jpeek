@@ -82,11 +82,6 @@ import org.xembly.Xembler;
  *  Once they are resolved, cover the metric with autotests and add it
  *  to reports list.
  *  (details on how to test the metrics are to be negotiated here - #107)
- *
- * @todo #15:30min LORM metric has impediments (see puzzles in LORM.xml).
- *  Once they are resolved, cover the metric with autotests and add it
- *  to reports list.
- *  (details on how to test the metrics are to be negotiated here - #107)
  */
 @SuppressWarnings
     (
@@ -132,7 +127,8 @@ public final class App {
                 new MapEntry<>("SCOM", true),
                 new MapEntry<>("NHD", true),
                 new MapEntry<>("MMAC", true),
-                new MapEntry<>("OCC", true)
+                new MapEntry<>("OCC", true),
+                new MapEntry<>("PCC", true)
             )
         );
     }
@@ -246,6 +242,14 @@ public final class App {
                 new Report(
                     chain.transform(skeleton),
                     "OCC", this.params
+                )
+            );
+        }
+        if (this.params.containsKey("PCC")) {
+            reports.add(
+                new Report(
+                    chain.transform(skeleton),
+                    "PCC"
                 )
             );
         }
