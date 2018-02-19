@@ -76,6 +76,8 @@ import org.junit.runners.Parameterized;
  * @checkstyle MagicNumberCheck (500 lines)
  * @todo #67:30min PCC: add the rest of the test cases for this metric. Could
  *  only fit test case for MethodsWithDiffParamTypes within budget.
+ * @todo #90:30min OCC metric: need to implement the rest of the test cases.
+ *  Could only fit test for sample class "Foo" within budget in this one.
  * @todo #106:30min Adding a new 'op' for calls to methods broke some tests
  *  and hence they were removed. Need to do the math for those tests and then
  *  add them back: SCOM with "Foo", SCOM with "MethodsWithDiffParamTypes",
@@ -146,6 +148,7 @@ public final class MetricsTest {
             new Object[] {"TwoCommonAttributes", "LCOM3", 1.0d},
             new Object[] {"WithoutAttributes", "LCOM3", 0.0d},
             new Object[] {"MethodsWithDiffParamTypes", "PCC", 0.3333d},
+            new Object[] {"Foo", "OCC", 0.5d},
             new Object[] {"Foo", "TCC", 1.0d},
             new Object[] {"MethodsWithDiffParamTypes", "TCC", 0.2d}
         );
