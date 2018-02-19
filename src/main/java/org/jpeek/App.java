@@ -131,7 +131,8 @@ public final class App {
                 new MapEntry<>("LCOM5", true),
                 new MapEntry<>("SCOM", true),
                 new MapEntry<>("NHD", true),
-                new MapEntry<>("MMAC", true)
+                new MapEntry<>("MMAC", true),
+                new MapEntry<>("OCC", true)
             )
         );
     }
@@ -237,6 +238,14 @@ public final class App {
                 new Report(
                     chain.transform(skeleton),
                     "SCOM", this.params
+                )
+            );
+        }
+        if (this.params.containsKey("OCC")) {
+            reports.add(
+                new Report(
+                    chain.transform(skeleton),
+                    "OCC", this.params
                 )
             );
         }
