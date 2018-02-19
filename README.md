@@ -166,6 +166,13 @@ Cohesion and Reuse in an Object-Oriented System,<br/>
 Department of Computer Science, Colorado State University, 1995,
 [PDF](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.53.2683).
 
+[`hitz95`]
+Lack of Cohesion in Methods (**LCOM4**).<br/>
+Martin Hitz et al.,<br/>
+Measuring Coupling and Cohesion In Object-Oriented Systems,<br/>
+Institute of Applied Computer Science and Systems Analysis, University of Vienna, 1995,
+[PDF](http://www.isys.uni-klu.ac.at/PDF/1995-0043-MHBM.pdf).
+
 ## How it works?
 
 First, `Skeleton` parses Java bytecode using Javaassit and ASM, in order to produce
