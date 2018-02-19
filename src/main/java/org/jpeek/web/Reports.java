@@ -23,18 +23,23 @@
  */
 package org.jpeek.web;
 
+import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.cactoos.BiFunc;
 import org.cactoos.Func;
 import org.cactoos.io.LengthOf;
 import org.cactoos.io.TeeInput;
 import org.cactoos.scalar.IoCheckedScalar;
 import org.cactoos.text.TextOf;
+import org.cactoos.text.UncheckedText;
 import org.jpeek.App;
 import org.takes.Response;
 
@@ -140,6 +145,27 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
             throw new IllegalStateException(ex);
         }
         final Path output = this.target.resolve(grp).resolve(artifact);
+        final Path pom = input
+            .resolve("META-INF/maven")
+            .resolve(group)
+            .resolve(artifact)
+            .resolve("pom.xml");
+        final Map<String, Object> params = new HashMap<>();
+        if (Files.exists(pom)) {
+            final XML xml = new XMLDocument(
+                new UncheckedText(
+                    new TextOf(
+                        pom
+                    ),
+                    e -> ""
+                ).asString()
+            ).registerNs("m", "http://maven.apache.org/POM/4.0.0");
+            final List<String> url = xml
+                .xpath("//m:project/m:scm/m:url/text()");
+            if (!url.isEmpty()) {
+                params.put("scm-url", url.get(0));
+            }
+        }
         if (Files.exists(output)) {
             throw new IllegalStateException(
                 String.format(
@@ -148,7 +174,7 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
                 )
             );
         }
-        new App(input, output).analyze();
+        new App(input, output, params).analyze();
         synchronized (this.sources) {
             new Results().add(String.format("%s:%s", group, artifact), output);
             new Mistakes().add(output);
@@ -156,5 +182,4 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
         }
         return new TypedPages(new Pages(output));
     }
-
 }
