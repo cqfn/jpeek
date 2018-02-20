@@ -218,6 +218,10 @@ Thus, all calculations happen inside the XSLT files. We decided to implement
 it this way after a less successful attempt to do it all in Java. It seems
 that XSL is much more suitable for manipulations with data than Java.
 
+## Known Limitations
+
+* The java compiler is known to inline constant variables as per [JLS 13.1](https://docs.oracle.com/javase/specs/jls/se8/html/jls-13.html#jls-13.1). This may affect the results obtained by some metrics when a method of a class being analyzed accesses a constant variable (basically the access to the constant will not be included in the calculations).
+
 ## How to contribute?
 
 Just fork, make changes, run `mvn clean install -Pqulice` and submit
