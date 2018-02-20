@@ -125,7 +125,7 @@ public final class MetricsTest {
             new Object[] {"NoMethods", "LCOM5", Double.NaN},
             new Object[] {"WithoutAttributes", "LCOM5", Double.NaN},
             new Object[] {"OneVoidMethodWithoutParams", "LCOM5", 1.0d},
-            new Object[] {"OneMethodCreatesLambda", "LCOM5", Double.NaN},
+            new Object[] {"OneMethodCreatesLambda", "LCOM5", 1.5d},
             new Object[] {"Bar", "NHD", 0.4d},
             new Object[] {"Foo", "NHD", 0.3333d},
             new Object[] {"MethodsWithDiffParamTypes", "NHD", 0.7143d},
