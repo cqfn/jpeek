@@ -23,10 +23,22 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
+  <!--
+  @todo #111:30min LORM: figure out how to extract the concepts from each
+   method of a class and then measure their "dispersal": how far apart
+   they are semantically speaking. This would be the same as asking
+   "to what degree are these methods talking about the same things?".
+   Based on a couple of supporting papers that I added to this ticket
+   (here: https://github.com/yegor256/jpeek/issues/111#issuecomment-365651455),
+   I believe the way forward is to use Latent Semantic Indexing of the methods
+   of the class and see how close or synonymous they are with the concept
+   expressed in the class name itself. There seem to be a few java libraries
+   available for latent semantic indexing that we can use.
+  -->
   <xsl:template match="skeleton">
     <metric>
       <xsl:apply-templates select="@*"/>
-      <title>LCOM</title>
+      <title>LORM</title>
       <description>
         <xsl:text><![CDATA[
           LORM = (R / RN) where,
