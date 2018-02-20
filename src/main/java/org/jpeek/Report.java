@@ -152,8 +152,8 @@ final class Report {
         this.skeleton = xml;
         this.metric = name;
         this.params = new MapOf<>(
-            // @checkstyle LineLength (1 line)
-            args, new MapEntry<>("schemaLocation", Report.SCHEMA_FILE)
+            args,
+            new MapEntry<>("schemaLocation", Report.SCHEMA_FILE)
         );
         this.post = new XSLChain(
             new CollectionOf<>(
@@ -161,8 +161,9 @@ final class Report {
                     new UncheckedText(
                         new TextOf(
                             new InputOf(
-                                // @checkstyle LineLength (1 line)
-                                Report.class.getResourceAsStream("xsl/metric-post-schemaloc.xsl")
+                                Report.class.getResourceAsStream(
+                                    "xsl/metric-post-schemaloc.xsl"
+                                )
                             )
                         )
                     ).asString(),
