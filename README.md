@@ -1,6 +1,6 @@
 <img src="http://www.jpeek.org/logo.svg" height="92px"/>
 
-[![Managed by Zerocracy](http://www.0crat.com/badge/C7JGJ00DP.svg)](http://www.0crat.com/p/C7JGJ00DP)
+[![Managed by Zerocracy](https://www.0crat.com/badge/C7JGJ00DP.svg)](http://www.0crat.com/p/C7JGJ00DP)
 [![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/jpeek)](http://www.rultor.com/p/yegor256/jpeek)
 
 [![Build Status](https://travis-ci.org/yegor256/jpeek.svg?branch=master)](https://travis-ci.org/yegor256/jpeek)
