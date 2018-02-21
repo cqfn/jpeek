@@ -150,7 +150,15 @@ public final class MetricsTest {
             new Object[] {"MethodsWithDiffParamTypes", "PCC", 0.3333d},
             new Object[] {"Foo", "OCC", 0.5d},
             new Object[] {"Foo", "TCC", 1.0d},
-            new Object[] {"MethodsWithDiffParamTypes", "TCC", 0.2d}
+            new Object[] {"MethodsWithDiffParamTypes", "TCC", 0.2d},
+            new Object[] {"Foo", "TLCOM", 1.0d},
+            new Object[] {"MethodsWithDiffParamTypes", "TLCOM", 15.0d},
+            new Object[] {"NoMethods", "TLCOM", 0.0d},
+            new Object[] {"OneVoidMethodWithoutParams", "TLCOM", 1.0d},
+            new Object[] {"OnlyOneMethodWithParams", "TLCOM", 0.0d},
+            new Object[] {"OverloadMethods", "TLCOM", 0.0d},
+            new Object[] {"TwoCommonAttributes", "TLCOM", 4.0d},
+            new Object[] {"WithoutAttributes", "TLCOM", 1.0d}
         );
     }
 
