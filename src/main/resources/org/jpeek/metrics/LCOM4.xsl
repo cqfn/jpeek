@@ -52,8 +52,8 @@ SOFTWARE.
     <xsl:variable name="M" select="methods/method"/>
     <xsl:variable name="m" select="count($M)"/>
     <!--
-    @todo #8:30min LCOM4: #156 needs to be fixed in order to avoid mistakenly capturing ops
-     on fields as if they actually belong to our enclosing class instead of another class.
+    @todo #8:30min LCOM4: #156 needs to be fixed in order to avoid confusing access to
+     fields belonging to other classes as if they actually belong to this class.
      Once #156 is fixed, refactor xpaths 'this_attrs' and 'other_attrs' accordingly.
     -->
     <!--

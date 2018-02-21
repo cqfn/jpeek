@@ -168,7 +168,7 @@ Department of Computer Science, Colorado State University, 1995,
 [PDF](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.53.2683).
 
 [`hitz95`]
-Lack of Cohesion in Methods (**LCOM4**).<br/>
+Lack of Cohesion in Methods 4 (**LCOM4**).<br/>
 Martin Hitz et al.,<br/>
 Measuring Coupling and Cohesion In Object-Oriented Systems,<br/>
 Institute of Applied Computer Science and Systems Analysis, University of Vienna, 1995,
