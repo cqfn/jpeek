@@ -52,9 +52,6 @@ import org.junit.runners.Parameterized;
 // @todo #68:30min SCOM has an impediment on issue #114: cannot currently
 //  be tested against "Bar" because the skeleton is incorrectly excluding
 //  some attributes from some methods that are using them.
-// @todo #92:30min Impediment: test for LCOM2/3 with "Bar" is not working
-//  because the generated skeleton.xml is not including all attributes
-//  being used by a method. See #114.
 // @todo #92:30min Impediment: test for LCOM3 with "OneMethodCreatesLambda"
 //  does not work because the skeleton.xml creates a <method> for the
 //  lambda with no way to discriminate it from regular methods.
