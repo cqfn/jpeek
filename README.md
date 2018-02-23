@@ -1,6 +1,6 @@
 <img src="http://www.jpeek.org/logo.svg" height="92px"/>
 
-[![EO principles respected here](https://cdn.rawgit.com/yegor256/elegantobjects.github.io/master/badge.svg)](http://www.elegantobjects.org)
+[![EO principles respected here](http://www.elegantobjects.org/badge.svg)](http://www.elegantobjects.org)
 [![Managed by Zerocracy](https://www.0crat.com/badge/C7JGJ00DP.svg)](https://www.0crat.com/p/C7JGJ00DP)
 [![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/jpeek)](http://www.rultor.com/p/yegor256/jpeek)
 
