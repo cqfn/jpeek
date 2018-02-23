@@ -1,7 +1,9 @@
 <img src="http://www.jpeek.org/logo.svg" height="92px"/>
 
-[![Managed by Zerocracy](http://www.0crat.com/badge/C7JGJ00DP.svg)](http://www.0crat.com/p/C7JGJ00DP)
+[![EO principles respected here](http://www.elegantobjects.org/badge.svg)](http://www.elegantobjects.org)
+[![Managed by Zerocracy](https://www.0crat.com/badge/C7JGJ00DP.svg)](https://www.0crat.com/p/C7JGJ00DP)
 [![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/jpeek)](http://www.rultor.com/p/yegor256/jpeek)
+[![We recommend IntelliJ IDEA](http://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
 
 [![Build Status](https://travis-ci.org/yegor256/jpeek.svg?branch=master)](https://travis-ci.org/yegor256/jpeek)
 [![Javadoc](http://www.javadoc.io/badge/org.jpeek/jpeek.svg)](http://www.javadoc.io/doc/org.jpeek/jpeek)
@@ -217,6 +219,10 @@ Then, we have a collection of XSL stylesheets, one per each metric. For example,
 Thus, all calculations happen inside the XSLT files. We decided to implement
 it this way after a less successful attempt to do it all in Java. It seems
 that XSL is much more suitable for manipulations with data than Java.
+
+## Known Limitations
+
+* The java compiler is known to inline constant variables as per [JLS 13.1](https://docs.oracle.com/javase/specs/jls/se8/html/jls-13.html#jls-13.1). This affects the results calculated by some metrics when a method accesses `final` attributes (the access to the constants are not be included in the calculation).
 
 ## How to contribute?
 
