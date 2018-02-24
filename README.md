@@ -222,7 +222,7 @@ that XSL is much more suitable for manipulations with data than Java.
 
 ## Known Limitations
 
-* The java compiler is known to inline constant variables as per [JLS 13.1](https://docs.oracle.com/javase/specs/jls/se8/html/jls-13.html#jls-13.1). This affects the results calculated by some metrics when a method accesses `final` attributes (the access to the constants are not be included in the calculation).
+* The java compiler is known to inline constant variables as per [JLS 13.1](https://docs.oracle.com/javase/specs/jls/se8/html/jls-13.html#jls-13.1). This affects the results calculated by metrics that take into account access to class attributes if these are `final` constants. For instance, all LCOM* and *COM metrics are affected.
 
 ## How to contribute?
 
