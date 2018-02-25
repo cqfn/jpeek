@@ -146,8 +146,12 @@ public final class MetricsTest {
             new Object[] {"WithoutAttributes", "LCOM3", 0.0d},
             new Object[] {"MethodsWithDiffParamTypes", "PCC", 0.3333d},
             new Object[] {"Foo", "OCC", 0.5d},
+            new Object[] {"Bar", "TCC", 0.0d},
             new Object[] {"Foo", "TCC", 1.0d},
-            new Object[] {"MethodsWithDiffParamTypes", "TCC", 0.2d}
+            new Object[] {"MethodsWithDiffParamTypes", "TCC", 0.2d},
+            new Object[] {"OverloadMethods", "TCC", 1.0d},
+            new Object[] {"TwoCommonAttributes", "TCC", 0.0d},
+            new Object[] {"WithoutAttributes", "TCC", 0.0d}
         );
     }
 
