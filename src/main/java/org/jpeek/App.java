@@ -251,10 +251,10 @@ public final class App {
         }
         if (this.params.containsKey("TCC")) {
             reports.add(
-                    new Report(
-                            chain.transform(skeleton),
-                            "TCC"
-                    )
+                new Report(
+                    chain.transform(skeleton),
+                    "TCC"
+                )
             );
         }
         new IoCheckedScalar<>(
