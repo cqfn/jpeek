@@ -36,9 +36,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-// @todo #18:30min Impediment: #103 must be fixed before LCOM5 is tested
-//  against: NoMethods, OneVoidMethodWithoutParams, WithoutAttributes,
-//  OneMethodCreatesLambda. The LCOM5 value for these will be "NaN".
 // @todo #93:30min NHD needs to be tested against the following after #103 is
 //  fixed: NoMethods, OneVoidMethodWithoutParams, WithoutAttributes,
 //  OneMethodCreatesLambda. NHD score for all these is "NaN".
@@ -119,6 +116,10 @@ public final class MetricsTest {
             new Object[] {"MethodsWithDiffParamTypes", "LCOM5", 0.6667d},
             new Object[] {"OverloadMethods", "LCOM5", 0.25d},
             new Object[] {"TwoCommonAttributes", "LCOM5", 1.0d},
+            new Object[] {"NoMethods", "LCOM5", Double.NaN},
+            new Object[] {"WithoutAttributes", "LCOM5", Double.NaN},
+            new Object[] {"OneVoidMethodWithoutParams", "LCOM5", 1.0d},
+            new Object[] {"OneMethodCreatesLambda", "LCOM5", 1.5d},
             new Object[] {"Bar", "NHD", 0.4d},
             new Object[] {"Foo", "NHD", 0.3333d},
             new Object[] {"MethodsWithDiffParamTypes", "NHD", 0.7143d},
@@ -126,6 +127,10 @@ public final class MetricsTest {
             new Object[] {"TwoCommonAttributes", "NHD", 0.3333d},
             new Object[] {"MethodsWithDiffParamTypes", "CCM", 0.0476d},
             new Object[] {"TwoCommonAttributes", "SCOM", 0.0d},
+            new Object[] {"NoMethods", "SCOM", Double.NaN},
+            new Object[] {"OneVoidMethodWithoutParams", "SCOM", 0.0d},
+            new Object[] {"WithoutAttributes", "SCOM", Double.NaN},
+            new Object[] {"OneMethodCreatesLambda", "SCOM", 0.0d},
             new Object[] {"Foo", "LCOM2", 0.3333d},
             new Object[] {"MethodsWithDiffParamTypes", "LCOM2", 0.5714d},
             new Object[] {"NoMethods", "LCOM2", 1.0d},
@@ -144,7 +149,8 @@ public final class MetricsTest {
             new Object[] {"MethodsWithDiffParamTypes", "PCC", 0.3333d},
             new Object[] {"Foo", "OCC", 0.5d},
             new Object[] {"Foo", "TCC", 1.0d},
-            new Object[] {"MethodsWithDiffParamTypes", "TCC", 0.2d}
+            new Object[] {"MethodsWithDiffParamTypes", "TCC", 0.2d},
+            new Object[] {"MethodMethodCalls", "LCOM4", 0.6d}
         );
     }
 
