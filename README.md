@@ -168,6 +168,13 @@ Cohesion and Reuse in an Object-Oriented System,<br/>
 Department of Computer Science, Colorado State University, 1995,
 [PDF](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.53.2683).
 
+[`dallal11.pdf`]
+Transitive Lack of Cohesion in Methods (**TLCOM**).<br/>
+Jehad Al Dallal,<br/>
+Transitive-based object-oriented lack-of-cohesion metric,<br/>
+Department of Information Science, Kuwait University, 2011,
+[PDF](https://www.researchgate.net/publication/220307725_Transitive-based_object-oriented_lack-of-cohesion_metric).
+
 [`hitz95`]
 Lack of Cohesion in Methods 4 (**LCOM4**).<br/>
 Martin Hitz et al.,<br/>
