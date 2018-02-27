@@ -168,6 +168,20 @@ Cohesion and Reuse in an Object-Oriented System,<br/>
 Department of Computer Science, Colorado State University, 1995,
 [PDF](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.53.2683).
 
+[`dallal11.pdf`]
+Transitive Lack of Cohesion in Methods (**TLCOM**).<br/>
+Jehad Al Dallal,<br/>
+Transitive-based object-oriented lack-of-cohesion metric,<br/>
+Department of Information Science, Kuwait University, 2011,
+[PDF](https://www.researchgate.net/publication/220307725_Transitive-based_object-oriented_lack-of-cohesion_metric).
+
+[`hitz95`]
+Lack of Cohesion in Methods 4 (**LCOM4**).<br/>
+Martin Hitz et al.,<br/>
+Measuring Coupling and Cohesion In Object-Oriented Systems,<br/>
+Institute of Applied Computer Science and Systems Analysis, University of Vienna, 1995,
+[PDF](http://www.isys.uni-klu.ac.at/PDF/1995-0043-MHBM.pdf).
+
 ## How it works?
 
 First, `Skeleton` parses Java bytecode using Javaassit and ASM, in order to produce
@@ -222,7 +236,7 @@ that XSL is much more suitable for manipulations with data than Java.
 
 ## Known Limitations
 
-* The java compiler is known to inline constant variables as per [JLS 13.1](https://docs.oracle.com/javase/specs/jls/se8/html/jls-13.html#jls-13.1). This affects the results calculated by some metrics when a method accesses `final` attributes (the access to the constants are not be included in the calculation).
+* The java compiler is known to inline constant variables as per [JLS 13.1](https://docs.oracle.com/javase/specs/jls/se8/html/jls-13.html#jls-13.1). This affects the results calculated by metrics that take into account access to class attributes if these are `final` constants. For instance, all LCOM* and *COM metrics are affected.
 
 ## How to contribute?
 
