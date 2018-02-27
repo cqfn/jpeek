@@ -139,11 +139,11 @@ final class Report {
      * @param mean Mean
      * @param sigma Sigma
      * @checkstyle ParameterNumberCheck (10 lines)
-     * @todo #135:30min Make Report save 'metric.xsd' itself. Currently, Report
-     *  is setting the schema's location on the output metric XML based on the
-     *  assumption that App will always save it to a relative subdirectory
-     *  'xsd' and with the same filename 'metric.xsd'. This promise is best
-     *  kept if Report class has the responsibility of saving metric.xsd itself.
+     * @todo #135:30min The current solution to add the reference to
+     *  'metric.xsd' in the generated 'metric.xml' is too complex for
+     *  the task at hand. Refactor towards a simpler solution that
+     *  ideally would just require one or two Xembly instructions to
+     *  add the required attribute.
      */
     @SuppressWarnings("unchecked")
     Report(final XML xml, final String name,
