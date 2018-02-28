@@ -147,6 +147,11 @@ SOFTWARE.
         <var id="a">
           <xsl:value-of select="$a"/>
         </var>
+        <!--
+        @todo #142:30min SCOM: implement tests for SCOM_minK after #222 is fixed.
+         Currently, the test harness in MetricsTest does not provide a way to
+         test values of vars.
+        -->
         <var id="SCOM_minK">
           <xsl:value-of select="$SCOM_minK"/>
         </var>
