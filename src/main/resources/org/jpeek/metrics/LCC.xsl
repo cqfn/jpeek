@@ -58,10 +58,13 @@ SOFTWARE.
       </xsl:for-each>
     </xsl:variable>
     <!--
-    @todo #9:30min `indirectly-related-pairs` are pairs of methods, which are through other directly connected methods.
-     https://pdfs.semanticscholar.org/672e/de6e3e600eafd84036a0b983b88e481ac626.pdf
-     Right now it is stubbed because information about method-method communication is yet to be provided in skeleton.xml
-     (issue #106).
+    @todo #119:30min `indirectly-related-pairs` are pairs of methods, which are connected through `directly-related-pairs`.
+     See section 3.1 of https://pdfs.semanticscholar.org/672e/de6e3e600eafd84036a0b983b88e481ac626.pdf
+     The key sentence is "The indirect connection relation is the **transitive closure** of direct connection relation".
+     See https://en.wikipedia.org/wiki/Transitive_closure for more info on what is a Transitive Closure.
+     We need to apply a Transitive Closure Algorithm on a graph of `directly-related-pairs`.
+     A simpliest Transitive Closure algorithms has O(V³) time complexity and involves a mutable V×V table (V is amount of vertices).
+     See https://www.geeksforgeeks.org/transitive-closure-of-a-graph/ for an example.
     -->
     <!--<xsl:variable name="indirectly-related-pairs">
     </xsl:variable>
