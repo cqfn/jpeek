@@ -32,7 +32,9 @@ book series make sense.
 
 ## How to use?
 
-Load [this JAR file](http://repo1.maven.org/maven2/org/jpeek/jpeek/0.5/jpeek-0.5-jar-with-dependencies.jar) and then:
+Load the latest `jar-with-dependencies.jar` file from
+[here](http://repo1.maven.org/maven2/org/jpeek/jpeek/)
+and then:
 
 ```bash
 $ java -jar jpeek-jar-with-dependencies.jar --sources . --target ./jpeek
