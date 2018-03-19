@@ -22,7 +22,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:math="http://www.w3.org/2005/xpath-functions/math" version="2.0">
   <xsl:template match="skeleton">
     <metric>
       <xsl:apply-templates select="@*"/>
@@ -71,16 +71,9 @@ SOFTWARE.
       </xsl:for-each-group>
     </xsl:variable>
     <xsl:variable name="Di">
-      <!--
-      @todo #17:30min Di value is supposed to be calculated by formula:
-       Di = sum( -Qdi * log(Qdi) ) / log(n).
-       See the MWE metric description for details.
-       However, logarithm function is currently not available in XSL, that's why it is stubbed.
-       Ensure that there is a way to define logarithm in metrics XSL and unstub Di calculation.
-      -->
-      <xsl:variable name="cur" select="."/>
       <xsl:for-each-group select="$Qdi/qdi" group-by="@topic">
-        <di topic="{current-grouping-key()}" value="1.0"/>
+        <xsl:variable name="qdi" select="."/>
+        <di topic="{current-grouping-key()}" value="(sum(-1 * $qdi * math:log10($qdi))) div math:log10($n)"/>
       </xsl:for-each-group>
     </xsl:variable>
     <xsl:variable name="OiDi">
