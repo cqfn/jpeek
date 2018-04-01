@@ -67,6 +67,7 @@ SOFTWARE.
      We need to apply a Transitive Closure Algorithm on a graph of `directly-related-pairs`.
      A simpliest Transitive Closure algorithms has O(V³) time complexity and involves a mutable V×V table (V is amount of vertices).
      See https://www.geeksforgeeks.org/transitive-closure-of-a-graph/ for an example.
+     @todo #118:30min fix the `NDC` is always `1` or calculate it as a part of `indirectly-related-pairs`.
     -->
     <!--<xsl:variable name="indirectly-related-pairs">
     </xsl:variable>

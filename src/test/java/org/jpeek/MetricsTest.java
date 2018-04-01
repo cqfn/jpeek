@@ -70,6 +70,11 @@ import org.junit.runners.Parameterized;
  *  and hence they were removed. Need to do the math for those tests and then
  *  add them back: SCOM with "Foo", SCOM with "MethodsWithDiffParamTypes",
  *  and SCOM with "OverloadMethods".
+ * @todo #118:30min Add test for LCC with "IndirectlyRelatedPairs" and others.
+ * In "IndirectlyRelatedPairs" all methods exist in one transitive closure so the result should be {@code 1d}.
+ * Also, all classes without transitive relations should have the same LCC metric as TCC metric.
+ * Before do it we have to fix puzzles in LCC.xml.
+ *
  */
 @RunWith(Parameterized.class)
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
