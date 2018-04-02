@@ -1,13 +1,15 @@
 public final class IndirectlyRelatedPairs {
-    public IndirectlyRelatedPairs(){
-        methodOne(0);
+    int a, b, c, d;
+    public IndirectlyRelatedPairs(final int x) {
+        methodOne(a+d);
     }
     public void methodOne(final int x) {
-        methodTwo(1);
+        methodTwo(a+b);
     }
     public void methodTwo(final int x) {
-        methodThree(2);
+        methodThree(b+c);
     }
     public void methodThree(final int x) {
+        new IndirectlyRelatedPairs(c+d);
     }
 }

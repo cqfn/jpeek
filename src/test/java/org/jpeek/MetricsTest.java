@@ -71,10 +71,11 @@ import org.junit.runners.Parameterized;
  *  add them back: SCOM with "Foo", SCOM with "MethodsWithDiffParamTypes",
  *  and SCOM with "OverloadMethods".
  * @todo #118:30min Add test for LCC with "IndirectlyRelatedPairs" and others.
- * In "IndirectlyRelatedPairs" all methods exist in one transitive closure so the result should be {@code 1d}.
- * Also, all classes without transitive relations should have the same LCC metric as TCC metric.
- * Before do it we have to fix puzzles in LCC.xml.
- *
+ *  In "IndirectlyRelatedPairs" all methods exist in one transitive closure,
+ *  so the result should be {@code 1d}.
+ *  Also, all classes without transitive relations
+ *  should have the same LCC metric as TCC metric.
+ *  Before do it we have to fix puzzles in LCC.xml.
  */
 @RunWith(Parameterized.class)
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
@@ -156,6 +157,7 @@ public final class MetricsTest {
             new Object[] {"OverloadMethods", "TCC", 1.0d},
             new Object[] {"TwoCommonAttributes", "TCC", 0.0d},
             new Object[] {"WithoutAttributes", "TCC", 0.0d},
+            new Object[] {"IndirectlyRelatedPairs", "TCC", 0.6667},
             new Object[] {"Foo", "TLCOM", 1.0d},
             new Object[] {"MethodsWithDiffParamTypes", "TLCOM", 15.0d},
             new Object[] {"NoMethods", "TLCOM", 0.0d},

@@ -72,7 +72,8 @@ import org.xembly.Xembler;
  *  Once they are resolved, cover the metric with autotests and add it
  *  to reports list.
  *  (details on how to test the metrics are to be negotiated here - #107)
- * @todo #118:30min LCC metric has impediments (see puzzles in LCC.xml and in `MetricsTest`).
+ * @todo #118:30min LCC metric has impediments (see puzzles in LCC.xml
+ *  and in `MetricsTest`).
  *  Once they are resolved add it to reports list.
  */
 @SuppressWarnings
