@@ -120,6 +120,10 @@ final class XmlClass extends ClassVisitor implements Iterable<Directive> {
                 (access & Opcodes.ACC_PUBLIC) == Opcodes.ACC_PUBLIC
             )
             .attr(
+                "final",
+                (access & Opcodes.ACC_FINAL) == Opcodes.ACC_FINAL
+            )
+            .attr(
                 "static",
                 (access & Opcodes.ACC_STATIC) == Opcodes.ACC_STATIC
             )

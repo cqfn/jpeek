@@ -46,6 +46,7 @@ SOFTWARE.
                         </xs:documentation>
                       </xs:annotation>
                     </xs:attribute>
+                    <xs:attribute name="final" use="required" type="xs:boolean"/>
                     <xs:attribute name="public" use="required" type="xs:boolean"/>
                     <xs:attribute name="static" use="required" type="xs:boolean"/>
                   </xs:extension>
