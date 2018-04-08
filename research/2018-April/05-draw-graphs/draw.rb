@@ -6,7 +6,7 @@ immutable = []
 mutable = []
 File.open(metrics).read.each_line.map do |l|
   cohesion, flag, size = l.split(',', 3)
-  hash = { cohesion: cohesion.to_f, size: size.to_i }
+  hash = { cohesion: cohesion.to_f.round(2), size: size.to_i }
   if flag == 'true'
     immutable << hash
   else
@@ -15,12 +15,16 @@ File.open(metrics).read.each_line.map do |l|
 end
 
 def draw(array)
+  unique = array.uniq { |c| "#{c[:cohesion]}/#{c[:size]}" }
+  xavg = unique.map { |c| c[:size] }.inject(:+) / unique.size
+  yavg = unique.map { |c| c[:cohesion] }.inject(:+) / unique.size
   txt = '\begin{tikzpicture}' +
-  '\begin{axis}[axis lines=middle, xlabel={size}, ylabel={cohesion}, x post scale=1.2,' +
-  "xmin=#{array.map{ |c| c[:size] }.min}," +
-  "xmax=#{array.map{ |c| c[:size] }.max}," +
-  'ymin=0, ymax=1]\addplot [only marks] table {' + "\n"
-  array.each do |c|
+  '\begin{axis}[width=12cm,height=6cm,' +
+  'axis lines=middle, xlabel={$S_i$}, ylabel={$C_i$},' +
+  'xmin=0, xmax=100, ymin=0, ymax=1,' +
+  "extra x ticks={#{xavg}},extra y ticks={#{yavg}},extra tick style={major grid style=black}," +
+  'grid=major]\addplot [only marks, mark size=1pt] table {' + "\n"
+  unique.each do |c|
     txt += "#{c[:size]} #{c[:cohesion]}\n"
   end
   txt + '};\end{axis}\end{tikzpicture}'

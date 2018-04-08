@@ -35,12 +35,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import org.cactoos.BiFunc;
-import org.cactoos.Func;
 import org.cactoos.Text;
 import org.cactoos.collection.Mapped;
 import org.cactoos.scalar.AvgOf;
 import org.cactoos.text.JoinedText;
-import org.takes.Response;
 
 /**
  * Futures for {@link AsyncReports}.
@@ -53,12 +51,12 @@ import org.takes.Response;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class Futures implements
-    BiFunc<String, String, Future<Func<String, Response>>>, Text {
+    BiFunc<String, String, Future<Front>>, Text {
 
     /**
      * Original func.
      */
-    private final BiFunc<String, String, Func<String, Response>> origin;
+    private final BiFunc<String, String, Front> origin;
 
     /**
      * Service.
@@ -79,7 +77,7 @@ final class Futures implements
      * Ctor.
      * @param func Original bi-function
      */
-    Futures(final BiFunc<String, String, Func<String, Response>> func) {
+    Futures(final BiFunc<String, String, Front> func) {
         this.origin = func;
         this.service = Executors.newFixedThreadPool(
             Runtime.getRuntime().availableProcessors(),
@@ -90,7 +88,7 @@ final class Futures implements
     }
 
     @Override
-    public Future<Func<String, Response>> apply(final String group,
+    public Future<Front> apply(final String group,
         final String artifact) {
         final String target = String.format("%s:%s", group, artifact);
         this.queue.put(target, System.currentTimeMillis());
@@ -101,7 +99,7 @@ final class Futures implements
         return this.service.submit(
             new VerboseCallable<>(
                 () -> {
-                    final Func<String, Response> func =
+                    final Front func =
                         this.origin.apply(group, artifact);
                     this.times.add(
                         System.currentTimeMillis() - this.queue.remove(target)

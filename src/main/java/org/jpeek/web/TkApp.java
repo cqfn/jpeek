@@ -29,7 +29,6 @@ import java.net.HttpURLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.BiFunc;
-import org.cactoos.func.SolidBiFunc;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.iterable.PropertiesOf;
 import org.cactoos.text.TextOf;
@@ -140,7 +139,7 @@ public final class TkApp extends TkWrap {
                                 new AsyncReports(
                                     new BiFunc.NoNulls<>(
                                         // @checkstyle MagicNumber (1 line)
-                                        new SolidBiFunc<>(futures, 100)
+                                        new StickyFutures(futures, 100)
                                     )
                                 )
                             )

@@ -23,14 +23,13 @@
  */
 package org.jpeek.web;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import org.cactoos.text.TextOf;
-import org.takes.Response;
-import org.takes.rs.RsWithBody;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Future;
+import org.cactoos.BiFunc;
 
 /**
- * Pages in one report.
+ * Futures for {@link AsyncReports}.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -39,28 +38,49 @@ import org.takes.rs.RsWithBody;
  * @since 0.8
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-final class Pages implements Front {
+final class StickyFutures implements BiFunc<String, String, Future<Front>> {
 
     /**
-     * Directory with files.
+     * Original func.
      */
-    private final Path home;
+    private final BiFunc<String, String, Future<Front>> origin;
+
+    /**
+     * Cache.
+     */
+    private final Map<String, Future<Front>> cache;
+
+    /**
+     * Max size.
+     */
+    private final int max;
 
     /**
      * Ctor.
-     * @param dir Home dir
+     * @param func Original bi-function
+     * @param size Max size of cache before full clean up
      */
-    Pages(final Path dir) {
-        this.home = dir;
+    StickyFutures(final BiFunc<String, String, Future<Front>> func,
+        final int size) {
+        this.origin = func;
+        this.cache = new ConcurrentHashMap<>(0);
+        this.max = size;
     }
 
     @Override
-    public Response apply(final String path) throws IOException {
-        return new RsWithBody(
-            new TextOf(
-                this.home.resolve(path)
-            ).asString()
-        );
+    public Future<Front> apply(final String group, final String artifact)
+        throws Exception {
+        synchronized (this.cache) {
+            if (this.cache.size() > this.max) {
+                this.cache.clear();
+            }
+            final String target = String.format("%s:%s", group, artifact);
+            if (!this.cache.containsKey(target)
+                || this.cache.get(target).isCancelled()) {
+                this.cache.put(target, this.origin.apply(group, artifact));
+            }
+            return this.cache.get(target);
+        }
     }
 
 }

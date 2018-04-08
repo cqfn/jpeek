@@ -23,44 +23,15 @@
  */
 package org.jpeek.web;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import org.cactoos.text.TextOf;
+import org.cactoos.Func;
 import org.takes.Response;
-import org.takes.rs.RsWithBody;
 
 /**
- * Pages in one report.
- *
- * <p>There is no thread-safety guarantee.
+ * Web front.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.8
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-final class Pages implements Front {
-
-    /**
-     * Directory with files.
-     */
-    private final Path home;
-
-    /**
-     * Ctor.
-     * @param dir Home dir
-     */
-    Pages(final Path dir) {
-        this.home = dir;
-    }
-
-    @Override
-    public Response apply(final String path) throws IOException {
-        return new RsWithBody(
-            new TextOf(
-                this.home.resolve(path)
-            ).asString()
-        );
-    }
-
+interface Front extends Func<String, Response> {
 }

@@ -53,7 +53,7 @@ final class AsyncReports implements
     /**
      * Cache.
      */
-    private final BiFunc<String, String, Future<Func<String, Response>>> cache;
+    private final BiFunc<String, String, Future<Front>> cache;
 
     /**
      * Starts.
@@ -65,7 +65,7 @@ final class AsyncReports implements
      * @param func Original bi-function
      */
     AsyncReports(
-        final BiFunc<String, String, Future<Func<String, Response>>> func) {
+        final BiFunc<String, String, Future<Front>> func) {
         this.cache = func;
         this.starts = new ConcurrentHashMap<>(0);
     }
@@ -73,7 +73,7 @@ final class AsyncReports implements
     @Override
     public Func<String, Response> apply(final String group,
         final String artifact) throws IOException {
-        final Future<Func<String, Response>> future =
+        final Future<Front> future =
             new IoCheckedBiFunc<>(this.cache).apply(group, artifact);
         final Func<String, Response> output;
         if (future.isDone()) {

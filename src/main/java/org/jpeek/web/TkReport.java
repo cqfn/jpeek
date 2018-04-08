@@ -71,8 +71,7 @@ final class TkReport implements TkRegex {
         }
         return new IoCheckedFunc<>(
             new IoCheckedBiFunc<>(this.reports).apply(
-                matcher.group(1),
-                matcher.group(2)
+                matcher.group(1), matcher.group(2)
             )
         ).apply(path.substring(1));
     }
