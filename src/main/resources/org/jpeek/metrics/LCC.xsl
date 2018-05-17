@@ -30,9 +30,9 @@ SOFTWARE.
       <description>
         <xsl:text>LCC(C) = (NDC(C) + NIC(C)) / NP(C), where C is the class, NP(C) is a
           maximal possible number of direct or indirect connections - N * (N - 1) / 2,
-          NDC(C) is a number of direct connections, 
-	      NIC(C) is a number of indirect connections.
-	      Value of the metric is in range [0, 1], greater is better.
+          NDC(C) is a number of direct connections,
+          NIC(C) is a number of indirect connections.
+          Value of the metric is in range [0, 1], greater is better.
         </xsl:text>
       </description>
       <xsl:apply-templates select="node()"/>

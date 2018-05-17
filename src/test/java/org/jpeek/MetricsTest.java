@@ -87,12 +87,9 @@ public final class MetricsTest {
     @Parameterized.Parameters(name = "{0}:{1}:{2}")
     public static Collection<Object[]> targets() {
         return new CollectionOf<>(
-
             new Object[] {"Bar", "CAMC", 0.4d},
             new Object[] {"Foo", "CAMC", 0.6667d},
-
             new Object[] {"MethodsWithDiffParamTypes", "CCM", 0.0476d},
-
             new Object[] {"Bar", "LCC", 0.0d},
             new Object[] {"Foo", "LCC", 1.0d},
             new Object[] {"MethodMethodCalls", "LCC", 0.1d},
@@ -104,7 +101,6 @@ public final class MetricsTest {
             new Object[] {"OverloadMethods", "LCC", 1.0d},
             new Object[] {"TwoCommonAttributes", "LCC", 0.0d},
             new Object[] {"WithoutAttributes", "LCC", 0.0d},
-
             new Object[] {"Bar", "LCOM", 6.0d},
             new Object[] {"Foo", "LCOM", 1.0d},
             new Object[] {"MethodsWithDiffParamTypes", "LCOM", 15.0d},
@@ -114,7 +110,6 @@ public final class MetricsTest {
             new Object[] {"TwoCommonAttributes", "LCOM", 6.0d},
             new Object[] {"WithoutAttributes", "LCOM", 1.0d},
             new Object[] {"OneMethodCreatesLambda", "LCOM", 3.0d},
-
             new Object[] {"Foo", "LCOM2", 0.3333d},
             new Object[] {"MethodsWithDiffParamTypes", "LCOM2", 0.5714d},
             new Object[] {"NoMethods", "LCOM2", 1.0d},
@@ -123,7 +118,6 @@ public final class MetricsTest {
             new Object[] {"TwoCommonAttributes", "LCOM2", 0.75d},
             new Object[] {"WithoutAttributes", "LCOM2", 0.0d},
             new Object[] {"OneMethodCreatesLambda", "LCOM2", 1.0d},
-
             new Object[] {"Foo", "LCOM3", 0.5d},
             new Object[] {"MethodsWithDiffParamTypes", "LCOM3", 0.6667d},
             new Object[] {"NoMethods", "LCOM3", 0.0d},
@@ -131,9 +125,7 @@ public final class MetricsTest {
             new Object[] {"OverloadMethods", "LCOM3", 0.25d},
             new Object[] {"TwoCommonAttributes", "LCOM3", 1.0d},
             new Object[] {"WithoutAttributes", "LCOM3", 0.0d},
-
             new Object[] {"MethodMethodCalls", "LCOM4", 0.6d},
-
             new Object[] {"Bar", "LCOM5", 0.8125d},
             new Object[] {"Foo", "LCOM5", 0.5d},
             new Object[] {"MethodsWithDiffParamTypes", "LCOM5", 0.6667d},
@@ -143,7 +135,6 @@ public final class MetricsTest {
             new Object[] {"WithoutAttributes", "LCOM5", Double.NaN},
             new Object[] {"OneVoidMethodWithoutParams", "LCOM5", 1.0d},
             new Object[] {"OneMethodCreatesLambda", "LCOM5", 1.5d},
-
             new Object[] {"Bar", "MMAC", 0.1d},
             new Object[] {"Foo", "MMAC", 0.3333d},
             new Object[] {"MethodsWithDiffParamTypes", "MMAC", 0.0d},
@@ -153,24 +144,19 @@ public final class MetricsTest {
             new Object[] {"TwoCommonAttributes", "MMAC", 0.1667d},
             new Object[] {"WithoutAttributes", "MMAC", 0.0d},
             new Object[] {"OneMethodCreatesLambda", "MMAC", 0.0d},
-
             new Object[] {"Bar", "NHD", 0.4d},
             new Object[] {"Foo", "NHD", 0.3333d},
             new Object[] {"MethodsWithDiffParamTypes", "NHD", 0.7143d},
             new Object[] {"OverloadMethods", "NHD", 0.5333d},
             new Object[] {"TwoCommonAttributes", "NHD", 0.3333d},
             new Object[] {"NoMethods", "NHD", Double.NaN},
-
             new Object[] {"Foo", "OCC", 0.5d},
-
             new Object[] {"MethodsWithDiffParamTypes", "PCC", 0.3333d},
-
             new Object[] {"TwoCommonAttributes", "SCOM", 0.0d},
             new Object[] {"NoMethods", "SCOM", Double.NaN},
             new Object[] {"OneVoidMethodWithoutParams", "SCOM", 0.0d},
             new Object[] {"WithoutAttributes", "SCOM", Double.NaN},
             new Object[] {"OneMethodCreatesLambda", "SCOM", 0.0d},
-
             new Object[] {"Bar", "TCC", 0.0d},
             new Object[] {"Foo", "TCC", 1.0d},
             new Object[] {"IndirectlyRelatedPairs", "TCC", 0.6667},
@@ -183,7 +169,6 @@ public final class MetricsTest {
             new Object[] {"OverloadMethods", "TCC", 1.0d},
             new Object[] {"TwoCommonAttributes", "TCC", 0.0d},
             new Object[] {"WithoutAttributes", "TCC", 0.0d},
-
             new Object[] {"Foo", "TLCOM", 1.0d},
             new Object[] {"MethodsWithDiffParamTypes", "TLCOM", 15.0d},
             new Object[] {"NoMethods", "TLCOM", 0.0d},
