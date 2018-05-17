@@ -183,16 +183,16 @@ public final class MetricsTest {
             new Object[] {"Foo", "TLCOM", 1.0d}
         );
     }
-// @todo #233:30min The targets() method is too long
-//  ,new Object[] {"MethodsWithDiffParamTypes", "TLCOM", 15.0d},
-//  new Object[] {"NoMethods", "TLCOM", 0.0d},
-//  new Object[] {"OneVoidMethodWithoutParams", "TLCOM", 1.0d},
-//  new Object[] {"OnlyOneMethodWithParams", "TLCOM", 0.0d},
-//  new Object[] {"OverloadMethods", "TLCOM", 0.0d},
-//  new Object[] {"TwoCommonAttributes", "TLCOM", 4.0d},
-//  new Object[] {"WithoutAttributes", "TLCOM", 1.0d}
-//  );
-//  }
+    // @todo #233:30min The targets() method is too long
+    //  ,new Object[] {"MethodsWithDiffParamTypes", "TLCOM", 15.0d},
+    //  new Object[] {"NoMethods", "TLCOM", 0.0d},
+    //  new Object[] {"OneVoidMethodWithoutParams", "TLCOM", 1.0d},
+    //  new Object[] {"OnlyOneMethodWithParams", "TLCOM", 0.0d},
+    //  new Object[] {"OverloadMethods", "TLCOM", 0.0d},
+    //  new Object[] {"TwoCommonAttributes", "TLCOM", 4.0d},
+    //  new Object[] {"WithoutAttributes", "TLCOM", 1.0d}
+    //  );
+    //  }
 
     @Test
     public void testsTarget() throws IOException {
