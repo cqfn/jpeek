@@ -30,8 +30,8 @@ SOFTWARE.
       <description>
         <xsl:text>TCC(C) = NDC(C) / NP(C), where C is the class, NP(C) is a
           maximal possible number of direct or indirect connections - N * (N - 1) / 2,
-          NDC(C) is a number of direct connections. Value of the metric is in range [0, 1],
-          greater is better.
+          NDC(C) is a number of direct connections.
+	  Value of the metric is in range [0, 1], greater is better.
         </xsl:text>
       </description>
       <xsl:apply-templates select="node()"/>
@@ -80,7 +80,8 @@ SOFTWARE.
             <xsl:text>0</xsl:text>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:value-of select="$NDC div $NC"/>
+            <xsl:variable name="tcc" select="$NDC div $NC"/>
+            <xsl:value-of select="format-number($tcc, '0.####')"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:attribute>

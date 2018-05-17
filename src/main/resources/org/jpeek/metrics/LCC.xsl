@@ -26,33 +26,35 @@ SOFTWARE.
   <xsl:template match="skeleton">
     <metric>
       <xsl:apply-templates select="@*"/>
-      <title>TCC</title>
+      <title>LCC</title>
       <description>
         <xsl:text>LCC(C) = (NDC(C) + NIC(C)) / NP(C), where C is the class, NP(C) is a
           maximal possible number of direct or indirect connections - N * (N - 1) / 2,
-          NDC(C) is a number of direct connections, NID(C) is a number of indirect
-          connections. Value of the metric is in range [0, 1], greater is better.
+          NDC(C) is a number of direct connections, 
+	      NIC(C) is a number of indirect connections.
+	      Value of the metric is in range [0, 1], greater is better.
         </xsl:text>
       </description>
       <xsl:apply-templates select="node()"/>
     </metric>
   </xsl:template>
   <xsl:template match="class">
-    <xsl:variable name="methods" select="methods/method"/>
+    <xsl:variable name="attrs" select="attributes/attribute[@static='false']/text()"/>
+    <xsl:variable name="methods" select="methods/method[@abstract='false' and @ctor='false']"/>
     <xsl:variable name="methods_count" select="count($methods)"/>
     <xsl:variable name="NC" select="$methods_count * ($methods_count - 1) div 2"/>
     <xsl:variable name="directly-related-pairs">
       <xsl:for-each select="$methods">
         <xsl:variable name="i" select="position()"/>
         <xsl:variable name="left" select="."/>
-        <xsl:variable name="left_ops" select="$left/ops/op[@code='get' or @code='put']"/>
+        <xsl:variable name="left_attrs" select="$attrs[. = $left/ops/op/text()]"/>
         <xsl:for-each select="$methods">
           <xsl:if test="position() &gt; $i">
             <xsl:variable name="right" select="."/>
-            <xsl:variable name="right_ops" select="$right/ops/op[@code='get' or @code='put']"/>
-            <pair>
-              <xsl:value-of select="count($left_ops[.=$right_ops])"/>
-            </pair>
+            <xsl:variable name="right_attrs" select="$attrs[. = $right/ops/op/text()]"/>
+            <xsl:if test="exists($left_attrs[. = $right_attrs])">
+              <pair/>
+            </xsl:if>
           </xsl:if>
         </xsl:for-each>
       </xsl:for-each>
@@ -70,8 +72,8 @@ SOFTWARE.
     </xsl:variable>
     <xsl:variable name="NIC" select="count($indirectly-related-pairs)"/>
     -->
-    <xsl:variable name="NDC" select="count($directly-related-pairs)"/>
     <xsl:variable name="NIC" select="0"/>
+    <xsl:variable name="NDC" select="count($directly-related-pairs/pair)"/>
     <xsl:copy>
       <xsl:attribute name="value">
         <xsl:choose>
@@ -86,6 +88,9 @@ SOFTWARE.
       </xsl:attribute>
       <xsl:apply-templates select="@*"/>
       <vars>
+        <var id="attributes">
+          <xsl:value-of select="count($attrs)"/>
+        </var>
         <var id="methods">
           <xsl:value-of select="count($methods)"/>
         </var>
