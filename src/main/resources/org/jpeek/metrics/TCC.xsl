@@ -31,7 +31,7 @@ SOFTWARE.
         <xsl:text>TCC(C) = NDC(C) / NP(C), where C is the class, NP(C) is a
           maximal possible number of direct or indirect connections - N * (N - 1) / 2,
           NDC(C) is a number of direct connections.
-	  Value of the metric is in range [0, 1], greater is better.
+          Value of the metric is in range [0, 1], greater is better.
         </xsl:text>
       </description>
       <xsl:apply-templates select="node()"/>
