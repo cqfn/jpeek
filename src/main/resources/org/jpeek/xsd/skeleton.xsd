@@ -136,6 +136,42 @@ SOFTWARE.
                       </xs:sequence>
                     </xs:complexType>
                   </xs:element>
+                  <xs:element name="topics" minOccurs="0" maxOccurs="1">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The list of topics covered in the method. See MWE metric.
+                      </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="topic" minOccurs="1" maxOccurs="unbounded">
+                          <xs:complexType>
+                            <xs:simpleContent>
+                              <xs:extension base="xs:string">
+                                <xs:attribute name="name" use="required" type="xs:string">
+                                  <xs:annotation>
+                                    <xs:documentation>
+                                      The topic's unique identifier.
+                                      In a high cohesive class, all the methods should talk
+                                      about the same topic.
+                                    </xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="p" use="required" type="xs:double">
+                                  <xs:annotation>
+                                    <xs:documentation>
+                                      Probability of the topic's occurence in the method.
+                                      A decimal number between 0 and 1.
+                                    </xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                              </xs:extension>
+                            </xs:simpleContent>
+                          </xs:complexType>
+                        </xs:element>
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
                 </xs:all>
                 <xs:attribute name="name" use="required" type="xs:string"/>
                 <xs:attribute name="desc" use="required" type="xs:string">
