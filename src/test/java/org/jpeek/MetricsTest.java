@@ -159,7 +159,18 @@ public final class MetricsTest {
             new Object[] {"OverloadMethods", "TLCOM", 0.0d},
             new Object[] {"TwoCommonAttributes", "TLCOM", 4.0d},
             new Object[] {"WithoutAttributes", "TLCOM", 1.0d},
-            new Object[] {"MethodMethodCalls", "LCOM4", 0.6d}
+            new Object[] {"MethodMethodCalls", "LCOM4", 0.6d},
+            new Object[] {"Bar", "LCC", 0.0d},
+            new Object[] {"Foo", "LCC", 1.0d},
+            new Object[] {"MethodMethodCalls", "LCC", 0.1d},
+            new Object[] {"MethodsWithDiffParamTypes", "LCC", 0.2d},
+            new Object[] {"NoMethods", "LCC", 0.0d},
+            new Object[] {"OneMethodCreatesLambda", "LCC", 0.0d},
+            new Object[] {"OneVoidMethodWithoutParams", "LCC", 0.0d},
+            new Object[] {"OnlyOneMethodWithParams", "LCC", 0.0d},
+            new Object[] {"OverloadMethods", "LCC", 1.0d},
+            new Object[] {"TwoCommonAttributes", "LCC", 0.0d},
+            new Object[] {"WithoutAttributes", "LCC", 0.0d}
         );
     }
 
