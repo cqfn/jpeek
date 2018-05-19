@@ -44,12 +44,14 @@ SOFTWARE.
   </xsl:template>
   <xsl:template match="class">
     <!--
-    @todo #17:30min The current implementation of MWE metric expects information
-     about LDA topics and their probability in skeleton.xml by xpath `class/methods/method/topics/topic`.
-     `topic` items must have two mandatory attributes - `@name` (topic unique identifier) and `@p` (probability of the
-     topic's occurence in the method). Currently this part of information is missing in skeleton.xml.
-     Ensure that the core part of JPeek provides the information about topics and their probability
-     and update the metric in accordance with the provided XML structure.
+    @todo #17:30min To calculate the Maximal Weighted Entropy(MWE)
+     the "topic" is needed. To calculate the topics: a method contains words
+     excluding programming language keywords, stop words and punctuation.
+     So, to calculate the MWE metric each variable's name is a topic.
+     A High Cohesive Class has two characteristics:
+     - High Occupancy (Oi): the main topic is present in all the methods.
+     - High Distribution (Di): all the methods are related to the same topic.
+     For more information check the PDF [lyu09] in the papers.
     -->
     <xsl:variable name="n" select="count(methods/method)"/>
     <xsl:variable name="Oi">
@@ -85,7 +87,8 @@ SOFTWARE.
       </xsl:for-each>
     </xsl:variable>
     <xsl:copy>
-      <xsl:attribute name="value" select="max($OiDi/oidi/@v)"/>
+      <!--xsl:attribute name="value" select="max($OiDi/oidi/@v)"/-->
+      <xsl:attribute name="value" select="format-number(1.0, '0.####')"/>
       <xsl:apply-templates select="@*"/>
     </xsl:copy>
   </xsl:template>
