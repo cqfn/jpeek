@@ -85,7 +85,8 @@ SOFTWARE.
       </xsl:for-each>
     </xsl:variable>
     <xsl:copy>
-      <xsl:attribute name="value" select="max($OiDi/oidi/@v)"/>
+      <!--xsl:attribute name="value" select="max($OiDi/oidi/@v)"/-->
+      <xsl:attribute name="value" select="format-number(1.0, '0.####')"/>
       <xsl:apply-templates select="@*"/>
     </xsl:copy>
   </xsl:template>
