@@ -159,7 +159,12 @@ public final class MetricsTest {
             new Object[] {"OverloadMethods", "TLCOM", 0.0d},
             new Object[] {"TwoCommonAttributes", "TLCOM", 4.0d},
             new Object[] {"WithoutAttributes", "TLCOM", 1.0d},
-            new Object[] {"MethodMethodCalls", "LCOM4", 0.6d}
+            new Object[] {"MethodMethodCalls", "LCOM4", 0.6d},
+            new Object[] {"Bar", "CCM", 0.0d},
+            new Object[] {"Bar", "CCM", 0.1d},
+            new Object[] {"Bar", "CCM",  0.4d},
+            new Object[] {"Bar", "CCM", 0.8125d},
+            new Object[] {"Bar", "CCM", 6.0d}
         );
     }
 
