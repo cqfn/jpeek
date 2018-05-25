@@ -124,7 +124,8 @@ public final class App {
                 new MapEntry<>("MMAC", true),
                 new MapEntry<>("OCC", true),
                 new MapEntry<>("PCC", true),
-                new MapEntry<>("TCC", true)
+                new MapEntry<>("TCC", true),
+                new MapEntry<>("LCC", true)
             )
         );
     }
@@ -254,6 +255,14 @@ public final class App {
                 new Report(
                     chain.transform(skeleton),
                     "TCC"
+                )
+            );
+        }
+        if (this.params.containsKey("LCC")) {
+            reports.add(
+                new Report(
+                    chain.transform(skeleton),
+                    "LCC"
                 )
             );
         }
