@@ -160,17 +160,17 @@ public final class MetricsTest {
             new Object[] {"TwoCommonAttributes", "TLCOM", 4.0d},
             new Object[] {"WithoutAttributes", "TLCOM", 1.0d},
             new Object[] {"MethodMethodCalls", "LCOM4", 0.6d},
-            new Object[] {"Bar", "LCC", 0.0d},
-            new Object[] {"Foo", "LCC", 1.0d},
-            new Object[] {"MethodMethodCalls", "LCC", 0.1d},
-            new Object[] {"MethodsWithDiffParamTypes", "LCC", 0.2d},
-            new Object[] {"NoMethods", "LCC", 0.0d},
-            new Object[] {"OneMethodCreatesLambda", "LCC", 0.0d},
-            new Object[] {"OneVoidMethodWithoutParams", "LCC", 0.0d},
-            new Object[] {"OnlyOneMethodWithParams", "LCC", 0.0d},
-            new Object[] {"OverloadMethods", "LCC", 1.0d},
-            new Object[] {"TwoCommonAttributes", "LCC", 0.0d},
-            new Object[] {"WithoutAttributes", "LCC", 0.0d}
+            new Object[] {"Bar", "MWE", 1.0d},
+            new Object[] {"Foo", "MWE", 1.0d},
+            new Object[] {"MethodMethodCalls", "MWE", 1.0d},
+            new Object[] {"MethodsWithDiffParamTypes", "MWE", 1.0d},
+            new Object[] {"NoMethods", "MWE", 1.0d},
+            new Object[] {"OneMethodCreatesLambda", "MWE", 1.0d},
+            new Object[] {"OneVoidMethodWithoutParams", "MWE", 1.0d},
+            new Object[] {"OnlyOneMethodWithParams", "MWE", 1.0d},
+            new Object[] {"OverloadMethods", "MWE", 1.0d},
+            new Object[] {"TwoCommonAttributes", "MWE", 1.0d},
+            new Object[] {"WithoutAttributes", "MWE", 1.0d}
         );
     }
 
