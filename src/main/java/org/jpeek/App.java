@@ -68,15 +68,13 @@ import org.xembly.Xembler;
  * @checkstyle MethodLengthCheck (500 lines)
  * @checkstyle JavaNCSSCheck (500 lines)
  *
- * @todo #9:30min LCC metric has impediments (see puzzles in LCC.xml).
- *  Once they are resolved, cover the metric with autotests and add it
- *  to reports list.
- *  (details on how to test the metrics are to be negotiated here - #107)
- *
  * @todo #17:30min MWE metric has impediments (see puzzles in MWE.xml).
  *  Once they are resolved, cover the metric with autotests and add it
  *  to reports list.
  *  (details on how to test the metrics are to be negotiated here - #107)
+ * @todo #118:30min LCC metric has impediments (see puzzles in LCC.xml
+ *  and in `MetricsTest`).
+ *  Once they are resolved add it to reports list.
  */
 @SuppressWarnings
     (
@@ -124,7 +122,8 @@ public final class App {
                 new MapEntry<>("MMAC", true),
                 new MapEntry<>("OCC", true),
                 new MapEntry<>("PCC", true),
-                new MapEntry<>("TCC", true)
+                new MapEntry<>("TCC", true),
+                new MapEntry<>("LCC", true)
             )
         );
     }
@@ -254,6 +253,14 @@ public final class App {
                 new Report(
                     chain.transform(skeleton),
                     "TCC"
+                )
+            );
+        }
+        if (this.params.containsKey("LCC")) {
+            reports.add(
+                new Report(
+                    chain.transform(skeleton),
+                    "LCC"
                 )
             );
         }
