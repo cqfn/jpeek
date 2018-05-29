@@ -178,11 +178,7 @@ public final class MetricsTest {
             new Object[] {"OverloadMethods", "LCC", 1.0d},
             new Object[] {"TwoCommonAttributes", "LCC", 0.0d},
             new Object[] {"WithoutAttributes", "LCC", 0.0d},
-            new Object[] {"Bar", "CCM", 0.0d},
-            new Object[] {"Bar", "CCM", 0.1d},
-            new Object[] {"Bar", "CCM", 0.4d},
-            new Object[] {"Bar", "CCM", 0.8125d},
-            new Object[] {"Bar", "CCM", 6.0d}
+            new Object[] {"Bar", "CCM", 0.125d}
         );
     }
 
