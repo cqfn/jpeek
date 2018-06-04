@@ -48,12 +48,6 @@ SOFTWARE.
         <xsl:for-each select="$method/following-sibling::method">
           <xsl:variable name="other" select="."/>
           <!--
-           @todo #66:30min For CCM, the following test cases need to be
-            added after #103 is fixed: NoMethods, WithoutAttributes,
-            OneMethodCreatesLambda, OneVoidMethodWithoutParams. The CCM value
-            for these cases is NaN.
-          -->
-          <!--
            @todo #66:30min For CCM, cannot add test case for class Bar because
             it is blocked by #114. Omission of the 'NAME' <op> for "getKey"
             messes up calculations. Add test case after #114 is fixed.
