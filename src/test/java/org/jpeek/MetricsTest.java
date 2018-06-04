@@ -178,6 +178,10 @@ public final class MetricsTest {
             new Object[] {"OverloadMethods", "LCC", 1.0d},
             new Object[] {"TwoCommonAttributes", "LCC", 0.0d},
             new Object[] {"WithoutAttributes", "LCC", 0.0d},
+            new Object[] {"NoMethods", "CCM", Double.NaN},
+            new Object[] {"WithoutAttributes", "CCM", Double.NaN},
+            new Object[] {"OneMethodCreatesLambda", "CCM", Double.NaN},
+            new Object[] {"OneVoidMethodWithoutParams", "CCM", Double.NaN},
             new Object[] {"Bar", "CCM", 0.125d}
         );
     }
