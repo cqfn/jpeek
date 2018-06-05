@@ -124,6 +124,7 @@ public final class App {
                 new MapEntry<>("PCC", true),
                 new MapEntry<>("TCC", true),
                 new MapEntry<>("LCC", true),
+                new MapEntry<>("CCM", true),
                 new MapEntry<>("MWE", true)
             )
         );
@@ -262,6 +263,14 @@ public final class App {
                 new Report(
                     chain.transform(skeleton),
                     "LCC"
+                )
+            );
+        }
+        if (this.params.containsKey("CCM")) {
+            reports.add(
+                new Report(
+                    chain.transform(skeleton),
+                    "CCM"
                 )
             );
         }
