@@ -48,12 +48,6 @@ SOFTWARE.
         <xsl:for-each select="$method/following-sibling::method">
           <xsl:variable name="other" select="."/>
           <!--
-           @todo #66:30min For CCM, the following test cases need to be
-            added after #103 is fixed: NoMethods, WithoutAttributes,
-            OneMethodCreatesLambda, OneVoidMethodWithoutParams. The CCM value
-            for these cases is NaN.
-          -->
-          <!--
            @todo #66:30min For CCM, need to add OR condition to the following
             xsl:if to check whether two methods both call another method in
             common for the same class. The skeleton currently does not produce
