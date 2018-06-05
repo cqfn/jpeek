@@ -78,7 +78,7 @@ import org.junit.runners.Parameterized;
  *  Before do it we have to fix puzzles in LCC.xml.
  */
 @RunWith(Parameterized.class)
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+@SuppressWarnings({"PMD.AvoidDuplicateLiterals", "PMD.ExcessiveMethodLength"})
 public final class MetricsTest {
 
     @Parameterized.Parameter
