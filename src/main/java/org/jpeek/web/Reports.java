@@ -117,8 +117,8 @@ final class Reports implements BiFunc<String, String, Front> {
         ).value();
         try {
             final File none;
-            String filepath = "/dev/null";
-			if (new File(filepath).exists()) {
+            final String filepath = "/dev/null";
+            if (new File(filepath).exists()) {
                 none = new File(filepath);
             } else {
                 none = new File("NUL");
