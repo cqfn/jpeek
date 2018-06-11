@@ -116,7 +116,13 @@ final class Reports implements BiFunc<String, String, Front> {
             )
         ).value();
         try {
-            final File none = new File("/dev/null");
+            final File none;
+            final String filepath = "/dev/null";
+            if (new File(filepath).exists()) {
+                none = new File(filepath);
+            } else {
+                none = new File("NUL");
+            }
             final int exit = new ProcessBuilder()
                 .redirectOutput(ProcessBuilder.Redirect.to(none))
                 .redirectInput(ProcessBuilder.Redirect.from(none))
