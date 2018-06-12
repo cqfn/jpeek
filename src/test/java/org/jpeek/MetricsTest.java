@@ -192,7 +192,11 @@ public final class MetricsTest {
             new Object[] {"OnlyOneMethodWithParams", "MWE", 1.0d},
             new Object[] {"OverloadMethods", "MWE", 1.0d},
             new Object[] {"TwoCommonAttributes", "MWE", 1.0d},
-            new Object[] {"WithoutAttributes", "MWE", 1.0d}
+            new Object[] {"WithoutAttributes", "MWE", 1.0d},
+            new Object[] {"Foo", "CCM", 0.1667d},
+            new Object[] {"OverloadMethods", "CCM", 0.6d},
+            new Object[] {"TwoCommonAttributes", "CCM", Double.NaN},
+            new Object[] {"TwoCommonMethods", "CCM", 0.0238d}
         );
     }
 
