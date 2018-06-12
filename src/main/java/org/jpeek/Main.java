@@ -123,10 +123,6 @@ public final class Main {
     /**
      * Run it.
      * @throws IOException If fails
-     * @todo #104:30min The logic for overwriting the target directory is very
-     *  procedural and needs to be refactored. Suggestion: 'target' should be
-     *  its own animated object where the logic is triggered in its 'toPath'
-     *  method.
      */
     private void run() throws IOException {
         final ConsoleAppender console = new ConsoleAppender();
@@ -135,18 +131,7 @@ public final class Main {
             console.activateOptions();
             Logger.getRootLogger().addAppender(console);
         }
-        if (this.target.exists()) {
-            if (this.overwrite) {
-                Main.deleteDir(this.target);
-            } else {
-                throw new IllegalStateException(
-                    String.format(
-                        "Directory/file already exists: %s",
-                        this.target.getAbsolutePath()
-                    )
-                );
-            }
-        }
+        
         final Map<String, Object> params = new HashMap<>(0);
         if (this.ctors) {
             params.put("include-ctors", 1);
@@ -162,38 +147,15 @@ public final class Main {
             }
             params.put(metric, true);
         }
-        new App(this.sources.toPath(), this.target.toPath(), params).analyze();
+        new App(this.sources.toPath(), 
+        	new FileTarget(
+        		this.target,
+        		this.overwrite
+        	).toPath(),
+        	params)
+        .analyze();
         if (!this.quiet) {
             Logger.getRootLogger().removeAppender(console);
         }
-    }
-
-    /**
-     * Deletes the directory recursively.
-     * @param dir The directory
-     * @throws IOException If an I/O error occurs
-     */
-    private static void deleteDir(final File dir) throws IOException {
-        Files.walkFileTree(
-            dir.toPath(),
-            new SimpleFileVisitor<Path>() {
-                @Override
-                public FileVisitResult visitFile(
-                    final Path file,
-                    final BasicFileAttributes attrs) throws IOException {
-                    Files.delete(file);
-                    return FileVisitResult.CONTINUE;
-                }
-
-                @Override
-                public FileVisitResult postVisitDirectory(
-                    final Path dir,
-                    final IOException error) throws IOException {
-                    Files.delete(dir);
-                    return FileVisitResult.CONTINUE;
-                }
-            }
-        );
-        com.jcabi.log.Logger.info(Main.class, "Directory %s deleted", dir);
     }
 }
