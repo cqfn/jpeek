@@ -1,3 +1,26 @@
+/**
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2017-2018 Yegor Bugayenko
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package org.jpeek;
 
 import java.io.File;
@@ -8,18 +31,37 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+/**
+ * File Target.
+ * @author Felipe Moreno (oridan@gmail.com)
+ * @version $Id$
+ * @since 1.0
+ */
 public final class FileTarget implements Target {
 
-	private final File target;
-	private final Boolean overwrite;
+    /**
+     * The file target.
+     */
+    private final File target;
 
-	public FileTarget(File target, Boolean overwrite) {
-		this.target = target;
-		this.overwrite = overwrite;
-	}
+    /**
+     * Overwrites if true.
+     */
+    private final Boolean overwrite;
 
-	public Path toPath() throws IOException {
-		if (this.target.exists()) {
+    /**
+     * Ctor.
+     * @param target Target dir
+     * @param overwrite Overwrite if exists
+     */
+    public FileTarget(final File target, final Boolean overwrite) {
+        this.target = target;
+        this.overwrite = overwrite;
+    }
+
+    @Override
+    public Path toPath() throws IOException {
+        if (this.target.exists()) {
             if (this.overwrite) {
                 deleteDir(this.target);
             } else {
@@ -31,10 +73,10 @@ public final class FileTarget implements Target {
                 );
             }
         }
-		return target.toPath();
-	}
-	
-	/**
+        return this.target.toPath();
+    }
+
+    /**
      * Deletes the directory recursively.
      * @param dir The directory
      * @throws IOException If an I/O error occurs
@@ -62,6 +104,4 @@ public final class FileTarget implements Target {
         );
         com.jcabi.log.Logger.info(Main.class, "Directory %s deleted", dir);
     }
-	
-	
 }
