@@ -196,7 +196,8 @@ public final class MetricsTest {
             new Object[] {"Foo", "CCM", 0.1667d},
             new Object[] {"OverloadMethods", "CCM", 0.6d},
             new Object[] {"TwoCommonAttributes", "CCM", Double.NaN},
-            new Object[] {"TwoCommonMethods", "CCM", 0.0238d}
+            new Object[] {"TwoCommonMethods", "CCM", 0.0238d},
+            new Object[] {"Bar", "CCM", 0.125d}
         );
     }
 
