@@ -31,7 +31,7 @@ import java.nio.file.Path;
  *
  * @author Felipe Moreno (oridan@gmail.com)
  * @version $Id$
- * @since 1.0
+ * @since 0.26.4
  */
 public interface Target {
 

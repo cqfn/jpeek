@@ -35,7 +35,7 @@ import java.nio.file.attribute.BasicFileAttributes;
  * File Target.
  * @author Felipe Moreno (oridan@gmail.com)
  * @version $Id$
- * @since 1.0
+ * @since 0.26.4
  */
 public final class FileTarget implements Target {
 
