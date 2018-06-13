@@ -28,11 +28,6 @@ import com.beust.jcommander.Parameter;
 import com.beust.jcommander.converters.FileConverter;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.log4j.ConsoleAppender;
@@ -131,7 +126,6 @@ public final class Main {
             console.activateOptions();
             Logger.getRootLogger().addAppender(console);
         }
-        
         final Map<String, Object> params = new HashMap<>(0);
         if (this.ctors) {
             params.put("include-ctors", 1);
@@ -147,13 +141,14 @@ public final class Main {
             }
             params.put(metric, true);
         }
-        new App(this.sources.toPath(), 
-        	new FileTarget(
-        		this.target,
-        		this.overwrite
-        	).toPath(),
-        	params)
-        .analyze();
+        new App(
+            this.sources.toPath(),
+            new FileTarget(
+                this.target,
+                this.overwrite
+            ).toPath(),
+            params
+        ).analyze();
         if (!this.quiet) {
             Logger.getRootLogger().removeAppender(console);
         }
