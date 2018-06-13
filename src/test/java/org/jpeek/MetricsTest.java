@@ -78,7 +78,7 @@ import org.junit.runners.Parameterized;
  *  Before do it we have to fix puzzles in LCC.xml.
  */
 @RunWith(Parameterized.class)
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+@SuppressWarnings({"PMD.AvoidDuplicateLiterals", "PMD.ExcessiveMethodLength"})
 public final class MetricsTest {
 
     @Parameterized.Parameter
@@ -182,6 +182,17 @@ public final class MetricsTest {
             new Object[] {"WithoutAttributes", "CCM", Double.NaN},
             new Object[] {"OneMethodCreatesLambda", "CCM", Double.NaN},
             new Object[] {"OneVoidMethodWithoutParams", "CCM", Double.NaN},
+            new Object[] {"Bar", "MWE", 1.0d},
+            new Object[] {"Foo", "MWE", 1.0d},
+            new Object[] {"MethodMethodCalls", "MWE", 1.0d},
+            new Object[] {"MethodsWithDiffParamTypes", "MWE", 1.0d},
+            new Object[] {"NoMethods", "MWE", 1.0d},
+            new Object[] {"OneMethodCreatesLambda", "MWE", 1.0d},
+            new Object[] {"OneVoidMethodWithoutParams", "MWE", 1.0d},
+            new Object[] {"OnlyOneMethodWithParams", "MWE", 1.0d},
+            new Object[] {"OverloadMethods", "MWE", 1.0d},
+            new Object[] {"TwoCommonAttributes", "MWE", 1.0d},
+            new Object[] {"WithoutAttributes", "MWE", 1.0d},
             new Object[] {"Foo", "CCM", 0.1667d},
             new Object[] {"OverloadMethods", "CCM", 0.6d},
             new Object[] {"TwoCommonAttributes", "CCM", Double.NaN},
