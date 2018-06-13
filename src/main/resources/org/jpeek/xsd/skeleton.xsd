@@ -188,6 +188,7 @@ SOFTWARE.
                 <xs:attribute name="abstract" use="required" type="xs:boolean"/>
                 <xs:attribute name="public" use="required" type="xs:boolean"/>
                 <xs:attribute name="static" use="required" type="xs:boolean"/>
+                <xs:attribute name="bridge" use="required" type="xs:boolean"/>
               </xs:complexType>
               <xs:unique name="methodUnique">
                 <xs:selector xpath="./method"/>

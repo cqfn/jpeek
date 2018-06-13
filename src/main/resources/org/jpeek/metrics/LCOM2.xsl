@@ -52,7 +52,7 @@ SOFTWARE.
   <xsl:template match="class">
     <xsl:variable name="attrs" select="attributes/attribute/text()"/>
     <xsl:variable name="attrs_count" select="count($attrs)"/>
-    <xsl:variable name="methods" select="methods/method"/>
+    <xsl:variable name="methods" select="methods/method[@bridge=false()]"/>
     <xsl:variable name="methods_count" select="count($methods)"/>
     <xsl:variable name="attr_use">
       <xsl:for-each select="$attrs">
