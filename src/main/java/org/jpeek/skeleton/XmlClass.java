@@ -182,6 +182,10 @@ final class XmlClass extends ClassVisitor implements Iterable<Directive> {
                 "public",
                 (access & Opcodes.ACC_PUBLIC) == Opcodes.ACC_PUBLIC
             )
+            .attr(
+                "bridge",
+                (access & Opcodes.ACC_BRIDGE) == Opcodes.ACC_BRIDGE
+            )
             .append(new TypesOf(desc));
         return new OpsOf(
             dirs, super.visitMethod(access, mtd, desc, signature, exceptions)
