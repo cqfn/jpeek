@@ -142,6 +142,7 @@ public final class MetricsTest {
             new Object[] {"TwoCommonAttributes", "LCOM2", 0.75d},
             new Object[] {"WithoutAttributes", "LCOM2", 0.0d},
             new Object[] {"OneMethodCreatesLambda", "LCOM2", 1.0d},
+            new Object[] {"BridgeMethod", "LCOM2", 0.0d},
             new Object[] {"Foo", "LCOM3", 0.5d},
             new Object[] {"MethodsWithDiffParamTypes", "LCOM3", 0.6667d},
             new Object[] {"NoMethods", "LCOM3", 0.0d},
