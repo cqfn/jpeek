@@ -27,6 +27,7 @@ import com.jcabi.matchers.XhtmlMatchers;
 import java.io.IOException;
 import org.hamcrest.MatcherAssert;
 import org.jpeek.FakeBase;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -35,6 +36,11 @@ import org.junit.Test;
  * @version $Id$
  * @since 0.23
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @todo #156:30min Skeleton must be upgraded to determine if a field being
+ *  accessed in a method belongs to that class or to another class. The test in
+ *  findFieldWithQualifiedName must be uncommented when this issue is
+ *  resolved. Please see #156 for more detailing in upgrading skeleton
+ *  behavior.
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class SkeletonTest {
@@ -98,6 +104,27 @@ public final class SkeletonTest {
                 "//class[@id='Bar']/methods/method[@name='setValue']/ops[op ='java.lang.UnsupportedOperationException.<init>']",
                 "//class[@id='Foo']/methods/method[@name='methodOne']/ops[op = 'Foo.methodTwo']",
                 "//class[@id='Foo']/methods/method[@name='methodTwo']/ops[op = 'Foo.methodOne']"
+            )
+        );
+    }
+
+    @Test
+    @Ignore
+    public void findFieldWithQualifiedName() {
+        MatcherAssert.assertThat(
+            XhtmlMatchers.xhtml(
+                new Skeleton(
+                    new FakeBase(
+                        "ClassWithPublicField",
+                        "ClassAccessingPublicField"
+                    )
+                )
+                .xml()
+                .toString()
+            ),
+            XhtmlMatchers.hasXPaths(
+                // @checkstyle LineLength (1 line)
+                "//class[@id='ClassAccessingPublicField']//method[@name='test']/ops/op[@code='put_static' and .='org.jpeek.samples.ClassWithPublicField.NAME']"
             )
         );
     }

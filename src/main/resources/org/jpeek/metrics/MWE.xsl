@@ -43,14 +43,6 @@ SOFTWARE.
     </metric>
   </xsl:template>
   <xsl:template match="class">
-    <!--
-    @todo #17:30min The current implementation of MWE metric expects information
-     about LDA topics and their probability in skeleton.xml by xpath `class/methods/method/topics/topic`.
-     `topic` items must have two mandatory attributes - `@name` (topic unique identifier) and `@p` (probability of the
-     topic's occurence in the method). Currently this part of information is missing in skeleton.xml.
-     Ensure that the core part of JPeek provides the information about topics and their probability
-     and update the metric in accordance with the provided XML structure.
-    -->
     <xsl:variable name="n" select="count(methods/method)"/>
     <xsl:variable name="Oi">
       <xsl:for-each-group select="methods/method/topics/topic" group-by="@name">
