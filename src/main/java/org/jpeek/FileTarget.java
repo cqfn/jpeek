@@ -67,7 +67,7 @@ public final class FileTarget implements Target {
             } else {
                 throw new IllegalStateException(
                     String.format(
-                        "Directory/file already exists: %s",
+                        "Overwrite disabled. Directory/file already exists: %s",
                         this.target.getAbsolutePath()
                     )
                 );
