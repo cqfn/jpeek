@@ -198,7 +198,7 @@ public final class MetricsTest {
             new Object[] {"OnlyOneMethodWithParams", "MWE", 1.0d},
             new Object[] {"OverloadMethods", "MWE", 1.0d},
             new Object[] {"TwoCommonAttributes", "MWE", 1.0d},
-            new Object[] {"WithoutAttributes", "MWE", 1.0d}       
+            new Object[] {"WithoutAttributes", "MWE", 1.0d}
         );
     }
 
