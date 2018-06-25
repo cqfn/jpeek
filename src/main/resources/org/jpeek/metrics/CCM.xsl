@@ -47,11 +47,6 @@ SOFTWARE.
         <xsl:variable name="method" select="."/>
         <xsl:for-each select="$method/following-sibling::method">
           <xsl:variable name="other" select="."/>
-          <!--
-           @todo #66:30min For CCM, cannot add test case for class Bar because
-            it is blocked by #114. Omission of the 'NAME' <op> for "getKey"
-            messes up calculations. Add test case after #114 is fixed.
-          -->
           <xsl:if test="$method/ops/op/text()[. = $other/ops/op/text()]">
             <edge>
               <method>
