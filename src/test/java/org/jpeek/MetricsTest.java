@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.Locale;
 import org.cactoos.collection.CollectionOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
@@ -198,7 +199,11 @@ public final class MetricsTest {
             new Object[] {"OnlyOneMethodWithParams", "MWE", 1.0d},
             new Object[] {"OverloadMethods", "MWE", 1.0d},
             new Object[] {"TwoCommonAttributes", "MWE", 1.0d},
-            new Object[] {"WithoutAttributes", "MWE", 1.0d}
+            new Object[] {"WithoutAttributes", "MWE", 1.0d},
+            new Object[] {"Foo", "CCM", 0.1667d},
+            new Object[] {"OverloadMethods", "CCM", 0.6d},
+            new Object[] {"TwoCommonAttributes", "CCM", Double.NaN},
+            new Object[] {"TwoCommonMethods", "CCM", 0.0238d}
         );
     }
 
@@ -223,6 +228,7 @@ public final class MetricsTest {
             ),
             XhtmlMatchers.hasXPaths(
                 String.format(
+                    Locale.US,
                     xpath,
                     this.target, this.value
                 )

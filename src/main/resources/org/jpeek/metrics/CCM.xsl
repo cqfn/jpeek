@@ -47,13 +47,6 @@ SOFTWARE.
         <xsl:variable name="method" select="."/>
         <xsl:for-each select="$method/following-sibling::method">
           <xsl:variable name="other" select="."/>
-          <!--
-           @todo #66:30min For CCM, need to add OR condition to the following
-            xsl:if to check whether two methods both call another method in
-            common for the same class. The skeleton currently does not produce
-            this information. After this is done, we can add test cases for Foo,
-            OverloadMethods, and TwoCommonAttributes.
-          -->
           <xsl:if test="$method/ops/op/text()[. = $other/ops/op/text()]">
             <edge>
               <method>
