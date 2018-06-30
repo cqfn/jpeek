@@ -142,9 +142,6 @@ public final class App {
     /**
      * Analyze sources.
      * @throws IOException If fails
-     * @todo #66:15min Add the CCM metric report here when all the puzzles
-     *  about it are resolved. It requires 'params' to be passed in in order
-     *  to properly include or exclude ctors.
      */
     @SuppressWarnings("PMD.ExcessiveMethodLength")
     public void analyze() throws IOException {
