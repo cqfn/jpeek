@@ -251,6 +251,13 @@ SOFTWARE.
           </xs:unique>
         </xs:element>
       </xs:all>
+      <!--
+      @todo #136:30min Would be great to have the definition of common attributes in one place
+      to avoid duplication and potentials bugs. Right now we are going to duplicate the documentation
+      sections of all four xsd files. Please extract the definition of date and version to base.xsd
+      file as it is defined for more than on xsd files. Then change the type to one defined in base.xsd,
+      to avoid the duplications in all xsd files.
+      -->
       <xs:attribute name="date" use="required" type="xs:dateTime">
         <xs:annotation>
           <xs:documentation>Date when the skeleton was generated.</xs:documentation>
