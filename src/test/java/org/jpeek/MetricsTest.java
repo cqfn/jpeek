@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.Locale;
 import org.cactoos.collection.CollectionOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
@@ -64,8 +65,6 @@ import org.junit.runners.Parameterized;
  * @checkstyle MagicNumberCheck (500 lines)
  * @todo #67:30min PCC: add the rest of the test cases for this metric. Could
  *  only fit test case for MethodsWithDiffParamTypes within budget.
- * @todo #90:30min OCC metric: need to implement the rest of the test cases.
- *  Could only fit test for sample class "Foo" within budget in this one.
  * @todo #106:30min Adding a new 'op' for calls to methods broke some tests
  *  and hence they were removed. Need to do the math for those tests and then
  *  add them back: SCOM with "Foo", SCOM with "MethodsWithDiffParamTypes",
@@ -183,6 +182,11 @@ public final class MetricsTest {
             new Object[] {"WithoutAttributes", "CCM", Double.NaN},
             new Object[] {"OneMethodCreatesLambda", "CCM", Double.NaN},
             new Object[] {"OneVoidMethodWithoutParams", "CCM", Double.NaN},
+            new Object[] {"Bar", "CCM", 0.125d},
+            new Object[] {"Foo", "CCM", 0.1667d},
+            new Object[] {"OverloadMethods", "CCM", 0.6d},
+            new Object[] {"TwoCommonAttributes", "CCM", Double.NaN},
+            new Object[] {"TwoCommonMethods", "CCM", 0.0238d},
             new Object[] {"Bar", "MWE", 1.0d},
             new Object[] {"Foo", "MWE", 1.0d},
             new Object[] {"MethodMethodCalls", "MWE", 1.0d},
@@ -198,7 +202,28 @@ public final class MetricsTest {
             new Object[] {"OverloadMethods", "CCM", 0.6d},
             new Object[] {"TwoCommonAttributes", "CCM", Double.NaN},
             new Object[] {"TwoCommonMethods", "CCM", 0.0238d},
-            new Object[] {"Bar", "CCM", 0.125d}
+            new Object[] {"Bar", "OCC", 0.75d},
+            new Object[] {"BridgeMethod", "OCC", 0.0d},
+            new Object[] {"ClassWithPublicField", "OCC", 0.5d},
+            new Object[] {
+                "IndirectlyRelatedPairs",
+                "OCC",
+                0.6666666666666666d,
+            },
+            new Object[] {"MethodMethodCalls", "OCC", 0.2d},
+            new Object[] {
+                "MethodsWithDiffParamTypes",
+                "OCC",
+                0.3333333333333333d,
+            },
+            new Object[] {"NoMethods", "OCC", 0.0d},
+            new Object[] {"OneMethodCreatesLambda", "OCC", 0.0d},
+            new Object[] {"OneVoidMethodWithoutParams", "OCC", 0.0d},
+            new Object[] {"OnlyOneMethodWithParams", "OCC", 1d},
+            new Object[] {"OverloadMethods", "OCC", 0.75d},
+            new Object[] {"TwoCommonAttributes", "OCC", 0.0d},
+            new Object[] {"TwoCommonMethods", "OCC", 0.0d},
+            new Object[] {"WithoutAttributes", "OCC", 0.0d}
         );
     }
 
@@ -223,6 +248,7 @@ public final class MetricsTest {
             ),
             XhtmlMatchers.hasXPaths(
                 String.format(
+                    Locale.US,
                     xpath,
                     this.target, this.value
                 )

@@ -255,6 +255,7 @@ if lost.
   - [@memoyil](https://github.com/memoyil) as Mehmet Yildirim
   - [@sergey-karazhenets](https://github.com/sergey-karazhenets) as Sergey Karazhenets
   - [@llorllale](https://github.com/llorllale) as George Aristy
+  - [@mesut](https://github.com/mesut) as Mesut Özen
 
 Don't hesitate to add your name to this list in your next pull request.
 
