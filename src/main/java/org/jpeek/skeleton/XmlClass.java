@@ -161,9 +161,21 @@ final class XmlClass extends ClassVisitor implements Iterable<Directive> {
     public MethodVisitor visitMethod(final int access,
         final String mtd, final String desc,
         final String signature, final String[] exceptions) {
-        final Directives dirs = new Directives();
-        this.methods.add(dirs);
-        dirs.add("method")
+        final MethodVisitor visitMethod = super.visitMethod(access, mtd, desc, signature, exceptions);
+        if ( (access & Opcodes.ACC_SYNTHETIC) == Opcodes.ACC_SYNTHETIC) {
+            return visitMethod;
+        } else {
+            final Directives dirs = directives(access, mtd, desc);
+            this.methods.add(dirs);
+            return new OpsOf(
+                dirs, visitMethod
+            );
+        }
+    }
+
+    private Directives directives(final int access, final String mtd, final String desc) {
+        return new Directives()
+            .add("method")
             .attr("name", mtd)
             .attr("desc", desc)
             .attr(
@@ -187,9 +199,6 @@ final class XmlClass extends ClassVisitor implements Iterable<Directive> {
                 (access & Opcodes.ACC_BRIDGE) == Opcodes.ACC_BRIDGE
             )
             .append(new TypesOf(desc));
-        return new OpsOf(
-            dirs, super.visitMethod(access, mtd, desc, signature, exceptions)
-        );
-    }
+	}
 
 }

@@ -108,6 +108,21 @@ public final class SkeletonTest {
         );
     }
 
+
+    @Test
+    public void createsOnlyOneMethodIgnoresSynthetic() {
+        MatcherAssert.assertThat(
+            XhtmlMatchers.xhtml(
+                new Skeleton(
+                    new FakeBase("OneMethodCreatesLambda")
+                ).xml().toString()
+            ),
+            XhtmlMatchers.hasXPaths(
+                "//class[@id='OneMethodCreatesLambda' and count(methods/method[contains(@name,'doSomething')])=1]"
+            )
+        );
+    }
+
     @Test
     @Ignore
     public void findFieldWithQualifiedName() {
