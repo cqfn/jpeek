@@ -169,7 +169,6 @@ public final class MetricsTest {
             new Object[] {"MethodMethodCalls", "LCOM4", 0.6d},
             new Object[] {"OneCommonAttribute", "LCOM4", 1d},
             new Object[] {"NotCommonAttributes", "LCOM4", 1.5d},
-            //new Object[] {"NotCommonAttributesWithAllArgsConstructor", "LCOM4", 1.5d},
             new Object[] {"Bar", "LCC", 0.0d},
             new Object[] {"Foo", "LCC", 1.0d},
             new Object[] {"MethodMethodCalls", "LCC", 0.1d},
