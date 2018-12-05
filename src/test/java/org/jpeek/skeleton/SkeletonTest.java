@@ -108,7 +108,6 @@ public final class SkeletonTest {
         );
     }
 
-
     @Test
     public void createsOnlyOneMethodIgnoresSynthetic() {
         MatcherAssert.assertThat(
@@ -118,6 +117,7 @@ public final class SkeletonTest {
                 ).xml().toString()
             ),
             XhtmlMatchers.hasXPaths(
+                // @checkstyle LineLength (1 line)
                 "//class[@id='OneMethodCreatesLambda' and count(methods/method[contains(@name,'doSomething')])=1]"
             )
         );
