@@ -57,7 +57,7 @@ import org.junit.runners.Parameterized;
 /**
  * Tests for all metrics.
  * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
+ * @version $Id: c40af2c127dfd4c84ec83adb0fc9920ef399eb9d $
  * @since 0.23
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle VisibilityModifierCheck (500 lines)
@@ -166,6 +166,7 @@ public final class MetricsTest {
             new Object[] {"OverloadMethods", "TLCOM", 0.0d},
             new Object[] {"TwoCommonAttributes", "TLCOM", 4.0d},
             new Object[] {"WithoutAttributes", "TLCOM", 1.0d},
+            new Object[] {"OneMethodCreatesLambda", "TLCOM", 3.0d},
             new Object[] {"MethodMethodCalls", "LCOM4", 0.6d},
             new Object[] {"Bar", "LCC", 0.0d},
             new Object[] {"Foo", "LCC", 1.0d},
@@ -230,6 +231,7 @@ public final class MetricsTest {
     @Test
     public void testsTarget() throws IOException {
         final Path output = Files.createTempDirectory("");
+        
         new Report(
             new Skeleton(new FakeBase(this.target)).xml(),
             this.metric
