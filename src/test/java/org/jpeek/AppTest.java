@@ -31,6 +31,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -65,6 +67,23 @@ public final class AppTest {
     }
 
     @Test
+    public void canIncludePrivateMethods() throws IOException {
+        final Path output = Files.createTempDirectory("").resolve("x2");
+        final Path input = Paths.get(".");
+        final Map<String, Object> args = new HashMap<>();
+        args.put("include-private-methods", 1);
+        new App(input, output, args).analyze();
+        MatcherAssert.assertThat(
+            XhtmlMatchers.xhtml(
+                new TextOf(output.resolve("skeleton.xml")).asString()
+            ),
+            XhtmlMatchers.hasXPaths(
+                "//method[@public='false']"
+            )
+        );
+    }
+
+    @Test
     public void createsIndexHtml() throws IOException {
         final Path output = Files.createTempDirectory("").resolve("x2");
         final Path input = Paths.get(".");
@@ -92,5 +111,4 @@ public final class AppTest {
             )
         );
     }
-
 }

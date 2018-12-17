@@ -160,6 +160,12 @@ public final class App {
             layers.add(App.xsl("layers/no-static-methods.xsl"));
             Logger.info(this, "Static methods will be ignored");
         }
+        if (this.params.containsKey("include-private-methods")) {
+            Logger.info(this, "Private methods will be included");
+        } else {
+            layers.add(App.xsl("layers/no-private-methods.xsl"));
+            Logger.info(this, "Private methods will be ignored");
+        }
         final XSL chain = new XSLChain(layers);
         this.save(skeleton.toString(), "skeleton.xml");
         final Collection<Report> reports = new LinkedList<>();

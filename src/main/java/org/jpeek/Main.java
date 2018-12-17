@@ -74,6 +74,11 @@ public final class Main {
     )
     private boolean statics;
 
+    @Parameter(
+        names = "--include-private-methods",
+        description = "Include private methods into all formulas")
+    private boolean privates;
+
     @SuppressWarnings("PMD.ImmutableField")
     @Parameter(
         names = "--metrics",
@@ -132,6 +137,9 @@ public final class Main {
         }
         if (this.statics) {
             params.put("include-static-methods", 1);
+        }
+        if (this.privates) {
+            params.put("include-private-methods", 1);
         }
         for (final String metric : this.metrics.split(",")) {
             if (!metric.matches("[A-Z]+[0-9]?")) {

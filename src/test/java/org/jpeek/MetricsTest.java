@@ -40,9 +40,6 @@ import org.junit.runners.Parameterized;
 // @todo #93:30min NHD needs to be tested against the following after #103 is
 //  fixed: NoMethods, OneVoidMethodWithoutParams, WithoutAttributes,
 //  OneMethodCreatesLambda. NHD score for all these is "NaN".
-// @todo #93:30min NHD calculation needs to take into account the method's
-//  visibility, which should be configurable and implemented after #101 is
-//  fixed.
 // @todo #68:30min SCOM has an impediment on issue #103: cannot currently
 //  be tested in MetricsTest when the resulting value is "NaN". Affected
 //  tests are: NoMethods, OneVoidMethodWithoutParams, WithoutAttributes,
