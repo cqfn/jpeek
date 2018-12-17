@@ -23,9 +23,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <!--
-@todo #134:30min Index.xsd: add `xsd:documentation` tags as per issue #134. We need to
- document the schemas in src/resources/org/jpeek/xsd so that the semantics of
- the generated XML documents is transparent for maintainers.
 @todo #135:30min Index.xsd: add a reference to this schema from the generated
  index.xml. Schemas from src/resources/org/jpeek/xsd must be referenced in
  generated XMLs.
@@ -35,23 +32,123 @@ SOFTWARE.
     <xs:complexType>
       <xs:sequence>
         <xs:element name="metric" minOccurs="0" maxOccurs="unbounded">
+          <xs:annotation>
+            <xs:documentation>
+              A concrete metric.
+            </xs:documentation>
+          </xs:annotation>
           <xs:complexType>
             <xs:all>
-              <xs:element name="html" type="xs:string" minOccurs="1" maxOccurs="1"/>
-              <xs:element name="xml" type="xs:string" minOccurs="1" maxOccurs="1"/>
-              <xs:element name="classes" type="xs:int" minOccurs="1" maxOccurs="1"/>
-              <xs:element name="elements" type="xs:int" minOccurs="1" maxOccurs="1"/>
-              <xs:element name="green" type="xs:int" minOccurs="1" maxOccurs="1"/>
-              <xs:element name="yellow" type="xs:int" minOccurs="1" maxOccurs="1"/>
-              <xs:element name="red" type="xs:int" minOccurs="1" maxOccurs="1"/>
-              <xs:element name="score" type="xs:double" minOccurs="1" maxOccurs="1"/>
-              <xs:element name="reverse" type="xs:boolean" minOccurs="1" maxOccurs="1"/>
-              <xs:element name="min" type="xs:double" minOccurs="0" maxOccurs="1"/>
-              <xs:element name="max" type="xs:double" minOccurs="0" maxOccurs="1"/>
-              <xs:element name="defects" type="xs:float" minOccurs="0" maxOccurs="1"/>
-              <xs:element name="sigma" type="xs:float" minOccurs="0" maxOccurs="1"/>
-              <xs:element name="mean" type="xs:float" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="html" type="xs:string" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>
+                    The name of the html file of this metric.
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="xml" type="xs:string" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>
+                    The name of the .xml containing the metric.
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="classes" type="xs:int" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>
+                    The total amount of classes measured by this metric.
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="elements" type="xs:int" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>
+                    The total amount of elements measured by this metric.
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="green" type="xs:int" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>
+                    The total amount of classes that received "green".
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="yellow" type="xs:int" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>
+                    The total amount of classes that received "yellow".
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="red" type="xs:int" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>
+                    The total amount of classes that received "red".
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="score" type="xs:double" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>
+                     A weighted average of the numbers from "green", "yellow"
+                     and "red". The weight of green classes is 1.0, yellow
+                     ones get 0.25 and red ones get 0.05.
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="reverse" type="xs:boolean" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>The metric is reversed.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="min" type="xs:double" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>
+                    The minimum score measured by this metric.
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="max" type="xs:double" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>
+                    The maximum score measured by this metric.
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="defects" type="xs:float" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>
+                    The percentage of defects (classes that fall out of one-sigma
+                    standard deviation interval).
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="sigma" type="xs:float" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>
+                    The standard deviation.
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="mean" type="xs:float" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>
+                    Mathematical average of all measurements.
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
               <xs:element name="bars" minOccurs="1" maxOccurs="1">
+                <!--
+                @todo #199:30min Index.xsd: add `xsd:documentation` as per #199 to the
+                 `bars` element. The element seems to describe the graph on the index.html
+
+                 Tests that might help you implement this by showing you .xml files and
+                 the resulting html:
+                   * org.jpeek.IndexTest
+                   * org.jpeek.AppTest#createsIndexHtml
+                   * org.jpeek.web.TkIndexTest#rendersIndexPage
+                -->
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="bar" minOccurs="0" maxOccurs="unbounded">
@@ -68,17 +165,60 @@ SOFTWARE.
                 </xs:complexType>
               </xs:element>
             </xs:all>
-            <xs:attribute name="name" use="required" type="xs:string"/>
+            <xs:attribute name="name" use="required" type="xs:string">
+              <xs:annotation>
+                <xs:documentation>
+                  The name of the metric.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
             <xs:attribute name="diff" type="xs:float" use="required"/>
           </xs:complexType>
         </xs:element>
       </xs:sequence>
-      <xs:attribute name="artifact" type="xs:string" use="required"/>
-      <xs:attribute name="defects" type="xs:float" use="required"/>
-      <xs:attribute name="diff" type="xs:float" use="required"/>
-      <xs:attribute name="score" type="xs:float" use="required"/>
-      <xs:attribute name="date" use="required" type="xs:dateTime"/>
-      <xs:attribute name="version" use="required" type="xs:string"/>
+      <xs:attribute name="artifact" type="xs:string" use="required">
+        <xs:annotation>
+          <xs:documentation>
+            The name of the analyzed artifact.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="defects" type="xs:float" use="required">
+        <xs:annotation>
+          <xs:documentation>
+            The average defects rate.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="diff" type="xs:float" use="required">
+        <xs:annotation>
+          <xs:documentation>
+            The average mistake of individual scores.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="score" type="xs:float" use="required">
+        <xs:annotation>
+          <xs:documentation>
+            The overall score.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="date" use="required" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>
+            The date the analysis took place in ISO 8601,
+            e.g. 2018-11-29T12:17:30.990Z.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="version" use="required" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>
+            The version of jPeek that analyzed the artifact, e.g. 1.0-SNAPSHOT.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
     </xs:complexType>
   </xs:element>
 </xs:schema>
