@@ -65,10 +65,6 @@ import org.junit.runners.Parameterized;
  * @checkstyle MagicNumberCheck (500 lines)
  * @todo #67:30min PCC: add the rest of the test cases for this metric. Could
  *  only fit test case for MethodsWithDiffParamTypes within budget.
- * @todo #106:30min Adding a new 'op' for calls to methods broke some tests
- *  and hence they were removed. Need to do the math for those tests and then
- *  add them back: SCOM with "Foo", SCOM with "MethodsWithDiffParamTypes",
- *  and SCOM with "OverloadMethods".
  * @todo #118:30min Add test for LCC with "IndirectlyRelatedPairs" and others.
  *  In "IndirectlyRelatedPairs" all methods exist in one transitive closure,
  *  so the result should be {@code 1d}.
@@ -101,7 +97,7 @@ public final class MetricsTest {
             new Object[] {"OverloadMethods", "LCOM", 0.0d},
             new Object[] {"TwoCommonAttributes", "LCOM", 6.0d},
             new Object[] {"WithoutAttributes", "LCOM", 1.0d},
-            new Object[] {"OneMethodCreatesLambda", "LCOM", 3.0d},
+            new Object[] {"OneMethodCreatesLambda", "LCOM", 1.0d},
             new Object[] {"Bar", "CAMC", 0.4d},
             new Object[] {"Foo", "CAMC", 0.6667d},
             new Object[] {"Bar", "MMAC", 0.1d},
@@ -121,13 +117,16 @@ public final class MetricsTest {
             new Object[] {"NoMethods", "LCOM5", Double.NaN},
             new Object[] {"WithoutAttributes", "LCOM5", Double.NaN},
             new Object[] {"OneVoidMethodWithoutParams", "LCOM5", 1.0d},
-            new Object[] {"OneMethodCreatesLambda", "LCOM5", 1.5d},
+            new Object[] {"OneMethodCreatesLambda", "LCOM5", 2.0d},
             new Object[] {"Bar", "NHD", 0.4d},
             new Object[] {"Foo", "NHD", 0.3333d},
             new Object[] {"MethodsWithDiffParamTypes", "NHD", 0.7143d},
             new Object[] {"OverloadMethods", "NHD", 0.5333d},
             new Object[] {"TwoCommonAttributes", "NHD", 0.3333d},
             new Object[] {"MethodsWithDiffParamTypes", "CCM", 0.0476d},
+            new Object[]{"Foo", "SCOM", 0.5d},
+            new Object[]{"MethodsWithDiffParamTypes", "SCOM", 0.2381d},
+            new Object[]{"OverloadMethods", "SCOM", 0.75d},
             new Object[] {"TwoCommonAttributes", "SCOM", 0.0d},
             new Object[] {"NoMethods", "SCOM", Double.NaN},
             new Object[] {"OneVoidMethodWithoutParams", "SCOM", 0.0d},
