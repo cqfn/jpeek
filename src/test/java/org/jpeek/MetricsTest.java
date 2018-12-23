@@ -37,9 +37,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-// @todo #93:30min NHD needs to be tested against the following after #103 is
-//  fixed: NoMethods, OneVoidMethodWithoutParams, WithoutAttributes,
-//  OneMethodCreatesLambda. NHD score for all these is "NaN".
 // @todo #68:30min SCOM has an impediment on issue #103: cannot currently
 //  be tested in MetricsTest when the resulting value is "NaN". Affected
 //  tests are: NoMethods, OneVoidMethodWithoutParams, WithoutAttributes,
@@ -120,6 +117,10 @@ public final class MetricsTest {
             new Object[] {"MethodsWithDiffParamTypes", "NHD", 0.7143d},
             new Object[] {"OverloadMethods", "NHD", 0.5333d},
             new Object[] {"TwoCommonAttributes", "NHD", 0.3333d},
+            new Object[] {"NoMethods", "NHD", Double.NaN},
+            new Object[] {"OneVoidMethodWithoutParams", "NHD", Double.NaN},
+            new Object[] {"WithoutAttributes", "NHD", 0.0d},
+            new Object[] {"OneMethodCreatesLambda", "NHD", 0.0d},
             new Object[] {"MethodsWithDiffParamTypes", "CCM", 0.0476d},
             new Object[]{"Foo", "SCOM", 0.5d},
             new Object[]{"MethodsWithDiffParamTypes", "SCOM", 0.2381d},
