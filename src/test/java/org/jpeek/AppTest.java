@@ -25,7 +25,6 @@ package org.jpeek;
 
 import com.jcabi.matchers.XhtmlMatchers;
 import com.jcabi.xml.ClasspathSources;
-import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
@@ -33,7 +32,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
@@ -49,6 +47,7 @@ import org.junit.Test;
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class AppTest {
+
     @Test
     public void createsXmlReports() throws IOException {
         final Path output = Files.createTempDirectory("").resolve("x1");
@@ -60,7 +59,7 @@ public final class AppTest {
         );
         MatcherAssert.assertThat(
             XSLDocument
-                .make(new Resource("xsl/metric.xsl"))
+                .make(this.getClass().getResourceAsStream("xsl/metric.xsl"))
                 .with(new ClasspathSources())
                 .applyTo(new XMLDocument(output.resolve("LCOM.xml").toFile())),
             XhtmlMatchers.hasXPath("//xhtml:body")
@@ -111,28 +110,5 @@ public final class AppTest {
                 "/index[count(metric)>0]"
             )
         );
-    }
-
-    @Test
-    public void isXsdDocumented() throws IOException {
-        final List<XML> elements = new XMLDocument(
-            new Resource("xsd/metric.xsd")
-        ).nodes("//xs:element");
-        MatcherAssert.assertThat(
-            elements.isEmpty(),
-            Matchers.is(false)
-        );
-        for (final XML element: elements) {
-            MatcherAssert.assertThat(
-                String.format(
-                    "element '%s' must have a documentation",
-                    element.xpath("@name").get(0)
-                ),
-                element
-                    .xpath("xs:annotation/xs:documentation/text()")
-                    .isEmpty(),
-                Matchers.is(false)
-            );
-        }
     }
 }
