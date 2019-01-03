@@ -42,23 +42,23 @@ import org.junit.Test;
  */
 public final class MatrixTest {
     /**
-     * Xml as a string.
+     * Xml file content as a string.
      */
-    private String xmltext;
+    private String xml;
 
     @Before
     public void setUp() throws IOException {
         final Path output = Files.createTempDirectory("").resolve("x2");
         final Path input = Paths.get(".");
         new App(input, output).analyze();
-        this.xmltext = new TextOf(output.resolve("matrix.xml")).asString();
+        this.xml = new TextOf(output.resolve("matrix.xml")).asString();
     }
 
     @Test
     public void createsMatrixXml() {
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
-                this.xmltext
+                this.xml
             ),
             XhtmlMatchers.hasXPaths("/matrix/classes")
         );
@@ -68,7 +68,7 @@ public final class MatrixTest {
     public void xmlHasSchema() {
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
-                this.xmltext
+                this.xml
             ),
             XhtmlMatchers.hasXPaths(
                 "/matrix[@xsi:noNamespaceSchemaLocation='xsd/matrix.xsd']"
