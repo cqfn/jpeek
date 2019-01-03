@@ -30,6 +30,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -40,17 +41,38 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class MatrixTest {
+    /**
+     * Xml as a string.
+     */
+    private String xmltext;
 
-    @Test
-    public void createsMatrixXml() throws IOException {
+    @Before
+    public void setUp() throws IOException {
         final Path output = Files.createTempDirectory("").resolve("x2");
         final Path input = Paths.get(".");
         new App(input, output).analyze();
+        this.xmltext = new TextOf(output.resolve("matrix.xml")).asString();
+    }
+
+    @Test
+    public void createsMatrixXml() {
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
-                new TextOf(output.resolve("matrix.xml")).asString()
+                this.xmltext
             ),
             XhtmlMatchers.hasXPaths("/matrix/classes")
+        );
+    }
+
+    @Test
+    public void xmlHasSchema() {
+        MatcherAssert.assertThat(
+            XhtmlMatchers.xhtml(
+                this.xmltext
+            ),
+            XhtmlMatchers.hasXPaths(
+                "/matrix[@xsi:noNamespaceSchemaLocation='xsd/matrix.xsd']"
+            )
         );
     }
 
