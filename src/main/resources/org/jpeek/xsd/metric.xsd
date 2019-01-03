@@ -22,18 +22,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
-<!--
-@todo #134:30min Metric.xsd: add `xsd:documentation` tags as per issue #134. We need to
- document the schemas in src/resources/org/jpeek/xsd so that the semantics of
- the generated XML documents is transparent for maintainers.
--->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:complexType name="class">
     <xs:sequence>
       <xs:element name="vars" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Variables</xs:documentation>
+        </xs:annotation>
         <xs:complexType>
           <xs:sequence>
             <xs:element name="var" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>Variable</xs:documentation>
+              </xs:annotation>
               <xs:complexType>
                 <xs:simpleContent>
                   <xs:extension base="xs:double">
@@ -67,7 +68,11 @@ SOFTWARE.
     <xs:complexContent>
       <xs:extension base="class">
         <xs:sequence>
-          <xs:element name="class" type="class" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element name="class" type="class" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Class</xs:documentation>
+            </xs:annotation>
+          </xs:element>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -77,6 +82,9 @@ SOFTWARE.
       <xs:extension base="class">
         <xs:sequence>
           <xs:element name="package" type="package" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Class</xs:documentation>
+            </xs:annotation>
             <xs:unique name="classUnique">
               <xs:selector xpath="./class"/>
               <xs:field xpath="@id"/>
@@ -87,19 +95,44 @@ SOFTWARE.
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="metric">
+    <xs:annotation>
+      <xs:documentation>Metric</xs:documentation>
+    </xs:annotation>
     <xs:complexType>
       <xs:all>
-        <xs:element name="description" type="xs:string" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="description" type="xs:string" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Description</xs:documentation>
+          </xs:annotation>
+        </xs:element>
         <xs:element name="app" type="app" minOccurs="0" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Application</xs:documentation>
+          </xs:annotation>
           <xs:unique name="packageUnique">
             <xs:selector xpath="./package"/>
             <xs:field xpath="@id"/>
           </xs:unique>
         </xs:element>
-        <xs:element name="min" type="xs:float" minOccurs="1" maxOccurs="1"/>
-        <xs:element name="max" type="xs:float" minOccurs="1" maxOccurs="1"/>
-        <xs:element name="title" type="xs:string" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="min" type="xs:float" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Minimum</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="max" type="xs:float" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Maximum</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="title" type="xs:string" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Title</xs:documentation>
+          </xs:annotation>
+        </xs:element>
         <xs:element name="colors" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Colors</xs:documentation>
+          </xs:annotation>
           <xs:complexType>
             <xs:simpleContent>
               <xs:extension base="xs:string">
@@ -110,9 +143,15 @@ SOFTWARE.
           </xs:complexType>
         </xs:element>
         <xs:element name="bars" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Bars</xs:documentation>
+          </xs:annotation>
           <xs:complexType>
             <xs:sequence>
               <xs:element name="bar" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation>Bar</xs:documentation>
+                </xs:annotation>
                 <xs:complexType>
                   <xs:simpleContent>
                     <xs:extension base="xs:int">
@@ -126,14 +165,41 @@ SOFTWARE.
           </xs:complexType>
         </xs:element>
         <xs:element name="statistics" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Statistics</xs:documentation>
+          </xs:annotation>
           <xs:complexType>
             <xs:all>
-              <xs:element name="total" type="xs:int" minOccurs="1" maxOccurs="1"/>
-              <xs:element name="elements" type="xs:int" minOccurs="1" maxOccurs="1"/>
-              <xs:element name="mean" type="xs:double" minOccurs="1" maxOccurs="1"/>
-              <xs:element name="variance" type="xs:double" minOccurs="1" maxOccurs="1"/>
-              <xs:element name="sigma" type="xs:double" minOccurs="1" maxOccurs="1"/>
-              <xs:element name="defects" type="xs:double" minOccurs="1" maxOccurs="1"/>
+              <xs:element name="total" type="xs:int" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>Total</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="elements" type="xs:int" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>Elements</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="mean" type="xs:double" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>Mean</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="variance" type="xs:double" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>Variance</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="sigma" type="xs:double" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>Sigma</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="defects" type="xs:double" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>Defects</xs:documentation>
+                </xs:annotation>
+              </xs:element>
             </xs:all>
           </xs:complexType>
         </xs:element>
