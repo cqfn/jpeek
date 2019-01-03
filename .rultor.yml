@@ -13,6 +13,7 @@ install: |
   sudo gem install --no-rdoc --no-ri pdd
   sudo gem install --no-rdoc --no-ri xcop
 architect:
+- paulodamaso
 - yegor256
 merge:
   script: |

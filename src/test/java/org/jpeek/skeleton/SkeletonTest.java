@@ -144,4 +144,24 @@ public final class SkeletonTest {
         );
     }
 
+    @Test
+    public void recognizesPublicMethods() {
+        MatcherAssert.assertThat(
+            XhtmlMatchers.xhtml(
+                new Skeleton(
+                    new FakeBase(
+                        "ClassWithDifferentMethodVisibilities"
+                    )
+                )
+                .xml()
+                .toString()
+            ),
+            XhtmlMatchers.hasXPaths(
+                "//method[@name='publicMethod' and @public='true']",
+                "//method[@name='defaultMethod' and @public='false']",
+                "//method[@name='protectedMethod' and @public='false']",
+                "//method[@name='privateMethod' and @public='false']"
+            )
+        );
+    }
 }
