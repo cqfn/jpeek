@@ -25,7 +25,7 @@ SOFTWARE.
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:complexType name="class">
     <xs:annotation>
-        <xs:documentation>Class under test</xs:documentation>
+      <xs:documentation>Class under test</xs:documentation>
     </xs:annotation>
     <xs:sequence>
       <xs:element name="vars" minOccurs="0" maxOccurs="1">
@@ -42,7 +42,7 @@ SOFTWARE.
                 <xs:simpleContent>
                   <xs:extension base="xs:double">
                     <xs:attribute name="id" use="required" type="xs:string">
-                     <xs:annotation>
+                      <xs:annotation>
                         <xs:documentation>Unique name of the variable</xs:documentation>
                       </xs:annotation>
                     </xs:attribute>
@@ -53,9 +53,9 @@ SOFTWARE.
           </xs:sequence>
         </xs:complexType>
         <xs:unique name="varUnique">
-           <xs:annotation>
-              <xs:documentation>Unique variable name</xs:documentation>
-            </xs:annotation>
+          <xs:annotation>
+            <xs:documentation>Unique variable name</xs:documentation>
+          </xs:annotation>
           <xs:selector xpath="./var"/>
           <xs:field xpath="@id"/>
         </xs:unique>
