@@ -38,6 +38,8 @@ import java.util.Map;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.hamcrest.collection.IsEmptyIterable;
+import org.hamcrest.core.IsNot;
 import org.junit.Test;
 
 /**
@@ -60,7 +62,9 @@ public final class AppTest {
         );
         MatcherAssert.assertThat(
             XSLDocument
-                .make(new Resource("xsl/metric.xsl"))
+                .make(
+                    AppTest.class.getResourceAsStream("xsl/metric.xsl")
+                )
                 .with(new ClasspathSources())
                 .applyTo(new XMLDocument(output.resolve("LCOM.xml").toFile())),
             XhtmlMatchers.hasXPath("//xhtml:body")
@@ -116,11 +120,14 @@ public final class AppTest {
     @Test
     public void isXsdDocumented() throws IOException {
         final List<XML> elements = new XMLDocument(
-            new Resource("xsd/metric.xsd")
+            AppTest.class.getResourceAsStream("xsd/metric.xsd")
         ).nodes("//node()[@name]");
+        final IsNot<? super List<?>> populated = new IsNot<>(
+            new IsEmptyIterable<>()
+        );
         MatcherAssert.assertThat(
-            elements.isEmpty(),
-            Matchers.is(false)
+            elements,
+            populated
         );
         for (final XML element: elements) {
             MatcherAssert.assertThat(
@@ -129,9 +136,8 @@ public final class AppTest {
                     element.xpath("@name").get(0)
                 ),
                 element
-                    .xpath("xs:annotation/xs:documentation/text()")
-                    .isEmpty(),
-                Matchers.is(false)
+                    .xpath("xs:annotation/xs:documentation/text()"),
+                populated
             );
         }
     }

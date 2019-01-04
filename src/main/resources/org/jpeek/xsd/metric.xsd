@@ -202,7 +202,7 @@ SOFTWARE.
                     <xs:extension base="xs:int">
                       <xs:attribute name="x" use="required" type="xs:double">
                         <xs:annotation>
-                          <xs:documentation>Chart X coordinate (horisontal)</xs:documentation>
+                          <xs:documentation>Chart X coordinate (horizontal)</xs:documentation>
                         </xs:annotation>
                       </xs:attribute>
                       <xs:attribute name="color" use="required" type="xs:string">
