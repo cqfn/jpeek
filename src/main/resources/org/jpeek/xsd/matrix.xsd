@@ -26,9 +26,6 @@ SOFTWARE.
 @todo #134:30min Matrix.xsd: add `xsd:documentation` tags as per issue #134. We need to
  document the schemas in src/resources/org/jpeek/xsd so that the semantics of
  the generated XML documents is transparent for maintainers.
-@todo #135:30min Matrix.xsd: add a reference to this schema from the generated
- matrix.xml. Schemas from src/resources/org/jpeek/xsd must be referenced in
- generated XMLs.
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:element name="matrix">

@@ -96,6 +96,17 @@ final class Matrix implements Iterable<Directive> {
         return new Directives()
             .add("matrix")
             .append(new Header())
+            .append(
+                () -> new Directives()
+                    .attr(
+                        "xmlns:xsi",
+                        "http://www.w3.org/2001/XMLSchema-instance"
+                    )
+                    .attr(
+                        "xsi:noNamespaceSchemaLocation",
+                        "xsd/matrix.xsd"
+                    )
+                    .iterator())
             .add("classes")
             .append(
                 new Joined<Directive>(
