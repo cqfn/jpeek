@@ -63,7 +63,7 @@ SOFTWARE.
     <!-- links between class methods -->
     <xsl:variable name="relations">
       <xsl:for-each select="$methods">
-        <xsl:variable name="from" select="@name" />
+        <xsl:variable name="from" select="@name"/>
         <xsl:for-each select="ops/op[@code='call'][starts-with(text(), $prefix)]">
           <xsl:variable name="to" select="substring-after(text(), $prefix)"/>
           <link from="{$from}" to="{$to}"/>
