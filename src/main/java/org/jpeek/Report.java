@@ -55,6 +55,15 @@ import org.cactoos.text.UncheckedText;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
+ *
+ * @todo #204:30min Generate metrics XML without XSLT
+ * The current architecture relies heavliy on XSLT for data analysis.
+ * For advanced semantic indexing such as ML, LSI, NLP
+ * we'll have to use external java libraries,
+ * it's very challenging to do complex calculations in pure XSLT.
+ * So we need to have an option to generate an XML report by name
+ * that is implemented in java not XSLT.
+ *
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class Report {
