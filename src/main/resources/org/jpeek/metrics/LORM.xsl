@@ -57,20 +57,16 @@ SOFTWARE.
     </metric>
   </xsl:template>
   <xsl:template match="class">
-    <xsl:variable name="methods" select="methods/method"/>
-    <xsl:variable name="possible_relations">
+    <xsl:variable name="prefix" select="concat(@id, '.')"/>
+    <!-- constructors are not methods -->
+    <xsl:variable name="methods" select="methods/method[@ctor='false']"/>
+    <!-- links between class methods -->
+    <xsl:variable name="relations">
       <xsl:for-each select="$methods">
-        <xsl:variable name="i" select="position()"/>
-        <xsl:variable name="left" select="."/>
-        <xsl:variable name="left_ops" select="$left/ops/op[@code='get' or @code='put']"/>
-        <xsl:for-each select="$methods">
-          <xsl:if test="position() &gt; $i">
-            <xsl:variable name="right" select="."/>
-            <xsl:variable name="right_ops" select="$right/ops/op[@code='get' or @code='put']"/>
-            <pair>
-              <xsl:value-of select="count($left_ops[.=$right_ops])"/>
-            </pair>
-          </xsl:if>
+        <xsl:variable name="from" select="@name" />
+        <xsl:for-each select="ops/op[@code='call'][starts-with(text(), $prefix)]">
+          <xsl:variable name="to" select="substring-after(text(), $prefix)"/>
+          <link from="{$from}" to="{$to}"/>
         </xsl:for-each>
       </xsl:for-each>
     </xsl:variable>
@@ -98,14 +94,16 @@ SOFTWARE.
      Ensure that JPeek core implements these techniques, collects information on
      such relations and unstub the lines commented below.
     -->
-    <!--
-     <xsl:variable name="possible_relations"/>
-     <xsl:variable name="R" select="count($possible_relations)"/>
-    -->
+    <!--  number of unique pairs of methods in the class -->
     <xsl:variable name="R">
-      <xsl:value-of select="0"/>
+      <xsl:variable name="unique_relations" select="$relations/link[not(following::link/@to=@to and following::link/@from=@from)]"/>
+      <xsl:value-of select="count($unique_relations)"/>
     </xsl:variable>
-    <xsl:variable name="RN" select="count($possible_relations)"/>
+    <!-- N = "total number of method functions in the class" -->
+    <xsl:variable name="N" select="count(./methods/method[@ctor='false'])"/>
+    <!-- R = "Total number of possible relations." -->
+    <xsl:variable name="RN" select="$N * ($N - 1) div 2"/>
+    <!-- LORM = the main metric -->
     <xsl:variable name="LORM">
       <xsl:choose>
         <xsl:when test="$RN lt 1">
@@ -117,11 +115,15 @@ SOFTWARE.
       </xsl:choose>
     </xsl:variable>
     <xsl:copy>
-      <xsl:attribute name="value" select="$LORM"/>
+      <!-- rounded to 5 meaningful digits -->
+      <xsl:attribute name="value" select="round($LORM*10000) div 10000"/>
       <xsl:apply-templates select="@*"/>
       <vars>
         <var id="R">
           <xsl:value-of select="$R"/>
+        </var>
+        <var id="N">
+          <xsl:value-of select="$N"/>
         </var>
         <var id="RN">
           <xsl:value-of select="$RN"/>

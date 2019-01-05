@@ -220,7 +220,8 @@ public final class MetricsTest {
             new Object[] {"OverloadMethods", "OCC", 0.75d},
             new Object[] {"TwoCommonAttributes", "OCC", 0.0d},
             new Object[] {"TwoCommonMethods", "OCC", 0.0d},
-            new Object[] {"WithoutAttributes", "OCC", 0.0d}
+            new Object[] {"WithoutAttributes", "OCC", 0.0d},
+            new Object[] {"TwoCommonMethods", "LORM", 0.26667d}
         );
     }
 
