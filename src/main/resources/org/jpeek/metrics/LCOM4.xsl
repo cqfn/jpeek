@@ -63,10 +63,10 @@ SOFTWARE.
     -->
     <!--
     @todo #216:30min LCOM4: "NotCommonAttributesWithAllArgsConstructor" test now fails.
-    Constructor with all attributes parameters should not affect LCOM4 metric.
-    So LCOM4.xsl needs to be fixed in order to avoid constructors affection to the metric values.
-    "NotCommonAttributesWithAllArgsConstructor" test case must be added into collection
-    returning by the targets() in the MetricsTest.java when this puzzle done.
+     Constructor with all attributes parameters should not affect LCOM4 metric.
+     So LCOM4.xsl needs to be fixed in order to avoid constructors affection to the metric values.
+     "NotCommonAttributesWithAllArgsConstructor" test case must be added into collection
+     returning by the targets() in the MetricsTest.java when this puzzle done.
     -->
     <xsl:variable name="E">
       <xsl:for-each select="$M">
