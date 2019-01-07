@@ -57,8 +57,16 @@ SOFTWARE.
      Once #156 is fixed, refactor xpaths 'this_attrs' and 'other_attrs' accordingly.
     -->
     <!--
-    @todo #8:30min LCOM4: need to finish implementing the rest of the test cases. Only test case
-     "MethodMethodCalls" was implemented in this 30min ticket.
+    @todo #216:30min LCOM4: need to finish implementing the rest of the test cases. Only test case
+     "OneCommonAttribute", "NotCommonAttributes", "NotCommonAttributesWithAllArgsConstructor",
+     was implemented in this 30min ticket.
+    -->
+    <!--
+    @todo #216:30min LCOM4: "NotCommonAttributesWithAllArgsConstructor" test now fails.
+     Constructor with all attributes parameters should not affect LCOM4 metric.
+     So LCOM4.xsl needs to be fixed in order to avoid constructors affection to the metric values.
+     "NotCommonAttributesWithAllArgsConstructor" test case must be added into collection
+     returning by the targets() in the MetricsTest.java when this puzzle done.
     -->
     <xsl:variable name="E">
       <xsl:for-each select="$M">
