@@ -29,7 +29,7 @@ import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
 import org.cactoos.io.ResourceOf;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.jpeek.FakeBase;
 import org.jpeek.skeleton.Skeleton;
 import org.junit.Test;
@@ -58,20 +58,20 @@ public final class LormTest {
         );
         final int methods = 6;
         MatcherAssert.assertThat(
-            "N variable",
+            "N variable 'N' is not calculated correctly",
             xml.xpath(
                 "//class[@id='TwoCommonMethods']/vars/var[@id='N']/text()"
             ).get(0),
-            Matchers.equalTo(
+            new IsEqual<>(
                 String.valueOf(methods)
             )
         );
         MatcherAssert.assertThat(
-            "R variable",
+            "variable 'R' is not calculated correctly",
             xml.xpath(
                 "//class[@id='TwoCommonMethods']/vars/var[@id='R']/text()"
             ).get(0),
-            Matchers.equalTo(
+            new IsEqual<>(
                 String.valueOf(
                     new String[] {
                         "methodTwo   -> methodOne",
@@ -83,11 +83,11 @@ public final class LormTest {
             )
         );
         MatcherAssert.assertThat(
-            "RN variable = N * (N - 1) / 2",
+            String.format("variable 'RN' is not calculated correctly"),
             xml.xpath(
                 "//class[@id='TwoCommonMethods']/vars/var[@id='RN']/text()"
             ).get(0),
-            Matchers.equalTo(
+            new IsEqual<>(
                 String.valueOf(
                     methods * (methods - 1) / 2
                 )
