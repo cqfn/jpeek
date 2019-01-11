@@ -155,6 +155,15 @@ final class XmlClass extends ClassVisitor implements Iterable<Directive> {
         final String signature, final String[] exceptions) {
         final Directives dirs = new Directives();
         if ((access & Opcodes.ACC_SYNTHETIC) != Opcodes.ACC_SYNTHETIC) {
+            String visibility = "default";
+            if ((access & Opcodes.ACC_PUBLIC) == Opcodes.ACC_PUBLIC) {
+                visibility = "public";
+            } else if (
+                (access & Opcodes.ACC_PROTECTED) == Opcodes.ACC_PROTECTED) {
+                visibility = "protected";
+            } else if ((access & Opcodes.ACC_PRIVATE) == Opcodes.ACC_PRIVATE) {
+                visibility = "private";
+            }
             dirs.add("method")
                 .attr("name", mtd)
                 .attr("desc", desc)
@@ -173,6 +182,9 @@ final class XmlClass extends ClassVisitor implements Iterable<Directive> {
                 .attr(
                 "public",
                 (access & Opcodes.ACC_PUBLIC) == Opcodes.ACC_PUBLIC
+                ).attr(
+                "visibility",
+                visibility
                 )
                 .attr(
                 "bridge",
