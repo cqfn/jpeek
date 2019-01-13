@@ -83,7 +83,7 @@ public final class LormTest {
             )
         );
         MatcherAssert.assertThat(
-            String.format("variable 'RN' is not calculated correctly"),
+            "variable 'RN' is not calculated correctly",
             xml.xpath(
                 "//class[@id='TwoCommonMethods']/vars/var[@id='RN']/text()"
             ).get(0),
