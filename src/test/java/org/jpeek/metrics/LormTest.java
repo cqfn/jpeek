@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2019 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -86,11 +86,9 @@ public final class LormTest {
             "variable 'RN' is not calculated correctly",
             xml.xpath(
                 "//class[@id='TwoCommonMethods']/vars/var[@id='RN']/text()"
-            ).get(0),
+            ).stream().mapToInt(Integer::valueOf).toArray(),
             new IsEqual<>(
-                String.valueOf(
-                    methods * (methods - 1) / 2
-                )
+                new int[] {methods * (methods - 1) / 2}
             )
         );
     }
