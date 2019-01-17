@@ -26,7 +26,7 @@ package org.jpeek;
 import java.io.IOException;
 import org.cactoos.Scalar;
 import org.cactoos.io.ResourceOf;
-import org.cactoos.iterable.PropertiesOf;
+import org.cactoos.scalar.PropertiesOf;
 
 /**
  * Version.

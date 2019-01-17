@@ -30,7 +30,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.BiFunc;
 import org.cactoos.io.ResourceOf;
-import org.cactoos.iterable.PropertiesOf;
+import org.cactoos.scalar.PropertiesOf;
 import org.cactoos.text.TextOf;
 import org.takes.Take;
 import org.takes.facets.fallback.Fallback;

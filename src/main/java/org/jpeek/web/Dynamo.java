@@ -32,7 +32,7 @@ import com.jcabi.dynamo.mock.MkRegion;
 import java.io.IOException;
 import java.util.Properties;
 import org.cactoos.io.ResourceOf;
-import org.cactoos.iterable.PropertiesOf;
+import org.cactoos.scalar.PropertiesOf;
 
 /**
  * Dynamo.

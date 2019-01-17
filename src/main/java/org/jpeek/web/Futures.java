@@ -136,9 +136,4 @@ final class Futures implements
             ).asString()
         );
     }
-
-    @Override
-    public int compareTo(final Text txt) {
-        throw new UnsupportedOperationException("#compareTo()");
-    }
 }

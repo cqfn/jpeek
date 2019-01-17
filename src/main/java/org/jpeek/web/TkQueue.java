@@ -54,11 +54,17 @@ final class TkQueue implements Take {
         this.futures = frs;
     }
 
+    // @checkstyle IllegalCatchCheck (10 lines)
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     @Override
     public Response act(final Request req) throws IOException {
-        return new RsText(
-            this.futures.asString()
-        );
+        try {
+            return new RsText(
+                this.futures.asString()
+            );
+        } catch (final Exception exception) {
+            throw new IOException(exception);
+        }
     }
 
 }

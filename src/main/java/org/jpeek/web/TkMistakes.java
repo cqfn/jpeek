@@ -23,9 +23,9 @@
  */
 package org.jpeek.web;
 
+import org.cactoos.iterable.HeadOf;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Joined;
-import org.cactoos.iterable.Limited;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
@@ -54,7 +54,7 @@ final class TkMistakes implements Take {
                     "worst",
                     new XeDirectives(
                         new Joined<>(
-                            new Limited<Iterable<Directive>>(
+                            new HeadOf<Iterable<Directive>>(
                                 // @checkstyle MagicNumber (1 line)
                                 20, new Mistakes().worst()
                             )
