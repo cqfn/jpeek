@@ -61,25 +61,25 @@ public final class LormTest {
             "N variable 'N' is not calculated correctly",
             xml.xpath(
                 "//class[@id='TwoCommonMethods']/vars/var[@id='N']/text()"
-            ).get(0),
+            ).stream().mapToInt(Integer::valueOf).toArray(),
             new IsEqual<>(
-                String.valueOf(methods)
+                new int[] { methods }
             )
         );
         MatcherAssert.assertThat(
             "variable 'R' is not calculated correctly",
             xml.xpath(
                 "//class[@id='TwoCommonMethods']/vars/var[@id='R']/text()"
-            ).get(0),
+            ).stream().mapToInt(Integer::valueOf).toArray(),
             new IsEqual<>(
-                String.valueOf(
-                    new String[] {
+                new int[] {
+                    new String[]{
                         "methodTwo   -> methodOne",
                         "methodThree -> methodOne",
                         "methodFive  -> methodFour",
                         "methodSix   -> methodFour",
                     }.length
-                )
+                }
             )
         );
         MatcherAssert.assertThat(
