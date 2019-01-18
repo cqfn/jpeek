@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2019 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -42,17 +42,7 @@ public final class XmlClassTest {
     @Test
     public void parsesClass() {
         MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
-                new Xembler(
-                    new Directives().add("class").append(
-                        new XmlClass(
-                            new Classes(
-                                new FakeBase("Bar")
-                            ).iterator().next()
-                        )
-                    )
-                ).xmlQuietly()
-            ),
+            XhtmlMatchers.xhtml(this.classAsXml("Bar")),
             XhtmlMatchers.hasXPaths(
                 "/class/methods[count(method) = 5]",
                 "/class/attributes[count(attribute) = 4]"
@@ -60,4 +50,30 @@ public final class XmlClassTest {
         );
     }
 
+    @Test
+    public void parsesMethodVisibility() {
+        MatcherAssert.assertThat(
+            XhtmlMatchers.xhtml(
+                this.classAsXml("ClassWithDifferentMethodVisibilities")
+            ),
+            XhtmlMatchers.hasXPaths(
+                "/class/methods/method[@visibility = 'public']",
+                "/class/methods/method[@visibility = 'private']",
+                "/class/methods/method[@visibility = 'default']",
+                "/class/methods/method[@visibility = 'protected']"
+            )
+        );
+    }
+
+    private String classAsXml(final String name) {
+        return new Xembler(
+            new Directives().add("class").append(
+                new XmlClass(
+                    new Classes(
+                        new FakeBase(name)
+                    ).iterator().next()
+                )
+            )
+        ).xmlQuietly();
+    }
 }

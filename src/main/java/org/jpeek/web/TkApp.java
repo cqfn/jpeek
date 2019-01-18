@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2019 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.BiFunc;
 import org.cactoos.io.ResourceOf;
-import org.cactoos.iterable.PropertiesOf;
+import org.cactoos.scalar.PropertiesOf;
 import org.cactoos.text.TextOf;
 import org.takes.Take;
 import org.takes.facets.fallback.Fallback;

@@ -2,7 +2,7 @@
 <!--
 The MIT License (MIT)
 
-Copyright (c) 2017-2018 Yegor Bugayenko
+Copyright (c) 2017-2019 Yegor Bugayenko
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,20 @@ SOFTWARE.
  skeleton.xml. Schemas from src/resources/org/jpeek/xsd must be referenced in
  generated XMLs.
 -->
+<!--
+@todo #188:30min Skeleton.xsd: remove method/@public. We should use the new enum
+ method/@visibility which is more flexible. For this remove the attribute from
+ this file and from XmlClass.java
+-->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="visibility">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="private"/>
+      <xs:enumeration value="default"/>
+      <xs:enumeration value="protected"/>
+      <xs:enumeration value="public"/>
+    </xs:restriction>
+  </xs:simpleType>
   <xs:complexType name="class">
     <xs:all>
       <xs:element name="attributes" minOccurs="0" maxOccurs="1">
@@ -187,6 +200,7 @@ SOFTWARE.
                 <xs:attribute name="ctor" use="required" type="xs:boolean"/>
                 <xs:attribute name="abstract" use="required" type="xs:boolean"/>
                 <xs:attribute name="public" use="required" type="xs:boolean"/>
+                <xs:attribute name="visibility" use="required" type="visibility"/>
                 <xs:attribute name="static" use="required" type="xs:boolean"/>
                 <xs:attribute name="bridge" use="required" type="xs:boolean"/>
               </xs:complexType>

@@ -2,7 +2,7 @@
 <!--
 The MIT License (MIT)
 
-Copyright (c) 2017-2018 Yegor Bugayenko
+Copyright (c) 2017-2019 Yegor Bugayenko
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,22 +22,30 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
-<!--
-@todo #134:30min Metric.xsd: add `xsd:documentation` tags as per issue #134. We need to
- document the schemas in src/resources/org/jpeek/xsd so that the semantics of
- the generated XML documents is transparent for maintainers.
--->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:complexType name="class">
+    <xs:annotation>
+      <xs:documentation>Class under test</xs:documentation>
+    </xs:annotation>
     <xs:sequence>
       <xs:element name="vars" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>List of class variables</xs:documentation>
+        </xs:annotation>
         <xs:complexType>
           <xs:sequence>
             <xs:element name="var" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>Class variable</xs:documentation>
+              </xs:annotation>
               <xs:complexType>
                 <xs:simpleContent>
                   <xs:extension base="xs:double">
-                    <xs:attribute name="id" use="required" type="xs:string"/>
+                    <xs:attribute name="id" use="required" type="xs:string">
+                      <xs:annotation>
+                        <xs:documentation>Unique name of the variable</xs:documentation>
+                      </xs:annotation>
+                    </xs:attribute>
                   </xs:extension>
                 </xs:simpleContent>
               </xs:complexType>
@@ -45,15 +53,33 @@ SOFTWARE.
           </xs:sequence>
         </xs:complexType>
         <xs:unique name="varUnique">
+          <xs:annotation>
+            <xs:documentation>Unique variable name</xs:documentation>
+          </xs:annotation>
           <xs:selector xpath="./var"/>
           <xs:field xpath="@id"/>
         </xs:unique>
       </xs:element>
     </xs:sequence>
-    <xs:attribute name="id" use="required" type="xs:string"/>
-    <xs:attribute name="value" use="optional" type="xs:float"/>
-    <xs:attribute name="element" use="required" type="xs:boolean"/>
+    <xs:attribute name="id" use="required" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>Unique class id</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="value" use="optional" type="xs:float">
+      <xs:annotation>
+        <xs:documentation>The main numeric value of this metric for the class</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="element" use="required" type="xs:boolean">
+      <xs:annotation>
+        <xs:documentation>Whether the value will count</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
     <xs:attribute name="color" use="optional">
+      <xs:annotation>
+        <xs:documentation>Just a display color the class name will be shown in the report</xs:documentation>
+      </xs:annotation>
       <xs:simpleType>
         <xs:restriction base="xs:string">
           <xs:enumeration value="green"/>
@@ -64,20 +90,36 @@ SOFTWARE.
     </xs:attribute>
   </xs:complexType>
   <xs:complexType name="package">
+    <xs:annotation>
+      <xs:documentation>Package</xs:documentation>
+    </xs:annotation>
     <xs:complexContent>
       <xs:extension base="class">
         <xs:sequence>
-          <xs:element name="class" type="class" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element name="class" type="class" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Class</xs:documentation>
+            </xs:annotation>
+          </xs:element>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
   <xs:complexType name="app">
+    <xs:annotation>
+      <xs:documentation>Application</xs:documentation>
+    </xs:annotation>
     <xs:complexContent>
       <xs:extension base="class">
         <xs:sequence>
           <xs:element name="package" type="package" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>Package name</xs:documentation>
+            </xs:annotation>
             <xs:unique name="classUnique">
+              <xs:annotation>
+                <xs:documentation>Unique class identifier</xs:documentation>
+              </xs:annotation>
               <xs:selector xpath="./class"/>
               <xs:field xpath="@id"/>
             </xs:unique>
@@ -87,37 +129,87 @@ SOFTWARE.
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="metric">
+    <xs:annotation>
+      <xs:documentation>Metric</xs:documentation>
+    </xs:annotation>
     <xs:complexType>
       <xs:all>
-        <xs:element name="description" type="xs:string" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="description" type="xs:string" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Description of the metric</xs:documentation>
+          </xs:annotation>
+        </xs:element>
         <xs:element name="app" type="app" minOccurs="0" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Application</xs:documentation>
+          </xs:annotation>
           <xs:unique name="packageUnique">
+            <xs:annotation>
+              <xs:documentation>Unique Java package namespace</xs:documentation>
+            </xs:annotation>
             <xs:selector xpath="./package"/>
             <xs:field xpath="@id"/>
           </xs:unique>
         </xs:element>
-        <xs:element name="min" type="xs:float" minOccurs="1" maxOccurs="1"/>
-        <xs:element name="max" type="xs:float" minOccurs="1" maxOccurs="1"/>
-        <xs:element name="title" type="xs:string" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="min" type="xs:float" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Minimum</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="max" type="xs:float" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Maximum</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="title" type="xs:string" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Name of the metric</xs:documentation>
+          </xs:annotation>
+        </xs:element>
         <xs:element name="colors" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Color ranges for the metric</xs:documentation>
+          </xs:annotation>
           <xs:complexType>
             <xs:simpleContent>
               <xs:extension base="xs:string">
-                <xs:attribute name="low" use="required" type="xs:double"/>
-                <xs:attribute name="high" use="required" type="xs:double"/>
+                <xs:attribute name="low" use="required" type="xs:double">
+                  <xs:annotation>
+                    <xs:documentation>Lower bound</xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="high" use="required" type="xs:double">
+                  <xs:annotation>
+                    <xs:documentation>Upper bound</xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
               </xs:extension>
             </xs:simpleContent>
           </xs:complexType>
         </xs:element>
         <xs:element name="bars" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Bars</xs:documentation>
+          </xs:annotation>
           <xs:complexType>
             <xs:sequence>
               <xs:element name="bar" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation>Chart for the metric</xs:documentation>
+                </xs:annotation>
                 <xs:complexType>
                   <xs:simpleContent>
                     <xs:extension base="xs:int">
-                      <xs:attribute name="x" use="required" type="xs:double"/>
-                      <xs:attribute name="color" use="required" type="xs:string"/>
+                      <xs:attribute name="x" use="required" type="xs:double">
+                        <xs:annotation>
+                          <xs:documentation>Chart X coordinate (horizontal)</xs:documentation>
+                        </xs:annotation>
+                      </xs:attribute>
+                      <xs:attribute name="color" use="required" type="xs:string">
+                        <xs:annotation>
+                          <xs:documentation>Chart clolor</xs:documentation>
+                        </xs:annotation>
+                      </xs:attribute>
                     </xs:extension>
                   </xs:simpleContent>
                 </xs:complexType>
@@ -126,20 +218,55 @@ SOFTWARE.
           </xs:complexType>
         </xs:element>
         <xs:element name="statistics" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Statistics</xs:documentation>
+          </xs:annotation>
           <xs:complexType>
             <xs:all>
-              <xs:element name="total" type="xs:int" minOccurs="1" maxOccurs="1"/>
-              <xs:element name="elements" type="xs:int" minOccurs="1" maxOccurs="1"/>
-              <xs:element name="mean" type="xs:double" minOccurs="1" maxOccurs="1"/>
-              <xs:element name="variance" type="xs:double" minOccurs="1" maxOccurs="1"/>
-              <xs:element name="sigma" type="xs:double" minOccurs="1" maxOccurs="1"/>
-              <xs:element name="defects" type="xs:double" minOccurs="1" maxOccurs="1"/>
+              <xs:element name="total" type="xs:int" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>Total</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="elements" type="xs:int" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>Elements</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="mean" type="xs:double" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>The sum of the values divided by the number of values</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="variance" type="xs:double" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>Measures how far a set of numbers are spread out</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="sigma" type="xs:double" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>Standard deviation, a measure that is used to quantify the amount of variation or dispersion of a set of data values.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="defects" type="xs:double" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>Number of defects</xs:documentation>
+                </xs:annotation>
+              </xs:element>
             </xs:all>
           </xs:complexType>
         </xs:element>
       </xs:all>
-      <xs:attribute name="date" use="required" type="xs:dateTime"/>
-      <xs:attribute name="version" use="required" type="xs:string"/>
+      <xs:attribute name="date" use="required" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>Date when the metric test was run</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="version" use="required" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Version of the metric</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
     </xs:complexType>
   </xs:element>
 </xs:schema>

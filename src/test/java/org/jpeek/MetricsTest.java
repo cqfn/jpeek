@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2019 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -164,6 +164,8 @@ public final class MetricsTest {
             new Object[] {"TwoCommonAttributes", "TLCOM", 4.0d},
             new Object[] {"WithoutAttributes", "TLCOM", 1.0d},
             new Object[] {"MethodMethodCalls", "LCOM4", 0.6d},
+            new Object[] {"OneCommonAttribute", "LCOM4", 1d},
+            new Object[] {"NotCommonAttributes", "LCOM4", 1.5d},
             new Object[] {"Bar", "LCC", 0.0d},
             new Object[] {"Foo", "LCC", 1.0d},
             new Object[] {"MethodMethodCalls", "LCC", 0.1d},

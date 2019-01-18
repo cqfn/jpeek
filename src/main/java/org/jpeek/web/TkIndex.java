@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2019 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,9 +23,9 @@
  */
 package org.jpeek.web;
 
+import org.cactoos.iterable.HeadOf;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Joined;
-import org.cactoos.iterable.Limited;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
@@ -54,7 +54,7 @@ final class TkIndex implements Take {
                     "best",
                     new XeDirectives(
                         new Joined<>(
-                            new Limited<Iterable<Directive>>(
+                            new HeadOf<Iterable<Directive>>(
                                 // @checkstyle MagicNumber (1 line)
                                 20, new Results().best()
                             )
@@ -65,7 +65,7 @@ final class TkIndex implements Take {
                     "recent",
                     new XeDirectives(
                         new Joined<>(
-                            new Limited<>(
+                            new HeadOf<>(
                                 // @checkstyle MagicNumber (1 line)
                                 25, new Results().recent()
                             )

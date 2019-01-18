@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2019 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -96,6 +96,17 @@ final class Matrix implements Iterable<Directive> {
         return new Directives()
             .add("matrix")
             .append(new Header())
+            .append(
+                () -> new Directives()
+                    .attr(
+                        "xmlns:xsi",
+                        "http://www.w3.org/2001/XMLSchema-instance"
+                    )
+                    .attr(
+                        "xsi:noNamespaceSchemaLocation",
+                        "xsd/matrix.xsd"
+                    )
+                    .iterator())
             .add("classes")
             .append(
                 new Joined<Directive>(

@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2019 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -54,11 +54,17 @@ final class TkQueue implements Take {
         this.futures = frs;
     }
 
+    // @checkstyle IllegalCatchCheck (10 lines)
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     @Override
     public Response act(final Request req) throws IOException {
-        return new RsText(
-            this.futures.asString()
-        );
+        try {
+            return new RsText(
+                this.futures.asString()
+            );
+        } catch (final Exception exception) {
+            throw new IOException(exception);
+        }
     }
 
 }

@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2019 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,6 +30,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -40,17 +41,38 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class MatrixTest {
+    /**
+     * Xml file content as a string.
+     */
+    private String xml;
 
-    @Test
-    public void createsMatrixXml() throws IOException {
+    @Before
+    public void setUp() throws IOException {
         final Path output = Files.createTempDirectory("").resolve("x2");
         final Path input = Paths.get(".");
         new App(input, output).analyze();
+        this.xml = new TextOf(output.resolve("matrix.xml")).asString();
+    }
+
+    @Test
+    public void createsMatrixXml() {
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
-                new TextOf(output.resolve("matrix.xml")).asString()
+                this.xml
             ),
             XhtmlMatchers.hasXPaths("/matrix/classes")
+        );
+    }
+
+    @Test
+    public void xmlHasSchema() {
+        MatcherAssert.assertThat(
+            XhtmlMatchers.xhtml(
+                this.xml
+            ),
+            XhtmlMatchers.hasXPaths(
+                "/matrix[@xsi:noNamespaceSchemaLocation='xsd/matrix.xsd']"
+            )
         );
     }
 
