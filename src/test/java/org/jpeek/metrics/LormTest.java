@@ -26,8 +26,8 @@ package org.jpeek.metrics;
 
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XSLDocument;
-import java.io.IOException;
 import org.cactoos.io.ResourceOf;
+import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.jpeek.FakeBase;
@@ -46,7 +46,7 @@ import org.junit.Test;
 public final class LormTest {
 
     @Test
-    public void calculatesVariables() throws IOException {
+    public void calculatesVariables() throws Exception {
         final XML xml = new XSLDocument(
             new ResourceOf(
                 "org/jpeek/metrics/LORM.xsl"
@@ -59,36 +59,46 @@ public final class LormTest {
         final int methods = 6;
         MatcherAssert.assertThat(
             "N variable 'N' is not calculated correctly",
-            xml.xpath(
-                "//class[@id='TwoCommonMethods']/vars/var[@id='N']/text()"
-            ).stream().mapToInt(Integer::valueOf).toArray(),
+            new ListOf<>(
+                xml.xpath(
+                    "//class[@id='TwoCommonMethods']/vars/var[@id='N']/text()"
+                ).stream().mapToInt(Integer::valueOf).iterator()
+            ),
             new IsEqual<>(
-                new int[] {methods}
+                new ListOf<>(
+                    methods
+                )
             )
         );
         MatcherAssert.assertThat(
             "variable 'R' is not calculated correctly",
-            xml.xpath(
-                "//class[@id='TwoCommonMethods']/vars/var[@id='R']/text()"
-            ).stream().mapToInt(Integer::valueOf).toArray(),
+            new ListOf<>(
+                xml.xpath(
+                    "//class[@id='TwoCommonMethods']/vars/var[@id='R']/text()"
+                ).stream().mapToInt(Integer::valueOf).iterator()
+            ),
             new IsEqual<>(
-                new int[] {
+                new ListOf<>(
                     new String[]{
                         "methodTwo   -> methodOne",
                         "methodThree -> methodOne",
                         "methodFive  -> methodFour",
-                        "methodSix   -> methodFour"
+                        "methodSix   -> methodFour",
                     }.length
-                }
+                )
             )
         );
         MatcherAssert.assertThat(
             "variable 'RN' is not calculated correctly",
-            xml.xpath(
-                "//class[@id='TwoCommonMethods']/vars/var[@id='RN']/text()"
-            ).stream().mapToInt(Integer::valueOf).toArray(),
+            new ListOf<>(
+                xml.xpath(
+                    "//class[@id='TwoCommonMethods']/vars/var[@id='RN']/text()"
+                ).stream().mapToInt(Integer::valueOf).iterator()
+            ),
             new IsEqual<>(
-                new int[] {methods * (methods - 1) / 2}
+                new ListOf<>(
+                    methods * (methods - 1) / 2
+                )
             )
         );
     }
