@@ -79,12 +79,12 @@ public final class LormTest {
             ),
             new IsEqual<>(
                 new ListOf<>(
-                    new String[]{
+                    new ListOf<>(
                         "methodTwo   -> methodOne",
                         "methodThree -> methodOne",
                         "methodFive  -> methodFour",
-                        "methodSix   -> methodFour",
-                    }.length
+                        "methodSix   -> methodFour"
+                    ).size()
                 )
             )
         );
