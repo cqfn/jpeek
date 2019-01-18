@@ -59,26 +59,20 @@ public final class LormTest {
         final int methods = 6;
         MatcherAssert.assertThat(
             "N variable 'N' is not calculated correctly",
-            new ListOf<>(
-                xml.xpath(
-                    "//class[@id='TwoCommonMethods']/vars/var[@id='N']/text()"
-                ).stream().mapToInt(Integer::valueOf).iterator()
-            ),
+            xml.xpath(
+                "//class[@id='TwoCommonMethods']/vars/var[@id='N']/text()"
+            ).get(0),
             new IsEqual<>(
-                new ListOf<>(
-                    methods
-                )
+                String.valueOf(methods)
             )
         );
         MatcherAssert.assertThat(
             "variable 'R' is not calculated correctly",
-            new ListOf<>(
-                xml.xpath(
-                    "//class[@id='TwoCommonMethods']/vars/var[@id='R']/text()"
-                ).stream().mapToInt(Integer::valueOf).iterator()
-            ),
+            xml.xpath(
+                "//class[@id='TwoCommonMethods']/vars/var[@id='R']/text()"
+            ).get(0),
             new IsEqual<>(
-                new ListOf<>(
+                String.valueOf(
                     new ListOf<>(
                         "methodTwo   -> methodOne",
                         "methodThree -> methodOne",
@@ -90,13 +84,11 @@ public final class LormTest {
         );
         MatcherAssert.assertThat(
             "variable 'RN' is not calculated correctly",
-            new ListOf<>(
-                xml.xpath(
-                    "//class[@id='TwoCommonMethods']/vars/var[@id='RN']/text()"
-                ).stream().mapToInt(Integer::valueOf).iterator()
-            ),
+            xml.xpath(
+                "//class[@id='TwoCommonMethods']/vars/var[@id='RN']/text()"
+            ).get(0),
             new IsEqual<>(
-                new ListOf<>(
+                String.valueOf(
                     methods * (methods - 1) / 2
                 )
             )
