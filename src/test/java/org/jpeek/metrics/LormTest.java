@@ -63,7 +63,7 @@ public final class LormTest {
                 "//class[@id='TwoCommonMethods']/vars/var[@id='N']/text()"
             ).stream().mapToInt(Integer::valueOf).toArray(),
             new IsEqual<>(
-                new int[] { methods }
+                new int[] {methods}
             )
         );
         MatcherAssert.assertThat(
@@ -77,7 +77,7 @@ public final class LormTest {
                         "methodTwo   -> methodOne",
                         "methodThree -> methodOne",
                         "methodFive  -> methodFour",
-                        "methodSix   -> methodFour",
+                        "methodSix   -> methodFour"
                     }.length
                 }
             )
