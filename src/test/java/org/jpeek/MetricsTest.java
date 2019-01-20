@@ -57,8 +57,6 @@ import org.junit.runners.Parameterized;
  * @checkstyle VisibilityModifierCheck (500 lines)
  * @checkstyle JavadocVariableCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
- * @todo #67:30min PCC: add the rest of the test cases for this metric. Could
- *  only fit test case for MethodsWithDiffParamTypes within budget.
  * @todo #118:30min Add test for LCC with "IndirectlyRelatedPairs" and others.
  *  In "IndirectlyRelatedPairs" all methods exist in one transitive closure,
  *  so the result should be {@code 1d}.
@@ -79,6 +77,7 @@ public final class MetricsTest {
     @Parameterized.Parameter(2)
     public double value;
 
+    // @checkstyle MethodLengthCheck (200 lines)
     @Parameterized.Parameters(name = "{0}:{1}:{2}")
     public static Collection<Object[]> targets() {
         return new CollectionOf<>(
@@ -146,7 +145,29 @@ public final class MetricsTest {
             new Object[] {"OverloadMethods", "LCOM3", 0.25d},
             new Object[] {"TwoCommonAttributes", "LCOM3", 1.0d},
             new Object[] {"WithoutAttributes", "LCOM3", 0.0d},
+            new Object[] {"Bar", "PCC", 0.5d},
+            new Object[] {"BridgeMethod", "PCC", Double.NaN},
+            new Object[] {
+                "ClassWithDifferentMethodVisibilities", "PCC", Double.NaN,
+            },
+            new Object[] {"ClassWithPublicField", "PCC", Double.NaN},
+            new Object[] {"Foo", "PCC", 0.5d},
+            new Object[] {"IndirectlyRelatedPairs", "PCC", Double.NaN},
+            new Object[] {"MethodMethodCalls", "PCC", 0.2d},
             new Object[] {"MethodsWithDiffParamTypes", "PCC", 0.3333d},
+            new Object[] {"NoMethods", "PCC", Double.NaN},
+            new Object[] {"NotCommonAttributes", "PCC", Double.NaN},
+            new Object[] {
+                "NotCommonAttributesWithAllArgsConstructor", "PCC", 1.0d,
+            },
+            new Object[] {"OneCommonAttribute", "PCC", 0.5d},
+            new Object[] {"OneMethodCreatesLambda", "PCC", Double.NaN},
+            new Object[] {"OneVoidMethodWithoutParams", "PCC", Double.NaN},
+            new Object[] {"OnlyOneMethodWithParams", "PCC", 1.0d},
+            new Object[] {"OverloadMethods", "PCC", 3.0d},
+            new Object[] {"TwoCommonAttributes", "PCC", Double.NaN},
+            new Object[] {"TwoCommonMethods", "PCC", Double.NaN},
+            new Object[] {"WithoutAttributes", "PCC", Double.NaN},
             new Object[] {"Foo", "OCC", 0.5d},
             new Object[] {"Bar", "TCC", 0.0d},
             new Object[] {"Foo", "TCC", 1.0d},
