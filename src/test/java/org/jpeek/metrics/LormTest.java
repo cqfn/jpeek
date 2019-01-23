@@ -24,14 +24,8 @@
 
 package org.jpeek.metrics;
 
-import com.jcabi.xml.XML;
-import com.jcabi.xml.XSLDocument;
-import org.cactoos.io.ResourceOf;
 import org.cactoos.list.ListOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.core.IsEqual;
-import org.jpeek.FakeBase;
-import org.jpeek.skeleton.Skeleton;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -44,54 +38,38 @@ import org.junit.Test;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class LormTest {
+    /**
+     * Test helper.
+     * For easy variable and value assertion.
+     */
+    private MetricBase base;
+
+    @Before
+    public void setUpMetric() throws Exception {
+        this.base = new MetricBase(
+            "org/jpeek/metrics/LORM.xsl"
+        );
+    }
 
     @Test
     public void calculatesVariables() throws Exception {
-        final XML xml = new XSLDocument(
-            new ResourceOf(
-                "org/jpeek/metrics/LORM.xsl"
-            ).stream()
-        ).transform(
-            new Skeleton(
-                new FakeBase("TwoCommonMethods")
-            ).xml()
+        final MetricBase.Report report = this.base.transform(
+            "TwoCommonMethods"
         );
         final int methods = 6;
-        MatcherAssert.assertThat(
-            "N variable 'N' is not calculated correctly",
-            xml.xpath(
-                "//class[@id='TwoCommonMethods']/vars/var[@id='N']/text()"
-            ).get(0),
-            new IsEqual<>(
-                String.valueOf(methods)
-            )
+        report.assertVariable("N", methods);
+        report.assertVariable(
+            "R",
+            new ListOf<>(
+                "methodTwo   -> methodOne",
+                "methodThree -> methodOne",
+                "methodFive  -> methodFour",
+                "methodSix   -> methodFour"
+            ).size()
         );
-        MatcherAssert.assertThat(
-            "variable 'R' is not calculated correctly",
-            xml.xpath(
-                "//class[@id='TwoCommonMethods']/vars/var[@id='R']/text()"
-            ).get(0),
-            new IsEqual<>(
-                String.valueOf(
-                    new ListOf<>(
-                        "methodTwo   -> methodOne",
-                        "methodThree -> methodOne",
-                        "methodFive  -> methodFour",
-                        "methodSix   -> methodFour"
-                    ).size()
-                )
-            )
-        );
-        MatcherAssert.assertThat(
-            "variable 'RN' is not calculated correctly",
-            xml.xpath(
-                "//class[@id='TwoCommonMethods']/vars/var[@id='RN']/text()"
-            ).get(0),
-            new IsEqual<>(
-                String.valueOf(
-                    methods * (methods - 1) / 2
-                )
-            )
+        report.assertVariable(
+            "RN",
+            methods * (methods - 1) / 2
         );
     }
 }

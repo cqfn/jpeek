@@ -41,7 +41,18 @@ SOFTWARE.
     </metric>
   </xsl:template>
   <xsl:template match="class">
-    <xsl:variable name="A" select="attributes/attribute/text()"/>
+    <xsl:variable name="class_fqn" select="replace(string-join(../@id | @id, '.'), '^\.', '')"/>
+    <xsl:variable name="attrs">
+      <xsl:for-each select="attributes/attribute">
+        <xsl:copy>
+          <xsl:if test="@static='true' and $class_fqn != ''">
+            <xsl:value-of select="concat($class_fqn, '.')"/>
+          </xsl:if>
+          <xsl:value-of select="text()"/>
+        </xsl:copy>
+      </xsl:for-each>
+    </xsl:variable>
+    <xsl:variable name="A" select="$attrs/*/text()"/>
     <xsl:variable name="M" select="methods/method"/>
     <xsl:variable name="n" select="count($M)"/>
     <xsl:variable name="connections">

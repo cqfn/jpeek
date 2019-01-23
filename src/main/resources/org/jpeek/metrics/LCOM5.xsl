@@ -46,12 +46,24 @@ SOFTWARE.
     </metric>
   </xsl:template>
   <xsl:template match="class">
+    <xsl:variable name="class_fqn" select="replace(string-join(../@id | @id, '.'), '^\.', '')"/>
+    <xsl:variable name="attrs_fqn">
+      <xsl:for-each select="attributes/attribute">
+        <xsl:copy>
+          <xsl:copy-of select="@*"/>
+          <xsl:if test="@static='true' and $class_fqn != ''">
+            <xsl:value-of select="concat($class_fqn, '.')"/>
+          </xsl:if>
+          <xsl:value-of select="text()"/>
+        </xsl:copy>
+      </xsl:for-each>
+    </xsl:variable>
     <xsl:variable name="methods" select="methods/method"/>
     <xsl:variable name="m" select="count($methods)"/>
-    <xsl:variable name="attributes" select="attributes/attribute/text()"/>
-    <xsl:variable name="a" select="count($attributes)"/>
+    <xsl:variable name="attributes" select="$attrs_fqn/*"/>
+    <xsl:variable name="a" select="count($attributes/text())"/>
     <xsl:variable name="attributes_use">
-      <xsl:for-each select="$attributes">
+      <xsl:for-each select="$attributes/text()">
         <xsl:variable name="attr" select="."/>
         <count>
           <xsl:value-of select="count($methods[ops/op = $attr])"/>
