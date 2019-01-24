@@ -25,7 +25,6 @@
 package org.jpeek.metrics;
 
 import org.cactoos.list.ListOf;
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -59,16 +58,9 @@ public final class Lcom4Test {
     public static final String METHODS = "methods";
 
     /**
-     * Test helper.
+     * Path to XSL.
      */
-    private MetricBase base;
-
-    @Before
-    public void setUpMetric() throws Exception {
-        this.base = new MetricBase(
-            "org/jpeek/metrics/LCOM4.xsl"
-        );
-    }
+    private static final String XSL = "org/jpeek/metrics/LCOM4.xsl";
 
     /**
      * Tests the deep dependencies methodFour() -> methodTwo() -> methodOne().
@@ -89,8 +81,10 @@ public final class Lcom4Test {
      */
     @Test
     @Ignore
-    public void methodMethodCalls() {
-        final MetricBase.Report report = this.base.transform(
+    public void methodMethodCalls() throws Exception {
+        final MetricBase.Report report = new MetricBase(
+            Lcom4Test.XSL
+        ).transform(
             "MethodMethodCalls"
         );
         report.assertVariable(
@@ -115,8 +109,10 @@ public final class Lcom4Test {
      * This is an ideal LCOM4 value = 1
      */
     @Test
-    public void oneCommonAttribute() {
-        final MetricBase.Report report = this.base.transform(
+    public void oneCommonAttribute() throws Exception {
+        final MetricBase.Report report = new MetricBase(
+            Lcom4Test.XSL
+        ).transform(
             "OneCommonAttribute"
         );
         report.assertVariable(
@@ -140,8 +136,10 @@ public final class Lcom4Test {
      * So the value is 2.0
      */
     @Test
-    public void notCommonAttributes() {
-        final MetricBase.Report report = this.base.transform(
+    public void notCommonAttributes() throws Exception {
+        final MetricBase.Report report = new MetricBase(
+            Lcom4Test.XSL
+        ).transform(
             "NotCommonAttributes"
         );
         report.assertVariable(Lcom4Test.ATTRIBUTES, 2);
@@ -154,8 +152,10 @@ public final class Lcom4Test {
      * since constructors are not methods and should be ignored
      */
     @Test
-    public void notCommonAttributesWithAllArgsConstructor() {
-        final MetricBase.Report report = this.base.transform(
+    public void notCommonAttributesWithAllArgsConstructor() throws Exception {
+        final MetricBase.Report report = new MetricBase(
+            Lcom4Test.XSL
+        ).transform(
             "NotCommonAttributesWithAllArgsConstructor"
         );
         report.assertVariable(Lcom4Test.ATTRIBUTES, 2);

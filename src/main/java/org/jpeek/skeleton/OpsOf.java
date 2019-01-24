@@ -24,12 +24,7 @@
 package org.jpeek.skeleton;
 
 import org.cactoos.Text;
-import org.cactoos.iterable.IterableOf;
-import org.cactoos.iterable.Joined;
-import org.cactoos.text.JoinedText;
-import org.cactoos.text.SplitText;
 import org.cactoos.text.TextOf;
-import org.cactoos.text.UncheckedText;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import org.xembly.Directives;
@@ -70,21 +65,21 @@ final class OpsOf extends MethodVisitor {
         final String attr, final String dsc) {
         super.visitFieldInsn(opcode, owner, attr, dsc);
         this.target.addIf("ops").add("op");
-        final String name;
+        final Text name;
         if (opcode == Opcodes.GETFIELD) {
             this.target.attr("code", "get");
-            name = attr;
+            name = new TextOf(attr);
         } else if (opcode == Opcodes.PUTFIELD) {
             this.target.attr("code", "put");
-            name = attr;
+            name = new TextOf(attr);
         } else if (opcode == Opcodes.GETSTATIC) {
             this.target.attr("code", "get_static");
-            name = OpsOf.getQualifiedName(owner, attr);
+            name = new QualifiedName(owner, attr);
         } else if (opcode == Opcodes.PUTSTATIC) {
             this.target.attr("code", "put_static");
-            name = OpsOf.getQualifiedName(owner, attr);
+            name = new QualifiedName(owner, attr);
         } else {
-            name = attr;
+            name = new TextOf(attr);
         }
         this.target.set(
             name
@@ -101,28 +96,5 @@ final class OpsOf extends MethodVisitor {
             .attr("code", "call")
             .set(owner.replace("/", ".").concat(".").concat(mtd))
             .up().up();
-    }
-
-    /**
-     * Returns fully qualified name, an unambiguous name
-     * that specifies field without regard
-     * to the context of the call.
-     * @param owner The class the attribute belongs to
-     * @param attr The name of the field
-     * @return Fully qualified name of the field
-     */
-    private static String getQualifiedName(final String owner,
-        final String attr) {
-        return new UncheckedText(
-            new JoinedText(
-                new TextOf("."),
-                new Joined<Text>(
-                    new SplitText(owner, "/"),
-                    new IterableOf<>(
-                        new TextOf(attr)
-                    )
-                )
-            )
-        ).asString();
     }
 }

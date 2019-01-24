@@ -26,6 +26,7 @@ package org.jpeek.metrics;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XSLDocument;
 import org.cactoos.io.ResourceOf;
+import org.cactoos.text.FormattedText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.number.IsCloseTo;
@@ -101,14 +102,16 @@ public final class MetricBase {
          * Asserts the variable produced.
          * @param variable Variable name
          * @param expected Expected value
+         * @throws Exception String format exception
          */
-        public void assertVariable(final String variable, final int expected) {
+        public void assertVariable(final String variable,
+            final int expected) throws Exception {
             MatcherAssert.assertThat(
-                String.format(
+                new FormattedText(
                     "Variable '%s' is not calculated correctly for class '%s'",
                     variable,
                     this.name
-                ),
+                ).asString(),
                 this.xml.xpath(
                     String.format(
                         "//class[@id='%s']/vars/var[@id='%s']/text()",
@@ -127,22 +130,23 @@ public final class MetricBase {
         /**
          * Asserts the main metric value.
          * @param value Expected value of the metric
+         * @throws Exception String format exception
          */
-        public void assertValue(final double value) {
+        public void assertValue(final double value) throws Exception {
             MatcherAssert.assertThat(
                 "The metric value is not calculated properly",
                 Double.parseDouble(
                     this.xml.xpath(
-                        String.format(
+                        new FormattedText(
                             "//class[@id='%s']/@value",
                             this.name
-                        )
+                        ).asString()
                     ).get(0)
                 ),
                 new IsCloseTo(
                     value,
                     // @checkstyle MagicNumberCheck (1 line)
-                    0.001D
+                    0.001d
                 )
             );
         }
