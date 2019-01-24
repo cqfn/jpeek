@@ -25,7 +25,6 @@
 package org.jpeek.metrics;
 
 import org.cactoos.list.ListOf;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -38,22 +37,11 @@ import org.junit.Test;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class LormTest {
-    /**
-     * Test helper.
-     * For easy variable and value assertion.
-     */
-    private MetricBase base;
-
-    @Before
-    public void setUpMetric() throws Exception {
-        this.base = new MetricBase(
-            "org/jpeek/metrics/LORM.xsl"
-        );
-    }
-
     @Test
     public void calculatesVariables() throws Exception {
-        final MetricBase.Report report = this.base.transform(
+        final MetricBase.Report report = new MetricBase(
+            "org/jpeek/metrics/LORM.xsl"
+        ).transform(
             "TwoCommonMethods"
         );
         final int methods = 6;
