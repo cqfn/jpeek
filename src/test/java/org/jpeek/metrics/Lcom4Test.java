@@ -39,6 +39,7 @@ import org.junit.Test;
  * @since 0.28
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
 public final class Lcom4Test {
 
@@ -100,7 +101,7 @@ public final class Lcom4Test {
             ).size()
         );
         report.assertVariable(Lcom4Test.ATTRIBUTES, 1);
-        report.assertValue(1.0f, 0.001);
+        report.assertValue(1.0f, 0.001f);
     }
 
     /**
@@ -126,7 +127,7 @@ public final class Lcom4Test {
         );
         report.assertVariable(Lcom4Test.ATTRIBUTES, 1);
         report.assertVariable(Lcom4Test.PAIRS, 1);
-        report.assertValue(1.0f, 0.001d);
+        report.assertValue(1.0f, 0.001f);
     }
 
     /**
@@ -146,7 +147,7 @@ public final class Lcom4Test {
         );
         report.assertVariable(Lcom4Test.ATTRIBUTES, 2);
         report.assertVariable(Lcom4Test.PAIRS, 0);
-        report.assertValue(2.0f, 0.001);
+        report.assertValue(2.0f, 0.001f);
     }
 
     /**
@@ -162,6 +163,6 @@ public final class Lcom4Test {
         );
         report.assertVariable(Lcom4Test.ATTRIBUTES, 2);
         report.assertVariable(Lcom4Test.PAIRS, 0);
-        report.assertValue(2.0f);
+        report.assertValue(2.0f, 0.001f);
     }
 }

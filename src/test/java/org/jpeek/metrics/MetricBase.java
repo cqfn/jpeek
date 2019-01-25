@@ -136,7 +136,7 @@ public final class MetricBase {
          * @param error Rounding tolerance since the metric is float number
          * @throws Exception String format exception
          */
-        public void assertValue(final double value, double error) {
+        public void assertValue(final double value, final double error) {
             new Assertion<>(
                 "The metric value is not calculated properly",
                 () -> Double.parseDouble(
