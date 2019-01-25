@@ -133,9 +133,10 @@ public final class MetricBase {
         /**
          * Asserts the main metric value.
          * @param value Expected value of the metric
+         * @param error Rounding tolerance since the metric is float number
          * @throws Exception String format exception
          */
-        public void assertValue(final double value) throws Exception {
+        public void assertValue(final double value, double error) {
             new Assertion<>(
                 "The metric value is not calculated properly",
                 () -> Double.parseDouble(
@@ -148,8 +149,7 @@ public final class MetricBase {
                 ),
                 new IsCloseTo(
                     value,
-                    // @checkstyle MagicNumberCheck (1 line)
-                    0.001d
+                    error
                 )
             ).affirm();
         }
