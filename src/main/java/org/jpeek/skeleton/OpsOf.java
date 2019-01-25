@@ -23,6 +23,8 @@
  */
 package org.jpeek.skeleton;
 
+import org.cactoos.Text;
+import org.cactoos.text.TextOf;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import org.xembly.Directives;
@@ -63,16 +65,25 @@ final class OpsOf extends MethodVisitor {
         final String attr, final String dsc) {
         super.visitFieldInsn(opcode, owner, attr, dsc);
         this.target.addIf("ops").add("op");
+        final Text name;
         if (opcode == Opcodes.GETFIELD) {
             this.target.attr("code", "get");
+            name = new TextOf(attr);
         } else if (opcode == Opcodes.PUTFIELD) {
             this.target.attr("code", "put");
+            name = new TextOf(attr);
         } else if (opcode == Opcodes.GETSTATIC) {
             this.target.attr("code", "get_static");
+            name = new QualifiedName(owner, attr);
         } else if (opcode == Opcodes.PUTSTATIC) {
             this.target.attr("code", "put_static");
+            name = new QualifiedName(owner, attr);
+        } else {
+            name = new TextOf(attr);
         }
-        this.target.set(attr).up().up();
+        this.target.set(
+            name
+        ).up().up();
     }
 
     @Override
@@ -86,5 +97,4 @@ final class OpsOf extends MethodVisitor {
             .set(owner.replace("/", ".").concat(".").concat(mtd))
             .up().up();
     }
-
 }

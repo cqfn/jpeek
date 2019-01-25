@@ -47,15 +47,22 @@ SOFTWARE.
   </xsl:template>
   <xsl:template match="class">
     <xsl:variable name="class_fqn" select="replace(string-join(../@id | @id, '.'), '^\.', '')"/>
-    <xsl:variable name="A" select="attributes/attribute[@static = 'false']/text()"/>
+    <xsl:variable name="attrs_fqn">
+      <xsl:for-each select="attributes/attribute">
+        <xsl:copy>
+          <xsl:copy-of select="@*"/>
+          <xsl:if test="@static='true' and $class_fqn != ''">
+            <xsl:value-of select="concat($class_fqn, '.')"/>
+          </xsl:if>
+          <xsl:value-of select="text()"/>
+        </xsl:copy>
+      </xsl:for-each>
+    </xsl:variable>
+    <xsl:variable name="A" select="$attrs_fqn/*/text()"/>
     <xsl:variable name="a" select="count($A)"/>
-    <xsl:variable name="M" select="methods/method"/>
+    <!-- Ctors are not methods -->
+    <xsl:variable name="M" select="methods/method[@ctor='false']"/>
     <xsl:variable name="m" select="count($M)"/>
-    <!--
-    @todo #8:30min LCOM4: #156 needs to be fixed in order to avoid confusing access to
-     fields belonging to other classes as if they actually belong to this class.
-     Once #156 is fixed, refactor xpaths 'this_attrs' and 'other_attrs' accordingly.
-    -->
     <!--
     @todo #216:30min LCOM4: need to finish implementing the rest of the test cases. Only test case
      "OneCommonAttribute", "NotCommonAttributes", "NotCommonAttributesWithAllArgsConstructor",
@@ -86,6 +93,7 @@ SOFTWARE.
       </xsl:for-each>
     </xsl:variable>
     <xsl:copy>
+      <!-- LCOM4 is the number of connected components of G.-->
       <xsl:attribute name="value">
         <xsl:choose>
           <xsl:when test="$m &lt; 2 or $a = 0">

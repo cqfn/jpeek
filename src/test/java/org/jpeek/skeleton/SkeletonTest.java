@@ -27,7 +27,6 @@ import com.jcabi.matchers.XhtmlMatchers;
 import java.io.IOException;
 import org.hamcrest.MatcherAssert;
 import org.jpeek.FakeBase;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -60,7 +59,7 @@ public final class SkeletonTest {
                 "//class[@id='OverloadMethods']/methods[count(method)=5]",
                 "//method[@name='<init>' and @ctor='true']",
                 "//class[@id='Bar']//method[@name='getKey']/ops[count(op)=3]",
-                "//class[@id='Bar']//method[@name='getKey']/ops/op[@code='put_static' and .='singleton']",
+                "//class[@id='Bar']//method[@name='getKey']/ops/op[@code='put_static' and .='Bar.singleton']",
                 "//class[@id='Bar']//method[@name='getKey']/ops/op[@code='call' and .='java.lang.String.length']",
                 "//class[@id='Bar']//method[@name='getKey']/ops/op[@code='get' and .='key']",
                 "//class[@id='Bar']//method[@name='<init>']/ops[count(op)=4]"
@@ -124,7 +123,6 @@ public final class SkeletonTest {
     }
 
     @Test
-    @Ignore
     public void findFieldWithQualifiedName() {
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(

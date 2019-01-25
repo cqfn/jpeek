@@ -21,43 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.jpeek.skeleton;
 
-package org.jpeek.metrics;
-
-import org.cactoos.list.ListOf;
-import org.junit.Test;
+import org.cactoos.text.JoinedText;
+import org.cactoos.text.TextEnvelope;
+import org.cactoos.text.UncheckedText;
 
 /**
- * Test case for LORM.
- * LORM = Logical Relatedness of Methods.
+ * A fully qualified name of a field, an unambiguous name
+ * that specifies field without regard
+ * to the context of the call.
  * @author Ilya Kharlamov (ilya.kharlamov@gmail.com)
  * @version $Id$
- * @since 0.28
- * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @since 0.29
  */
-public final class LormTest {
-    @Test
-    public void calculatesVariables() throws Exception {
-        final MetricBase.Report report = new MetricBase(
-            "org/jpeek/metrics/LORM.xsl"
-        ).transform(
-            "TwoCommonMethods"
-        );
-        final int methods = 6;
-        report.assertVariable("N", methods);
-        report.assertVariable(
-            "R",
-            new ListOf<>(
-                "methodTwo   -> methodOne",
-                "methodThree -> methodOne",
-                "methodFive  -> methodFour",
-                "methodSix   -> methodFour"
-            ).size()
-        );
-        report.assertVariable(
-            "RN",
-            methods * (methods - 1) / 2
+public final class QualifiedName extends TextEnvelope {
+    /**
+     * Ctor.
+     * @param owner The class the attribute belongs to
+     * @param attr The name of the field
+     */
+    public QualifiedName(final String owner, final String attr) {
+        super(
+            new UncheckedText(
+                new JoinedText(
+                    ".",
+                    owner.replace('/', '.'),
+                    attr
+                )
+            )
         );
     }
 }
