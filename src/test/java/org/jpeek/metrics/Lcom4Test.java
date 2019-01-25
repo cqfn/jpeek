@@ -71,13 +71,15 @@ public final class Lcom4Test {
      *  - methodFour uses 'num' indirectly via methodTwo and methodOne
      *  - methodFive does not use 'num' (this is an orphan method, ignored)
      *  Therefore the number of disjoint sets (LCOM4) should be 1
-     *  since all the methods that use num
+     *  since all the methods use the same num field.
      *  @todo #215:30min LCOM4: Graph algorithm to determine disjoint sets.
      *  Currently we can only identify the dependencies via only one graph hop
      *  so we can't trace methodFour that uses 'num' indirectly
      *  via methodTwo and methodOne.
-     *  This one will be tricky to implement,
-     *  Since graph algorithms in XSLT - that will be a challenge.
+     *  Calculating Disjoint sets (also known as Connected Components),
+     *  requires a graph traversal algorithm like depth-first search.
+     *  This one will be tricky to implement in XSLT.
+     *  After implementing, remove the @Ignore.
      */
     @Test
     @Ignore
