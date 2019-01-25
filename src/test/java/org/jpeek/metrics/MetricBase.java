@@ -27,11 +27,12 @@ import com.jcabi.xml.XML;
 import com.jcabi.xml.XSLDocument;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.text.FormattedText;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.core.IsEqual;
+import org.cactoos.text.TextOf;
 import org.hamcrest.number.IsCloseTo;
 import org.jpeek.FakeBase;
 import org.jpeek.skeleton.Skeleton;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.TextIs;
 
 /**
  * Metric test helper.
@@ -106,25 +107,27 @@ public final class MetricBase {
          */
         public void assertVariable(final String variable,
             final int expected) throws Exception {
-            MatcherAssert.assertThat(
+            new Assertion<>(
                 new FormattedText(
                     "Variable '%s' is not calculated correctly for class '%s'",
                     variable,
                     this.name
                 ).asString(),
-                this.xml.xpath(
-                    String.format(
-                        "//class[@id='%s']/vars/var[@id='%s']/text()",
-                        this.name,
-                        variable
-                    )
-                ).get(0),
-                new IsEqual<>(
+                () -> new TextOf(
+                    this.xml.xpath(
+                        new FormattedText(
+                            "//class[@id='%s']/vars/var[@id='%s']/text()",
+                            this.name,
+                            variable
+                        ).asString()
+                    ).get(0)
+                ),
+                new TextIs(
                     String.valueOf(
                         expected
                     )
                 )
-            );
+            ).affirm();
         }
 
         /**
@@ -133,9 +136,9 @@ public final class MetricBase {
          * @throws Exception String format exception
          */
         public void assertValue(final double value) throws Exception {
-            MatcherAssert.assertThat(
+            new Assertion<>(
                 "The metric value is not calculated properly",
-                Double.parseDouble(
+                () -> Double.parseDouble(
                     this.xml.xpath(
                         new FormattedText(
                             "//class[@id='%s']/@value",
@@ -148,7 +151,7 @@ public final class MetricBase {
                     // @checkstyle MagicNumberCheck (1 line)
                     0.001d
                 )
-            );
+            ).affirm();
         }
     }
 }

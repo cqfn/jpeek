@@ -23,13 +23,8 @@
  */
 package org.jpeek.skeleton;
 
-import org.cactoos.Text;
-import org.cactoos.iterable.IterableOf;
-import org.cactoos.iterable.Joined;
 import org.cactoos.text.JoinedText;
-import org.cactoos.text.SplitText;
 import org.cactoos.text.TextEnvelope;
-import org.cactoos.text.TextOf;
 import org.cactoos.text.UncheckedText;
 
 /**
@@ -50,13 +45,9 @@ public final class QualifiedName extends TextEnvelope {
         super(
             new UncheckedText(
                 new JoinedText(
-                    new TextOf("."),
-                    new Joined<Text>(
-                        new SplitText(owner, "/"),
-                        new IterableOf<>(
-                            new TextOf(attr)
-                        )
-                    )
+                    ".",
+                    owner.replace('/', '.'),
+                    attr
                 )
             )
         );

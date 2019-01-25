@@ -182,6 +182,12 @@ SOFTWARE.
       <version>9.8.0-5</version>
       <scope>runtime</scope>
     </dependency>
+    <dependency>
+      <groupId>org.llorllale</groupId>
+      <artifactId>cactoos-matchers</artifactId>
+      <version>0.13</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
   <build>
     <plugins>

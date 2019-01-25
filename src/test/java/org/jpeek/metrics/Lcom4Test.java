@@ -100,7 +100,7 @@ public final class Lcom4Test {
             ).size()
         );
         report.assertVariable(Lcom4Test.ATTRIBUTES, 1);
-        report.assertValue(1.0F);
+        report.assertValue(1.0f);
     }
 
     /**
@@ -126,7 +126,7 @@ public final class Lcom4Test {
         );
         report.assertVariable(Lcom4Test.ATTRIBUTES, 1);
         report.assertVariable(Lcom4Test.PAIRS, 1);
-        report.assertValue(1.0F);
+        report.assertValue(1.0f);
     }
 
     /**
@@ -146,7 +146,7 @@ public final class Lcom4Test {
         );
         report.assertVariable(Lcom4Test.ATTRIBUTES, 2);
         report.assertVariable(Lcom4Test.PAIRS, 0);
-        report.assertValue(2.0F);
+        report.assertValue(2.0f);
     }
 
     /**
@@ -162,6 +162,6 @@ public final class Lcom4Test {
         );
         report.assertVariable(Lcom4Test.ATTRIBUTES, 2);
         report.assertVariable(Lcom4Test.PAIRS, 0);
-        report.assertValue(2.0F);
+        report.assertValue(2.0f);
     }
 }
