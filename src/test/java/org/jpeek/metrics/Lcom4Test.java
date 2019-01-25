@@ -73,7 +73,7 @@ public final class Lcom4Test {
      *  - methodFive does not use 'num' (this is an orphan method, ignored)
      *  Therefore the number of disjoint sets (LCOM4) should be 1
      *  since all the methods use the same num field.
-     *  @todo #215:30min LCOM4: Graph algorithm to determine disjoint sets.
+     * @todo #215:30min LCOM4: Graph algorithm to determine disjoint sets.
      *  Currently we can only identify the dependencies via only one graph hop
      *  so we can't trace methodFour that uses 'num' indirectly
      *  via methodTwo and methodOne.
