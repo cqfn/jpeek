@@ -69,10 +69,22 @@ final class Index implements Iterable<Directive> {
             .attr("artifact", "unknown")
             .append(new Header())
             .append(
-                new Joined<Directive>(
+                () -> new Directives()
+                    .attr(
+                        "xmlns:xsi",
+                        "http://www.w3.org/2001/XMLSchema-instance"
+                        )
+                    .attr(
+                    "xsi:noNamespaceSchemaLocation",
+                    "xsd/index.xsd"
+                    )
+                    .iterator()
+            )
+            .append(
+                new Joined<>(
                     new Mapped<>(
                         Index::metric,
-                        new Filtered<Path>(
+                        new Filtered<>(
                             path -> path.getFileName().toString().matches(
                                 "^[A-Z].+\\.xml$"
                             ),

@@ -67,6 +67,7 @@ public final class MatrixTest {
     @Test
     public void xmlHasSchema() {
         MatcherAssert.assertThat(
+            "The XML Schema is invalid",
             XhtmlMatchers.xhtml(
                 this.xml
             ),

@@ -30,6 +30,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -40,17 +41,39 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class IndexTest {
+    /**
+     * Xml file content as a string.
+     */
+    private String xml;
 
-    @Test
-    public void createsIndexXml() throws IOException {
+    @Before
+    public void setUp() throws IOException {
         final Path output = Files.createTempDirectory("").resolve("x2");
         final Path input = Paths.get(".");
         new App(input, output).analyze();
+        this.xml = new TextOf(output.resolve("index.xml")).asString();
+    }
+
+    @Test
+    public void createsIndexXml() {
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
-                new TextOf(output.resolve("index.xml")).asString()
+                this.xml
             ),
             XhtmlMatchers.hasXPaths("/index/metric")
+        );
+    }
+
+    @Test
+    public void xmlHasSchema() {
+        MatcherAssert.assertThat(
+            "The XML Schema is invalid",
+            XhtmlMatchers.xhtml(
+                this.xml
+            ),
+            XhtmlMatchers.hasXPaths(
+                "/index[@xsi:noNamespaceSchemaLocation='xsd/index.xsd']"
+            )
         );
     }
 
