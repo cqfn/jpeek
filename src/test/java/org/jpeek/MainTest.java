@@ -67,6 +67,27 @@ public final class MainTest {
         );
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void crashesIfOverwriteAndSourceEqualsToTarget() throws IOException {
+        final Path source = Files.createTempDirectory("sourceequalstarget");
+        final Path target = source;
+        Main.main(
+            "--sources", source.toString(),
+            "--target", target.toString(),
+            "--overwrite"
+        );
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void crashesIfMetricsHaveInvalidNames() throws IOException {
+        final Path target = Files.createTempDirectory("");
+        Main.main(
+            "--sources", Paths.get(".").toString(),
+            "--target", target.toString(),
+            "--metrics", "#%$!"
+        );
+    }
+
     @Test
     public void createsXmlReportsIfOverwriteAndTargetExists()
         throws IOException {

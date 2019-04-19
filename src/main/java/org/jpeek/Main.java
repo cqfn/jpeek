@@ -143,7 +143,7 @@ public final class Main {
         }
         if (this.overwrite && this.sources.equals(this.target)) {
             throw new IllegalArgumentException(
-                    "Invalid target path, source and target paths shouldn't be equal."
+                "Invalid paths, source and target paths shouldn't be equal."
             );
         }
         for (final String metric : this.metrics.split(",")) {
