@@ -141,6 +141,9 @@ public final class Main {
         if (this.privates) {
             params.put("include-private-methods", 1);
         }
+        if (this.overwrite && this.sources.equals(this.target)) {
+            throw new IllegalArgumentException("Invalid target path, source and target paths shouldn't be equal.");
+        }
         for (final String metric : this.metrics.split(",")) {
             if (!metric.matches("[A-Z]+[0-9]?")) {
                 throw new IllegalArgumentException(
