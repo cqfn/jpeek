@@ -127,7 +127,7 @@ public final class Main {
     private void run() throws IOException {
         if (this.overwrite && this.sources.equals(this.target)) {
             throw new IllegalArgumentException(
-                "Invalid paths, source and target paths shouldn't be equal."
+                "Invalid paths - can't be equal if overwrite option is set." 
             );
         }
         final ConsoleAppender console = this.buildConsoleAppender();
