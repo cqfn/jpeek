@@ -217,13 +217,16 @@ final class Report {
         }
         return new XMLDocument(
             new Xembler(
-                new Directives().xpath("metric").attr(
-                    "xmlns:xsi",
-                    "http://www.w3.org/2001/XMLSchema-instance"
-                ).attr(
-                    "xsi:noNamespaceSchemaLocation",
-                    Report.SCHEMA_FILE
-                )
+                new Directives()
+                    .xpath("/metric")
+                    .attr(
+                        "xmlns:xsi",
+                        "http://www.w3.org/2001/XMLSchema-instance"
+                    )
+                    .attr(
+                        "xsi:noNamespaceSchemaLocation",
+                        Report.SCHEMA_FILE
+                    )
             ).applyQuietly(
                 new XSLDocument(
                     new TextOf(res).asString(),
