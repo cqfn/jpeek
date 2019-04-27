@@ -28,24 +28,24 @@ import com.jcabi.xml.ClasspathSources;
 import com.jcabi.xml.Sources;
 import com.jcabi.xml.StrictXML;
 import com.jcabi.xml.XML;
+import com.jcabi.xml.XMLDocument;
 import com.jcabi.xml.XSD;
 import com.jcabi.xml.XSDDocument;
 import com.jcabi.xml.XSL;
 import com.jcabi.xml.XSLChain;
 import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import org.cactoos.collection.CollectionOf;
-import org.cactoos.io.InputOf;
 import org.cactoos.io.LengthOf;
+import org.cactoos.io.ResourceOf;
 import org.cactoos.io.TeeInput;
-import org.cactoos.map.MapEntry;
-import org.cactoos.map.MapOf;
+import org.cactoos.text.FormattedText;
 import org.cactoos.text.TextOf;
-import org.cactoos.text.UncheckedText;
+import org.xembly.Directives;
+import org.xembly.Xembler;
 
 /**
  * Single report.
@@ -139,37 +139,15 @@ final class Report {
      * @param mean Mean
      * @param sigma Sigma
      * @checkstyle ParameterNumberCheck (10 lines)
-     * @todo #135:30min The current solution to add the reference to
-     *  'metric.xsd' in the generated 'metric.xml' is too complex for
-     *  the task at hand. Refactor towards a simpler solution that
-     *  ideally would just require one or two Xembly instructions to
-     *  add the required attribute.
      */
-    @SuppressWarnings("unchecked")
     Report(final XML xml, final String name,
         final Map<String, Object> args,
         final double mean, final double sigma) {
         this.skeleton = xml;
         this.metric = name;
-        this.params = new MapOf<>(
-            args,
-            new MapEntry<>("schemaLocation", Report.SCHEMA_FILE)
-        );
+        this.params = args;
         this.post = new XSLChain(
             new CollectionOf<>(
-                new XSLDocument(
-                    new UncheckedText(
-                        new TextOf(
-                            new InputOf(
-                                Report.class.getResourceAsStream(
-                                    "xsl/metric-post-schemaloc.xsl"
-                                )
-                            )
-                        )
-                    ).asString(),
-                    Sources.DUMMY,
-                    this.params
-                ),
                 new XSLDocument(
                     Report.class.getResourceAsStream(
                         "xsl/metric-post-colors.xsl"
@@ -228,20 +206,41 @@ final class Report {
      * Make XML.
      * @return XML
      * @throws IOException If fails
+     * @todo #227:30min Add a test to check whether passing params to
+     *  XSLDocument really works. Currently only C3 metric template
+     *  is known to use parameter named 'ctors'. However C3.xsl is a
+     *  work in progress and has impediments, see #175. In case the
+     *  parameter becomes obsolete, consider simplifying construction
+     *  of XSLDocument without params (see reviews to #326).
      */
     private XML xml() throws IOException {
-        final String name = String.format("metrics/%s.xsl", this.metric);
-        final URL res = this.getClass().getResource(name);
-        if (res == null) {
-            throw new IllegalArgumentException(
-                String.format("XSL not found: %s", name)
-            );
-        }
-        return new XSLDocument(
-            new TextOf(res).asString(),
-            Sources.DUMMY,
-            this.params
-        ).transform(this.skeleton);
+        return new XMLDocument(
+            new Xembler(
+                new Directives()
+                    .xpath("/metric")
+                    .attr(
+                        "xmlns:xsi",
+                        "http://www.w3.org/2001/XMLSchema-instance"
+                    )
+                    .attr(
+                        "xsi:noNamespaceSchemaLocation",
+                        Report.SCHEMA_FILE
+                    )
+            ).applyQuietly(
+                new XSLDocument(
+                    new TextOf(
+                        new ResourceOf(
+                            new FormattedText(
+                                "org/jpeek/metrics/%s.xsl",
+                                this.metric
+                            )
+                        )
+                    ).asString(),
+                    Sources.DUMMY,
+                    this.params
+                ).transform(this.skeleton).node()
+            )
+        );
     }
 
 }
