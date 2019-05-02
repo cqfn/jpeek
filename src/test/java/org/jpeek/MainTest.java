@@ -31,6 +31,8 @@ import java.nio.file.Paths;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Main}.
@@ -65,6 +67,49 @@ public final class MainTest {
             "--sources", Paths.get(".").toString(),
             "--target", target.toString()
         );
+    }
+
+    @Test
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public void crashesIfOverwriteAndSourceEqualsToTarget() throws IOException {
+        final Path source = Files.createTempDirectory("sourceequalstarget");
+        final Path target = source;
+        new Assertion(
+            "Must throw an exception",
+            () -> {
+                Main.main(
+                    "--sources", source.toString(),
+                    "--target", target.toString(),
+                    "--overwrite"
+                );
+                return true;
+            },
+            new Throws(
+                "Invalid paths - can't be equal if overwrite option is set.",
+                IllegalArgumentException.class
+            )
+        ).affirm();
+    }
+
+    @Test
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public void crashesIfMetricsHaveInvalidNames() throws IOException {
+        final Path target = Files.createTempDirectory("");
+        new Assertion(
+        "Must throw an exception",
+            () -> {
+                Main.main(
+                    "--sources", Paths.get(".").toString(),
+                    "--target", target.toString(),
+                    "--metrics", "#%$!"
+                );
+                return true;
+            },
+            new Throws(
+                "Invalid metric name: '#%$!'",
+                IllegalArgumentException.class
+            )
+        ).affirm();
     }
 
     @Test
