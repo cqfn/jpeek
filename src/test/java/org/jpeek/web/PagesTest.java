@@ -53,7 +53,7 @@ public final class PagesTest {
             StandardOpenOption.CREATE_NEW
         );
         new Assertion<>(
-            "should return -1",
+            "There is no byte available in body - should return -1",
             () -> new Pages(temp).apply(path).body().read(),
             new IsEqual<>(-1)
         ).affirm();

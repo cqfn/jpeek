@@ -96,7 +96,7 @@ public final class MainTest {
     public void crashesIfMetricsHaveInvalidNames() throws IOException {
         final Path target = Files.createTempDirectory("");
         new Assertion(
-        "Must throw an exception",
+            "Must throw an exception",
             () -> {
                 Main.main(
                     "--sources", Paths.get(".").toString(),
