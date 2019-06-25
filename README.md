@@ -16,6 +16,7 @@
 [![jpeek report](http://i.jpeek.org/org.jpeek/jpeek/badge.svg)](http://i.jpeek.org/org.jpeek/jpeek/)
 [![Test Coverage](https://img.shields.io/codecov/c/github/yegor256/jpeek.svg)](https://codecov.io/github/yegor256/jpeek?branch=master)
 [![SonarQube](https://img.shields.io/badge/sonar-ok-green.svg)](https://sonarcloud.io/dashboard?id=org.jpeek%3Ajpeek)
+[![Hits-of-Code](https://hitsofcode.com/github/yegor256/jpeek)](https://hitsofcode.com/view/github/yegor256/jpeek)
 
 Project architect: [@paulodamaso](https://github.com/paulodamaso)
 
