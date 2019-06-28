@@ -125,12 +125,31 @@ public final class Main {
      * @throws IOException If fails
      */
     private void run() throws IOException {
-        final ConsoleAppender console = new ConsoleAppender();
-        if (!this.quiet) {
-            console.setLayout(new PatternLayout("%m%n"));
-            console.activateOptions();
-            Logger.getRootLogger().addAppender(console);
+        if (this.overwrite && this.sources.equals(this.target)) {
+            throw new IllegalArgumentException(
+                "Invalid paths - can't be equal if overwrite option is set."
+            );
         }
+        final ConsoleAppender console = this.buildConsoleAppender();
+        final Map<String, Object> params = this.buildParameters();
+        new App(
+            this.sources.toPath(),
+            new FileTarget(
+                this.target,
+                this.overwrite
+            ).toPath(),
+            params
+        ).analyze();
+        if (!this.quiet) {
+            Logger.getRootLogger().removeAppender(console);
+        }
+    }
+
+    /**
+     * Prepare application parameters based on configuration and metrics.
+     * @return A {@link Map} filled with parameters.
+     */
+    private Map<String, Object> buildParameters() {
         final Map<String, Object> params = new HashMap<>(0);
         if (this.ctors) {
             params.put("include-ctors", 1);
@@ -149,16 +168,20 @@ public final class Main {
             }
             params.put(metric, true);
         }
-        new App(
-            this.sources.toPath(),
-            new FileTarget(
-                this.target,
-                this.overwrite
-            ).toPath(),
-            params
-        ).analyze();
+        return params;
+    }
+
+    /**
+     * Prepare {@link ConsoleAppender} based on configuration.
+     * @return Configured {@link ConsoleAppender}.
+     */
+    private ConsoleAppender buildConsoleAppender() {
+        final ConsoleAppender console = new ConsoleAppender();
         if (!this.quiet) {
-            Logger.getRootLogger().removeAppender(console);
+            console.setLayout(new PatternLayout("%m%n"));
+            console.activateOptions();
+            Logger.getRootLogger().addAppender(console);
         }
+        return console;
     }
 }
