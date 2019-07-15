@@ -41,13 +41,6 @@ import org.junit.runners.Parameterized;
 //  be tested in MetricsTest when the resulting value is "NaN". Affected
 //  tests are: NoMethods, OneVoidMethodWithoutParams, WithoutAttributes,
 //  OneMethodCreatesLambda.
-// @todo #103:30min NaN-based assertions introduced in #103 made complexity
-//  of `testsTarget` higher. Potentially, if more possible invariants will be
-//  introduced, enlarging complexity may become real problem for this method.
-//  That's why parametrized tests as a generic way of testing all metrics is
-//  proposed to be refactored. Possible alternatives are either classical
-//  JUnit modules, one per test, or wrapping parameters to reusable test case
-//  objects, like described here - https://github.com/yegor256/cactoos-test
 /**
  * Tests for all metrics.
  * @author Yegor Bugayenko (yegor256@gmail.com)
