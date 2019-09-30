@@ -63,10 +63,15 @@ import org.xembly.Xembler;
 public final class Skeleton {
 
     /**
+     * Path to skeleton XSD schema.
+     */
+    private static final String SKELETON_XSD = "xsd/skeleton.xsd";
+
+    /**
      * XSD schema.
      */
     private static final XSD SCHEMA = XSDDocument.make(
-        App.class.getResourceAsStream("xsd/skeleton.xsd")
+        App.class.getResourceAsStream(Skeleton.SKELETON_XSD)
     );
 
     /**
@@ -94,6 +99,11 @@ public final class Skeleton {
                     new Directives()
                         .add("skeleton")
                         .append(new Header())
+                        .append(
+                            () -> new Directives()
+                                .attr("schema", Skeleton.SKELETON_XSD)
+                                .iterator()
+                        )
                         .add("app")
                         .attr("id", this.base)
                         .append(
