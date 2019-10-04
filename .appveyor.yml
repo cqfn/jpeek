@@ -24,19 +24,10 @@ build_script:
   - mvn clean site -Psite --errors --batch-mode
   - mvn clean install -Pqulice --errors --batch-mode
 
-test_script:
-  - ant unit-tests
-
-on_finish:
-  - ps: |
-      $url = "https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)"
-      $file = '.\junit\TESTS-TestSuites.xml'
-      $webclient = New-Object 'System.Net.WebClient'
-      # uploads currently fail because of many tests (https://github.com/appveyor/ci/issues/2084)
-      try { $webclient.UploadFile($url, (Resolve-Path $file)) } catch { $_ }
 cache:
   - C:\maven\ -> appveyor.yml
   - C:\Users\appveyor\.m2\ -> pom.xml
+
 notifications:
   - provider: Email
     to:
