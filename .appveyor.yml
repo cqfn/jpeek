@@ -29,8 +29,5 @@ cache:
   - C:\Users\appveyor\.m2\ -> pom.xml
 
 notifications:
-  - provider: Email
-    to:
-      - nizarucsc@gmail.com
-    on_build_success: false
-    on_build_status_changed: true
+  - provider: GitHubPullRequest
+    template: "{{#passed}}:white_check_ ..."
