@@ -64,11 +64,6 @@ SOFTWARE.
     <xsl:variable name="M" select="methods/method[@ctor='false']"/>
     <xsl:variable name="m" select="count($M)"/>
     <!--
-    @todo #216:30min LCOM4: need to finish implementing the rest of the test cases. Only test case
-     "OneCommonAttribute", "NotCommonAttributes", "NotCommonAttributesWithAllArgsConstructor",
-     was implemented in this 30min ticket.
-    -->
-    <!--
     @todo #216:30min LCOM4: "NotCommonAttributesWithAllArgsConstructor" test now fails.
      Constructor with all attributes parameters should not affect LCOM4 metric.
      So LCOM4.xsl needs to be fixed in order to avoid constructors affection to the metric values.
