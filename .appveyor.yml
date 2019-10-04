@@ -1,0 +1,70 @@
+version: 0.1.{build}
+
+os: Visual Studio 2014 CTP4
+
+environment:
+  matrix:
+    # 64 bit
+    - PLATFORM: x64
+      CONFIGURATION: Release
+      JAVA_HOME: C:\Program Files\Java\jdk1.8.0
+      RDP: "no"
+
+    # 32 bit
+    - PLATFORM: x86
+      CONFIGURATION: Release
+      JAVA_HOME: C:\Program Files (x86)\Java\jdk1.8.0
+
+install:
+
+  # Install Maven
+  - set MVN_VERSION=3.6.0
+  - set PATH=%PATH%;C:\bin\apache-maven-%MVN_VERSION%\bin
+  - if not exist "C:\bin\apache-maven-%MVN_VERSION%\bin\*.*" (echo Maven %MVN_VERSION% not installed, so install it & cinst maven -Version %MVN_VERSION%) else (echo  Maven %MVN_VERSION% already installed)
+
+
+  # Set VC variables for the platform
+  - if %PLATFORM% == x64 call "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\vcvarsx86_amd64.bat"
+  - if %PLATFORM% == x86 call "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\vcvars32.bat"
+
+  # Install NSIS
+  # - choco install nsis --version 2.46.0
+
+  # Download dependencies
+  - if not exist C:\deps.zip appveyor DownloadFile https://projects.g-node.org/nix/nix-dependencies-windows-20150206.zip -FileName C:\deps.zip
+  - 'if not exist C:\deps 7z x -y C:\deps.zip -oC:\deps > NUL:'
+  - c:\deps\nixenv.bat
+
+  # Build NIX
+  - git clone https://github.com/G-Node/nix.git
+  - cd nix
+  - mkdir build
+  - cd build
+  - if %PLATFORM% == x64 cmake .. -G"Visual Studio 12 Win64"
+  - if %PLATFORM% == x86 cmake .. -G"Visual Studio 12"
+  - cmake --build . --config %CONFIGURATION%
+  - cd ..
+  - cd ..
+
+build_script:
+
+  # Build NIX Java bindings
+  - mvn clean package -DnixIncludePath=C:/projects/nix-java/nix/include -DboostIncludePath=%BOOST_INCLUDEDIR% -DnixLinkPath=C:/projects/nix-java/nix/build/Release -Dhdf5LinkPath=%HDF5_BASE%/bin -DboostLinkPath=%BOOST_ROOT%/lib -Dmaven.test.failure.ignore=true -Dplatform.dependency=false
+
+on_failure:
+
+  # Display error log file if generated
+  - if exist *.log type *.log
+
+test_script: []
+
+cache:
+  - C:\bin\apache-maven-3.6.0
+  - C:\Users\appveyor\.m2
+
+
+on_finish:
+  - ps: |
+      if ($env:RDP -eq "yes") {
+          $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+      }
