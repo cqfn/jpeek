@@ -83,7 +83,7 @@ public final class AppTest {
                 new TextOf(output.resolve("skeleton.xml")).asString()
             ),
             XhtmlMatchers.hasXPaths(
-                "//method[@public='false']"
+                "//method[@visibility='private']"
             )
         );
     }

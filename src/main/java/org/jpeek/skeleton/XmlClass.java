@@ -180,9 +180,6 @@ final class XmlClass extends ClassVisitor implements Iterable<Directive> {
                 (access & Opcodes.ACC_ABSTRACT) == Opcodes.ACC_ABSTRACT
                 )
                 .attr(
-                "public",
-                (access & Opcodes.ACC_PUBLIC) == Opcodes.ACC_PUBLIC
-                ).attr(
                 "visibility",
                 visibility
                 )

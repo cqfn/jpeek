@@ -37,6 +37,7 @@ import org.xembly.Xembler;
  * @since 0.27
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class XmlClassTest {
 
     @Test
@@ -61,6 +62,18 @@ public final class XmlClassTest {
                 "/class/methods/method[@visibility = 'private']",
                 "/class/methods/method[@visibility = 'default']",
                 "/class/methods/method[@visibility = 'protected']"
+            )
+        );
+    }
+
+    @Test
+    public void thereIsNoAttributePublic() {
+        MatcherAssert.assertThat(
+            XhtmlMatchers.xhtml(
+                this.classAsXml("ClassWithDifferentMethodVisibilities")
+            ),
+            XhtmlMatchers.hasXPaths(
+                "/class/methods/method[not (@public)]"
             )
         );
     }

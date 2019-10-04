@@ -22,11 +22,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
-<!--
-@todo #188:30min Skeleton.xsd: remove method/@public. We should use the new enum
- method/@visibility which is more flexible. For this remove the attribute from
- this file and from XmlClass.java
--->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:simpleType name="visibility">
     <xs:restriction base="xs:string">
@@ -268,11 +263,6 @@ SOFTWARE.
       <xs:attribute name="version" use="required" type="xs:string">
         <xs:annotation>
           <xs:documentation>Version of jpeek when the skeleton was generated.</xs:documentation>
-        </xs:annotation>
-      </xs:attribute>
-      <xs:attribute name="schema" use="required" type="xs:string">
-        <xs:annotation>
-          <xs:documentation>Used XSD schema for the skeleton generation.</xs:documentation>
         </xs:annotation>
       </xs:attribute>
     </xs:complexType>
