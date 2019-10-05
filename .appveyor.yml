@@ -27,7 +27,3 @@ build_script:
 cache:
   - C:\maven\ -> appveyor.yml
   - C:\Users\appveyor\.m2\ -> pom.xml
-
-notifications:
-  - provider: GitHubPullRequest
-    template: "{{#passed}}:white_check_ ..."
