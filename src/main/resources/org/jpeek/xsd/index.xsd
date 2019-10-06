@@ -134,19 +134,19 @@ SOFTWARE.
                 </xs:annotation>
               </xs:element>
               <xs:element name="bars" minOccurs="1" maxOccurs="1">
-                <!--
-                @todo #199:30min Index.xsd: add `xsd:documentation` as per #199 to the
-                 `bars` element. The element seems to describe the graph on the index.html
-
-                 Tests that might help you implement this by showing you .xml files and
-                 the resulting html:
-                   * org.jpeek.IndexTest
-                   * org.jpeek.AppTest#createsIndexHtml
-                   * org.jpeek.web.TkIndexTest#rendersIndexPage
-                -->
+                <xs:annotation>
+                  <xs:documentation>
+                    List of colored bars that showed as a graph
+                  </xs:documentation>
+                </xs:annotation>
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="bar" minOccurs="0" maxOccurs="unbounded">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Single colored bar on a graph
+                        </xs:documentation>
+                      </xs:annotation>
                       <xs:complexType>
                         <xs:simpleContent>
                           <xs:extension base="xs:int">
