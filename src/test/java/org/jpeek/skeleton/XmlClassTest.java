@@ -27,6 +27,7 @@ import com.jcabi.matchers.XhtmlMatchers;
 import org.hamcrest.MatcherAssert;
 import org.jpeek.FakeBase;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.xembly.Directives;
 import org.xembly.Xembler;
 
@@ -68,16 +69,18 @@ public final class XmlClassTest {
 
     @Test
     public void thereIsNoAttributePublic() {
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
+        new Assertion<>(
+            "attribute public does not exists",
+            () -> XhtmlMatchers.xhtml(
                 this.classAsXml("ClassWithDifferentMethodVisibilities")
             ),
             XhtmlMatchers.hasXPaths(
                 "/class/methods/method[not (@public)]"
             )
-        );
+        ).affirm();
     }
 
+    // @todo #297:30min extract the method as a new class.
     private String classAsXml(final String name) {
         return new Xembler(
             new Directives().add("class").append(

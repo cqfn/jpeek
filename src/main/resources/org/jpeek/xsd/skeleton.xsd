@@ -189,7 +189,6 @@ SOFTWARE.
                 </xs:attribute>
                 <xs:attribute name="ctor" use="required" type="xs:boolean"/>
                 <xs:attribute name="abstract" use="required" type="xs:boolean"/>
-                <xs:attribute name="public" use="required" type="xs:boolean"/>
                 <xs:attribute name="visibility" use="required" type="visibility"/>
                 <xs:attribute name="static" use="required" type="xs:boolean"/>
                 <xs:attribute name="bridge" use="required" type="xs:boolean"/>
@@ -263,6 +262,11 @@ SOFTWARE.
       <xs:attribute name="version" use="required" type="xs:string">
         <xs:annotation>
           <xs:documentation>Version of jpeek when the skeleton was generated.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="schema" use="required" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Used XSD schema for the skeleton generation.</xs:documentation>
         </xs:annotation>
       </xs:attribute>
     </xs:complexType>
