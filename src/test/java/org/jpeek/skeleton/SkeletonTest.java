@@ -143,6 +143,22 @@ public final class SkeletonTest {
     }
 
     @Test
+    public void findSchemaOfSkeleton() {
+        MatcherAssert.assertThat(
+            XhtmlMatchers.xhtml(
+                new Skeleton(
+                    new FakeBase(
+                        "ClassWithDifferentMethodVisibilities"
+                    )
+                )
+                .xml()
+                .toString()
+            ),
+            XhtmlMatchers.hasXPaths("//skeleton[@schema='xsd/skeleton.xsd']")
+        );
+    }
+
+    @Test
     public void recognizesPublicMethods() {
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(

@@ -267,6 +267,11 @@ SOFTWARE.
           <xs:documentation>Version of the metric</xs:documentation>
         </xs:annotation>
       </xs:attribute>
+      <xs:attribute name="schema" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Used XSD schema for the metric generation.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
     </xs:complexType>
   </xs:element>
 </xs:schema>
