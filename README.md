@@ -263,5 +263,6 @@ if lost.
   - [@humb1t](https://github.com/humb1t) as Nikita Puzankov
   - [@stepanov-dmitry](https://github.com/stepanov-dmitry) as Dmitry Stepanov
   - [@GnusinPavel](https://github.com/GnusinPavel) as Gnusin Pavel
+  - [@mohamednizar](https://github.com/mohamednizar) as Mohamed Nizar
 
 Don't hesitate to add your name to this list in your next pull request.
