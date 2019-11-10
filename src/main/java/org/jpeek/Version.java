@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2019 Yegor Bugayenko
@@ -37,6 +37,7 @@ import org.cactoos.scalar.PropertiesOf;
  * @version $Id$
  * @since 0.11
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @checkstyle JavadocTagsCheck (500 lines)
  */
 public final class Version implements Scalar<String> {
 

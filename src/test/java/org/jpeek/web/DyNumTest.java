@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2019 Yegor Bugayenko
@@ -35,6 +35,7 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @version $Id$
  * @since 0.31
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle JavadocTagsCheck (500 lines)
  */
 public final class DyNumTest {
 

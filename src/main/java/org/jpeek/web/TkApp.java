@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2019 Yegor Bugayenko
@@ -60,6 +60,7 @@ import org.takes.tk.TkWrap;
  * @since 0.5
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @checkstyle ClassFanOutComplexityCheck (500 lines)
+ * @checkstyle JavadocTagsCheck (500 lines)
  */
 @SuppressWarnings("PMD.UseUtilityClass")
 public final class TkApp extends TkWrap {

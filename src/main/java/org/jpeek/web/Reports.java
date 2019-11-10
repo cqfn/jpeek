@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2019 Yegor Bugayenko
@@ -45,6 +45,7 @@ import org.jpeek.App;
  * @version $Id$
  * @since 0.7
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @checkstyle JavadocTagsCheck (500 lines)
  */
 final class Reports implements BiFunc<String, String, Front> {
 
@@ -77,6 +78,7 @@ final class Reports implements BiFunc<String, String, Front> {
     }
 
     // @checkstyle ExecutableStatementCountCheck (100 lines)
+    @SuppressWarnings("PMD.CyclomaticComplexity")
     @Override
     public Front apply(final String group,
         final String artifact) throws IOException {

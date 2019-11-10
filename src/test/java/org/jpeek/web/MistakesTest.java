@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2019 Yegor Bugayenko
@@ -42,6 +42,7 @@ import org.xembly.Xembler;
  * @version $Id$
  * @since 0.16
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle JavadocTagsCheck (500 lines)
  */
 public final class MistakesTest {
 

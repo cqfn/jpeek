@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2019 Yegor Bugayenko
@@ -50,6 +50,7 @@ import org.takes.rs.xe.XeStylesheet;
  * @version $Id$
  * @since 0.14
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @checkstyle JavadocTagsCheck (500 lines)
  */
 final class RsPage extends RsWrap {
 

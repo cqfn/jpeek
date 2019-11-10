@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2019 Yegor Bugayenko
@@ -43,6 +43,7 @@ import org.apache.log4j.PatternLayout;
  * @version $Id$
  * @since 0.1
  * @checkstyle JavadocVariableCheck (500 lines)
+ * @checkstyle JavadocTagsCheck (500 lines)
  */
 public final class Main {
 
