@@ -59,7 +59,13 @@ import org.junit.runners.Parameterized;
  *  @checkstyle JavadocTagsCheck (500 lines)
  */
 @RunWith(Parameterized.class)
-@SuppressWarnings({"PMD.AvoidDuplicateLiterals", "PMD.ExcessiveMethodLength"})
+@SuppressWarnings(
+    {
+        "PMD.AvoidDuplicateLiterals",
+        "PMD.ExcessiveMethodLength",
+        "PMD.UseUnderscoresInNumericLiterals"
+    }
+)
 public final class MetricsTest {
 
     @Parameterized.Parameter
@@ -219,13 +225,13 @@ public final class MetricsTest {
             new Object[] {
                 "IndirectlyRelatedPairs",
                 "OCC",
-                0.6_666_666_666_666_666d,
+                0.6666666666666666d,
             },
             new Object[] {"MethodMethodCalls", "OCC", 0.2d},
             new Object[] {
                 "MethodsWithDiffParamTypes",
                 "OCC",
-                0.3_333_333_333_333_333d,
+                0.3333333333333333d,
             },
             new Object[] {"NoMethods", "OCC", 0.0d},
             new Object[] {"OneMethodCreatesLambda", "OCC", 0.0d},

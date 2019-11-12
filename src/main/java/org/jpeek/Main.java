@@ -42,6 +42,7 @@ import org.apache.log4j.PatternLayout;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
+ * @todo #308:30min Remove all 'JavadocTagsCheck' suppression, fix qulice errors
  * @checkstyle JavadocVariableCheck (500 lines)
  * @checkstyle JavadocTagsCheck (500 lines)
  */
