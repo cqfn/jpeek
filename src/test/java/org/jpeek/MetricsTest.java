@@ -24,18 +24,18 @@
 package org.jpeek;
 
 import com.jcabi.matchers.XhtmlMatchers;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Locale;
 import org.cactoos.collection.CollectionOf;
+import org.cactoos.text.FormattedText;
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
 import org.jpeek.skeleton.Skeleton;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.llorllale.cactoos.matchers.Assertion;
 
 // @todo #68:30min SCOM has an impediment on issue #103: cannot currently
 //  be tested in MetricsTest when the resulting value is "NaN". Affected
@@ -246,7 +246,7 @@ public final class MetricsTest {
     }
 
     @Test
-    public void testsTarget() throws IOException {
+    public void testsTarget() throws Exception {
         final Path output = Files.createTempDirectory("");
         new Report(
             new Skeleton(new FakeBase(this.target)).xml(),
@@ -258,8 +258,12 @@ public final class MetricsTest {
         } else {
             xpath = "//class[@id='%s' and number(@value)=%.4f]";
         }
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
+        new Assertion<>(
+            new FormattedText(
+                "Must exists with target '%s' and value '%s'",
+                this.target, this.value
+            ).asString(),
+            () -> XhtmlMatchers.xhtml(
                 new TextOf(
                     output.resolve(String.format("%s.xml", this.metric))
                 ).asString()
@@ -271,6 +275,6 @@ public final class MetricsTest {
                     this.target, this.value
                 )
             )
-        );
+        ).affirm();
     }
 }

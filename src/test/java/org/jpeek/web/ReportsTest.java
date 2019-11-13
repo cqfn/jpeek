@@ -28,11 +28,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.file.Files;
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.takes.facets.hamcrest.HmRsStatus;
 
 /**
@@ -56,13 +56,13 @@ public final class ReportsTest {
 
     @Test
     @Ignore
-    public void rendersOneReport() throws Exception {
-        MatcherAssert.assertThat(
-            new Reports(
+    public void rendersOneReport() {
+        new Assertion<>(
+            "Must return HTTP 200 OK status",
+            () -> new Reports(
                 Files.createTempDirectory("x")
             ).apply("org.takes", "takes").apply("index.html"),
             new HmRsStatus(HttpURLConnection.HTTP_OK)
-        );
+        ).affirm();
     }
-
 }

@@ -27,9 +27,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link DefaultBase}.
@@ -53,10 +53,11 @@ public final class DefaultBaseTest {
             temp.resolve("a/z.class"), "".getBytes(),
             StandardOpenOption.CREATE_NEW
         );
-        MatcherAssert.assertThat(
-            new DefaultBase(temp).files(),
+        new Assertion<>(
+            "Must be more the 2 files",
+            () -> new DefaultBase(temp).files(),
             Matchers.iterableWithSize(Matchers.greaterThan(2))
-        );
+        ).affirm();
     }
 
 }

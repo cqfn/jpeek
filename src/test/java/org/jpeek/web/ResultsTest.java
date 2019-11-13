@@ -28,11 +28,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.cactoos.collection.Joined;
-import org.hamcrest.MatcherAssert;
 import org.jpeek.App;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.xembly.Directive;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.xembly.Directives;
 import org.xembly.Xembler;
 
@@ -54,16 +53,17 @@ public final class ResultsTest {
         new App(input, output).analyze();
         final Results results = new Results();
         results.add("org.takes:takes", output);
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
+        new Assertion<>(
+            "Must exists repos tag",
+            () -> XhtmlMatchers.xhtml(
                 new Xembler(
                     new Directives().add("repos").append(
-                        new Joined<Directive>(results.recent())
+                        new Joined<>(results.recent())
                     )
                 ).xmlQuietly()
             ),
             XhtmlMatchers.hasXPath("/repos")
-        );
+        ).affirm();
     }
 
 }

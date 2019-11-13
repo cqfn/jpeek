@@ -28,11 +28,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.cactoos.collection.Joined;
-import org.hamcrest.MatcherAssert;
 import org.jpeek.App;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.xembly.Directive;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.xembly.Directives;
 import org.xembly.Xembler;
 
@@ -54,16 +53,17 @@ public final class MistakesTest {
         new App(input, output).analyze();
         final Mistakes mistakes = new Mistakes();
         mistakes.add(output);
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
+        new Assertion<>(
+            "Must accept and render",
+            () -> XhtmlMatchers.xhtml(
                 new Xembler(
                     new Directives().add("metrics").append(
-                        new Joined<Directive>(mistakes.worst())
+                        new Joined<>(mistakes.worst())
                     )
                 ).xmlQuietly()
             ),
             XhtmlMatchers.hasXPath("/metrics/metric[@id='LCOM']/avg")
-        );
+        ).affirm();
     }
 
 }

@@ -29,8 +29,8 @@ import com.jcabi.xml.XMLDocument;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link ReportWithStatistics}.
@@ -61,12 +61,13 @@ public final class ReportWithStatisticsTest {
         }
         latch.countDown();
         service.shutdown();
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
+        new Assertion<>(
+            "Must create report with statics",
+            () -> XhtmlMatchers.xhtml(
                 xml.toString()
             ),
             XhtmlMatchers.hasXPaths("/metric/statistics[total='0']")
-        );
+        ).affirm();
     }
 
 }

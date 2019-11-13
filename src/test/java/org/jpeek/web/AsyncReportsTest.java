@@ -31,8 +31,8 @@ import java.util.concurrent.TimeUnit;
 import org.cactoos.BiFunc;
 import org.cactoos.Func;
 import org.cactoos.func.SolidBiFunc;
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.takes.Response;
 import org.takes.facets.hamcrest.HmRsStatus;
 import org.takes.rs.RsPrint;
@@ -64,14 +64,16 @@ public final class AsyncReportsTest {
             );
         final Response response =
             bifunc.apply("org.jpeek", "jpeek").apply("index.html");
-        MatcherAssert.assertThat(
-            response,
+        new Assertion<>(
+            "Must return HTTP OK status",
+            () -> response,
             new HmRsStatus(HttpURLConnection.HTTP_OK)
-        );
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(new RsPrint(response).printBody()),
+        ).affirm();
+        new Assertion<>(
+            "Must have body in response",
+            () -> XhtmlMatchers.xhtml(new RsPrint(response).printBody()),
             XhtmlMatchers.hasXPath("//xhtml:body")
-        );
+        ).affirm();
         service.shutdownNow();
     }
 

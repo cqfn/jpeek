@@ -24,8 +24,8 @@
 package org.jpeek.skeleton;
 
 import com.jcabi.matchers.XhtmlMatchers;
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.xembly.Directives;
 import org.xembly.Xembler;
 
@@ -41,8 +41,9 @@ public final class TypesOfTest {
 
     @Test
     public void parsesSignature() {
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
+        new Assertion<>(
+            "Must parse signature",
+            () -> XhtmlMatchers.xhtml(
                 new Xembler(
                     new Directives().add("method").append(
                         new TypesOf("(Ljava/lang/String;Lorg/jpeek/Test;)Z")
@@ -54,7 +55,7 @@ public final class TypesOfTest {
                 "/method/args/arg[@type = 'Ljava/lang/String']",
                 "/method[return='Z']"
             )
-        );
+        ).affirm();
     }
 
 }

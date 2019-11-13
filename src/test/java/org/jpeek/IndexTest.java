@@ -29,9 +29,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
 import org.junit.Before;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Index}.
@@ -57,25 +57,26 @@ public final class IndexTest {
 
     @Test
     public void createsIndexXml() {
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
+        new Assertion<>(
+            "Must create index.xml",
+            () -> XhtmlMatchers.xhtml(
                 this.xml
             ),
             XhtmlMatchers.hasXPaths("/index/metric")
-        );
+        ).affirm();
     }
 
     @Test
     public void xmlHasSchema() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "The XML Schema is invalid",
-            XhtmlMatchers.xhtml(
+            () -> XhtmlMatchers.xhtml(
                 this.xml
             ),
             XhtmlMatchers.hasXPaths(
                 "/index[@xsi:noNamespaceSchemaLocation='xsd/index.xsd']"
             )
-        );
+        ).affirm();
     }
 
 }

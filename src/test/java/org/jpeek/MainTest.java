@@ -28,10 +28,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.IsTrue;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -50,9 +49,10 @@ public final class MainTest {
         final Path output = Files.createTempDirectory("").resolve("x3");
         final Path input = Paths.get(".");
         Main.main("--sources", input.toString(), "--target", output.toString());
-        MatcherAssert.assertThat(
-            Files.exists(output.resolve("LCOM5.xml")),
-            Matchers.equalTo(true)
+        new Assertion<>(
+            "Must create LCOM5 report",
+            () -> Files.exists(output.resolve("LCOM5.xml")),
+            new IsTrue()
         );
     }
 
@@ -122,9 +122,10 @@ public final class MainTest {
             "--target", target.toString(),
             "--overwrite"
         );
-        MatcherAssert.assertThat(
-            Files.exists(target.resolve("LCOM5.xml")),
-            Matchers.equalTo(true)
-        );
+        new Assertion<>(
+            "Must exists LCOM5.xml",
+            () -> Files.exists(target.resolve("LCOM5.xml")),
+            new IsTrue()
+        ).affirm();
     }
 }

@@ -29,9 +29,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
 import org.junit.Before;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Matrix}.
@@ -57,25 +57,26 @@ public final class MatrixTest {
 
     @Test
     public void createsMatrixXml() {
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
+        new Assertion<>(
+            "Must create matrix.xml",
+            () -> XhtmlMatchers.xhtml(
                 this.xml
             ),
             XhtmlMatchers.hasXPaths("/matrix/classes")
-        );
+        ).affirm();
     }
 
     @Test
     public void xmlHasSchema() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "The XML Schema is invalid",
-            XhtmlMatchers.xhtml(
+            () -> XhtmlMatchers.xhtml(
                 this.xml
             ),
             XhtmlMatchers.hasXPaths(
                 "/matrix[@xsi:noNamespaceSchemaLocation='xsd/matrix.xsd']"
             )
-        );
+        ).affirm();
     }
 
 }

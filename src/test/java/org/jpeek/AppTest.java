@@ -36,11 +36,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.hamcrest.collection.IsEmptyIterable;
 import org.hamcrest.core.IsNot;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
  * Test case for {@link App}.
@@ -49,6 +49,7 @@ import org.junit.Test;
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocTagsCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class AppTest {
@@ -57,19 +58,21 @@ public final class AppTest {
         final Path output = Files.createTempDirectory("").resolve("x1");
         final Path input = Paths.get(".");
         new App(input, output).analyze();
-        MatcherAssert.assertThat(
-            Files.exists(output.resolve("LCOM.xml")),
-            Matchers.equalTo(true)
-        );
-        MatcherAssert.assertThat(
-            XSLDocument
+        new Assertion<>(
+            "Must LCOM.xml file exists",
+            () -> Files.exists(output.resolve("LCOM.xml")),
+            new IsTrue()
+        ).affirm();
+        new Assertion<>(
+            "Must create LCOM report",
+            () -> XSLDocument
                 .make(
                     AppTest.class.getResourceAsStream("xsl/metric.xsl")
                 )
                 .with(new ClasspathSources())
                 .applyTo(new XMLDocument(output.resolve("LCOM.xml").toFile())),
             XhtmlMatchers.hasXPath("//xhtml:body")
-        );
+        ).affirm();
     }
 
     @Test
@@ -79,14 +82,15 @@ public final class AppTest {
         final Map<String, Object> args = new HashMap<>();
         args.put("include-private-methods", 1);
         new App(input, output, args).analyze();
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
+        new Assertion<>(
+            "Must contain private method",
+            () -> XhtmlMatchers.xhtml(
                 new TextOf(output.resolve("skeleton.xml")).asString()
             ),
             XhtmlMatchers.hasXPaths(
                 "//method[@public='false']"
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -94,10 +98,11 @@ public final class AppTest {
         final Path output = Files.createTempDirectory("").resolve("x2");
         final Path input = Paths.get(".");
         new App(input, output).analyze();
-        MatcherAssert.assertThat(
-            Files.exists(output.resolve("index.html")),
-            Matchers.equalTo(true)
-        );
+        new Assertion<>(
+            "Must index.html file exists",
+            () -> Files.exists(output.resolve("index.html")),
+            new IsTrue()
+        ).affirm();
     }
 
     @Test
@@ -105,8 +110,9 @@ public final class AppTest {
         final Path output = Files.createTempDirectory("").resolve("x7");
         final Path input = Paths.get(".");
         new App(input, output).analyze();
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
+        new Assertion<>(
+            "Must have some metrics",
+            () -> XhtmlMatchers.xhtml(
                 new TextOf(output.resolve("index.xml")).asString()
             ),
             XhtmlMatchers.hasXPaths(
@@ -115,10 +121,11 @@ public final class AppTest {
                 "/index[@diff!='NaN']",
                 "/index[count(metric)>0]"
             )
-        );
+        ).affirm();
     }
 
     @Test
+    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
     public void isXsdDocumented() throws IOException {
         final List<XML> elements = new XMLDocument(
             AppTest.class.getResourceAsStream("xsd/metric.xsd")
@@ -126,20 +133,20 @@ public final class AppTest {
         final IsNot<? super List<?>> populated = new IsNot<>(
             new IsEmptyIterable<>()
         );
-        MatcherAssert.assertThat(
-            elements,
+        new Assertion<>(
+            "Nodes must not be empty",
+            () -> elements,
             populated
-        );
+        ).affirm();
         for (final XML element: elements) {
-            MatcherAssert.assertThat(
+            new Assertion<>(
                 String.format(
                     "element '%s' must have a documentation",
                     element.xpath("@name").get(0)
                 ),
-                element
-                    .xpath("xs:annotation/xs:documentation/text()"),
+                () -> element.xpath("xs:annotation/xs:documentation/text()"),
                 populated
-            );
+            ).affirm();
         }
     }
 }

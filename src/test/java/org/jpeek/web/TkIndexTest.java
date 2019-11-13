@@ -24,9 +24,8 @@
 package org.jpeek.web;
 
 import com.jcabi.matchers.XhtmlMatchers;
-import java.io.IOException;
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.takes.rq.RqFake;
 import org.takes.rs.RsPrint;
 
@@ -41,13 +40,14 @@ import org.takes.rs.RsPrint;
 public final class TkIndexTest {
 
     @Test
-    public void rendersIndexPage() throws IOException {
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
+    public void rendersIndexPage() {
+        new Assertion<>(
+            "Must print footer",
+            () -> XhtmlMatchers.xhtml(
                 new RsPrint(new TkIndex().act(new RqFake())).printBody()
             ),
             XhtmlMatchers.hasXPath("//xhtml:footer")
-        );
+        ).affirm();
     }
 
 }

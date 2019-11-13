@@ -24,9 +24,9 @@
 package org.jpeek.skeleton;
 
 import com.jcabi.matchers.XhtmlMatchers;
-import org.hamcrest.MatcherAssert;
 import org.jpeek.FakeBase;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.xembly.Directives;
 import org.xembly.Xembler;
 
@@ -42,19 +42,21 @@ public final class XmlClassTest {
 
     @Test
     public void parsesClass() {
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(this.classAsXml("Bar")),
+        new Assertion<>(
+            "Must parse class",
+            () -> XhtmlMatchers.xhtml(this.classAsXml("Bar")),
             XhtmlMatchers.hasXPaths(
                 "/class/methods[count(method) = 5]",
                 "/class/attributes[count(attribute) = 4]"
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void parsesMethodVisibility() {
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
+        new Assertion<>(
+            "Must parse method visibility",
+            () -> XhtmlMatchers.xhtml(
                 this.classAsXml("ClassWithDifferentMethodVisibilities")
             ),
             XhtmlMatchers.hasXPaths(
@@ -63,7 +65,7 @@ public final class XmlClassTest {
                 "/class/methods/method[@visibility = 'default']",
                 "/class/methods/method[@visibility = 'protected']"
             )
-        );
+        ).affirm();
     }
 
     private String classAsXml(final String name) {

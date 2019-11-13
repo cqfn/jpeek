@@ -28,8 +28,8 @@ import com.jcabi.http.response.RestResponse;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.nio.file.Files;
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.takes.Response;
 import org.takes.Take;
 import org.takes.facets.hamcrest.HmRsStatus;
@@ -85,11 +85,11 @@ public final class TkAppTest {
         final Take app = new TkApp(Files.createTempDirectory("x"));
         for (final String page : pages) {
             final Response response = app.act(new RqFake("GET", page));
-            MatcherAssert.assertThat(
+            new Assertion<>(
                 new RsPrint(response).print(),
-                response,
+                () -> response,
                 new HmRsStatus(HttpURLConnection.HTTP_OK)
-            );
+            ).affirm();
         }
     }
 

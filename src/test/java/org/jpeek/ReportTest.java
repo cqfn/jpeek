@@ -29,10 +29,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.jpeek.skeleton.Skeleton;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.IsTrue;
 import org.xembly.Directives;
 import org.xembly.Xembler;
 
@@ -52,14 +52,16 @@ public final class ReportTest {
     public void createsXmlReport() throws IOException {
         final Path output = Files.createTempDirectory("");
         new Report(new Skeleton(new FakeBase()).xml(), "LCOM").save(output);
-        MatcherAssert.assertThat(
-            Files.exists(output.resolve("LCOM.xml")),
-            Matchers.equalTo(true)
-        );
-        MatcherAssert.assertThat(
-            Files.exists(output.resolve("LCOM.html")),
-            Matchers.equalTo(true)
-        );
+        new Assertion<>(
+            "Must LCOM.xml file exists",
+            () -> Files.exists(output.resolve("LCOM.xml")),
+            new IsTrue()
+        ).affirm();
+        new Assertion<>(
+            "Must LCOM.html file exists",
+            () -> Files.exists(output.resolve("LCOM.html")),
+            new IsTrue()
+        ).affirm();
     }
 
     @Test
@@ -74,8 +76,9 @@ public final class ReportTest {
             ).xml(),
             "LCOM"
         ).save(output);
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
+        new Assertion<>(
+            "Must create LCOM report",
+            () -> XhtmlMatchers.xhtml(
                 new TextOf(output.resolve("LCOM.xml")).asString()
             ),
             XhtmlMatchers.hasXPaths(
@@ -83,21 +86,22 @@ public final class ReportTest {
                 "/metric/statistics/mean",
                 "/metric/bars/bar[@x='0' and .='0' and @color='yellow']"
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void createsXmlReportWithEmptyProject() throws IOException {
         final Path output = Files.createTempDirectory("");
         new Report(new Skeleton(new FakeBase()).xml(), "LCOM").save(output);
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
+        new Assertion<>(
+            "Report for empty project created",
+            () -> XhtmlMatchers.xhtml(
                 new TextOf(output.resolve("LCOM.xml")).asString()
             ),
             XhtmlMatchers.hasXPaths(
                 "/metric[title='LCOM']/bars/bar"
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -120,8 +124,9 @@ public final class ReportTest {
             ),
             "LCOM"
         ).save(output);
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
+        new Assertion<>(
+            "Must create full report",
+            () -> XhtmlMatchers.xhtml(
                 new TextOf(output.resolve("LCOM.xml")).asString()
             ),
             XhtmlMatchers.hasXPaths(
@@ -133,21 +138,22 @@ public final class ReportTest {
                 "//statistics[elements='2']",
                 "//statistics[mean='0.55']"
             )
-        );
+        ).affirm();
     }
 
     @Test
-    public void setsCorrectschemaLocation() throws IOException {
+    public void setsCorrectSchemaLocation() throws IOException {
         final Path output = Files.createTempDirectory("");
         new Report(new Skeleton(new FakeBase()).xml(), "LCOM").save(output);
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
+        new Assertion<>(
+            "Must have correct schema location",
+            () -> XhtmlMatchers.xhtml(
                 new TextOf(output.resolve("LCOM.xml")).asString()
             ),
             XhtmlMatchers.hasXPaths(
                 // @checkstyle LineLength (1 line)
                 "/metric[@xsi:noNamespaceSchemaLocation = 'xsd/metric.xsd']"
             )
-        );
+        ).affirm();
     }
 }

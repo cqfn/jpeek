@@ -24,9 +24,8 @@
 package org.jpeek.web;
 
 import com.jcabi.matchers.XhtmlMatchers;
-import java.io.IOException;
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.takes.rq.RqFake;
 import org.takes.rq.RqWithHeaders;
 import org.takes.rs.RsPrint;
@@ -42,19 +41,21 @@ import org.takes.rs.RsPrint;
 public final class TkMistakesTest {
 
     @Test
-    public void rendersMistakesPage() throws IOException {
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
+    public void rendersMistakesPage() {
+        new Assertion<>(
+            "Must print footer on mistakes page",
+            () -> XhtmlMatchers.xhtml(
                 new RsPrint(new TkMistakes().act(new RqFake())).printBody()
             ),
             XhtmlMatchers.hasXPath("//xhtml:footer")
-        );
+        ).affirm();
     }
 
     @Test
-    public void rendersMistakesPageInXml() throws IOException {
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
+    public void rendersMistakesPageInXml() {
+        new Assertion<>(
+            "Must render mistake page in xml",
+            () -> XhtmlMatchers.xhtml(
                 new RsPrint(
                     new TkMistakes().act(
                         new RqWithHeaders(
@@ -65,7 +66,7 @@ public final class TkMistakesTest {
                 ).printBody()
             ),
             XhtmlMatchers.hasXPath("/page/worst")
-        );
+        ).affirm();
     }
 
 }

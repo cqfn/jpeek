@@ -24,10 +24,9 @@
 package org.jpeek.skeleton;
 
 import com.jcabi.matchers.XhtmlMatchers;
-import java.io.IOException;
-import org.hamcrest.MatcherAssert;
 import org.jpeek.FakeBase;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Skeleton}.
@@ -47,8 +46,9 @@ public final class SkeletonTest {
 
     @Test
     public void createsXml() {
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
+        new Assertion<>(
+            "Must overload bar's methods",
+            () -> XhtmlMatchers.xhtml(
                 new Skeleton(
                     new FakeBase("OverloadMethods", "Bar")
                 ).xml().toString()
@@ -65,13 +65,14 @@ public final class SkeletonTest {
                 "//class[@id='Bar']//method[@name='getKey']/ops/op[@code='get' and .='key']",
                 "//class[@id='Bar']//method[@name='<init>']/ops[count(op)=4]"
             )
-        );
+        ).affirm();
     }
 
     @Test
-    public void findsMethodsAndArgs() throws IOException {
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
+    public void findsMethodsAndArgs() {
+        new Assertion<>(
+            "Must find methods with diff param types",
+            () -> XhtmlMatchers.xhtml(
                 new Skeleton(
                     new FakeBase("MethodsWithDiffParamTypes")
                 ).xml().toString()
@@ -85,13 +86,14 @@ public final class SkeletonTest {
                 "//method[@name='methodTwo' and return='V']",
                 "//method[@name='methodOne']/args/arg[@type='Ljava/lang/Object']"
             )
-        );
+        ).affirm();
     }
 
     @Test
-    public void findsMethodCalls() throws IOException {
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
+    public void findsMethodCalls() {
+        new Assertion<>(
+            "Must call methods",
+            () -> XhtmlMatchers.xhtml(
                 new Skeleton(
                     new FakeBase("Bar", "Foo")
                 ).xml().toString()
@@ -105,13 +107,14 @@ public final class SkeletonTest {
                 "//class[@id='Foo']/methods/method[@name='methodOne']/ops[op = 'Foo.methodTwo']",
                 "//class[@id='Foo']/methods/method[@name='methodTwo']/ops[op = 'Foo.methodOne']"
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void createsOnlyOneMethodIgnoresSynthetic() {
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
+        new Assertion<>(
+            "Must create only one method",
+            () -> XhtmlMatchers.xhtml(
                 new Skeleton(
                     new FakeBase("OneMethodCreatesLambda")
                 ).xml().toString()
@@ -120,13 +123,14 @@ public final class SkeletonTest {
                 // @checkstyle LineLength (1 line)
                 "//class[@id='OneMethodCreatesLambda' and count(methods/method[contains(@name,'doSomething')])=1]"
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void findFieldWithQualifiedName() {
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
+        new Assertion<>(
+            "Must find field with qualified name",
+            () -> XhtmlMatchers.xhtml(
                 new Skeleton(
                     new FakeBase(
                         "ClassWithPublicField",
@@ -140,13 +144,14 @@ public final class SkeletonTest {
                 // @checkstyle LineLength (1 line)
                 "//class[@id='ClassAccessingPublicField']//method[@name='test']/ops/op[@code='put_static' and .='org.jpeek.samples.ClassWithPublicField.NAME']"
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void findSchemaOfSkeleton() {
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
+        new Assertion<>(
+            "Must find schema of skeleton",
+            () -> XhtmlMatchers.xhtml(
                 new Skeleton(
                     new FakeBase(
                         "ClassWithDifferentMethodVisibilities"
@@ -156,13 +161,14 @@ public final class SkeletonTest {
                 .toString()
             ),
             XhtmlMatchers.hasXPaths("//skeleton[@schema='xsd/skeleton.xsd']")
-        );
+        ).affirm();
     }
 
     @Test
     public void recognizesPublicMethods() {
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
+        new Assertion<>(
+            "Must recognize public methods",
+            () -> XhtmlMatchers.xhtml(
                 new Skeleton(
                     new FakeBase(
                         "ClassWithDifferentMethodVisibilities"
@@ -177,6 +183,6 @@ public final class SkeletonTest {
                 "//method[@name='protectedMethod' and @public='false']",
                 "//method[@name='privateMethod' and @public='false']"
             )
-        );
+        ).affirm();
     }
 }
