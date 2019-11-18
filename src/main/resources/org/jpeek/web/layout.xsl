@@ -32,7 +32,7 @@ SOFTWARE.
         <meta name="keywords" content="code quality metrics"/>
         <meta name="author" content="jpeek.org"/>
         <link rel="shortcut icon" href="http://www.jpeek.org/logo.png"/>
-        <link rel="stylesheet" href="http://cdn.rawgit.com/yegor256/tacit/gh-pages/tacit-css-1.1.1.min.css"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/yegor256/tacit@gh-pages/tacit-css.min.css"/>
         <link rel="stylesheet" href="/jpeek.css"/>
         <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/sortable/0.8.0/js/sortable.min.js">&#xA0;</script>
         <xsl:apply-templates select="." mode="head"/>
