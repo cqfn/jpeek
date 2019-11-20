@@ -81,7 +81,7 @@ public final class XmlClassTest {
     }
 
     // @todo #297:30min this method appears three times and may be useful for
-    // future tests, so extract the method as a new class.
+    //  future tests, so extract the method as a new class.
     private String classAsXml(final String name) {
         return new Xembler(
             new Directives().add("class").append(
