@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2019 Yegor Bugayenko
@@ -36,6 +36,7 @@ import java.nio.file.attribute.BasicFileAttributes;
  * @author Felipe Moreno (oridan@gmail.com)
  * @version $Id$
  * @since 0.26.4
+ * @checkstyle JavadocTagsCheck (500 lines)
  */
 public final class FileTarget implements Target {
 

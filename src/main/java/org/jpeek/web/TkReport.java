@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2019 Yegor Bugayenko
@@ -43,6 +43,7 @@ import org.takes.facets.forward.RsForward;
  * @version $Id$
  * @since 0.5
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @checkstyle JavadocTagsCheck (500 lines)
  */
 final class TkReport implements TkRegex {
 

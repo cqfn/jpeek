@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2019 Yegor Bugayenko
@@ -67,6 +67,7 @@ import org.xembly.Xembler;
  * @checkstyle CyclomaticComplexityCheck (500 lines)
  * @checkstyle MethodLengthCheck (500 lines)
  * @checkstyle JavaNCSSCheck (500 lines)
+ * @checkstyle JavadocTagsCheck (500 lines)
  *
  * @todo #118:30min LCC metric has impediments (see puzzles in LCC.xml
  *  and in `MetricsTest`).
@@ -143,7 +144,10 @@ public final class App {
      * Analyze sources.
      * @throws IOException If fails
      */
-    @SuppressWarnings("PMD.ExcessiveMethodLength")
+    @SuppressWarnings({
+        "PMD.ExcessiveMethodLength",
+        "PMD.NcssCount"
+    })
     public void analyze() throws IOException {
         final Base base = new DefaultBase(this.input);
         final XML skeleton = new Skeleton(base).xml();

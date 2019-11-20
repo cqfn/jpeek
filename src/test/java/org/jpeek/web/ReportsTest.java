@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2019 Yegor Bugayenko
@@ -41,6 +41,7 @@ import org.takes.facets.hamcrest.HmRsStatus;
  * @version $Id$
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle JavadocTagsCheck (500 lines)
  */
 public final class ReportsTest {
 

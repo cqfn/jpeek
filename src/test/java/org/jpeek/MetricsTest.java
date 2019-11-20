@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2019 Yegor Bugayenko
@@ -56,9 +56,16 @@ import org.junit.runners.Parameterized;
  *  Also, all classes without transitive relations
  *  should have the same LCC metric as TCC metric.
  *  Before do it we have to fix puzzles in LCC.xml.
+ *  @checkstyle JavadocTagsCheck (500 lines)
  */
 @RunWith(Parameterized.class)
-@SuppressWarnings({"PMD.AvoidDuplicateLiterals", "PMD.ExcessiveMethodLength"})
+@SuppressWarnings(
+    {
+        "PMD.AvoidDuplicateLiterals",
+        "PMD.ExcessiveMethodLength",
+        "PMD.UseUnderscoresInNumericLiterals"
+    }
+)
 public final class MetricsTest {
 
     @Parameterized.Parameter
@@ -234,7 +241,7 @@ public final class MetricsTest {
             new Object[] {"TwoCommonAttributes", "OCC", 0.0d},
             new Object[] {"TwoCommonMethods", "OCC", 0.0d},
             new Object[] {"WithoutAttributes", "OCC", 0.0d},
-            new Object[] {"TwoCommonMethods", "LORM", 0.26667d}
+            new Object[] {"TwoCommonMethods", "LORM", 0.26_667d}
         );
     }
 

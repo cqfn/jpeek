@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2019 Yegor Bugayenko
@@ -59,6 +59,7 @@ import org.xembly.Xembler;
  * @since 0.23
  * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @checkstyle JavadocTagsCheck (500 lines)
  */
 public final class Skeleton {
 
@@ -139,7 +140,10 @@ public final class Skeleton {
      * Calculate Xembly for all packages.
      * @return XML for all packages (one by one)
      */
-    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
+    @SuppressWarnings({
+        "PMD.AvoidInstantiatingObjectsInLoops",
+        "PMD.GuardLogStatement"
+    })
     private Iterable<Map.Entry<String, Directives>> packages() {
         final long start = System.currentTimeMillis();
         final Collection<Map.Entry<String, Directives>> all =

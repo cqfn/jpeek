@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2019 Yegor Bugayenko
@@ -39,6 +39,7 @@ import org.llorllale.cactoos.matchers.TextIs;
  * @author Ilya Kharlamov (ilya.kharlamov@gmail.com)
  * @version $Id$
  * @since 0.28
+ * @checkstyle JavadocTagsCheck (500 lines)
  */
 public final class MetricBase {
     /**

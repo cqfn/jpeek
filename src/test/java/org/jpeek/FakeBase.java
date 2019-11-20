@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2019 Yegor Bugayenko
@@ -43,6 +43,7 @@ import org.cactoos.scalar.IoCheckedScalar;
  * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @checkstyle JavadocTagsCheck (500 lines)
  */
 public final class FakeBase implements Base {
 

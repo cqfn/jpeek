@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2019 Yegor Bugayenko
@@ -38,13 +38,14 @@ import java.io.IOException;
  * @version $Id$
  * @since 0.17
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @checkstyle JavadocTagsCheck (500 lines)
  */
 final class DyNum extends Number {
 
     /**
      * Score multiplier.
      */
-    private static final Double MULTIPLIER = 100000.0d;
+    private static final Double MULTIPLIER = 100_000.0d;
 
     /**
      * Serialization marker.

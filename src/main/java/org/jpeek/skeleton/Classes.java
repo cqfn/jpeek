@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2019 Yegor Bugayenko
@@ -24,7 +24,6 @@
 package org.jpeek.skeleton;
 
 import com.jcabi.log.Logger;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -51,6 +50,7 @@ import org.jpeek.Base;
  * @since 0.27
  * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @checkstyle JavadocTagsCheck (500 lines)
  */
 final class Classes implements Iterable<CtClass> {
 
@@ -74,7 +74,10 @@ final class Classes implements Iterable<CtClass> {
     }
 
     @Override
-    @SuppressWarnings("PMD.PrematureDeclaration")
+    @SuppressWarnings({
+        "PMD.PrematureDeclaration",
+        "PMD.GuardLogStatement"
+    })
     public Iterator<CtClass> iterator() {
         final Collection<CtClass> classes;
         final long start = System.currentTimeMillis();
@@ -88,8 +91,7 @@ final class Classes implements Iterable<CtClass> {
                     && !ctClass.getName().matches("^.+\\$AjcClosure[0-9]+$"),
                 new Mapped<>(
                     path -> {
-                        try (InputStream stream =
-                            new FileInputStream(path.toFile())) {
+                        try (InputStream stream = Files.newInputStream(path)) {
                             return this.pool.makeClassIfNew(stream);
                         }
                     },

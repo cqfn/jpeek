@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2019 Yegor Bugayenko
@@ -56,12 +56,14 @@ import org.xembly.Xembler;
  * @version $Id$
  * @since 0.1
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @checkstyle JavadocTagsCheck (500 lines)
  */
 final class Report {
     /**
      * Default mean.
      */
     private static final double DEFAULT_MEAN = 0.5d;
+
     /**
      * Default sigma.
      */
@@ -172,6 +174,7 @@ final class Report {
      * @param target Target dir
      * @throws IOException If fails
      */
+    @SuppressWarnings("PMD.GuardLogStatement")
     public void save(final Path target) throws IOException {
         final long start = System.currentTimeMillis();
         final XML xml = new StrictXML(

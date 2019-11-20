@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2019 Yegor Bugayenko
@@ -38,6 +38,7 @@ import org.takes.rs.RsText;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.18
+ * @checkstyle JavadocTagsCheck (500 lines)
  */
 final class TkQueue implements Take {
 

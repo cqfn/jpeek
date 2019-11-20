@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2019 Yegor Bugayenko
@@ -42,7 +42,12 @@ import org.apache.log4j.PatternLayout;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
+ * @todo #308:30min Due to introduce new version of qulice 0.18.17 there were
+ *  many 'JavadocTagsCheck' suppression, so we need to fix that by remove
+ *  author, version and since tags in all javadoc. After that remove
+ *  'JavadocTagsCheck' suppression.
  * @checkstyle JavadocVariableCheck (500 lines)
+ * @checkstyle JavadocTagsCheck (500 lines)
  */
 public final class Main {
 

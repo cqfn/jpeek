@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2019 Yegor Bugayenko
@@ -41,6 +41,7 @@ import org.xembly.Directives;
  * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @checkstyle ParameterNumberCheck (500 lines)
+ * @checkstyle JavadocTagsCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class OpsOf extends MethodVisitor {

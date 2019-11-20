@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2019 Yegor Bugayenko
@@ -40,6 +40,7 @@ import org.junit.Test;
  *  findFieldWithQualifiedName must be uncommented when this issue is
  *  resolved. Please see #156 for more detailing in upgrading skeleton
  *  behavior.
+ *  @checkstyle JavadocTagsCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class SkeletonTest {

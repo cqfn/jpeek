@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2019 Yegor Bugayenko
@@ -40,6 +40,7 @@ import org.llorllale.cactoos.matchers.Throws;
  * @version $Id$
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle JavadocTagsCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class MainTest {

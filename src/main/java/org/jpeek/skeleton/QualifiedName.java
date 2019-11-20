@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2019 Yegor Bugayenko
@@ -34,6 +34,7 @@ import org.cactoos.text.UncheckedText;
  * @author Ilya Kharlamov (ilya.kharlamov@gmail.com)
  * @version $Id$
  * @since 0.29
+ * @checkstyle JavadocTagsCheck (500 lines)
  */
 public final class QualifiedName extends TextEnvelope {
     /**
