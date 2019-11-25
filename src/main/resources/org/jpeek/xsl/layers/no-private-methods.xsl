@@ -24,7 +24,7 @@ SOFTWARE.
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
   <xsl:template match="method">
-    <xsl:if test="@public='true'">
+    <xsl:if test="@visibility!='private'">
       <xsl:copy>
         <xsl:apply-templates select="node()|@*"/>
       </xsl:copy>

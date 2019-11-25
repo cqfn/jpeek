@@ -178,10 +178,10 @@ public final class SkeletonTest {
                 .toString()
             ),
             XhtmlMatchers.hasXPaths(
-                "//method[@name='publicMethod' and @public='true']",
-                "//method[@name='defaultMethod' and @public='false']",
-                "//method[@name='protectedMethod' and @public='false']",
-                "//method[@name='privateMethod' and @public='false']"
+                "//method[@name='publicMethod' and @visibility='public']",
+                "//method[@name='defaultMethod' and @visibility='default']",
+                "//method[@name='protectedMethod' and @visibility='protected']",
+                "//method[@name='privateMethod' and @visibility='private']"
             )
         ).affirm();
     }

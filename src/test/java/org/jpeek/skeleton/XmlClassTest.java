@@ -38,6 +38,7 @@ import org.xembly.Xembler;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocTagsCheck (500 lines)
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class XmlClassTest {
 
     @Test
@@ -68,6 +69,21 @@ public final class XmlClassTest {
         ).affirm();
     }
 
+    @Test
+    public void thereIsNoAttributePublic() {
+        new Assertion<>(
+            "attribute public does not exists",
+            () -> XhtmlMatchers.xhtml(
+                this.classAsXml("ClassWithDifferentMethodVisibilities")
+            ),
+            XhtmlMatchers.hasXPaths(
+                "/class/methods/method[not (@public)]"
+            )
+        ).affirm();
+    }
+
+    // @todo #297:30min this method appears three times and may be useful for
+    //  future tests, so extract the method as a new class.
     private String classAsXml(final String name) {
         return new Xembler(
             new Directives().add("class").append(
