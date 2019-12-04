@@ -48,6 +48,7 @@ import org.takes.rs.xe.XeAppend;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @checkstyle JavadocTagsCheck (500 lines)
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class AsyncReports implements
     BiFunc<String, String, Func<String, Response>> {
 
@@ -74,10 +75,21 @@ final class AsyncReports implements
     @Override
     public Func<String, Response> apply(final String group,
         final String artifact) throws IOException {
-        final Future<Front> future =
-            new IoCheckedBiFunc<>(this.cache).apply(group, artifact);
+        final Future<Front> future = new IoCheckedBiFunc<>(
+            new BiFunc.NoNulls<>(this.cache)
+        ).apply(group, artifact);
         final Func<String, Response> output;
-        if (future.isDone()) {
+        if (future.isCancelled()) {
+            output = input -> new RsPage(
+                new RqFake(),
+                "error",
+                () -> new IterableOf<>(
+                    new XeAppend("group", group),
+                    new XeAppend("artifact", artifact),
+                    new XeAppend("future", future.toString())
+                )
+            );
+        } else if (future.isDone()) {
             try {
                 output = future.get();
             } catch (final InterruptedException | ExecutionException ex) {
@@ -90,7 +102,8 @@ final class AsyncReports implements
                     s -> System.currentTimeMillis()
                 );
             output = input -> new RsPage(
-                new RqFake(), "wait",
+                new RqFake(),
+                "wait",
                 () -> new IterableOf<>(
                     new XeAppend("group", group),
                     new XeAppend("artifact", artifact),
