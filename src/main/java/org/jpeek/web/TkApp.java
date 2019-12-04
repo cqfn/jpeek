@@ -100,7 +100,9 @@ public final class TkApp extends TkWrap {
      * @throws IOException If fails
      */
     private static Take make(final Path home) throws IOException {
-        final Futures futures = new Futures(new Reports(home));
+        final Futures futures = new Futures(
+            new BiFunc.NoNulls<>(new Reports(home))
+        );
         return new TkFallback(
             new TkForward(
                 new TkFork(

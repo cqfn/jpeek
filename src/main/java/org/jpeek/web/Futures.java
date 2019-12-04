@@ -37,8 +37,13 @@ import java.util.concurrent.Future;
 import org.cactoos.BiFunc;
 import org.cactoos.Text;
 import org.cactoos.collection.Mapped;
+import org.cactoos.io.InputOf;
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.AvgOf;
 import org.cactoos.text.JoinedText;
+import org.cactoos.text.TextOf;
+import org.takes.rq.RqFake;
+import org.takes.rs.xe.XeAppend;
 
 /**
  * Futures for {@link AsyncReports}.
@@ -89,6 +94,7 @@ final class Futures implements
     }
 
     @Override
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public Future<Front> apply(final String group,
         final String artifact) {
         final String target = String.format("%s:%s", group, artifact);
@@ -100,12 +106,29 @@ final class Futures implements
         return this.service.submit(
             new VerboseCallable<>(
                 () -> {
-                    final Front func =
-                        this.origin.apply(group, artifact);
-                    this.times.add(
-                        System.currentTimeMillis() - this.queue.remove(target)
-                    );
-                    return func;
+                    Front front;
+                    try {
+                        front = this.origin.apply(group, artifact);
+                        this.times.add(
+                            System.currentTimeMillis() - this.queue.remove(target)
+                        );
+                    // @checkstyle IllegalCatchCheck (4 lines)
+                    // @checkstyle AvoidCatchingGenericException (4 lines)
+                    } catch (final Exception ex) {
+                        front = input -> new RsPage(
+                            new RqFake(),
+                            "exception",
+                            () -> new IterableOf<>(
+                                new XeAppend("group", group),
+                                new XeAppend("artifact", artifact),
+                                new XeAppend(
+                                    "stacktrace",
+                                    new TextOf(new InputOf(ex)).asString()
+                                )
+                            )
+                        );
+                    }
+                    return front;
                 },
                 true, true
             )
