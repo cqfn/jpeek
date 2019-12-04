@@ -22,8 +22,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+set -e
+
 home=$(pwd)
-jar="${home}/../../../target/jpeek-jar-with-dependencies.jar"
+jar=~/.m2/repository/org/jpeek/jpeek/1.0-SNAPSHOT/jpeek-1.0-SNAPSHOT-jar-with-dependencies.jar
 if [ ! -e "${jar}" ]; then
   echo "${jar} doesn't exist, please run 'mvn clean install' first"
   exit -1
