@@ -35,7 +35,7 @@ SOFTWARE.
     <p>
       <xsl:text>You can test any artifact just by pointing your browser to </xsl:text>
       <code>
-        <xsl:text>http://i.jpeek.org/{group}/{artifact}/</xsl:text>
+        <xsl:text>https://i.jpeek.org/{group}/{artifact}/</xsl:text>
       </code>
       <xsl:text>, where </xsl:text>
       <code>
@@ -52,7 +52,7 @@ SOFTWARE.
       </code>
       <xsl:text> it is </xsl:text>
       <code>
-        <xsl:text>http://i.jpeek.org/org.takes/takes/</xsl:text>
+        <xsl:text>https://i.jpeek.org/org.takes/takes/</xsl:text>
       </code>
       <xsl:text>. Got the idea?</xsl:text>
       <xsl:text> Please, remember that every time we deploy a new</xsl:text>

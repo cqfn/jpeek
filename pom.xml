@@ -54,7 +54,7 @@ SOFTWARE.
       <name>Yegor Bugayenko</name>
       <email>yegor256@gmail.com</email>
       <organization>yegor256.com</organization>
-      <organizationUrl>http://www.yegor256.com</organizationUrl>
+      <organizationUrl>https://www.yegor256.com</organizationUrl>
       <roles>
         <role>Architect</role>
         <role>Developer</role>
@@ -73,7 +73,7 @@ SOFTWARE.
   </scm>
   <ciManagement>
     <system>rultor</system>
-    <url>http://www.rultor.com/s/jpeek</url>
+    <url>https://www.rultor.com/s/jpeek</url>
   </ciManagement>
   <distributionManagement>
     <site>

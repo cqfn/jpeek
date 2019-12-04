@@ -9,6 +9,6 @@ Many thanks for your contribution, we truly appreciate it. We will appreciate it
   - Description begins with the issue's number, then enumerates the changes - summarized - in bulletpoints
   - Description does not contain GitHub keywords (https://help.github.com/articles/closing-issues-using-keywords/).
 
-This article will help you understand what we are looking for: http://www.yegor256.com/2015/02/09/serious-code-reviewer.html
+This article will help you understand what we are looking for: https://www.yegor256.com/2015/02/09/serious-code-reviewer.html
 
 Thank you for your contribution!

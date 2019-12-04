@@ -48,7 +48,7 @@ public final class ReportsTest {
     @Before
     public void weAreOnline() {
         try {
-            new TextOf(new URL("http://www.jpeek.org/")).asString();
+            new TextOf(new URL("https://www.jpeek.org/")).asString();
         } catch (final IOException ex) {
             Assume.assumeTrue(false);
         }

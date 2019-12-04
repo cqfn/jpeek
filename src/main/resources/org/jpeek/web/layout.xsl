@@ -31,23 +31,23 @@ SOFTWARE.
         <meta name="description" content="jpeek"/>
         <meta name="keywords" content="code quality metrics"/>
         <meta name="author" content="jpeek.org"/>
-        <link rel="shortcut icon" href="http://www.jpeek.org/logo.png"/>
+        <link rel="shortcut icon" href="https://www.jpeek.org/logo.png"/>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/yegor256/tacit@gh-pages/tacit-css.min.css"/>
         <link rel="stylesheet" href="/jpeek.css"/>
-        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/sortable/0.8.0/js/sortable.min.js">&#xA0;</script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sortable/0.8.0/js/sortable.min.js">&#xA0;</script>
         <xsl:apply-templates select="." mode="head"/>
       </head>
       <body>
         <p>
-          <a href="http://i.jpeek.org">
-            <img alt="logo" src="http://www.jpeek.org/logo.svg" style="height:60px"/>
+          <a href="https://i.jpeek.org">
+            <img alt="logo" src="https://www.jpeek.org/logo.svg" style="height:60px"/>
           </a>
         </p>
         <xsl:apply-templates select="." mode="body"/>
         <footer style="color:gray;font-size:75%;">
           <p>
             <xsl:text>This is </xsl:text>
-            <a href="http://www.jpeek.org">
+            <a href="https://www.jpeek.org">
               <xsl:text>jpeek </xsl:text>
               <xsl:value-of select="@version"/>
             </a>

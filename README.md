@@ -1,19 +1,19 @@
-<img src="http://www.jpeek.org/logo.svg" height="92px"/>
+<img src="https://www.jpeek.org/logo.svg" height="92px"/>
 
 [![Donate via Zerocracy](https://www.0crat.com/contrib-badge/C7JGJ00DP.svg)](https://www.0crat.com/contrib/C7JGJ00DP)
 
 [![EO principles respected here](https://www.elegantobjects.org/badge.svg)](https://www.elegantobjects.org)
 [![Managed by Zerocracy](https://www.0crat.com/badge/C7JGJ00DP.svg)](https://www.0crat.com/p/C7JGJ00DP)
-[![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/jpeek)](http://www.rultor.com/p/yegor256/jpeek)
+[![DevOps By Rultor.com](https://www.rultor.com/b/yegor256/jpeek)](https://www.rultor.com/p/yegor256/jpeek)
 [![We recommend IntelliJ IDEA](https://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
 
 [![Build Status](https://travis-ci.org/yegor256/jpeek.svg?branch=master)](https://travis-ci.org/yegor256/jpeek)
 [![Javadoc](http://www.javadoc.io/badge/org.jpeek/jpeek.svg)](http://www.javadoc.io/doc/org.jpeek/jpeek)
-[![PDD status](http://www.0pdd.com/svg?name=yegor256/jpeek)](http://www.0pdd.com/p?name=yegor256/jpeek)
+[![PDD status](https://www.0pdd.com/svg?name=yegor256/jpeek)](https://www.0pdd.com/p?name=yegor256/jpeek)
 [![Maven Central](https://img.shields.io/maven-central/v/org.jpeek/jpeek.svg)](https://maven-badges.herokuapp.com/maven-central/org.jpeek/jpeek)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/yegor256/jpeek/blob/master/LICENSE.txt)
 
-[![jpeek report](http://i.jpeek.org/org.jpeek/jpeek/badge.svg)](http://i.jpeek.org/org.jpeek/jpeek/)
+[![jpeek report](https://i.jpeek.org/org.jpeek/jpeek/badge.svg)](https://i.jpeek.org/org.jpeek/jpeek/)
 [![Test Coverage](https://img.shields.io/codecov/c/github/yegor256/jpeek.svg)](https://codecov.io/github/yegor256/jpeek?branch=master)
 [![SonarQube](https://img.shields.io/badge/sonar-ok-green.svg)](https://sonarcloud.io/dashboard?id=org.jpeek%3Ajpeek)
 [![Hits-of-Code](https://hitsofcode.com/github/yegor256/jpeek)](https://hitsofcode.com/view/github/yegor256/jpeek)
@@ -32,7 +32,7 @@ have calculators available. The situation with other metrics is very similar.
 We want to create such a tool that will make it
 possible to analyze code quality more or less formally (with hundreds of metrics). Then, we will
 apply this analysis to different Java libraries with an intent to prove
-that the ideas from [Elegant Objects](http://www.yegor256.com/elegant-objects.html)
+that the ideas from [Elegant Objects](https://www.yegor256.com/elegant-objects.html)
 book series make sense.
 
 ## How to use?
@@ -253,7 +253,7 @@ if lost.
 
 ## Contributors
 
-  - [@yegor256](https://github.com/yegor256) as Yegor Bugayenko ([Blog](http://www.yegor256.com))
+  - [@yegor256](https://github.com/yegor256) as Yegor Bugayenko ([Blog](https://www.yegor256.com))
   - [@alayor](https://github.com/alayor) as Alonso A. Ortega ([Blog](http://www.alayor.com))
   - [@memoyil](https://github.com/memoyil) as Mehmet Yildirim
   - [@sergey-karazhenets](https://github.com/sergey-karazhenets) as Sergey Karazhenets

@@ -7,6 +7,6 @@ Make sure the title of the issue explains the problem you are having. Also, the 
   - You explain the results you are getting
   - You suggest an alternative result you would like to see
 
-This article will help you understand what we are looking for: http://www.yegor256.com/2014/11/24/principles-of-bug-tracking.html
+This article will help you understand what we are looking for: https://www.yegor256.com/2014/11/24/principles-of-bug-tracking.html
 
 Thank you for your contribution!

@@ -137,7 +137,7 @@ SOFTWARE.
         <xsl:text>%</xsl:text>
       </td>
       <td>
-        <span class="ping" data-uri="http://i.jpeek.org/{group}/{artifact}/index.html">
+        <span class="ping" data-uri="https://i.jpeek.org/{group}/{artifact}/index.html">
           <xsl:value-of select="version"/>
         </span>
       </td>
