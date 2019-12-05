@@ -37,7 +37,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.time.Instant;
 import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 import org.cactoos.iterable.Mapped;
@@ -196,7 +195,7 @@ final class Results {
                         )
                         .atZone(ZoneOffset.UTC)
                         .toLocalDateTime()
-                        .format(DateTimeFormatter.ISO_INSTANT)
+                        .toString()
                     )
                     .up()
                     .add("group").set(parts[0]).up()
