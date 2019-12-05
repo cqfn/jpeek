@@ -23,6 +23,7 @@
  */
 package org.jpeek.web;
 
+import org.cactoos.iterable.IterableOf;
 import org.jpeek.Header;
 import org.takes.Request;
 import org.takes.Response;
@@ -53,6 +54,15 @@ import org.takes.rs.xe.XeStylesheet;
  * @checkstyle JavadocTagsCheck (500 lines)
  */
 final class RsPage extends RsWrap {
+
+    /**
+     * Ctor.
+     * @param req Request
+     * @param xsl XSL stylesheet
+     */
+    RsPage(final Request req, final String xsl) {
+        super(RsPage.make(req, xsl, IterableOf::new));
+    }
 
     /**
      * Ctor.

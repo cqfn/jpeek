@@ -30,21 +30,21 @@ import org.takes.rq.RqFake;
 import org.takes.rs.RsPrint;
 
 /**
- * Test case for {@link TkIndex}.
+ * Test case for {@link TkAll}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.11
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocTagsCheck (500 lines)
  */
-public final class TkIndexTest {
+public final class TkAllTest {
 
     @Test
-    public void rendersIndexPage() {
+    public void rendersAllPage() {
         new Assertion<>(
             "Must print body",
             () -> XhtmlMatchers.xhtml(
-                new RsPrint(new TkIndex().act(new RqFake())).printBody()
+                new RsPrint(new TkAll().act(new RqFake())).printBody()
             ),
             XhtmlMatchers.hasXPath("//xhtml:body")
         ).affirm();

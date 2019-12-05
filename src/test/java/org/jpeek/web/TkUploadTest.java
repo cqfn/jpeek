@@ -23,30 +23,45 @@
  */
 package org.jpeek.web;
 
-import com.jcabi.matchers.XhtmlMatchers;
+import org.cactoos.BiFunc;
+import org.cactoos.Func;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.takes.Response;
 import org.takes.rq.RqFake;
+import org.takes.rq.RqWithHeader;
+import org.takes.rq.multipart.RqMtFake;
 import org.takes.rs.RsPrint;
 
 /**
- * Test case for {@link TkIndex}.
+ * Test case for {@link TkUpload}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.11
+ * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocTagsCheck (500 lines)
  */
-public final class TkIndexTest {
+public final class TkUploadTest {
 
     @Test
     public void rendersIndexPage() {
+        final BiFunc<String, String, Func<String, Response>> reports =
+            (artifact, group) -> null;
         new Assertion<>(
-            "Must print body",
-            () -> XhtmlMatchers.xhtml(
-                new RsPrint(new TkIndex().act(new RqFake())).printBody()
-            ),
-            XhtmlMatchers.hasXPath("//xhtml:body")
+            "Must upload body",
+            () -> new RsPrint(
+                new TkUpload(reports).act(
+                    new RqMtFake(
+                        new RqFake(),
+                        new RqWithHeader(
+                            new RqFake("POST", "/", "org.jpeek:jpeek"),
+                            "Content-Disposition: form-data; name=\"coordinates\""
+                        )
+                    )
+                )
+            ).printBody(),
+            Matchers.startsWith("Uploaded ")
         ).affirm();
     }
 

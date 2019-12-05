@@ -35,6 +35,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import org.cactoos.BiFunc;
+import org.cactoos.Func;
 import org.cactoos.Text;
 import org.cactoos.collection.Mapped;
 import org.cactoos.io.InputOf;
@@ -42,6 +43,7 @@ import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.AvgOf;
 import org.cactoos.text.JoinedText;
 import org.cactoos.text.TextOf;
+import org.takes.Response;
 import org.takes.rq.RqFake;
 import org.takes.rs.xe.XeAppend;
 
@@ -57,12 +59,12 @@ import org.takes.rs.xe.XeAppend;
  * @checkstyle JavadocTagsCheck (500 lines)
  */
 final class Futures implements
-    BiFunc<String, String, Future<Front>>, Text {
+    BiFunc<String, String, Future<Func<String, Response>>>, Text {
 
     /**
      * Original func.
      */
-    private final BiFunc<String, String, Front> origin;
+    private final BiFunc<String, String, Func<String, Response>> origin;
 
     /**
      * Service.
@@ -83,7 +85,7 @@ final class Futures implements
      * Ctor.
      * @param func Original bi-function
      */
-    Futures(final BiFunc<String, String, Front> func) {
+    Futures(final BiFunc<String, String, Func<String, Response>> func) {
         this.origin = func;
         this.service = Executors.newFixedThreadPool(
             Runtime.getRuntime().availableProcessors(),
@@ -95,7 +97,7 @@ final class Futures implements
 
     @Override
     @SuppressWarnings("PMD.AvoidCatchingGenericException")
-    public Future<Front> apply(final String group,
+    public Future<Func<String, Response>> apply(final String group,
         final String artifact) {
         final String target = String.format("%s:%s", group, artifact);
         this.queue.put(target, System.currentTimeMillis());
@@ -106,7 +108,7 @@ final class Futures implements
         return this.service.submit(
             new VerboseCallable<>(
                 () -> {
-                    Front front;
+                    Func<String, Response> front;
                     try {
                         front = this.origin.apply(group, artifact);
                         this.times.add(

@@ -43,11 +43,11 @@ public final class TkMistakesTest {
     @Test
     public void rendersMistakesPage() {
         new Assertion<>(
-            "Must print footer on mistakes page",
+            "Must print body on mistakes page",
             () -> XhtmlMatchers.xhtml(
                 new RsPrint(new TkMistakes().act(new RqFake())).printBody()
             ),
-            XhtmlMatchers.hasXPath("//xhtml:footer")
+            XhtmlMatchers.hasXPath("//xhtml:body")
         ).affirm();
     }
 

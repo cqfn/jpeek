@@ -30,11 +30,13 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.BiFunc;
+import org.cactoos.Func;
 import org.cactoos.io.LengthOf;
 import org.cactoos.io.TeeInput;
 import org.cactoos.scalar.IoCheckedScalar;
 import org.cactoos.text.TextOf;
 import org.jpeek.App;
+import org.takes.Response;
 
 /**
  * All reports.
@@ -47,7 +49,7 @@ import org.jpeek.App;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @checkstyle JavadocTagsCheck (500 lines)
  */
-final class Reports implements BiFunc<String, String, Front> {
+final class Reports implements BiFunc<String, String, Func<String, Response>> {
 
     /**
      * Directory with sources.
@@ -80,7 +82,7 @@ final class Reports implements BiFunc<String, String, Front> {
     // @checkstyle ExecutableStatementCountCheck (100 lines)
     @SuppressWarnings("PMD.CyclomaticComplexity")
     @Override
-    public Front apply(final String group,
+    public Func<String, Response> apply(final String group,
         final String artifact) throws IOException {
         final String grp = group.replace(".", "/");
         final Path input = this.sources.resolve(grp).resolve(artifact);

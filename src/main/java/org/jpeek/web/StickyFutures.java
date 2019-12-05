@@ -27,6 +27,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
 import org.cactoos.BiFunc;
+import org.cactoos.Func;
+import org.takes.Response;
 
 /**
  * Futures for {@link AsyncReports}.
@@ -39,17 +41,18 @@ import org.cactoos.BiFunc;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @checkstyle JavadocTagsCheck (500 lines)
  */
-final class StickyFutures implements BiFunc<String, String, Future<Front>> {
+final class StickyFutures
+    implements BiFunc<String, String, Future<Func<String, Response>>> {
 
     /**
      * Original func.
      */
-    private final BiFunc<String, String, Future<Front>> origin;
+    private final BiFunc<String, String, Future<Func<String, Response>>> origin;
 
     /**
      * Cache.
      */
-    private final Map<String, Future<Front>> cache;
+    private final Map<String, Future<Func<String, Response>>> cache;
 
     /**
      * Max size.
@@ -61,15 +64,16 @@ final class StickyFutures implements BiFunc<String, String, Future<Front>> {
      * @param func Original bi-function
      * @param size Max size of cache before full clean up
      */
-    StickyFutures(final BiFunc<String, String, Future<Front>> func,
-        final int size) {
+    StickyFutures(final BiFunc<String, String,
+        Future<Func<String, Response>>> func, final int size) {
         this.origin = func;
         this.cache = new ConcurrentHashMap<>(0);
         this.max = size;
     }
 
     @Override
-    public Future<Front> apply(final String group, final String artifact)
+    public Future<Func<String, Response>> apply(
+        final String group, final String artifact)
         throws Exception {
         synchronized (this.cache) {
             if (this.cache.size() > this.max) {

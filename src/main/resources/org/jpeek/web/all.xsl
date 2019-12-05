@@ -31,12 +31,12 @@ SOFTWARE.
       <xsl:text>All </xsl:text>
       <xsl:value-of select="count(recent/repo)"/>
     </title>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js">
+    <script src="//code.jquery.com/jquery-3.2.1.min.js">
       <!-- nothing -->
     </script>
     <script type="text/javascript">
       <xsl:text>
-        function ping() {
+        function ping_them_all() {
           $('.ping').each(function() {
             var $span = $(this);
             $.get(
@@ -58,7 +58,7 @@ SOFTWARE.
       <xsl:text>There are </xsl:text>
       <xsl:value-of select="count(repo)"/>
       <xsl:text> artifacts in our database (</xsl:text>
-      <a href="#" onclick="ping(); return false;">
+      <a href="#" onclick="ping_them_all(); return false;">
         <xsl:text>ping them all</xsl:text>
       </a>
       <xsl:text>):</xsl:text>

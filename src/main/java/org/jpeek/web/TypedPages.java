@@ -24,6 +24,7 @@
 package org.jpeek.web;
 
 import java.io.IOException;
+import org.cactoos.Func;
 import org.cactoos.func.IoCheckedFunc;
 import org.takes.Response;
 import org.takes.rs.RsWithType;
@@ -39,18 +40,18 @@ import org.takes.rs.RsWithType;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @checkstyle JavadocTagsCheck (500 lines)
  */
-final class TypedPages implements Front {
+final class TypedPages implements Func<String, Response> {
 
     /**
      * Origin.
      */
-    private final Front origin;
+    private final Func<String, Response> origin;
 
     /**
      * Ctor.
      * @param func The func
      */
-    TypedPages(final Front func) {
+    TypedPages(final Func<String, Response> func) {
         this.origin = func;
     }
 

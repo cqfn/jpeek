@@ -25,6 +25,7 @@ package org.jpeek.web;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import org.cactoos.Func;
 import org.cactoos.text.TextOf;
 import org.takes.Response;
 import org.takes.rs.RsWithBody;
@@ -40,7 +41,7 @@ import org.takes.rs.RsWithBody;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @checkstyle JavadocTagsCheck (500 lines)
  */
-final class Pages implements Front {
+final class Pages implements Func<String, Response> {
 
     /**
      * Directory with files.

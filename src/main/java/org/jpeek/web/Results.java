@@ -35,6 +35,9 @@ import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.time.Instant;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 import org.cactoos.iterable.Mapped;
@@ -186,6 +189,16 @@ final class Results {
                 return new Directives()
                     .add("repo")
                     .add("version").set(item.get("version").getS()).up()
+                    .add("added")
+                    .set(
+                        Instant.ofEpochMilli(
+                            Long.parseLong(item.get("added").getN())
+                        )
+                        .atZone(ZoneOffset.UTC)
+                        .toLocalDateTime()
+                        .format(DateTimeFormatter.ISO_INSTANT)
+                    )
+                    .up()
                     .add("group").set(parts[0]).up()
                     .add("artifact").set(parts[1]).up()
                     .add("rank")
@@ -220,7 +233,7 @@ final class Results {
                         .withLimit(1000)
                         .withAttributeToGet(
                             "artifact", "classes", "defects", "version",
-                            "rank", "score", "elements"
+                            "rank", "score", "elements", "added"
                         )
                 )
         );

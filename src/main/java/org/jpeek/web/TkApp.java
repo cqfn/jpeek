@@ -29,9 +29,11 @@ import java.net.HttpURLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.BiFunc;
+import org.cactoos.Func;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.scalar.PropertiesOf;
 import org.cactoos.text.TextOf;
+import org.takes.Response;
 import org.takes.Take;
 import org.takes.facets.fallback.Fallback;
 import org.takes.facets.fallback.FbChain;
@@ -103,6 +105,15 @@ public final class TkApp extends TkWrap {
         final Futures futures = new Futures(
             new BiFunc.NoNulls<>(new Reports(home))
         );
+        final BiFunc<String, String, Func<String, Response>> reports =
+            new BiFunc.NoNulls<>(
+                new AsyncReports(
+                    new BiFunc.NoNulls<>(
+                        // @checkstyle MagicNumber (1 line)
+                        new StickyFutures(futures, 100)
+                    )
+                )
+            );
         return new TkFallback(
             new TkForward(
                 new TkFork(
@@ -115,6 +126,11 @@ public final class TkApp extends TkWrap {
                             String.format("%d flushed", new Results().flush())
                         )
                     ),
+                    new FkRegex(
+                        "/upload",
+                        (Take) req -> new RsPage(req, "upload")
+                    ),
+                    new FkRegex("/do-upload", new TkUpload(reports)),
                     new FkRegex("/all", new TkAll()),
                     new FkRegex("/queue", new TkQueue(futures)),
                     new FkRegex(
@@ -137,16 +153,7 @@ public final class TkApp extends TkWrap {
                     ),
                     new FkRegex(
                         "/([^/]+)/([^/]+)(.*)",
-                        new TkReport(
-                            new BiFunc.NoNulls<>(
-                                new AsyncReports(
-                                    new BiFunc.NoNulls<>(
-                                        // @checkstyle MagicNumber (1 line)
-                                        new StickyFutures(futures, 100)
-                                    )
-                                )
-                            )
-                        )
+                        new TkReport(reports)
                     )
                 )
             ),
