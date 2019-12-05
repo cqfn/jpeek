@@ -68,7 +68,7 @@ final class TkUpload implements Take {
         ).printBody().trim().split("\n");
         int submitted = 0;
         for (final String item : items) {
-            final String[] parts = item.split(":", 2);
+            final String[] parts = item.trim().split(":", 2);
             this.reports.apply(parts[0], parts[1]);
             submitted += 1;
         }
