@@ -1,3 +1,4 @@
+ch.sahits.game/OpenPatricianDisplay,387
 com.sun.xml.ws/rt,1387
 org.dynamoframework/dynamo-spring,280
 me.reactiv.fabric-java-sdk/fabric-java-sdk,654
@@ -31,7 +32,6 @@ com.hazelcast.simulator/tests-common,301
 org.codehaus.janino/janino,438
 org.asynchttpclient/async-http-client,267
 com.ximpleware/vtd-xml,267
-ch.sahits.game/OpenPatricianDisplay,387
 org.teiid/teiid-engine,960
 pt.uminho.ceb.biosystems.mew/mew-core,407
 org.primefaces/primefaces,1142
