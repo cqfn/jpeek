@@ -23,16 +23,26 @@
  */
 package org.jpeek.web;
 
+import com.jcabi.xml.ClasspathSources;
+import com.jcabi.xml.XMLDocument;
+import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.util.regex.Matcher;
 import org.cactoos.BiFunc;
 import org.cactoos.Func;
 import org.cactoos.func.IoCheckedBiFunc;
 import org.cactoos.func.IoCheckedFunc;
+import org.jpeek.App;
 import org.takes.Response;
 import org.takes.facets.fork.RqRegex;
 import org.takes.facets.fork.TkRegex;
 import org.takes.facets.forward.RsForward;
+import org.takes.facets.hamcrest.HmRsStatus;
+import org.takes.rs.RsText;
+import org.takes.rs.RsWithType;
+import org.xembly.Directives;
+import org.xembly.Xembler;
 
 /**
  * Report page.
@@ -53,16 +63,24 @@ final class TkReport implements TkRegex {
     private final BiFunc<String, String, Func<String, Response>> reports;
 
     /**
+     * Results.
+     */
+    private final Results results;
+
+    /**
      * Ctor.
      * @param rpts Reports
      */
-    TkReport(final BiFunc<String, String, Func<String, Response>> rpts) {
+    TkReport(final BiFunc<String, String, Func<String, Response>> rpts,
+        final Results rslts) {
         this.reports = rpts;
+        this.results = rslts;
     }
 
     @Override
     public Response act(final RqRegex req) throws IOException {
         final Matcher matcher = req.matcher();
+        System.out.println(matcher);
         // @checkstyle MagicNumber (1 line)
         final String path = matcher.group(3);
         if (path.isEmpty()) {
@@ -70,11 +88,35 @@ final class TkReport implements TkRegex {
                 String.format("%s/index.html", matcher.group(0))
             );
         }
-        return new IoCheckedFunc<>(
+        Response response = new IoCheckedFunc<>(
             new IoCheckedBiFunc<>(this.reports).apply(
                 matcher.group(1), matcher.group(2)
             )
         ).apply(path.substring(1));
+        if (new HmRsStatus(HttpURLConnection.HTTP_NOT_FOUND).matches(response)
+            && "badge.svg".equals(matcher.group(3))) {
+            final String artifact = String.format(
+                "%s:%s", matcher.group(1), matcher.group(2)
+            );
+            final Directives dirs = new Directives().add("badge")
+                .attr("style", "round");
+            if (this.results.exists(artifact)) {
+                dirs.set(this.results.score(artifact));
+            } else {
+                dirs.set(0).attr("unknown", "true");
+            }
+            response = new RsWithType(
+                new RsText(
+                    new XSLDocument(
+                        App.class.getResourceAsStream("xsl/badge.xsl")
+                    ).with(new ClasspathSources()).transform(
+                        new XMLDocument(new Xembler(dirs).xmlQuietly())
+                    ).toString()
+                ),
+                "image/svg+xml"
+            );
+        }
+        return response;
     }
 
 }

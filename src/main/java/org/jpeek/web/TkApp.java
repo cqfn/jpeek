@@ -151,7 +151,7 @@ public final class TkApp extends TkWrap {
                         ),
                         new FkRegex(
                             "/([^/]+)/([^/]+)(.*)",
-                            new TkReport(reports)
+                            new TkReport(reports, new Results())
                         )
                     )
                 ),

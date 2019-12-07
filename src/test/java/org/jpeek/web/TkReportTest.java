@@ -23,41 +23,56 @@
  */
 package org.jpeek.web;
 
+import com.jcabi.matchers.XhtmlMatchers;
 import java.io.IOException;
-import org.hamcrest.Matchers;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.takes.facets.fork.RqRegex;
 import org.takes.rq.RqFake;
-import org.takes.rq.RqWithHeader;
-import org.takes.rq.multipart.RqMtFake;
 import org.takes.rs.RsPrint;
 
 /**
- * Test case for {@link TkUpload}.
+ * Test case for {@link TkReport}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.32
+ * @since 0.23
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocTagsCheck (500 lines)
  */
-public final class TkUploadTest {
+public final class TkReportTest {
+
+    /**
+     * Temp folder for all tests.
+     */
+    @Rule
+    @SuppressWarnings("PMD.BeanMembersShouldSerialize")
+    public TemporaryFolder folder = new TemporaryFolder();
 
     @Test
-    public void rendersIndexPage() throws IOException {
+    public void rendersEmptySvgBadge() throws IOException {
         new Assertion<>(
-            "Must upload body",
-            new RsPrint(
-                new TkUpload((artifact, group) -> null).act(
-                    new RqMtFake(
-                        new RqFake(),
-                        new RqWithHeader(
-                            new RqFake("POST", "/", "org.jpeek:jpeek"),
-                            "Content-Disposition: form-data; name=\"coordinates\""
+            "Must render the badge",
+            XhtmlMatchers.xhtml(
+                new RsPrint(
+                    new TkReport(
+                        new AsyncReports(
+                            new Futures(
+                                new Reports(this.folder.newFolder().toPath())
+                            )
+                        ),
+                        new Results()
+                    ).act(
+                        new RqRegex.Fake(
+                            new RqFake(),
+                            "/([^/]+)/([^/]+)/([^/]+)",
+                            "/org.jpeek/jpeek/badge.svg"
                         )
                     )
-                )
-            ).printBody(),
-            Matchers.startsWith("Uploaded ")
+                ).printBody()
+            ),
+            XhtmlMatchers.hasXPath("//svg:svg")
         ).affirm();
     }
 

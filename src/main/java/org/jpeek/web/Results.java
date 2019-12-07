@@ -161,6 +161,32 @@ final class Results {
     }
 
     /**
+     * Has this artifact?
+     * @param artifact The artifact, e.g. "org.jpeek:jpeek"
+     * @return TRUE if it exists
+     */
+    public boolean exists(final String artifact) {
+        return !this.table.frame()
+            .where("good", "true")
+            .where("artifact", artifact)
+            .isEmpty();
+    }
+
+    /**
+     * Get score of this.
+     * @param artifact The artifact, e.g. "org.jpeek:jpeek"
+     * @return The score
+     */
+    public double score(final String artifact) throws IOException {
+        final Item item = this.table.frame()
+            .where("good", "true")
+            .where("artifact", artifact)
+            .iterator()
+            .next();
+        return new DyNum(item, "score").doubleValue();
+    }
+
+    /**
      * Recent artifacts..
      * @return List of them
      */

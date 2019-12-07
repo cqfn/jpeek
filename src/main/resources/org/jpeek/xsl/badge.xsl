@@ -46,6 +46,9 @@ SOFTWARE.
         <path d="M27 0h77v20H27z">
           <xsl:attribute name="fill">
             <xsl:choose>
+              <xsl:when test="@unknown">
+                <xsl:text>#ccc</xsl:text>
+              </xsl:when>
               <xsl:when test=". &gt; 8">
                 <xsl:text>#44cc11</xsl:text>
               </xsl:when>
