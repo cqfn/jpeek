@@ -182,6 +182,16 @@ public final class Skeleton {
             pkg,
             new Directives()
                 .add("class")
+                .comment(
+                    Xembler.escape(
+                        String.format(
+                            "Package: %s; name: %s; file: %s",
+                            ctc.getPackageName(),
+                            ctc.getName(),
+                            ctc.getClassFile().getName()
+                        )
+                    )
+                )
                 .attr("id", ctc.getSimpleName())
                 .append(new XmlClass(ctc))
                 .up()

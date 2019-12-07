@@ -1,3 +1,4 @@
+com.sun.xml.ws/rt,1387
 org.dynamoframework/dynamo-spring,280
 me.reactiv.fabric-java-sdk/fabric-java-sdk,654
 org.jodd/jodd-all,1260
@@ -20,7 +21,6 @@ com.torodb.engine/core,399
 kg.apc/jmeter-plugins-manager,469
 org.hawkular.apm/hawkular-apm-agent-opentracing,1289
 org.eobjects.datacleaner/DataCleaner-engine-core,459
-com.sun.xml.ws/rt,1387
 com.facebook.presto.orc/orc-protobuf,764
 com.sinacloud.java/java-sdk,224
 ch.epfl.gsn/gsn-services,732
