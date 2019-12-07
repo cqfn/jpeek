@@ -76,7 +76,7 @@ final class AsyncReports implements
     public Func<String, Response> apply(final String group,
         final String artifact) throws IOException {
         final Future<Func<String, Response>> future = new IoCheckedBiFunc<>(
-            new BiFunc.NoNulls<>(this.cache)
+            this.cache
         ).apply(group, artifact);
         final Func<String, Response> output;
         if (future.isCancelled()) {

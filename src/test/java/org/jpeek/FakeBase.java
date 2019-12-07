@@ -27,13 +27,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.collection.Joined;
-import org.cactoos.io.LengthOf;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.io.TeeInput;
 import org.cactoos.iterable.Mapped;
 import org.cactoos.list.ListOf;
 import org.cactoos.scalar.And;
-import org.cactoos.scalar.IoCheckedScalar;
+import org.cactoos.scalar.IoChecked;
+import org.cactoos.scalar.LengthOf;
 
 /**
  * Fake base for tests.
@@ -75,7 +75,7 @@ public final class FakeBase implements Base {
             cls -> String.format("%s.java", cls),
             this.classes
         );
-        new IoCheckedScalar<>(
+        new IoChecked<>(
             new And(
                 java -> {
                     new LengthOf(

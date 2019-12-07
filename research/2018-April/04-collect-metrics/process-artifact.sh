@@ -42,7 +42,7 @@ trap "rm -rf ${dir}" EXIT
 curl --fail --silent "http://repo1.maven.org/maven2/${path}/${version}/${artifact}-${version}.jar" > "${dir}/${artifact}.jar"
 cd "${dir}"
 mkdir "${artifact}"
-unzip -o -q -d "${artifact}" "${artifact}.jar"
+unzip -o -d "${artifact}" "${artifact}.jar"
 java -jar "${jar}" --sources "${artifact}" --target ./target --quiet
 ruby "${home}/collect.rb" target >> "${output}"
 cd

@@ -31,9 +31,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.BiFunc;
 import org.cactoos.Func;
-import org.cactoos.io.LengthOf;
 import org.cactoos.io.TeeInput;
-import org.cactoos.scalar.IoCheckedScalar;
+import org.cactoos.scalar.IoChecked;
+import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.TextOf;
 import org.jpeek.App;
 import org.takes.Response;
@@ -106,7 +106,7 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
             ).asString()
         ).xpath("/metadata/versioning/latest/text()").get(0);
         final String name = String.format("%s-%s.jar", artifact, version);
-        new IoCheckedScalar<>(
+        new IoChecked<>(
             new LengthOf(
                 new TeeInput(
                     new URL(

@@ -29,8 +29,8 @@ import java.util.Collection;
 import java.util.List;
 import javax.xml.namespace.NamespaceContext;
 import org.cactoos.collection.Mapped;
-import org.cactoos.scalar.SolidScalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.Solid;
+import org.cactoos.scalar.Unchecked;
 import org.w3c.dom.Node;
 import org.xembly.Directives;
 import org.xembly.Xembler;
@@ -51,15 +51,15 @@ final class ReportWithStatistics implements XML {
     /**
      * The XML with statistics.
      */
-    private final UncheckedScalar<XML> output;
+    private final Unchecked<XML> output;
 
     /**
      * Ctor.
      * @param xml The XML
      */
     ReportWithStatistics(final XML xml) {
-        this.output = new UncheckedScalar<>(
-            new SolidScalar<XML>(
+        this.output = new Unchecked<>(
+            new Solid<XML>(
                 () -> {
                     final Collection<Double> values = new Mapped<>(
                         Double::parseDouble,

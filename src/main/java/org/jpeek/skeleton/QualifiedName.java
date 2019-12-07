@@ -23,7 +23,7 @@
  */
 package org.jpeek.skeleton;
 
-import org.cactoos.text.JoinedText;
+import org.cactoos.text.Joined;
 import org.cactoos.text.TextEnvelope;
 import org.cactoos.text.UncheckedText;
 
@@ -45,7 +45,7 @@ public final class QualifiedName extends TextEnvelope {
     public QualifiedName(final String owner, final String attr) {
         super(
             new UncheckedText(
-                new JoinedText(
+                new Joined(
                     ".",
                     owner.replace('/', '.'),
                     attr

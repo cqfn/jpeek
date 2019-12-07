@@ -38,7 +38,7 @@ import org.cactoos.collection.Joined;
 import org.cactoos.collection.Mapped;
 import org.cactoos.map.MapEntry;
 import org.cactoos.scalar.AndInThreads;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.Unchecked;
 import org.jpeek.App;
 import org.jpeek.Base;
 import org.jpeek.Header;
@@ -147,7 +147,7 @@ public final class Skeleton {
         final long start = System.currentTimeMillis();
         final Collection<Map.Entry<String, Directives>> all =
             new CopyOnWriteArrayList<>();
-        new UncheckedScalar<>(
+        new Unchecked<>(
             new AndInThreads(
                 new Mapped<>(
                     clz -> () -> all.add(Skeleton.xembly(clz)),

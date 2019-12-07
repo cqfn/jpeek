@@ -41,7 +41,7 @@ import org.cactoos.collection.Mapped;
 import org.cactoos.io.InputOf;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.AvgOf;
-import org.cactoos.text.JoinedText;
+import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
 import org.takes.Response;
 import org.takes.rq.RqFake;
@@ -165,8 +165,8 @@ final class Futures implements
             new AvgOf(
                 this.times.toArray(new Long[this.times.size()])
             ).longValue() * (long) this.queue.size(),
-            new JoinedText(", ", this.queue.keySet()).asString(),
-            new JoinedText(
+            new Joined(", ", this.queue.keySet()).asString(),
+            new Joined(
                 ", ",
                 new Mapped<>(
                     Thread::getName,

@@ -103,16 +103,12 @@ public final class TkApp extends TkWrap {
      */
     private static Take make(final Path home) throws IOException {
         final Futures futures = new Futures(
-            new BiFunc.NoNulls<>(new Reports(home))
+            new Reports(home)
         );
         final BiFunc<String, String, Func<String, Response>> reports =
-            new BiFunc.NoNulls<>(
-                new AsyncReports(
-                    new BiFunc.NoNulls<>(
-                        // @checkstyle MagicNumber (1 line)
-                        new StickyFutures(futures, 100)
-                    )
-                )
+            new AsyncReports(
+                // @checkstyle MagicNumber (1 line)
+                new StickyFutures(futures, 100)
             );
         return new TkFallback(
             new TkForward(

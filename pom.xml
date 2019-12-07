@@ -38,7 +38,7 @@ SOFTWARE.
   <url>https://github.com/yegor256/jpeek</url>
   <inceptionYear>2017</inceptionYear>
   <organization>
-    <name>Cactoos</name>
+    <name>jPeek</name>
     <url>https://github.com/yegor256/jpeek</url>
   </organization>
   <licenses>
@@ -85,7 +85,7 @@ SOFTWARE.
     <dependency>
       <groupId>org.cactoos</groupId>
       <artifactId>cactoos</artifactId>
-      <version>0.38</version>
+      <version>0.43</version>
     </dependency>
     <dependency>
       <groupId>org.takes</groupId>
@@ -188,6 +188,22 @@ SOFTWARE.
       <artifactId>cactoos-matchers</artifactId>
       <version>0.13</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.findbugs</groupId>
+      <artifactId>annotations</artifactId>
+      <version>3.0.1</version>
+      <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>net.jcip</groupId>
+          <artifactId>jcip-annotations</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>com.google.code.findbugs</groupId>
+          <artifactId>jsr305</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
   </dependencies>
   <build>

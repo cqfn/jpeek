@@ -38,7 +38,6 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Map;
 import org.cactoos.collection.CollectionOf;
-import org.cactoos.io.LengthOf;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.io.TeeInput;
 import org.cactoos.list.ListOf;
@@ -46,7 +45,8 @@ import org.cactoos.map.MapEntry;
 import org.cactoos.map.MapOf;
 import org.cactoos.scalar.And;
 import org.cactoos.scalar.AndInThreads;
-import org.cactoos.scalar.IoCheckedScalar;
+import org.cactoos.scalar.IoChecked;
+import org.cactoos.scalar.LengthOf;
 import org.jpeek.skeleton.Skeleton;
 import org.xembly.Directives;
 import org.xembly.Xembler;
@@ -287,7 +287,7 @@ public final class App {
                 )
             );
         }
-        new IoCheckedScalar<>(
+        new IoChecked<>(
             new AndInThreads(
                 report -> {
                     report.save(this.output);
@@ -344,13 +344,13 @@ public final class App {
             "matrix.html"
         );
         this.copy("jpeek.css");
-        new IoCheckedScalar<>(
+        new IoChecked<>(
             new And(
                 this::copyXsl,
                 new ListOf<>("index", "matrix", "metric", "skeleton")
             )
         ).value();
-        new IoCheckedScalar<>(
+        new IoChecked<>(
             new And(
                 this::copyXsd,
                 new ListOf<>("index", "matrix", "metric", "skeleton")
@@ -364,7 +364,7 @@ public final class App {
      * @throws IOException If fails
      */
     private void copy(final String name) throws IOException {
-        new IoCheckedScalar<>(
+        new IoChecked<>(
             new LengthOf(
                 new TeeInput(
                     new ResourceOf(String.format("org/jpeek/%s", name)),
@@ -399,7 +399,7 @@ public final class App {
      * @throws IOException If fails
      */
     private void save(final String data, final String name) throws IOException {
-        new IoCheckedScalar<>(
+        new IoChecked<>(
             new LengthOf(
                 new TeeInput(
                     data,

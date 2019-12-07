@@ -34,6 +34,7 @@ import javassist.CtClass;
 import org.cactoos.collection.CollectionOf;
 import org.cactoos.collection.Filtered;
 import org.cactoos.collection.Mapped;
+import org.cactoos.set.SetOf;
 import org.jpeek.Base;
 
 /**
@@ -94,10 +95,12 @@ final class Classes implements Iterable<CtClass> {
                             return this.pool.makeClassIfNew(stream);
                         }
                     },
-                    new Filtered<>(
-                        path -> Files.isRegularFile(path)
-                            && path.toString().endsWith(".class"),
-                        new CollectionOf<>(this.base.files())
+                    new SetOf<>(
+                        new Filtered<>(
+                            path -> Files.isRegularFile(path)
+                                && path.toString().endsWith(".class"),
+                            new CollectionOf<>(this.base.files())
+                        )
                     )
                 )
             );

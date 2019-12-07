@@ -34,7 +34,7 @@ import org.cactoos.collection.Joined;
 import org.cactoos.io.Directory;
 import org.cactoos.iterable.Mapped;
 import org.cactoos.scalar.And;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.Unchecked;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -67,7 +67,7 @@ final class Matrix implements Iterable<Directive> {
     @Override
     public Iterator<Directive> iterator() {
         final SortedMap<String, Map<String, String>> matrix = new TreeMap<>();
-        new UncheckedScalar<>(
+        new Unchecked<>(
             new And(
                 path -> {
                     new And(
