@@ -337,7 +337,7 @@ public final class App {
             ),
             new XSDDocument(App.class.getResourceAsStream("xsd/matrix.xsd"))
         );
-        Logger.info(this, "Matrix generated");
+        Logger.info(this, "Matrix generated with %d metrics", reports.size());
         this.save(matrix.toString(), "matrix.xml");
         this.save(
             App.xsl("matrix.xsl").transform(matrix).toString(),

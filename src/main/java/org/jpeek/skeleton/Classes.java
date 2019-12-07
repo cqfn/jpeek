@@ -27,7 +27,6 @@ import com.jcabi.log.Logger;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Iterator;
 import javassist.ClassPool;
@@ -95,7 +94,7 @@ final class Classes implements Iterable<CtClass> {
                             return this.pool.makeClassIfNew(stream);
                         }
                     },
-                    new Filtered<Path>(
+                    new Filtered<>(
                         path -> Files.isRegularFile(path)
                             && path.toString().endsWith(".class"),
                         new CollectionOf<>(this.base.files())

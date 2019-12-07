@@ -185,4 +185,20 @@ public final class SkeletonTest {
             )
         ).affirm();
     }
+
+    @Test
+    public void acceptsSimilarClassNamesInDifferentPackages() {
+        new Assertion<>(
+            "Must not conflict when class names are identical",
+            () -> XhtmlMatchers.xhtml(
+                new Skeleton(
+                    new FakeBase("foo/Foo", "bar/Foo")
+                ).xml().toString()
+            ),
+            XhtmlMatchers.hasXPaths(
+                "/skeleton[count(//class) = 2]",
+                "//class[@id='Foo']"
+            )
+        ).affirm();
+    }
 }

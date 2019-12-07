@@ -42,7 +42,6 @@ import org.cactoos.scalar.UncheckedScalar;
 import org.jpeek.App;
 import org.jpeek.Base;
 import org.jpeek.Header;
-import org.xembly.Directive;
 import org.xembly.Directives;
 import org.xembly.Xembler;
 
@@ -108,7 +107,7 @@ public final class Skeleton {
                         .add("app")
                         .attr("id", this.base)
                         .append(
-                            new Joined<Directive>(
+                            new Joined<>(
                                 new Mapped<>(
                                     ent -> new Directives()
                                         .add("package")
