@@ -48,6 +48,7 @@ import org.takes.misc.Opt;
 import org.takes.rs.RsText;
 import org.takes.rs.RsWithStatus;
 import org.takes.tk.TkClasspath;
+import org.takes.tk.TkSslOnly;
 import org.takes.tk.TkText;
 import org.takes.tk.TkWithType;
 import org.takes.tk.TkWrap;
@@ -110,70 +111,72 @@ public final class TkApp extends TkWrap {
                 // @checkstyle MagicNumber (1 line)
                 new StickyFutures(futures, 100)
             );
-        return new TkFallback(
-            new TkForward(
-                new TkFork(
-                    new FkRegex("/", new TkIndex()),
-                    new FkRegex("/robots.txt", new TkText("")),
-                    new FkRegex("/mistakes", new TkMistakes()),
-                    new FkRegex(
-                        "/flush",
-                        (Take) req -> new RsText(
-                            String.format("%d flushed", new Results().flush())
-                        )
-                    ),
-                    new FkRegex(
-                        "/upload",
-                        (Take) req -> new RsPage(req, "upload")
-                    ),
-                    new FkRegex("/do-upload", new TkUpload(reports)),
-                    new FkRegex("/all", new TkAll()),
-                    new FkRegex("/queue", new TkQueue(futures)),
-                    new FkRegex(
-                        ".+\\.xsl",
-                        new TkWithType(
-                            new TkClasspath(),
-                            "text/xsl"
-                        )
-                    ),
-                    new FkRegex(
-                        "/jpeek\\.css",
-                        new TkWithType(
-                            new TkText(
-                                new TextOf(
-                                    new ResourceOf("org/jpeek/jpeek.css")
-                                ).asString()
-                            ),
-                            "text/css"
-                        )
-                    ),
-                    new FkRegex(
-                        "/([^/]+)/([^/]+)(.*)",
-                        new TkReport(reports)
-                    )
-                )
-            ),
-            new FbChain(
-                new FbStatus(
-                    HttpURLConnection.HTTP_NOT_FOUND,
-                    (Fallback) req -> new Opt.Single<>(
-                        new RsWithStatus(
-                            new RsText(req.throwable().getMessage()),
-                            req.code()
+        return new TkSslOnly(
+            new TkFallback(
+                new TkForward(
+                    new TkFork(
+                        new FkRegex("/", new TkIndex()),
+                        new FkRegex("/robots.txt", new TkText("")),
+                        new FkRegex("/mistakes", new TkMistakes()),
+                        new FkRegex(
+                            "/flush",
+                            (Take) req -> new RsText(
+                                String.format("%d flushed", new Results().flush())
+                            )
+                        ),
+                        new FkRegex(
+                            "/upload",
+                            (Take) req -> new RsPage(req, "upload")
+                        ),
+                        new FkRegex("/do-upload", new TkUpload(reports)),
+                        new FkRegex("/all", new TkAll()),
+                        new FkRegex("/queue", new TkQueue(futures)),
+                        new FkRegex(
+                            ".+\\.xsl",
+                            new TkWithType(
+                                new TkClasspath(),
+                                "text/xsl"
+                            )
+                        ),
+                        new FkRegex(
+                            "/jpeek\\.css",
+                            new TkWithType(
+                                new TkText(
+                                    new TextOf(
+                                        new ResourceOf("org/jpeek/jpeek.css")
+                                    ).asString()
+                                ),
+                                "text/css"
+                            )
+                        ),
+                        new FkRegex(
+                            "/([^/]+)/([^/]+)(.*)",
+                            new TkReport(reports)
                         )
                     )
                 ),
-                req -> {
-                    Sentry.capture(req.throwable());
-                    return new Opt.Single<>(
-                        new RsWithStatus(
-                            new RsText(
-                                new TextOf(req.throwable()).asString()
-                            ),
-                            HttpURLConnection.HTTP_INTERNAL_ERROR
+                new FbChain(
+                    new FbStatus(
+                        HttpURLConnection.HTTP_NOT_FOUND,
+                        (Fallback) req -> new Opt.Single<>(
+                            new RsWithStatus(
+                                new RsText(req.throwable().getMessage()),
+                                req.code()
+                            )
                         )
-                    );
-                }
+                    ),
+                    req -> {
+                        Sentry.capture(req.throwable());
+                        return new Opt.Single<>(
+                            new RsWithStatus(
+                                new RsText(
+                                    new TextOf(req.throwable()).asString()
+                                ),
+                                HttpURLConnection.HTTP_INTERNAL_ERROR
+                            )
+                        );
+                    }
+                )
             )
         );
     }

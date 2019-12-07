@@ -25,7 +25,6 @@ package org.jpeek.web;
 
 import com.jcabi.http.request.JdkRequest;
 import com.jcabi.http.response.RestResponse;
-import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.nio.file.Files;
 import org.junit.Test;
@@ -48,7 +47,7 @@ import org.takes.rs.RsPrint;
 public final class TkAppTest {
 
     @Test
-    public void rendersOneReport() throws IOException {
+    public void rendersOneReport() throws Exception {
         final Take app = new TkApp(Files.createTempDirectory("x"));
         new FtRemote(app).exec(
             home -> {
@@ -73,7 +72,7 @@ public final class TkAppTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
-    public void pingsSimplePages() throws IOException {
+    public void pingsSimplePages() throws Exception {
         final String[] pages = {
             "/org/jpeek/web/layout.xsl",
             "/org/jpeek/web/index.xsl",
