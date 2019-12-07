@@ -146,9 +146,11 @@ public final class App {
      */
     @SuppressWarnings({
         "PMD.ExcessiveMethodLength",
-        "PMD.NcssCount"
+        "PMD.NcssCount",
+        "PMD.GuardLogStatement"
     })
     public void analyze() throws IOException {
+        final long start = System.currentTimeMillis();
         final Base base = new DefaultBase(this.input);
         final XML skeleton = new Skeleton(base).xml();
         final Collection<XSL> layers = new LinkedList<>();
@@ -293,7 +295,10 @@ public final class App {
                 reports
             )
         ).value();
-        Logger.info(this, "%d XML reports created", reports.size());
+        Logger.info(
+            this, "%d XML reports created in %[ms]s",
+            reports.size(), System.currentTimeMillis() - start
+        );
         final XML index = new StrictXML(
             new XSLChain(
                 new CollectionOf<>(

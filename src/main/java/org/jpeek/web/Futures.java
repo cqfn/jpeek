@@ -119,7 +119,10 @@ final class Futures implements
                         this.times.add(
                             System.currentTimeMillis() - this.queue.remove(target)
                         );
-                        Logger.info(this, "Finished processing of %s:%s");
+                        Logger.info(
+                            this, "Finished processing of %s:%s",
+                            artifact, group
+                        );
                     // @checkstyle IllegalCatchCheck (4 lines)
                     // @checkstyle AvoidCatchingGenericException (4 lines)
                     } catch (final Exception ex) {

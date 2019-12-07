@@ -106,7 +106,7 @@ final class Results {
             dir.resolve("index.xml").toFile()
         );
         final int elements = Integer.parseInt(
-            index.xpath("/index/metric[1]/elements/text()").get(0)
+            index.xpath("max(/index/metric/elements/number(text()))").get(0)
         );
         final Number diff = new DyNum(index.xpath("/index/@diff").get(0));
         final long score = new DyNum(
@@ -116,8 +116,9 @@ final class Results {
         // @checkstyle MagicNumber (1 line)
         if (elements < 100) {
             Logger.info(
-                this, "%d elements NOT saved for %s by %s, rank=%d, score=%d",
-                elements, artifact, new Version().value(), rank, score
+                this, "%d elements NOT saved for %s by %s, rank=%d, score=%d, metrics=%d",
+                elements, artifact, new Version().value(), rank, score,
+                Integer.parseInt(index.xpath("count(/index/metric)").get(0))
             );
         } else {
             this.table.put(
