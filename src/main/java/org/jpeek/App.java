@@ -155,22 +155,22 @@ public final class App {
         final XML skeleton = new Skeleton(base).xml();
         final Collection<XSL> layers = new LinkedList<>();
         if (this.params.containsKey("include-ctors")) {
-            Logger.info(this, "Constructors will be included");
+            Logger.debug(this, "Constructors will be included");
         } else {
             layers.add(App.xsl("layers/no-ctors.xsl"));
-            Logger.info(this, "Constructors will be ignored");
+            Logger.debug(this, "Constructors will be ignored");
         }
         if (this.params.containsKey("include-static-methods")) {
-            Logger.info(this, "Static methods will be included");
+            Logger.debug(this, "Static methods will be included");
         } else {
             layers.add(App.xsl("layers/no-static-methods.xsl"));
-            Logger.info(this, "Static methods will be ignored");
+            Logger.debug(this, "Static methods will be ignored");
         }
         if (this.params.containsKey("include-private-methods")) {
-            Logger.info(this, "Private methods will be included");
+            Logger.debug(this, "Private methods will be included");
         } else {
             layers.add(App.xsl("layers/no-private-methods.xsl"));
-            Logger.info(this, "Private methods will be ignored");
+            Logger.debug(this, "Private methods will be ignored");
         }
         final XSL chain = new XSLChain(layers);
         this.save(skeleton.toString(), "skeleton.xml");
@@ -295,7 +295,7 @@ public final class App {
                 reports
             )
         ).value();
-        Logger.info(
+        Logger.debug(
             this, "%d XML reports created in %[ms]s",
             reports.size(), System.currentTimeMillis() - start
         );

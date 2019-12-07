@@ -110,7 +110,7 @@ final class Classes implements Iterable<CtClass> {
             Comparator.comparing(CtClass::getName)
         );
         unique.addAll(classes);
-        Logger.info(
+        Logger.debug(
             this, "%d classes found and parsed via Javassist in %[ms]s",
             unique.size(), System.currentTimeMillis() - start
         );

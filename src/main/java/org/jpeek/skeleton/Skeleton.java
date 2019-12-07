@@ -160,7 +160,7 @@ public final class Skeleton {
             map.putIfAbsent(ent.getKey(), new Directives());
             map.get(ent.getKey()).append(ent.getValue());
         }
-        Logger.info(
+        Logger.debug(
             this, "%d classes parsed via ASM in %[ms]s",
             map.size(), System.currentTimeMillis() - start
         );

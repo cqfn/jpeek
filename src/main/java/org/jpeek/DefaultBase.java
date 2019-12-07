@@ -65,7 +65,7 @@ public final class DefaultBase implements Base {
     public Iterable<Path> files() throws IOException {
         try (Stream<Path> stream = Files.walk(this.dir)) {
             final List<Path> files = stream.collect(Collectors.toList());
-            Logger.info(this, "Found %d files in %s", files.size(), this.dir);
+            Logger.debug(this, "Found %d files in %s", files.size(), this.dir);
             return files;
         }
     }
