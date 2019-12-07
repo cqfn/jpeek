@@ -111,6 +111,10 @@ final class Futures implements
                 () -> {
                     Func<String, Response> front;
                     try {
+                        Logger.info(
+                            this, "Started processing of %s:%s...",
+                            group, artifact
+                        );
                         front = this.origin.apply(group, artifact);
                         this.times.add(
                             System.currentTimeMillis() - this.queue.remove(target)
@@ -121,7 +125,7 @@ final class Futures implements
                     } catch (final Exception ex) {
                         Logger.error(
                             this, "Failure in %s:%s: %s",
-                            ex.getMessage()
+                            group, artifact, ex.getMessage()
                         );
                         front = input -> new RsPage(
                             new RqFake(),

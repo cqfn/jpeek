@@ -136,7 +136,7 @@ SOFTWARE.
         <xsl:value-of select="format-number(100 * defects,'#')"/>
         <xsl:text>%</xsl:text>
       </td>
-      <td title="@added">
+      <td title="{@added}">
         <span class="ping" data-uri="https://i.jpeek.org/{group}/{artifact}/index.html">
           <xsl:value-of select="version"/>
         </span>
