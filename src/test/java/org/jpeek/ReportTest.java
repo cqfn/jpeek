@@ -54,12 +54,12 @@ public final class ReportTest {
         new Report(new Skeleton(new FakeBase()).xml(), "LCOM").save(output);
         new Assertion<>(
             "Must LCOM.xml file exists",
-            () -> Files.exists(output.resolve("LCOM.xml")),
+            Files.exists(output.resolve("LCOM.xml")),
             new IsTrue()
         ).affirm();
         new Assertion<>(
             "Must LCOM.html file exists",
-            () -> Files.exists(output.resolve("LCOM.html")),
+            Files.exists(output.resolve("LCOM.html")),
             new IsTrue()
         ).affirm();
     }
@@ -78,7 +78,7 @@ public final class ReportTest {
         ).save(output);
         new Assertion<>(
             "Must create LCOM report",
-            () -> XhtmlMatchers.xhtml(
+            XhtmlMatchers.xhtml(
                 new TextOf(output.resolve("LCOM.xml")).asString()
             ),
             XhtmlMatchers.hasXPaths(
@@ -95,7 +95,7 @@ public final class ReportTest {
         new Report(new Skeleton(new FakeBase()).xml(), "LCOM").save(output);
         new Assertion<>(
             "Report for empty project created",
-            () -> XhtmlMatchers.xhtml(
+            XhtmlMatchers.xhtml(
                 new TextOf(output.resolve("LCOM.xml")).asString()
             ),
             XhtmlMatchers.hasXPaths(
@@ -126,7 +126,7 @@ public final class ReportTest {
         ).save(output);
         new Assertion<>(
             "Must create full report",
-            () -> XhtmlMatchers.xhtml(
+            XhtmlMatchers.xhtml(
                 new TextOf(output.resolve("LCOM.xml")).asString()
             ),
             XhtmlMatchers.hasXPaths(
@@ -147,7 +147,7 @@ public final class ReportTest {
         new Report(new Skeleton(new FakeBase()).xml(), "LCOM").save(output);
         new Assertion<>(
             "Must have correct schema location",
-            () -> XhtmlMatchers.xhtml(
+            XhtmlMatchers.xhtml(
                 new TextOf(output.resolve("LCOM.xml")).asString()
             ),
             XhtmlMatchers.hasXPaths(

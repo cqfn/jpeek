@@ -43,7 +43,7 @@ public final class TypesOfTest {
     public void parsesSignature() {
         new Assertion<>(
             "Must parse signature",
-            () -> XhtmlMatchers.xhtml(
+            XhtmlMatchers.xhtml(
                 new Xembler(
                     new Directives().add("method").append(
                         new TypesOf("(Ljava/lang/String;Lorg/jpeek/Test;)Z")

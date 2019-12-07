@@ -28,13 +28,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Iterator;
+import java.util.TreeSet;
 import javassist.ClassPool;
 import javassist.CtClass;
 import org.cactoos.collection.CollectionOf;
 import org.cactoos.collection.Filtered;
 import org.cactoos.collection.Mapped;
-import org.cactoos.set.SetOf;
 import org.jpeek.Base;
 
 /**
@@ -95,23 +96,25 @@ final class Classes implements Iterable<CtClass> {
                             return this.pool.makeClassIfNew(stream);
                         }
                     },
-                    new SetOf<>(
-                        new Filtered<>(
-                            path -> Files.isRegularFile(path)
-                                && path.toString().endsWith(".class"),
-                            new CollectionOf<>(this.base.files())
-                        )
+                    new Filtered<>(
+                        path -> Files.isRegularFile(path)
+                            && path.toString().endsWith(".class"),
+                        new CollectionOf<>(this.base.files())
                     )
                 )
             );
         } catch (final IOException ex) {
             throw new IllegalStateException(ex);
         }
+        final Collection<CtClass> unique = new TreeSet<>(
+            Comparator.comparing(CtClass::getName)
+        );
+        unique.addAll(classes);
         Logger.info(
             this, "%d classes found and parsed via Javassist in %[ms]s",
-            classes.size(), System.currentTimeMillis() - start
+            unique.size(), System.currentTimeMillis() - start
         );
-        return classes.iterator();
+        return unique.iterator();
     }
 
 }

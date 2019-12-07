@@ -55,7 +55,7 @@ public final class MistakesTest {
         mistakes.add(output);
         new Assertion<>(
             "Must accept and render",
-            () -> XhtmlMatchers.xhtml(
+            XhtmlMatchers.xhtml(
                 new Xembler(
                     new Directives().add("metrics").append(
                         new Joined<>(mistakes.worst())

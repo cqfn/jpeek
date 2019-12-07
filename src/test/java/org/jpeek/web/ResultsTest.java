@@ -55,7 +55,7 @@ public final class ResultsTest {
         results.add("org.takes:takes", output);
         new Assertion<>(
             "Must exists repos tag",
-            () -> XhtmlMatchers.xhtml(
+            XhtmlMatchers.xhtml(
                 new Xembler(
                     new Directives().add("repos").append(
                         new Joined<>(results.recent())

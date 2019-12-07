@@ -87,7 +87,7 @@ public final class TkAppTest {
             final Response response = app.act(new RqFake("GET", page));
             new Assertion<>(
                 new RsPrint(response).print(),
-                () -> response,
+                response,
                 new HmRsStatus(HttpURLConnection.HTTP_OK)
             ).affirm();
         }

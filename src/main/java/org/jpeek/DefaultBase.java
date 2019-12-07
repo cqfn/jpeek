@@ -23,9 +23,11 @@
  */
 package org.jpeek;
 
+import com.jcabi.log.Logger;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -62,7 +64,9 @@ public final class DefaultBase implements Base {
     @Override
     public Iterable<Path> files() throws IOException {
         try (Stream<Path> stream = Files.walk(this.dir)) {
-            return stream.collect(Collectors.toList());
+            final List<Path> files = stream.collect(Collectors.toList());
+            Logger.info(this, "Found %d files in %s", files.size(), this.dir);
+            return files;
         }
     }
 

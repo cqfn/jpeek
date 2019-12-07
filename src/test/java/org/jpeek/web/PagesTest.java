@@ -55,7 +55,7 @@ public final class PagesTest {
         );
         new Assertion<>(
             "There is no byte available in body - should return -1",
-            () -> new Pages(temp).apply(path).body().read(),
+            new Pages(temp).apply(path).body().read(),
             new IsEqual<>(-1)
         ).affirm();
     }

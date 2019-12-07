@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import org.cactoos.Scalar;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
@@ -51,9 +52,9 @@ public final class MainTest {
         Main.main("--sources", input.toString(), "--target", output.toString());
         new Assertion<>(
             "Must create LCOM5 report",
-            () -> Files.exists(output.resolve("LCOM5.xml")),
+            Files.exists(output.resolve("LCOM5.xml")),
             new IsTrue()
-        );
+        ).affirm();
     }
 
     @Test(expected = ParameterException.class)
@@ -77,7 +78,7 @@ public final class MainTest {
         final Path target = source;
         new Assertion(
             "Must throw an exception",
-            () -> {
+            (Scalar<Boolean>) () -> {
                 Main.main(
                     "--sources", source.toString(),
                     "--target", target.toString(),
@@ -98,7 +99,7 @@ public final class MainTest {
         final Path target = Files.createTempDirectory("");
         new Assertion(
             "Must throw an exception",
-            () -> {
+            (Scalar<Boolean>) () -> {
                 Main.main(
                     "--sources", Paths.get(".").toString(),
                     "--target", target.toString(),
@@ -124,7 +125,7 @@ public final class MainTest {
         );
         new Assertion<>(
             "Must exists LCOM5.xml",
-            () -> Files.exists(target.resolve("LCOM5.xml")),
+            Files.exists(target.resolve("LCOM5.xml")),
             new IsTrue()
         ).affirm();
     }

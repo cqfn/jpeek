@@ -23,6 +23,7 @@
  */
 package org.jpeek.web;
 
+import java.io.IOException;
 import org.cactoos.BiFunc;
 import org.cactoos.Func;
 import org.hamcrest.Matchers;
@@ -45,12 +46,12 @@ import org.takes.rs.RsPrint;
 public final class TkUploadTest {
 
     @Test
-    public void rendersIndexPage() {
+    public void rendersIndexPage() throws IOException {
         final BiFunc<String, String, Func<String, Response>> reports =
             (artifact, group) -> null;
         new Assertion<>(
             "Must upload body",
-            () -> new RsPrint(
+            new RsPrint(
                 new TkUpload(reports).act(
                     new RqMtFake(
                         new RqFake(),

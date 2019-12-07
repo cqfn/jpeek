@@ -263,7 +263,7 @@ public final class MetricsTest {
                 "Must exists with target '%s' and value '%s'",
                 this.target, this.value
             ).asString(),
-            () -> XhtmlMatchers.xhtml(
+            XhtmlMatchers.xhtml(
                 new TextOf(
                     output.resolve(String.format("%s.xml", this.metric))
                 ).asString()

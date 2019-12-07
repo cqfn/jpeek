@@ -59,7 +59,7 @@ public final class IndexTest {
     public void createsIndexXml() {
         new Assertion<>(
             "Must create index.xml",
-            () -> XhtmlMatchers.xhtml(
+            XhtmlMatchers.xhtml(
                 this.xml
             ),
             XhtmlMatchers.hasXPaths("/index/metric")
@@ -70,7 +70,7 @@ public final class IndexTest {
     public void xmlHasSchema() {
         new Assertion<>(
             "The XML Schema is invalid",
-            () -> XhtmlMatchers.xhtml(
+            XhtmlMatchers.xhtml(
                 this.xml
             ),
             XhtmlMatchers.hasXPaths(

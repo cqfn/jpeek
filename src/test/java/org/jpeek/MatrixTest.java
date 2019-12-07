@@ -59,7 +59,7 @@ public final class MatrixTest {
     public void createsMatrixXml() {
         new Assertion<>(
             "Must create matrix.xml",
-            () -> XhtmlMatchers.xhtml(
+            XhtmlMatchers.xhtml(
                 this.xml
             ),
             XhtmlMatchers.hasXPaths("/matrix/classes")
@@ -70,7 +70,7 @@ public final class MatrixTest {
     public void xmlHasSchema() {
         new Assertion<>(
             "The XML Schema is invalid",
-            () -> XhtmlMatchers.xhtml(
+            XhtmlMatchers.xhtml(
                 this.xml
             ),
             XhtmlMatchers.hasXPaths(

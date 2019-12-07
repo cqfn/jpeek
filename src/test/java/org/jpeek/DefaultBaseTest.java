@@ -55,7 +55,7 @@ public final class DefaultBaseTest {
         );
         new Assertion<>(
             "Must be more the 2 files",
-            () -> new DefaultBase(temp).files(),
+            new DefaultBase(temp).files(),
             Matchers.iterableWithSize(Matchers.greaterThan(2))
         ).affirm();
     }

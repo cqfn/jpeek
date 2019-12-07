@@ -66,12 +66,12 @@ public final class AsyncReportsTest {
             bifunc.apply("org.jpeek", "jpeek").apply("index.html");
         new Assertion<>(
             "Must return HTTP OK status",
-            () -> response,
+            response,
             new HmRsStatus(HttpURLConnection.HTTP_OK)
         ).affirm();
         new Assertion<>(
             "Must have body in response",
-            () -> XhtmlMatchers.xhtml(new RsPrint(response).printBody()),
+            XhtmlMatchers.xhtml(new RsPrint(response).printBody()),
             XhtmlMatchers.hasXPath("//xhtml:body")
         ).affirm();
         service.shutdownNow();

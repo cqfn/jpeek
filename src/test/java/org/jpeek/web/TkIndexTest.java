@@ -24,6 +24,7 @@
 package org.jpeek.web;
 
 import com.jcabi.matchers.XhtmlMatchers;
+import java.io.IOException;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.takes.rq.RqFake;
@@ -40,10 +41,10 @@ import org.takes.rs.RsPrint;
 public final class TkIndexTest {
 
     @Test
-    public void rendersIndexPage() {
+    public void rendersIndexPage() throws IOException {
         new Assertion<>(
             "Must print body",
-            () -> XhtmlMatchers.xhtml(
+            XhtmlMatchers.xhtml(
                 new RsPrint(new TkIndex().act(new RqFake())).printBody()
             ),
             XhtmlMatchers.hasXPath("//xhtml:body")

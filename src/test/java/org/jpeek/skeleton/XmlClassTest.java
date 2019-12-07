@@ -45,7 +45,7 @@ public final class XmlClassTest {
     public void parsesClass() {
         new Assertion<>(
             "Must parse class",
-            () -> XhtmlMatchers.xhtml(this.classAsXml("Bar")),
+            XhtmlMatchers.xhtml(this.classAsXml("Bar")),
             XhtmlMatchers.hasXPaths(
                 "/class/methods[count(method) = 5]",
                 "/class/attributes[count(attribute) = 4]"
@@ -57,7 +57,7 @@ public final class XmlClassTest {
     public void parsesMethodVisibility() {
         new Assertion<>(
             "Must parse method visibility",
-            () -> XhtmlMatchers.xhtml(
+            XhtmlMatchers.xhtml(
                 this.classAsXml("ClassWithDifferentMethodVisibilities")
             ),
             XhtmlMatchers.hasXPaths(
@@ -73,7 +73,7 @@ public final class XmlClassTest {
     public void thereIsNoAttributePublic() {
         new Assertion<>(
             "attribute public does not exists",
-            () -> XhtmlMatchers.xhtml(
+            XhtmlMatchers.xhtml(
                 this.classAsXml("ClassWithDifferentMethodVisibilities")
             ),
             XhtmlMatchers.hasXPaths(

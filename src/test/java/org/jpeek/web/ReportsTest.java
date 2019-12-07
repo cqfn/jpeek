@@ -56,10 +56,10 @@ public final class ReportsTest {
 
     @Test
     @Ignore
-    public void rendersOneReport() {
+    public void rendersOneReport() throws Exception {
         new Assertion<>(
             "Must return HTTP 200 OK status",
-            () -> new Reports(
+            new Reports(
                 Files.createTempDirectory("x")
             ).apply("org.takes", "takes").apply("index.html"),
             new HmRsStatus(HttpURLConnection.HTTP_OK)

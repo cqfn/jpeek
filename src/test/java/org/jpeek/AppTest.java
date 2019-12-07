@@ -60,12 +60,12 @@ public final class AppTest {
         new App(input, output).analyze();
         new Assertion<>(
             "Must LCOM.xml file exists",
-            () -> Files.exists(output.resolve("LCOM.xml")),
+            Files.exists(output.resolve("LCOM.xml")),
             new IsTrue()
         ).affirm();
         new Assertion<>(
             "Must create LCOM report",
-            () -> XSLDocument
+            XSLDocument
                 .make(
                     AppTest.class.getResourceAsStream("xsl/metric.xsl")
                 )
@@ -84,7 +84,7 @@ public final class AppTest {
         new App(input, output, args).analyze();
         new Assertion<>(
             "Must contain private method",
-            () -> XhtmlMatchers.xhtml(
+            XhtmlMatchers.xhtml(
                 new TextOf(output.resolve("skeleton.xml")).asString()
             ),
             XhtmlMatchers.hasXPaths(
@@ -100,7 +100,7 @@ public final class AppTest {
         new App(input, output).analyze();
         new Assertion<>(
             "Must index.html file exists",
-            () -> Files.exists(output.resolve("index.html")),
+            Files.exists(output.resolve("index.html")),
             new IsTrue()
         ).affirm();
     }
@@ -112,7 +112,7 @@ public final class AppTest {
         new App(input, output).analyze();
         new Assertion<>(
             "Must have some metrics",
-            () -> XhtmlMatchers.xhtml(
+            XhtmlMatchers.xhtml(
                 new TextOf(output.resolve("index.xml")).asString()
             ),
             XhtmlMatchers.hasXPaths(
@@ -135,7 +135,7 @@ public final class AppTest {
         );
         new Assertion<>(
             "Nodes must not be empty",
-            () -> elements,
+            elements,
             populated
         ).affirm();
         for (final XML element: elements) {
@@ -144,7 +144,7 @@ public final class AppTest {
                     "element '%s' must have a documentation",
                     element.xpath("@name").get(0)
                 ),
-                () -> element.xpath("xs:annotation/xs:documentation/text()"),
+                element.xpath("xs:annotation/xs:documentation/text()"),
                 populated
             ).affirm();
         }

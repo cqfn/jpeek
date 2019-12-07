@@ -25,6 +25,7 @@ package org.jpeek.metrics;
 
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XSLDocument;
+import java.io.IOException;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.TextOf;
@@ -114,7 +115,7 @@ public final class MetricBase {
                     variable,
                     this.name
                 ).asString(),
-                () -> new TextOf(
+                new TextOf(
                     this.xml.xpath(
                         new FormattedText(
                             "//class[@id='%s']/vars/var[@id='%s']/text()",
@@ -135,12 +136,13 @@ public final class MetricBase {
          * Asserts the main metric value.
          * @param value Expected value of the metric
          * @param error Rounding tolerance since the metric is float number
-         * @throws Exception String format exception
+         * @throws IOException String format exception
          */
-        public void assertValue(final double value, final double error) {
+        public void assertValue(final double value, final double error)
+            throws IOException {
             new Assertion<>(
                 "The metric value is not calculated properly",
-                () -> Double.parseDouble(
+                Double.parseDouble(
                     this.xml.xpath(
                         new FormattedText(
                             "//class[@id='%s']/@value",

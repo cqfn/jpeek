@@ -63,7 +63,7 @@ public final class ReportWithStatisticsTest {
         service.shutdown();
         new Assertion<>(
             "Must create report with statics",
-            () -> XhtmlMatchers.xhtml(
+            XhtmlMatchers.xhtml(
                 xml.toString()
             ),
             XhtmlMatchers.hasXPaths("/metric/statistics[total='0']")

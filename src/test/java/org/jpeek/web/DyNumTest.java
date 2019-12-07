@@ -46,7 +46,7 @@ public final class DyNumTest {
             "Double values should be equal",
             new DyNum(
                 String.valueOf(number)
-            )::doubleValue,
+            ).doubleValue(),
             new IsEqual<>(number)
         ).affirm();
     }
@@ -56,7 +56,7 @@ public final class DyNumTest {
         final long number = 2L;
         new Assertion<>(
             "Long values should be equal",
-            new DyNum(number)::longValue,
+            new DyNum(number).longValue(),
             new IsEqual<>(number)
         ).affirm();
     }
@@ -66,7 +66,7 @@ public final class DyNumTest {
         final Double number = 2.0d;
         new Assertion<>(
             "Integer values should be equal",
-            new DyNum(number)::intValue,
+            new DyNum(number).intValue(),
             new IsEqual<>(number.intValue())
         ).affirm();
     }
@@ -76,7 +76,7 @@ public final class DyNumTest {
         final float number = 2.0f;
         new Assertion<>(
             "Float values should be equal",
-            new DyNum(number)::floatValue,
+            new DyNum(number).floatValue(),
             new IsEqual<>(number)
         ).affirm();
     }
@@ -86,7 +86,7 @@ public final class DyNumTest {
         final double number = 2.0d;
         new Assertion<>(
             "Double values should be equal.",
-            new DyNum(number)::doubleValue,
+            new DyNum(number).doubleValue(),
             new IsEqual<>(number)
         ).affirm();
     }
@@ -95,7 +95,7 @@ public final class DyNumTest {
     public void testUpdateDyNum() {
         new Assertion<>(
             "Result should not be null",
-            new DyNum(2.0d)::update,
+            new DyNum(2.0d).update(),
             new IsNot<>(
                 new IsNull<>()
             )

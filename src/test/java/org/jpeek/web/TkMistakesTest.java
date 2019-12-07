@@ -24,6 +24,7 @@
 package org.jpeek.web;
 
 import com.jcabi.matchers.XhtmlMatchers;
+import java.io.IOException;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.takes.rq.RqFake;
@@ -41,10 +42,10 @@ import org.takes.rs.RsPrint;
 public final class TkMistakesTest {
 
     @Test
-    public void rendersMistakesPage() {
+    public void rendersMistakesPage() throws IOException {
         new Assertion<>(
             "Must print body on mistakes page",
-            () -> XhtmlMatchers.xhtml(
+            XhtmlMatchers.xhtml(
                 new RsPrint(new TkMistakes().act(new RqFake())).printBody()
             ),
             XhtmlMatchers.hasXPath("//xhtml:body")
@@ -52,10 +53,10 @@ public final class TkMistakesTest {
     }
 
     @Test
-    public void rendersMistakesPageInXml() {
+    public void rendersMistakesPageInXml() throws IOException {
         new Assertion<>(
             "Must render mistake page in xml",
-            () -> XhtmlMatchers.xhtml(
+            XhtmlMatchers.xhtml(
                 new RsPrint(
                     new TkMistakes().act(
                         new RqWithHeaders(

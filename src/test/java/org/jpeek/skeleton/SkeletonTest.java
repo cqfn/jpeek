@@ -24,6 +24,7 @@
 package org.jpeek.skeleton;
 
 import com.jcabi.matchers.XhtmlMatchers;
+import org.jpeek.Base;
 import org.jpeek.FakeBase;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -48,7 +49,7 @@ public final class SkeletonTest {
     public void createsXml() {
         new Assertion<>(
             "Must overload bar's methods",
-            () -> XhtmlMatchers.xhtml(
+            XhtmlMatchers.xhtml(
                 new Skeleton(
                     new FakeBase("OverloadMethods", "Bar")
                 ).xml().toString()
@@ -72,7 +73,7 @@ public final class SkeletonTest {
     public void findsMethodsAndArgs() {
         new Assertion<>(
             "Must find methods with diff param types",
-            () -> XhtmlMatchers.xhtml(
+            XhtmlMatchers.xhtml(
                 new Skeleton(
                     new FakeBase("MethodsWithDiffParamTypes")
                 ).xml().toString()
@@ -93,7 +94,7 @@ public final class SkeletonTest {
     public void findsMethodCalls() {
         new Assertion<>(
             "Must call methods",
-            () -> XhtmlMatchers.xhtml(
+            XhtmlMatchers.xhtml(
                 new Skeleton(
                     new FakeBase("Bar", "Foo")
                 ).xml().toString()
@@ -114,7 +115,7 @@ public final class SkeletonTest {
     public void createsOnlyOneMethodIgnoresSynthetic() {
         new Assertion<>(
             "Must create only one method",
-            () -> XhtmlMatchers.xhtml(
+            XhtmlMatchers.xhtml(
                 new Skeleton(
                     new FakeBase("OneMethodCreatesLambda")
                 ).xml().toString()
@@ -130,7 +131,7 @@ public final class SkeletonTest {
     public void findFieldWithQualifiedName() {
         new Assertion<>(
             "Must find field with qualified name",
-            () -> XhtmlMatchers.xhtml(
+            XhtmlMatchers.xhtml(
                 new Skeleton(
                     new FakeBase(
                         "ClassWithPublicField",
@@ -151,7 +152,7 @@ public final class SkeletonTest {
     public void findSchemaOfSkeleton() {
         new Assertion<>(
             "Must find schema of skeleton",
-            () -> XhtmlMatchers.xhtml(
+            XhtmlMatchers.xhtml(
                 new Skeleton(
                     new FakeBase(
                         "ClassWithDifferentMethodVisibilities"
@@ -168,7 +169,7 @@ public final class SkeletonTest {
     public void recognizesPublicMethods() {
         new Assertion<>(
             "Must recognize public methods",
-            () -> XhtmlMatchers.xhtml(
+            XhtmlMatchers.xhtml(
                 new Skeleton(
                     new FakeBase(
                         "ClassWithDifferentMethodVisibilities"
@@ -190,9 +191,12 @@ public final class SkeletonTest {
     public void acceptsSimilarClassNamesInDifferentPackages() {
         new Assertion<>(
             "Must not conflict when class names are identical",
-            () -> XhtmlMatchers.xhtml(
+            XhtmlMatchers.xhtml(
                 new Skeleton(
-                    new FakeBase("foo/Foo", "bar/Foo")
+                    new Base.Concat(
+                        new FakeBase("foo/Foo", "bar/Foo"),
+                        new FakeBase("foo/Foo")
+                    )
                 ).xml().toString()
             ),
             XhtmlMatchers.hasXPaths(

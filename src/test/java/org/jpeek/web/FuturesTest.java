@@ -43,10 +43,10 @@ import org.takes.rs.xe.XeAppend;
 public final class FuturesTest {
 
     @Test
-    public void testSimpleScenario() {
+    public void testSimpleScenario() throws Exception {
         new Assertion<>(
             "Futures returns Response",
-            () -> new Futures(
+            new Futures(
                 (artifact, group) -> input -> new RsPage(
                     new RqFake(),
                     "wait",
@@ -61,10 +61,10 @@ public final class FuturesTest {
     }
 
     @Test
-    public void testIgnoresCrashes() {
+    public void testIgnoresCrashes() throws Exception {
         new Assertion<>(
             "Futures don't crash",
-            () -> new Futures(
+            new Futures(
                 (artifact, group) -> {
                     throw new UnsupportedOperationException("intended");
                 }
