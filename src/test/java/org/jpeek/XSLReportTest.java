@@ -37,7 +37,7 @@ import org.xembly.Directives;
 import org.xembly.Xembler;
 
 /**
- * Test case for {@link Report}.
+ * Test case for {@link XSLReport}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.4
@@ -46,12 +46,12 @@ import org.xembly.Xembler;
  * @checkstyle JavadocTagsCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class ReportTest {
+public final class XSLReportTest {
 
     @Test
     public void createsXmlReport() throws IOException {
         final Path output = Files.createTempDirectory("");
-        new Report(new Skeleton(new FakeBase()).xml(), "LCOM").save(output);
+        new XSLReport(new Skeleton(new FakeBase()).xml(), "LCOM").save(output);
         new Assertion<>(
             "Must LCOM.xml file exists",
             () -> Files.exists(output.resolve("LCOM.xml")),
@@ -67,7 +67,7 @@ public final class ReportTest {
     @Test
     public void createsXmlReportWithXpaths() throws IOException {
         final Path output = Files.createTempDirectory("");
-        new Report(
+        new XSLReport(
             new Skeleton(
                 new FakeBase(
                     "NoMethods", "Bar", "OverloadMethods",
@@ -92,9 +92,9 @@ public final class ReportTest {
     @Test
     public void createsXmlReportWithEmptyProject() throws IOException {
         final Path output = Files.createTempDirectory("");
-        new Report(new Skeleton(new FakeBase()).xml(), "LCOM").save(output);
+        new XSLReport(new Skeleton(new FakeBase()).xml(), "LCOM").save(output);
         new Assertion<>(
-            "Report for empty project created",
+            "org.jpeek.Report for empty project created",
             () -> XhtmlMatchers.xhtml(
                 new TextOf(output.resolve("LCOM.xml")).asString()
             ),
@@ -107,7 +107,7 @@ public final class ReportTest {
     @Test
     public void createsFullXmlReport() throws IOException {
         final Path output = Files.createTempDirectory("");
-        new Report(
+        new XSLReport(
             new XMLDocument(
                 new Xembler(
                     new Directives()
@@ -144,7 +144,7 @@ public final class ReportTest {
     @Test
     public void setsCorrectSchemaLocation() throws IOException {
         final Path output = Files.createTempDirectory("");
-        new Report(new Skeleton(new FakeBase()).xml(), "LCOM").save(output);
+        new XSLReport(new Skeleton(new FakeBase()).xml(), "LCOM").save(output);
         new Assertion<>(
             "Must have correct schema location",
             () -> XhtmlMatchers.xhtml(

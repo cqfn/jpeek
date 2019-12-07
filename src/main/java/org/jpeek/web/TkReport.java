@@ -35,7 +35,7 @@ import org.takes.facets.fork.TkRegex;
 import org.takes.facets.forward.RsForward;
 
 /**
- * Report page.
+ * org.jpeek.Report page.
  *
  * <p>There is no thread-safety guarantee.
  *

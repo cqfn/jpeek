@@ -40,7 +40,7 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocTagsCheck (500 lines)
  */
-public final class ReportWithStatisticsTest {
+public final class XSLReportWithStatisticsTest {
 
     @Test
     public void createsXml() {
