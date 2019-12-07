@@ -35,9 +35,9 @@ SOFTWARE.
     <form action="/do-upload" method="post" enctype="multipart/form-data">
       <fieldset>
         <label>
-          <xsl:text>List of artifact coordinates:</xsl:text>
+          <xsl:text>List of artifact coordinates (one per line):</xsl:text>
         </label>
-        <textarea name="coordinates">
+        <textarea name="coordinates" style="width:100%;height:8em;">
           <xsl:text>org.jpeek:jpeek</xsl:text>
         </textarea>
         <input type="submit" value="Upload"/>

@@ -88,7 +88,8 @@ final class Futures implements
     Futures(final BiFunc<String, String, Func<String, Response>> func) {
         this.origin = func;
         this.service = Executors.newFixedThreadPool(
-            Runtime.getRuntime().availableProcessors(),
+            // @checkstyle MagicNumber (1 line)
+            Math.min(Runtime.getRuntime().availableProcessors(), 4),
             new VerboseThreads(Futures.class)
         );
         this.queue = new ConcurrentSkipListMap<>();
@@ -114,9 +115,14 @@ final class Futures implements
                         this.times.add(
                             System.currentTimeMillis() - this.queue.remove(target)
                         );
+                        Logger.info(this, "Finished processing of %s:%s");
                     // @checkstyle IllegalCatchCheck (4 lines)
                     // @checkstyle AvoidCatchingGenericException (4 lines)
                     } catch (final Exception ex) {
+                        Logger.error(
+                            this, "Failure in %s:%s: %s",
+                            ex.getMessage()
+                        );
                         front = input -> new RsPage(
                             new RqFake(),
                             "exception",

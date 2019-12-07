@@ -31,6 +31,7 @@ import com.jcabi.dynamo.Item;
 import com.jcabi.dynamo.QueryValve;
 import com.jcabi.dynamo.ScanValve;
 import com.jcabi.dynamo.Table;
+import com.jcabi.log.Logger;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import java.io.IOException;
@@ -113,7 +114,12 @@ final class Results {
         ).longValue();
         final long rank = (long) ((double) score * (1.0d - diff.doubleValue()));
         // @checkstyle MagicNumber (1 line)
-        if (elements >= 100) {
+        if (elements < 100) {
+            Logger.info(
+                this, "%d elements NOT saved for %s by %s, rank=%d, score=%d",
+                elements, artifact, new Version().value(), rank, score
+            );
+        } else {
             this.table.put(
                 new Attributes()
                     .with("good", "true")
@@ -145,6 +151,10 @@ final class Results {
                             // @checkstyle MagicNumber (1 line)
                             + TimeUnit.DAYS.toSeconds(100L)
                     )
+            );
+            Logger.info(
+                this, "%d elements saved for %s by %s, rank=%d, score=%d",
+                elements, artifact, new Version().value(), rank, score
             );
         }
     }
