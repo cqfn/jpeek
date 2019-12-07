@@ -25,6 +25,7 @@ package org.jpeek.web;
 
 import com.jcabi.log.Logger;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
@@ -35,6 +36,7 @@ import org.cactoos.func.IoCheckedBiFunc;
 import org.cactoos.iterable.IterableOf;
 import org.takes.Response;
 import org.takes.rq.RqFake;
+import org.takes.rs.RsWithStatus;
 import org.takes.rs.xe.XeAppend;
 
 /**
@@ -101,19 +103,22 @@ final class AsyncReports implements
                     String.format("%s:%s", group, artifact),
                     s -> System.currentTimeMillis()
                 );
-            output = input -> new RsPage(
-                new RqFake(),
-                "wait",
-                () -> new IterableOf<>(
-                    new XeAppend("group", group),
-                    new XeAppend("artifact", artifact),
-                    new XeAppend("future", future.toString()),
-                    new XeAppend("msec", Long.toString(msec)),
-                    new XeAppend(
-                        "spent",
-                        Logger.format("%[ms]s", msec)
+            output = input -> new RsWithStatus(
+                new RsPage(
+                    new RqFake(),
+                    "wait",
+                    () -> new IterableOf<>(
+                        new XeAppend("group", group),
+                        new XeAppend("artifact", artifact),
+                        new XeAppend("future", future.toString()),
+                        new XeAppend("msec", Long.toString(msec)),
+                        new XeAppend(
+                            "spent",
+                            Logger.format("%[ms]s", msec)
+                        )
                     )
-                )
+                ),
+                HttpURLConnection.HTTP_NOT_FOUND
             );
         }
         return output;

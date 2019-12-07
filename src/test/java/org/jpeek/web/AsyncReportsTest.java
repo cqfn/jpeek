@@ -65,9 +65,9 @@ public final class AsyncReportsTest {
         final Response response =
             bifunc.apply("org.jpeek", "jpeek").apply("index.html");
         new Assertion<>(
-            "Must return HTTP OK status",
+            "Must return HTTP NOT FOUND status",
             response,
-            new HmRsStatus(HttpURLConnection.HTTP_OK)
+            new HmRsStatus(HttpURLConnection.HTTP_NOT_FOUND)
         ).affirm();
         new Assertion<>(
             "Must have body in response",
