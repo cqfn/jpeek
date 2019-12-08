@@ -70,6 +70,7 @@ final class TkReport implements TkRegex {
     /**
      * Ctor.
      * @param rpts Reports
+     * @param rslts Results
      */
     TkReport(final BiFunc<String, String, Func<String, Response>> rpts,
         final Results rslts) {
@@ -80,7 +81,6 @@ final class TkReport implements TkRegex {
     @Override
     public Response act(final RqRegex req) throws IOException {
         final Matcher matcher = req.matcher();
-        System.out.println(matcher);
         // @checkstyle MagicNumber (1 line)
         final String path = matcher.group(3);
         if (path.isEmpty()) {
@@ -94,6 +94,7 @@ final class TkReport implements TkRegex {
             )
         ).apply(path.substring(1));
         if (new HmRsStatus(HttpURLConnection.HTTP_NOT_FOUND).matches(response)
+            // @checkstyle MagicNumber (1 line)
             && "badge.svg".equals(matcher.group(3))) {
             final String artifact = String.format(
                 "%s:%s", matcher.group(1), matcher.group(2)

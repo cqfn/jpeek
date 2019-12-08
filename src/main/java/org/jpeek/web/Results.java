@@ -176,6 +176,7 @@ final class Results {
      * Get score of this.
      * @param artifact The artifact, e.g. "org.jpeek:jpeek"
      * @return The score
+     * @throws IOException If fails
      */
     public double score(final String artifact) throws IOException {
         final Item item = this.table.frame()
