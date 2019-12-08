@@ -23,16 +23,19 @@
  */
 package org.jpeek.web;
 
+import com.jcabi.log.Logger;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.file.Files;
+import org.cactoos.BiFunc;
+import org.cactoos.Func;
 import org.cactoos.text.TextOf;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.takes.Response;
 import org.takes.facets.hamcrest.HmRsStatus;
 
 /**
@@ -48,20 +51,25 @@ public final class ReportsTest {
     @Before
     public void weAreOnline() {
         try {
-            new TextOf(new URL("https://www.jpeek.org/")).asString();
+            new TextOf(new URL("http://www.jpeek.org/")).asString();
         } catch (final IOException ex) {
+            Logger.debug(this, "We are not online: %s", ex.getMessage());
             Assume.assumeTrue(false);
         }
     }
 
     @Test
-    @Ignore
     public void rendersOneReport() throws Exception {
+        final BiFunc<String, String, Func<String, Response>> reports =
+            new Reports(Files.createTempDirectory("x"));
         new Assertion<>(
             "Must return HTTP 200 OK status",
-            new Reports(
-                Files.createTempDirectory("x")
-            ).apply("org.takes", "takes").apply("index.html"),
+            reports.apply("com.jcabi", "jcabi-urn").apply("index.html"),
+            new HmRsStatus(HttpURLConnection.HTTP_OK)
+        ).affirm();
+        new Assertion<>(
+            "Must return HTTP 200 OK status",
+            reports.apply("com.jcabi", "jcabi-urn").apply("index.html"),
             new HmRsStatus(HttpURLConnection.HTTP_OK)
         ).affirm();
     }

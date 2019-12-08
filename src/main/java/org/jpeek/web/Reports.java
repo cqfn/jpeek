@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Comparator;
 import org.cactoos.BiFunc;
 import org.cactoos.Func;
 import org.cactoos.io.TeeInput;
@@ -41,7 +42,9 @@ import org.takes.Response;
 /**
  * All reports.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is NO thread-safety guarantee. Moreover, this class is NOT
+ * thread-safe. You have to decorate it with a thread-safe
+ * {@link Futures}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
@@ -86,14 +89,7 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
         final String artifact) throws IOException {
         final String grp = group.replace(".", "/");
         final Path input = this.sources.resolve(grp).resolve(artifact);
-        if (Files.exists(input)) {
-            throw new IllegalStateException(
-                String.format(
-                    "The input directory for %s:%s already exists: %s",
-                    group, artifact, input
-                )
-            );
-        }
+        Reports.deleteIfPresent(input);
         final String version = new XMLDocument(
             new TextOf(
                 new URL(
@@ -148,14 +144,7 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
             throw new IllegalStateException(ex);
         }
         final Path output = this.target.resolve(grp).resolve(artifact);
-        if (Files.exists(output)) {
-            throw new IllegalStateException(
-                String.format(
-                    "The output directory for %s:%s already exists: %s",
-                    group, artifact, output
-                )
-            );
-        }
+        Reports.deleteIfPresent(output);
         new App(input, output).analyze();
         synchronized (this.sources) {
             new Results().add(String.format("%s:%s", group, artifact), output);
@@ -163,6 +152,20 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
             new Sigmas().add(output);
         }
         return new TypedPages(new Pages(output));
+    }
+
+    /**
+     * Delete this dir if it's present.
+     * @param dir The dir
+     * @throws IOException If fails
+     */
+    private static void deleteIfPresent(final Path dir) throws IOException {
+        if (Files.exists(dir)) {
+            Files.walk(dir)
+                .sorted(Comparator.reverseOrder())
+                .map(Path::toFile)
+                .forEach(File::delete);
+        }
     }
 
 }
