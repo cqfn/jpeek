@@ -45,7 +45,7 @@ public final class XmlClassTest {
     public void parsesClass() {
         new Assertion<>(
             "Must parse class",
-            XhtmlMatchers.xhtml(this.classAsXml("Bar")),
+            XhtmlMatchers.xhtml(new ClassAsXml("Bar").value()),
             XhtmlMatchers.hasXPaths(
                 "/class/methods[count(method) = 5]",
                 "/class/attributes[count(attribute) = 4]"
@@ -58,7 +58,7 @@ public final class XmlClassTest {
         new Assertion<>(
             "Must parse method visibility",
             XhtmlMatchers.xhtml(
-                this.classAsXml("ClassWithDifferentMethodVisibilities")
+                new ClassAsXml("ClassWithDifferentMethodVisibilities").value()
             ),
             XhtmlMatchers.hasXPaths(
                 "/class/methods/method[@visibility = 'public']",
@@ -74,25 +74,11 @@ public final class XmlClassTest {
         new Assertion<>(
             "attribute public does not exists",
             XhtmlMatchers.xhtml(
-                this.classAsXml("ClassWithDifferentMethodVisibilities")
+                new ClassAsXml("ClassWithDifferentMethodVisibilities").value()
             ),
             XhtmlMatchers.hasXPaths(
                 "/class/methods/method[not (@public)]"
             )
         ).affirm();
-    }
-
-    // @todo #297:30min this method appears three times and may be useful for
-    //  future tests, so extract the method as a new class.
-    private String classAsXml(final String name) {
-        return new Xembler(
-            new Directives().add("class").append(
-                new XmlClass(
-                    new Classes(
-                        new FakeBase(name)
-                    ).iterator().next()
-                )
-            )
-        ).xmlQuietly();
     }
 }
