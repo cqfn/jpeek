@@ -30,26 +30,25 @@ import org.xembly.Xembler;
 
 /**
  * String XML representation for input class name.
- *
- * @author Andriy Kryvtsun (andy@akryvtsun.com)
+ * @since 0.27
  */
 final class ClassAsXml implements Scalar<String> {
     private final String name;
 
-    public ClassAsXml(final String name) {
+    ClassAsXml(final String name) {
         this.name = name;
     }
 
     @Override
     public String value() {
         return new Xembler(
-                new Directives().add("class").append(
-                        new XmlClass(
-                                new Classes(
-                                        new FakeBase(name)
-                                ).iterator().next()
-                        )
+            new Directives().add("class").append(
+                new XmlClass(
+                    new Classes(
+                        new FakeBase(this.name)
+                    ).iterator().next()
                 )
+            )
         ).xmlQuietly();
     }
 }
