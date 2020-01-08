@@ -59,16 +59,6 @@ public final class ReportsTest {
         }
     }
 
-    // @todo #359:30min test is unstable: is failed with exception
-    //  'java.io.IOException: Cannot run program "unzip" (in directory
-    //  "C:\Users\AKRYVT~1\AppData\Local\Temp\x7638602862964606675\sources\com\jcabi\jcabi-urn"):
-    //  CreateProcess error=2, The system cannot find the file specified
-    //    at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1128)
-    //	  at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1071)
-    //	  at org.jpeek.web.Reports.apply(Reports.java:132)
-    //	  at org.jpeek.web.Reports.apply(Reports.java:55)
-    //	  at org.jpeek.web.ReportsTest.rendersOneReport(ReportsTest.java:68) ...'
-    //  if is run with all other tests and is executed Ok separately.
     @Test
     public void rendersOneReport() throws Exception {
         final BiFunc<String, String, Func<String, Response>> reports =
