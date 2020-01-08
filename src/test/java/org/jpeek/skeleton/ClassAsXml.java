@@ -33,8 +33,15 @@ import org.xembly.Xembler;
  * @since 0.27
  */
 final class ClassAsXml implements Scalar<String> {
+    /**
+     * Class name for conversion to XML.
+     */
     private final String name;
 
+    /**
+     * Ctor.
+     * @param name Class name for conversion
+     */
     ClassAsXml(final String name) {
         this.name = name;
     }
