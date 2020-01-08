@@ -24,11 +24,8 @@
 package org.jpeek.skeleton;
 
 import com.jcabi.matchers.XhtmlMatchers;
-import org.jpeek.FakeBase;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.xembly.Directives;
-import org.xembly.Xembler;
 
 /**
  * Test case for {@link XmlClass}.
