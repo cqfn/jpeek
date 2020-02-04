@@ -38,7 +38,7 @@ book series make sense.
 ## How to use?
 
 Load the latest `jar-with-dependencies.jar` file from
-[here](http://repo1.maven.org/maven2/org/jpeek/jpeek/)
+[here](https://repo1.maven.org/maven2/org/jpeek/jpeek/)
 and then:
 
 ```bash
