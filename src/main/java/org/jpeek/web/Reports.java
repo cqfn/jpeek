@@ -95,7 +95,7 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
                 new URL(
                     String.format(
                         // @checkstyle LineLength (1 line)
-                        "http://repo1.maven.org/maven2/%s/%s/maven-metadata.xml",
+                        "https://repo1.maven.org/maven2/%s/%s/maven-metadata.xml",
                         grp, artifact
                     )
                 )
@@ -107,7 +107,7 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
                 new TeeInput(
                     new URL(
                         String.format(
-                            "http://repo1.maven.org/maven2/%s/%s/%s/%s",
+                            "https://repo1.maven.org/maven2/%s/%s/%s/%s",
                             grp, artifact, version, name
                         )
                     ),
