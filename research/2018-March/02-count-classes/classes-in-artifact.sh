@@ -29,13 +29,13 @@
 set -e
 
 path=${1//.//}
-meta=$(curl --fail --silent "http://repo1.maven.org/maven2/${path}/maven-metadata.xml")
+meta=$(curl --fail --silent "https://repo1.maven.org/maven2/${path}/maven-metadata.xml")
 version=$(echo ${meta} | xmllint --xpath '/metadata/versioning/latest/text()' -)
 group=$(echo ${meta} | xmllint --xpath '/metadata/groupId/text()' -)
 artifact=$(echo ${meta} | xmllint --xpath '/metadata/artifactId/text()' -)
 
 dir=$(mktemp -d /tmp/jpeek-XXXX)
-curl --fail --silent "http://repo1.maven.org/maven2/${path}/${version}/${artifact}-${version}.jar" > "${dir}/${artifact}.jar"
+curl --fail --silent "https://repo1.maven.org/maven2/${path}/${version}/${artifact}-${version}.jar" > "${dir}/${artifact}.jar"
 cd "${dir}"
 unzip -q "${artifact}.jar"
 classes=$(find . -name '*.class' | wc -w)

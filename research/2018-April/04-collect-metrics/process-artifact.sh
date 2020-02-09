@@ -31,7 +31,7 @@ set -e
 jar=$1
 output=$3
 path=${2//.//}
-meta=$(curl --fail --silent "http://repo1.maven.org/maven2/${path}/maven-metadata.xml")
+meta=$(curl --fail --silent "https://repo1.maven.org/maven2/${path}/maven-metadata.xml")
 version=$(echo ${meta} | xmllint --xpath '/metadata/versioning/latest/text()' -)
 group=$(echo ${meta} | xmllint --xpath '/metadata/groupId/text()' -)
 artifact=$(echo ${meta} | xmllint --xpath '/metadata/artifactId/text()' -)
@@ -39,7 +39,7 @@ artifact=$(echo ${meta} | xmllint --xpath '/metadata/artifactId/text()' -)
 home=$(pwd)
 dir=$(mktemp -d /tmp/jpeek-XXXX)
 trap "rm -rf ${dir}" EXIT
-curl --fail --silent "http://repo1.maven.org/maven2/${path}/${version}/${artifact}-${version}.jar" > "${dir}/${artifact}.jar"
+curl --fail --silent "https://repo1.maven.org/maven2/${path}/${version}/${artifact}-${version}.jar" > "${dir}/${artifact}.jar"
 cd "${dir}"
 mkdir "${artifact}"
 unzip -o -q -d "${artifact}" "${artifact}.jar"

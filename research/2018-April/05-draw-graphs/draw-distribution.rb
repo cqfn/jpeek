@@ -8,19 +8,22 @@ File.open(metrics).read.each_line.map do |l|
   probs << cohesion.to_f.round(2)
 end
 
-width = 0.1
-
-def draw(slices)
+def draw(probs)
+  total = 100
+  slices = []
+  total.times do |i|
+    slices[i] = probs.select { |p| p <= i.to_f / total && p > (i.to_f-1) / total }.count
+  end
   txt = '\begin{tikzpicture}' +
   '\begin{axis}[width=12cm,height=6cm,' +
-  'axis lines=middle, xlabel={$S_i$}, ylabel={$C_i$},' +
-  'xmin=0, xmax=100, ymin=0, ymax=1}' +
+  'axis lines=middle, xlabel={$p_i$}, ylabel={classes},' +
+  "xmin=0, xmax=1, ymin=0, ymax=#{slices.max}," +
   'grid=major]\addplot [only marks, mark size=1pt] table {' + "\n"
   slices.each_with_index do |c, i|
-    txt += "#{c[:size]} #{c[:cohesion]}\n"
+    txt += "#{i.to_f / 100} #{c}\n"
   end
   txt + '};\end{axis}\end{tikzpicture}'
 end
 
-File.write(File.join(dir,'graph-distribution.tex'), draw(slices))
+File.write(File.join(dir,'graph-distribution.tex'), draw(probs))
 
