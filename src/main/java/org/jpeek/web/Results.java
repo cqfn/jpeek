@@ -52,7 +52,6 @@ import org.xembly.Directives;
  *
  * @since 0.8
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
- * @checkstyle JavadocTagsCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class Results {

@@ -46,7 +46,6 @@ import org.takes.rs.xe.XeAppend;
  *
  * @since 0.8
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
- * @checkstyle JavadocTagsCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class AsyncReports implements

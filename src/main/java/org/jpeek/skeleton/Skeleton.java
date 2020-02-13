@@ -56,7 +56,6 @@ import org.xembly.Xembler;
  * @since 0.23
  * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
- * @checkstyle JavadocTagsCheck (500 lines)
  */
 public final class Skeleton {
 

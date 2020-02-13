@@ -42,7 +42,6 @@ import org.xembly.Xembler;
  *
  * @since 0.16
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
- * @checkstyle JavadocTagsCheck (500 lines)
  */
 final class ReportWithStatistics implements XML {
 

@@ -38,7 +38,6 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
- * @checkstyle JavadocTagsCheck (500 lines)
  */
 public final class Lcom4Test {
 

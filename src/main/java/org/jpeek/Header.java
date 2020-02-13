@@ -37,7 +37,6 @@ import org.xembly.Directives;
  *
  * @since 0.8
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
- * @checkstyle JavadocTagsCheck (500 lines)
  */
 public final class Header implements Iterable<Directive> {
 

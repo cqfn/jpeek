@@ -54,7 +54,6 @@ import org.llorllale.cactoos.matchers.Assertion;
  *  Also, all classes without transitive relations
  *  should have the same LCC metric as TCC metric.
  *  Before do it we have to fix puzzles in LCC.xml.
- *  @checkstyle JavadocTagsCheck (500 lines)
  */
 @RunWith(Parameterized.class)
 @SuppressWarnings(

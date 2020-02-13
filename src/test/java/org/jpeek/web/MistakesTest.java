@@ -39,7 +39,6 @@ import org.xembly.Xembler;
  * Test case for {@link Mistakes}.
  * @since 0.16
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle JavadocTagsCheck (500 lines)
  */
 public final class MistakesTest {
 

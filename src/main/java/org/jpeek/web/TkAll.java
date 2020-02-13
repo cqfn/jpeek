@@ -38,7 +38,6 @@ import org.takes.rs.xe.XeDirectives;
  *
  * @since 0.17
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
- * @checkstyle JavadocTagsCheck (500 lines)
  */
 final class TkAll implements Take {
 

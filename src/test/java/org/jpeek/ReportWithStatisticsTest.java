@@ -36,7 +36,6 @@ import org.llorllale.cactoos.matchers.Assertion;
  * Test case for {@link ReportWithStatistics}.
  * @since 0.19
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle JavadocTagsCheck (500 lines)
  */
 public final class ReportWithStatisticsTest {
 

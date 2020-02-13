@@ -45,7 +45,6 @@ import org.xembly.Directives;
  *
  * @since 0.6
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
- * @checkstyle JavadocTagsCheck (500 lines)
  */
 final class Matrix implements Iterable<Directive> {
 

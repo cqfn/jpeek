@@ -33,7 +33,6 @@ import org.xembly.Xembler;
  * Test case for {@link TypesOf}.
  * @since 0.27
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle JavadocTagsCheck (500 lines)
  */
 public final class TypesOfTest {
 

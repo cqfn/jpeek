@@ -42,7 +42,6 @@ import org.takes.rs.RsText;
  *
  * @since 0.32
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
- * @checkstyle JavadocTagsCheck (500 lines)
  */
 final class TkUpload implements Take {
 

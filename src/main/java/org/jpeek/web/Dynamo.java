@@ -41,7 +41,6 @@ import org.cactoos.scalar.PropertiesOf;
  *
  * @since 0.14
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
- * @checkstyle JavadocTagsCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class Dynamo implements Region {

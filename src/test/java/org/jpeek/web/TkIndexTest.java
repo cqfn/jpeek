@@ -34,7 +34,6 @@ import org.takes.rs.RsPrint;
  * Test case for {@link TkIndex}.
  * @since 0.11
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle JavadocTagsCheck (500 lines)
  */
 public final class TkIndexTest {
 

@@ -30,7 +30,6 @@ import java.nio.file.Path;
  * File Target.
  *
  * @since 0.26.4
- * @checkstyle JavadocTagsCheck (500 lines)
  */
 public interface Target {
 

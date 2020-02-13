@@ -46,7 +46,6 @@ import org.jpeek.Version;
  *
  * @since 0.17
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
- * @checkstyle JavadocTagsCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class Sigmas {

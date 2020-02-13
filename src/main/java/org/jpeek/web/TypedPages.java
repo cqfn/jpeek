@@ -36,7 +36,6 @@ import org.takes.rs.RsWithType;
  *
  * @since 0.8
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
- * @checkstyle JavadocTagsCheck (500 lines)
  */
 final class TypedPages implements Func<String, Response> {
 

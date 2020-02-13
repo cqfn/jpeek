@@ -41,7 +41,6 @@ import org.cactoos.scalar.LengthOf;
  * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
- * @checkstyle JavadocTagsCheck (500 lines)
  */
 public final class FakeBase implements Base {
 

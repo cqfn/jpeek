@@ -36,7 +36,6 @@ import org.takes.rs.RsPrint;
  * Test case for {@link TkUpload}.
  * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle JavadocTagsCheck (500 lines)
  */
 public final class TkUploadTest {
 

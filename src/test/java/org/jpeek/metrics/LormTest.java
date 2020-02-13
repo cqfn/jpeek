@@ -33,7 +33,6 @@ import org.junit.Test;
  * @since 0.28
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
- * @checkstyle JavadocTagsCheck (500 lines)
  */
 public final class LormTest {
     @Test

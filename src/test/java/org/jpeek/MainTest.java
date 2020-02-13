@@ -38,7 +38,6 @@ import org.llorllale.cactoos.matchers.Throws;
  * Test case for {@link Main}.
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle JavadocTagsCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class MainTest {

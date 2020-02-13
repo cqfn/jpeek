@@ -37,7 +37,6 @@ import org.takes.Response;
  *
  * @since 0.8
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
- * @checkstyle JavadocTagsCheck (500 lines)
  */
 final class StickyFutures
     implements BiFunc<String, String, Future<Func<String, Response>>> {

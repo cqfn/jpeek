@@ -40,7 +40,6 @@ import org.xembly.Directive;
  *
  * @since 0.14
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
- * @checkstyle JavadocTagsCheck (500 lines)
  */
 final class TkMistakes implements Take {
 

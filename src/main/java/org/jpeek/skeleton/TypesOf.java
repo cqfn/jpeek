@@ -43,7 +43,6 @@ import org.xembly.Directives;
  * @since 0.27
  * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
- * @checkstyle JavadocTagsCheck (500 lines)
  */
 final class TypesOf extends SignatureVisitor implements Iterable<Directive> {
 

@@ -35,7 +35,6 @@ import org.cactoos.scalar.PropertiesOf;
  *
  * @since 0.11
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
- * @checkstyle JavadocTagsCheck (500 lines)
  */
 public final class Version implements Scalar<String> {
 

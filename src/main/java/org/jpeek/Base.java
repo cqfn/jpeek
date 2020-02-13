@@ -33,7 +33,6 @@ import org.cactoos.iterable.Joined;
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.1
- * @checkstyle JavadocTagsCheck (500 lines)
  */
 public interface Base {
 

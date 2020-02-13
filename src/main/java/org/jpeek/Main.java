@@ -45,7 +45,6 @@ import org.apache.log4j.PatternLayout;
  *  author, version and since tags in all javadoc. After that remove
  *  'JavadocTagsCheck' suppression.
  * @checkstyle JavadocVariableCheck (500 lines)
- * @checkstyle JavadocTagsCheck (500 lines)
  */
 public final class Main {
 

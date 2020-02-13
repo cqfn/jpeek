@@ -34,7 +34,6 @@ import java.nio.file.attribute.BasicFileAttributes;
 /**
  * File Target.
  * @since 0.26.4
- * @checkstyle JavadocTagsCheck (500 lines)
  */
 public final class FileTarget implements Target {
 

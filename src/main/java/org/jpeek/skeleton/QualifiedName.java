@@ -32,7 +32,6 @@ import org.cactoos.text.UncheckedText;
  * that specifies field without regard
  * to the context of the call.
  * @since 0.29
- * @checkstyle JavadocTagsCheck (500 lines)
  */
 public final class QualifiedName extends TextEnvelope {
     /**

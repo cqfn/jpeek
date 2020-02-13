@@ -38,7 +38,6 @@ import org.llorllale.cactoos.matchers.Assertion;
  *  findFieldWithQualifiedName must be uncommented when this issue is
  *  resolved. Please see #156 for more detailing in upgrading skeleton
  *  behavior.
- *  @checkstyle JavadocTagsCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class SkeletonTest {

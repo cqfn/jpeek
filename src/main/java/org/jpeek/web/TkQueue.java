@@ -36,7 +36,6 @@ import org.takes.rs.RsText;
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.18
- * @checkstyle JavadocTagsCheck (500 lines)
  */
 final class TkQueue implements Take {
 

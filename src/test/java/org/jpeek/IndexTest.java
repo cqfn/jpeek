@@ -37,7 +37,6 @@ import org.llorllale.cactoos.matchers.Assertion;
  * Test case for {@link Index}.
  * @since 0.6
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle JavadocTagsCheck (500 lines)
  */
 public final class IndexTest {
     /**

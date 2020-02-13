@@ -46,7 +46,6 @@ import org.llorllale.cactoos.matchers.IsTrue;
  * Test case for {@link App}.
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle JavadocTagsCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
