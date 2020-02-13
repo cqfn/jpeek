@@ -34,8 +34,6 @@ import org.takes.rs.RsPrint;
 
 /**
  * Test case for {@link TkUpload}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocTagsCheck (500 lines)

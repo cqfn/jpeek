@@ -52,8 +52,6 @@ import org.xembly.Xembler;
  *
  * <p>There is no thread-safety guarantee.</p>
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @see <a href="http://www.pitt.edu/~ckemerer/CK%20research%20papers/MetricForOOD_ChidamberKemerer94.pdf">A packages suite for object oriented design</a>
  * @since 0.23
  * @checkstyle AbbreviationAsWordInNameCheck (5 lines)

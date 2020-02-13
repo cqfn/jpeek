@@ -29,8 +29,6 @@ import java.nio.file.Path;
 /**
  * File Target.
  *
- * @author Felipe Moreno (oridan@gmail.com)
- * @version $Id$
  * @since 0.26.4
  * @checkstyle JavadocTagsCheck (500 lines)
  */

@@ -35,8 +35,6 @@ import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Matrix}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocTagsCheck (500 lines)

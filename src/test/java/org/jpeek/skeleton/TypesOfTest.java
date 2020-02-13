@@ -31,8 +31,6 @@ import org.xembly.Xembler;
 
 /**
  * Test case for {@link TypesOf}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.27
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocTagsCheck (500 lines)

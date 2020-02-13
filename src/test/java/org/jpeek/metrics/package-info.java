@@ -25,8 +25,6 @@
 /**
  * Individual metrics tests.
  *
- * @author Ilya Kharlamov (ilya.kharlamov@gmail.com)
- * @version $Id$
  * @since 0.28
  */
 package org.jpeek.metrics;

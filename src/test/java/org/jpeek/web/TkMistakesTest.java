@@ -33,8 +33,6 @@ import org.takes.rs.RsPrint;
 
 /**
  * Test case for {@link TkMistakes}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.14
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocTagsCheck (500 lines)

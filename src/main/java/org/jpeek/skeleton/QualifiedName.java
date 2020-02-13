@@ -31,8 +31,6 @@ import org.cactoos.text.UncheckedText;
  * A fully qualified name of a field, an unambiguous name
  * that specifies field without regard
  * to the context of the call.
- * @author Ilya Kharlamov (ilya.kharlamov@gmail.com)
- * @version $Id$
  * @since 0.29
  * @checkstyle JavadocTagsCheck (500 lines)
  */

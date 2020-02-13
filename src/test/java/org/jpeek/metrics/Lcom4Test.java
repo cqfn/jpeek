@@ -34,8 +34,6 @@ import org.junit.Test;
  * Basically it's a graph disjoint set.
  * I.e. it answers the the following question:
  * "Into how many independent classes can you split this class?"
- * @author Ilya Kharlamov (ilya.kharlamov@gmail.com)
- * @version $Id$
  * @since 0.28
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)

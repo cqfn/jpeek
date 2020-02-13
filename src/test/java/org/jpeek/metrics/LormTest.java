@@ -30,8 +30,6 @@ import org.junit.Test;
 /**
  * Test case for LORM.
  * LORM = Logical Relatedness of Methods.
- * @author Ilya Kharlamov (ilya.kharlamov@gmail.com)
- * @version $Id$
  * @since 0.28
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)

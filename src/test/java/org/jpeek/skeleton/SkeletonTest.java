@@ -31,8 +31,6 @@ import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Skeleton}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.23
  * @checkstyle JavadocMethodCheck (500 lines)
  * @todo #156:30min Skeleton must be upgraded to determine if a field being

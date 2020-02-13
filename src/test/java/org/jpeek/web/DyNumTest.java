@@ -31,8 +31,6 @@ import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link DyNum}.
- * @author Nikita Puzankov (humb1t@yandex.ru)
- * @version $Id$
  * @since 0.31
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocTagsCheck (500 lines)

@@ -37,8 +37,6 @@ import org.cactoos.scalar.LengthOf;
 
 /**
  * Fake base for tests.
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.2
  * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
  * @checkstyle JavadocMethodCheck (500 lines)

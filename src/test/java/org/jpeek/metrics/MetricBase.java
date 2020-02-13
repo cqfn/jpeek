@@ -37,8 +37,6 @@ import org.llorllale.cactoos.matchers.TextIs;
 
 /**
  * Metric test helper.
- * @author Ilya Kharlamov (ilya.kharlamov@gmail.com)
- * @version $Id$
  * @since 0.28
  * @checkstyle JavadocTagsCheck (500 lines)
  */
