@@ -64,7 +64,7 @@ public final class MainTest {
             () -> {
                 Main.main("hello");
                 return null;
-            }, new Throws<>("", ParameterException.class)
+            }, new Throws<>(ParameterException.class)
         ).affirm();
     }
 
@@ -79,7 +79,7 @@ public final class MainTest {
                     "--target", target.toString()
                 );
                 return null;
-            }, new Throws<>("", IllegalStateException.class)
+            }, new Throws<>(IllegalStateException.class)
         ).affirm();
     }
 
