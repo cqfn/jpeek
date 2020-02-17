@@ -35,7 +35,7 @@ import org.llorllale.cactoos.matchers.Assertion;
 /**
  * Test case for {@link ReportWithStatistics}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id: cd48d531b54b75bcbb7d7300276380a36337f1be $
+ * @version $Id$
  * @since 0.19
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocTagsCheck (500 lines)

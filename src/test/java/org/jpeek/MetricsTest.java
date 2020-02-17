@@ -44,7 +44,7 @@ import org.llorllale.cactoos.matchers.Assertion;
 /**
  * Tests for all metrics.
  * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id: 473cae02955981eb3ce0a348f85a6bdd23457899 $
+ * @version $Id$
  * @since 0.23
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle VisibilityModifierCheck (500 lines)

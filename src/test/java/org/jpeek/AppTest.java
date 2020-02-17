@@ -45,7 +45,7 @@ import org.llorllale.cactoos.matchers.IsTrue;
 /**
  * Test case for {@link App}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id: 6f5a212c49c37e8fcb52668a89bef98c2e0a9335 $
+ * @version $Id$
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocTagsCheck (500 lines)

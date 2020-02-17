@@ -39,7 +39,7 @@ import org.xembly.Xembler;
 /**
  * Test case for {@link Report}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id: 46f01c3c892964ce23da18ad766d18f364982c33 $
+ * @version $Id$
  * @since 0.4
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)

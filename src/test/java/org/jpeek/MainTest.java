@@ -37,7 +37,7 @@ import org.llorllale.cactoos.matchers.Throws;
 /**
  * Test case for {@link Main}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id: b1b1f9e48a25fb704c1d28fad85d363be2c9bb46 $
+ * @version $Id$
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocTagsCheck (500 lines)
