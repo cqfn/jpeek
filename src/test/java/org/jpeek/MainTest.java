@@ -29,7 +29,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.cactoos.Scalar;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
 import org.llorllale.cactoos.matchers.Throws;
@@ -37,7 +37,7 @@ import org.llorllale.cactoos.matchers.Throws;
 /**
  * Test case for {@link Main}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
+ * @version $Id: b1b1f9e48a25fb704c1d28fad85d363be2c9bb46 $
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocTagsCheck (500 lines)
@@ -57,18 +57,30 @@ public final class MainTest {
         ).affirm();
     }
 
-    @Test(expected = ParameterException.class)
+    @Test
     public void crashesIfInvalidInput() throws IOException {
-        Main.main("hello");
+        new Assertion<>(
+            "Must throw an exception if parameter is invalid",
+            () -> {
+                Main.main("hello");
+                return null;
+            }, new Throws<>("", ParameterException.class)
+        ).affirm();
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void crashesIfNoOverwriteAndTargetExists() throws IOException {
         final Path target = Files.createTempDirectory("");
-        Main.main(
-            "--sources", Paths.get(".").toString(),
-            "--target", target.toString()
-        );
+        new Assertion<>(
+            "Must throw an exception if target exists and no overwrite",
+            () -> {
+                Main.main(
+                    "--sources", Paths.get(".").toString(),
+                    "--target", target.toString()
+                );
+                return null;
+            }, new Throws<>("", IllegalStateException.class)
+        ).affirm();
     }
 
     @Test

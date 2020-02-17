@@ -29,14 +29,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.cactoos.text.TextOf;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Matrix}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
+ * @version $Id: 1855f8cf6c5488becaed4c48cfce961fb57a7786 $
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocTagsCheck (500 lines)
@@ -47,7 +47,7 @@ public final class MatrixTest {
      */
     private String xml;
 
-    @Before
+    @BeforeEach
     public void setUp() throws IOException {
         final Path output = Files.createTempDirectory("").resolve("x2");
         final Path input = Paths.get(".");

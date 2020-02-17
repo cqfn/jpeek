@@ -44,28 +44,27 @@ import org.llorllale.cactoos.matchers.Assertion;
 /**
  * Tests for all metrics.
  * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
+ * @version $Id: 473cae02955981eb3ce0a348f85a6bdd23457899 $
  * @since 0.23
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle VisibilityModifierCheck (500 lines)
  * @checkstyle JavadocVariableCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  * @todo #118:30min Add test for LCC with "IndirectlyRelatedPairs" and others.
- *  In "IndirectlyRelatedPairs" all methods exist in one transitive closure,
- *  so the result should be {@code 1d}.
- *  Also, all classes without transitive relations
- *  should have the same LCC metric as TCC metric.
- *  Before do it we have to fix puzzles in LCC.xml.
- *  @checkstyle JavadocTagsCheck (500 lines)
+ *  In "IndirectlyRelatedPairs" all methods exist in one transitive closure, so
+ *  the result should be {@code 1d}. Also, all classes without transitive
+ *  relations should have the same LCC metric as TCC metric. Before do it we have
+ *  to fix puzzles in LCC.xml.
+ * @todo #323:30min Migrate this parametrized test to junit 5, so it won't
+ *  import any classes from junit 4 anymore.
+ * @checkstyle JavadocTagsCheck (500 lines)
  */
 @RunWith(Parameterized.class)
-@SuppressWarnings(
-    {
-        "PMD.AvoidDuplicateLiterals",
-        "PMD.ExcessiveMethodLength",
-        "PMD.UseUnderscoresInNumericLiterals"
-    }
-)
+@SuppressWarnings({
+    "PMD.AvoidDuplicateLiterals",
+    "PMD.ExcessiveMethodLength",
+    "PMD.UseUnderscoresInNumericLiterals"
+})
 public final class MetricsTest {
 
     @Parameterized.Parameter
@@ -121,9 +120,9 @@ public final class MetricsTest {
             new Object[] {"WithoutAttributes", "NHD", 0.0d},
             new Object[] {"OneMethodCreatesLambda", "NHD", 0.0d},
             new Object[] {"MethodsWithDiffParamTypes", "CCM", 0.0476d},
-            new Object[]{"Foo", "SCOM", 0.5d},
-            new Object[]{"MethodsWithDiffParamTypes", "SCOM", 0.2381d},
-            new Object[]{"OverloadMethods", "SCOM", 0.75d},
+            new Object[] {"Foo", "SCOM", 0.5d},
+            new Object[] {"MethodsWithDiffParamTypes", "SCOM", 0.2381d},
+            new Object[] {"OverloadMethods", "SCOM", 0.75d},
             new Object[] {"TwoCommonAttributes", "SCOM", 0.0d},
             new Object[] {"NoMethods", "SCOM", Double.NaN},
             new Object[] {"OneVoidMethodWithoutParams", "SCOM", 0.0d},

@@ -26,7 +26,11 @@
  * Tests.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
+ * @version $Id: 5f32b906da657837e39669980f837afea3dc7a9e $
  * @since 0.1
+ * @todo #323:30min Migrate the tests in the sub-packages: org.jpeek.metrics,
+ * org.jpeek.skeleton and org.jpeek.web to junit 5, so they won't
+ * import any classes from junit 4 anymore. Then, we should find a way to
+ * exclude junit 4 from project dependecy, so they won't be imported anymore.
  */
 package org.jpeek;

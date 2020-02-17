@@ -38,14 +38,14 @@ import java.util.Map;
 import org.cactoos.text.TextOf;
 import org.hamcrest.collection.IsEmptyIterable;
 import org.hamcrest.core.IsNot;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
  * Test case for {@link App}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
+ * @version $Id: 6f5a212c49c37e8fcb52668a89bef98c2e0a9335 $
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocTagsCheck (500 lines)
@@ -138,7 +138,7 @@ public final class AppTest {
             elements,
             populated
         ).affirm();
-        for (final XML element: elements) {
+        for (final XML element : elements) {
             new Assertion<>(
                 String.format(
                     "element '%s' must have a documentation",
