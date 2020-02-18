@@ -40,10 +40,6 @@ import org.apache.log4j.PatternLayout;
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.1
- * @todo #308:30min Due to introduce new version of qulice 0.18.17 there were
- *  many 'JavadocTagsCheck' suppression, so we need to fix that by remove
- *  author, version and since tags in all javadoc. After that remove
- *  'JavadocTagsCheck' suppression.
  * @checkstyle JavadocVariableCheck (500 lines)
  */
 public final class Main {
