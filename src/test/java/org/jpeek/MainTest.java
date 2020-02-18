@@ -58,12 +58,12 @@ public final class MainTest {
     }
 
     @Test
-    public void crashesIfInvalidInput() throws IOException {
+    public void crashesIfInvalidInput() {
         new Assertion<>(
             "Must throw an exception if parameter is invalid",
             () -> {
                 Main.main("hello");
-                return null;
+                return "";
             }, new Throws<>(ParameterException.class)
         ).affirm();
     }
@@ -78,7 +78,7 @@ public final class MainTest {
                     "--sources", Paths.get(".").toString(),
                     "--target", target.toString()
                 );
-                return null;
+                return "";
             }, new Throws<>(IllegalStateException.class)
         ).affirm();
     }
