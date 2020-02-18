@@ -29,8 +29,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.cactoos.text.TextOf;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
@@ -47,7 +47,7 @@ public final class IndexTest {
      */
     private String xml;
 
-    @Before
+    @BeforeEach
     public void setUp() throws IOException {
         final Path output = Files.createTempDirectory("").resolve("x2");
         final Path input = Paths.get(".");

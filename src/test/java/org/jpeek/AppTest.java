@@ -38,7 +38,7 @@ import java.util.Map;
 import org.cactoos.text.TextOf;
 import org.hamcrest.collection.IsEmptyIterable;
 import org.hamcrest.core.IsNot;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
 
@@ -138,7 +138,7 @@ public final class AppTest {
             elements,
             populated
         ).affirm();
-        for (final XML element: elements) {
+        for (final XML element : elements) {
             new Assertion<>(
                 String.format(
                     "element '%s' must have a documentation",

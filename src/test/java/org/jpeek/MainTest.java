@@ -29,7 +29,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.cactoos.Scalar;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
 import org.llorllale.cactoos.matchers.Throws;
@@ -57,18 +57,30 @@ public final class MainTest {
         ).affirm();
     }
 
-    @Test(expected = ParameterException.class)
-    public void crashesIfInvalidInput() throws IOException {
-        Main.main("hello");
+    @Test
+    public void crashesIfInvalidInput() {
+        new Assertion<>(
+            "Must throw an exception if parameter is invalid",
+            () -> {
+                Main.main("hello");
+                return "";
+            }, new Throws<>(ParameterException.class)
+        ).affirm();
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void crashesIfNoOverwriteAndTargetExists() throws IOException {
         final Path target = Files.createTempDirectory("");
-        Main.main(
-            "--sources", Paths.get(".").toString(),
-            "--target", target.toString()
-        );
+        new Assertion<>(
+            "Must throw an exception if target exists and no overwrite",
+            () -> {
+                Main.main(
+                    "--sources", Paths.get(".").toString(),
+                    "--target", target.toString()
+                );
+                return "";
+            }, new Throws<>(IllegalStateException.class)
+        ).affirm();
     }
 
     @Test
