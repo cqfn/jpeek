@@ -33,11 +33,6 @@ import org.llorllale.cactoos.matchers.Assertion;
  * Test case for {@link Skeleton}.
  * @since 0.23
  * @checkstyle JavadocMethodCheck (500 lines)
- * @todo #156:30min Skeleton must be upgraded to determine if a field being
- *  accessed in a method belongs to that class or to another class. The test in
- *  findFieldWithQualifiedName must be uncommented when this issue is
- *  resolved. Please see #156 for more detailing in upgrading skeleton
- *  behavior.
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class SkeletonTest {
