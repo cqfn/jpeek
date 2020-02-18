@@ -248,7 +248,7 @@ public final class MetricsTest {
     @Test
     public void testsTarget() throws Exception {
         final Path output = Files.createTempDirectory("");
-        new Report(
+        new XslReport(
             new Skeleton(new FakeBase(this.target)).xml(),
             this.metric
         ).save(output);
