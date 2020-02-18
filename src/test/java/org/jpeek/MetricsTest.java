@@ -55,8 +55,8 @@ import org.llorllale.cactoos.matchers.Assertion;
  *  the result should be {@code 1d}. Also, all classes without transitive
  *  relations should have the same LCC metric as TCC metric. Before do it we have
  *  to fix puzzles in LCC.xml.
- * @todo #323:30min Migrate this parametrized test to junit 5, so it won't
- *  import any classes from junit 4 anymore.
+ * @todo #323:30min This test is fully written against JUnit 4 API.
+ *  Migrate this parametrized test to junit 5, so it won't import any classes from junit 4 anymore.
  * @checkstyle JavadocTagsCheck (500 lines)
  */
 @RunWith(Parameterized.class)
