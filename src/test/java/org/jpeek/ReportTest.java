@@ -30,7 +30,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.text.TextOf;
 import org.jpeek.skeleton.Skeleton;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
 import org.xembly.Directives;
