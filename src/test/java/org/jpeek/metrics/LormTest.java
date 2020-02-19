@@ -25,7 +25,7 @@
 package org.jpeek.metrics;
 
 import org.cactoos.list.ListOf;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for LORM.

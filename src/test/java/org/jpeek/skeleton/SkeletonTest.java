@@ -26,7 +26,7 @@ package org.jpeek.skeleton;
 import com.jcabi.matchers.XhtmlMatchers;
 import org.jpeek.Base;
 import org.jpeek.FakeBase;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**

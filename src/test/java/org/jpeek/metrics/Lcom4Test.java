@@ -25,8 +25,8 @@
 package org.jpeek.metrics;
 
 import org.cactoos.list.ListOf;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for LCOM4
@@ -84,7 +84,7 @@ public final class Lcom4Test {
      *  After implementing, remove the @Ignore.
      */
     @Test
-    @Ignore
+    @Disabled
     public void methodMethodCalls() throws Exception {
         final MetricBase.Report report = new MetricBase(
             Lcom4Test.XSL
