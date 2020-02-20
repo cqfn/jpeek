@@ -43,8 +43,6 @@ import org.llorllale.cactoos.matchers.Assertion;
 //  OneMethodCreatesLambda.
 /**
  * Tests for all metrics.
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.23
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle VisibilityModifierCheck (500 lines)
@@ -57,7 +55,6 @@ import org.llorllale.cactoos.matchers.Assertion;
  *  to fix puzzles in LCC.xml.
  * @todo #323:30min This test is fully written against JUnit 4 API.
  *  Migrate this parametrized test to junit 5, so it won't import any classes from junit 4 anymore.
- * @checkstyle JavadocTagsCheck (500 lines)
  */
 @RunWith(Parameterized.class)
 @SuppressWarnings({

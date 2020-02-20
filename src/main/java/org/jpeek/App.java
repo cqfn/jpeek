@@ -56,8 +56,6 @@ import org.xembly.Xembler;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.1
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @checkstyle ClassFanOutComplexityCheck (500 lines)
@@ -67,7 +65,6 @@ import org.xembly.Xembler;
  * @checkstyle CyclomaticComplexityCheck (500 lines)
  * @checkstyle MethodLengthCheck (500 lines)
  * @checkstyle JavaNCSSCheck (500 lines)
- * @checkstyle JavadocTagsCheck (500 lines)
  *
  * @todo #118:30min LCC metric has impediments (see puzzles in LCC.xml
  *  and in `MetricsTest`).
