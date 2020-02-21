@@ -26,9 +26,10 @@
  * Tests.
  *
  * @since 0.1
- * @todo #323:30min Migrate the tests in the sub-packages: org.jpeek.metrics,
- *  org.jpeek.skeleton and org.jpeek.web to junit 5, so they won't
- *  import any classes from junit 4 anymore. Then, we should find a way to
- *  exclude junit 4 from project dependecy, so they won't be imported anymore.
+ * @todo #380:30min Migrate the tests in the remaining sub-package
+ *  org.jpeek.web to junit 5, so they won't import any classes from Junit 4
+ *  anymore. Once we have no more Junit 4 tests, we can remove
+ *  junit-vintage-engine dependency. Ideally, we should find a way to exclude
+ *  junit 4 from project dependecy, so its API won't be imported anymore.
  */
 package org.jpeek;
