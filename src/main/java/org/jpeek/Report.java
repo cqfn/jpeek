@@ -55,7 +55,6 @@ import org.xembly.Xembler;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
- * @todo #355:30min too short puzzle
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @checkstyle JavadocTagsCheck (500 lines)
  */
