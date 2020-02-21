@@ -42,6 +42,9 @@ import org.llorllale.cactoos.matchers.Assertion;
 //  OneMethodCreatesLambda.
 /**
  * Tests for all metrics.
+ * <p>
+ * In some cases to run this test in IDE,
+ * you have to set up VM options: -Duser.language=en -Duser.country=US
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.23
