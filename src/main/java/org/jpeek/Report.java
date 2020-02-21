@@ -29,6 +29,10 @@ import java.nio.file.Path;
 /**
  * Report interface.
  * @since 0.1
+ * @todo #296:30min Now that we have the infrastructure to implement
+ *  some metrics in other means than XSL transformations. We should try
+ *  to implement some metrics with Java. We could start with LCOM4 metric that
+ *  implies a graph traversal algorithm.
  */
 public interface Report {
 
