@@ -57,6 +57,7 @@ import org.xembly.Xembler;
  * @since 0.1
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @checkstyle JavadocTagsCheck (500 lines)
+ * @todo #355:30min too short puzzle
  */
 final class Report {
     /**
