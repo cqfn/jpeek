@@ -56,7 +56,10 @@ import org.llorllale.cactoos.matchers.Assertion;
  *  relations should have the same LCC metric as TCC metric. Before do it we have
  *  to fix puzzles in LCC.xml.
  * @todo #323:30min This test is fully written against JUnit 4 API.
- *  Migrate this parametrized test to junit 5, so it won't import any classes from junit 4 anymore.
+ *  Migrate this parametrized test to junit 5, so it won't import any classes
+ *  from junit 4 anymore. Once we have no more Junit 4 tests, we can remove
+ *  junit-vintage-engine dependency. Ideally, we should find a way to exclude
+ *  junit 4 from project dependecy, so its API won't be imported anymore.
  * @checkstyle JavadocTagsCheck (500 lines)
  */
 @RunWith(Parameterized.class)

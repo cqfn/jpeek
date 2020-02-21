@@ -29,8 +29,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.cactoos.collection.Joined;
 import org.jpeek.App;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.xembly.Directives;
 import org.xembly.Xembler;
@@ -43,7 +43,7 @@ import org.xembly.Xembler;
 public final class ResultsTest {
 
     @Test
-    @Ignore
+    @Disabled
     public void acceptsAndRenders() throws Exception {
         final Path output = Files.createTempDirectory("").resolve("x2");
         final Path input = Paths.get(".");
