@@ -45,7 +45,7 @@ public final class TkReportTest {
      * Temp folder for all tests.
      */
     @TempDir
-    public File folder;
+    private File folder;
 
     @Test
     public void rendersEmptySvgBadge() throws IOException {
