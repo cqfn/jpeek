@@ -25,11 +25,16 @@ package org.jpeek.web;
 
 import com.jcabi.xml.XMLDocument;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Comparator;
+import java.util.Enumeration;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 import org.cactoos.BiFunc;
 import org.cactoos.Func;
 import org.cactoos.io.TeeInput;
@@ -112,34 +117,10 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
                 )
             )
         ).value();
-        try {
-            final File none;
-            final String filepath = "/dev/null";
-            if (new File(filepath).exists()) {
-                none = new File(filepath);
-            } else {
-                none = new File("NUL");
-            }
-            final int exit = new ProcessBuilder()
-                .redirectOutput(ProcessBuilder.Redirect.to(none))
-                .redirectInput(ProcessBuilder.Redirect.from(none))
-                .redirectError(ProcessBuilder.Redirect.to(none))
-                .directory(input.toFile())
-                .command("unzip", name)
-                .start()
-                .waitFor();
-            if (exit != 0) {
-                throw new IllegalStateException(
-                    String.format(
-                        "Failed to unzip %s:%s archive, exit code %d",
-                        group, artifact, exit
-                    )
-                );
-            }
-        } catch (final InterruptedException ex) {
-            Thread.currentThread().interrupt();
-            throw new IllegalStateException(ex);
-        }
+
+        String path = input.toString();
+        extractClasses(path + File.separator + name, path);
+
         final Path output = this.target.resolve(grp).resolve(artifact);
         Reports.deleteIfPresent(output);
         new App(input, output).analyze();
@@ -149,6 +130,33 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
             new Sigmas().add(output);
         }
         return new TypedPages(new Pages(output));
+    }
+
+    /**
+     * Extract classes from passed Jar file.
+     * @param file File name
+     * @param dest Destination dir
+     * @throws IOException If fails
+     */
+    private void extractClasses(String file, String dest) throws IOException {
+        JarFile jar = new JarFile(file);
+        Enumeration<JarEntry> enumEntries = jar.entries();
+        while (enumEntries.hasMoreElements()) {
+            JarEntry entry = enumEntries.nextElement();
+            File f = new File(dest + File.separator + entry.getName());
+            if (entry.isDirectory()) {
+                f.mkdir();
+                continue;
+            }
+            InputStream is = jar.getInputStream(entry);
+            FileOutputStream fos = new FileOutputStream(f);
+            while (is.available() > 0) {
+                fos.write(is.read());
+            }
+            fos.close();
+            is.close();
+        }
+        jar.close();
     }
 
     /**
