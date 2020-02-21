@@ -26,10 +26,15 @@ package org.jpeek.web;
 import com.jcabi.xml.XMLDocument;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Comparator;
+import java.util.Enumeration;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 import org.cactoos.BiFunc;
 import org.cactoos.Func;
 import org.cactoos.io.TeeInput;
@@ -112,34 +117,8 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
                 )
             )
         ).value();
-        try {
-            final File none;
-            final String filepath = "/dev/null";
-            if (new File(filepath).exists()) {
-                none = new File(filepath);
-            } else {
-                none = new File("NUL");
-            }
-            final int exit = new ProcessBuilder()
-                .redirectOutput(ProcessBuilder.Redirect.to(none))
-                .redirectInput(ProcessBuilder.Redirect.from(none))
-                .redirectError(ProcessBuilder.Redirect.to(none))
-                .directory(input.toFile())
-                .command("unzip", name)
-                .start()
-                .waitFor();
-            if (exit != 0) {
-                throw new IllegalStateException(
-                    String.format(
-                        "Failed to unzip %s:%s archive, exit code %d",
-                        group, artifact, exit
-                    )
-                );
-            }
-        } catch (final InterruptedException ex) {
-            Thread.currentThread().interrupt();
-            throw new IllegalStateException(ex);
-        }
+        final String path = input.toString();
+        extractClasses(path + File.separator + name, path);
         final Path output = this.target.resolve(grp).resolve(artifact);
         Reports.deleteIfPresent(output);
         new App(input, output).analyze();
@@ -149,6 +128,34 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
             new Sigmas().add(output);
         }
         return new TypedPages(new Pages(output));
+    }
+
+    /**
+     * Extract classes from passed Jar file.
+     * @param origin File name
+     * @param dest Destination dir
+     * @throws IOException If fails
+     */
+    private static void extractClasses(final String origin, final String dest) throws IOException {
+        final JarFile jar = new JarFile(origin);
+        final Enumeration<JarEntry> entries = jar.entries();
+        while (entries.hasMoreElements()) {
+            final JarEntry entry = entries.nextElement();
+            final File item = new File(dest + File.separator + entry.getName());
+            if (entry.isDirectory()) {
+                item.mkdir();
+                continue;
+            }
+            try (
+                OutputStream os = Files.newOutputStream(item.toPath());
+                InputStream is = jar.getInputStream(entry)
+            ) {
+                while (is.available() > 0) {
+                    os.write(is.read());
+                }
+            }
+        }
+        jar.close();
     }
 
     /**
