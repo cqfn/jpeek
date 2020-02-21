@@ -25,8 +25,6 @@
 /**
  * JPeek web.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.7
  */
 package org.jpeek.web;

@@ -31,11 +31,8 @@ import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Skeleton}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.23
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle JavadocTagsCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class SkeletonTest {

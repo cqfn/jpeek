@@ -40,11 +40,8 @@ import org.takes.facets.hamcrest.HmRsStatus;
 
 /**
  * Test case for {@link Reports}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle JavadocTagsCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class ReportsTest {

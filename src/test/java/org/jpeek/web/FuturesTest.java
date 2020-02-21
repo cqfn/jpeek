@@ -33,11 +33,8 @@ import org.takes.rs.xe.XeAppend;
 
 /**
  * Test case for {@link Futures}.
- * @author Nikita Puzankov (humb1t@yandex.ru)
- * @version $Id$
  * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle JavadocTagsCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class FuturesTest {

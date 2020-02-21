@@ -46,11 +46,8 @@ import org.takes.Response;
  * thread-safe. You have to decorate it with a thread-safe
  * {@link Futures}.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.7
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
- * @checkstyle JavadocTagsCheck (500 lines)
  */
 final class Reports implements BiFunc<String, String, Func<String, Response>> {
 

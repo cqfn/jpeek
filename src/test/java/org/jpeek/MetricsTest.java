@@ -45,8 +45,6 @@ import org.llorllale.cactoos.matchers.Assertion;
  * <p>
  * In some cases to run this test in IDE,
  * you have to set up VM options: -Duser.language=en -Duser.country=US
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.23
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle VisibilityModifierCheck (500 lines)
@@ -249,7 +247,7 @@ public final class MetricsTest {
     @Test
     public void testsTarget() throws Exception {
         final Path output = Files.createTempDirectory("");
-        new Report(
+        new XslReport(
             new Skeleton(new FakeBase(this.target)).xml(),
             this.metric
         ).save(output);
