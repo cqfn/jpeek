@@ -41,14 +41,9 @@ import org.takes.rs.RsPrint;
  */
 public final class TkReportTest {
 
-    /**
-     * Temp folder for all tests.
-     */
-    @TempDir
-    private File folder;
-
     @Test
-    public void rendersEmptySvgBadge() throws IOException {
+    public void rendersEmptySvgBadge(@TempDir final File folder)
+        throws IOException {
         new Assertion<>(
             "Must render the badge",
             XhtmlMatchers.xhtml(
@@ -56,7 +51,7 @@ public final class TkReportTest {
                     new TkReport(
                         new AsyncReports(
                             new Futures(
-                                new Reports(this.folder.toPath())
+                                new Reports(folder.toPath())
                             )
                         ),
                         new Results()
