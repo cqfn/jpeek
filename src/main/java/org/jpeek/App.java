@@ -174,7 +174,7 @@ public final class App {
         final Collection<Report> reports = new LinkedList<>();
         if (this.params.containsKey("LCOM")) {
             reports.add(
-                new Report(
+                new XslReport(
                     chain.transform(skeleton),
                     "LCOM", this.params, 10.0d, -5.0d
                 )
@@ -182,7 +182,7 @@ public final class App {
         }
         if (this.params.containsKey("CAMC")) {
             reports.add(
-                new Report(
+                new XslReport(
                     chain.transform(skeleton),
                     "CAMC", this.params
                 )
@@ -190,7 +190,7 @@ public final class App {
         }
         if (this.params.containsKey("MMAC")) {
             reports.add(
-                new Report(
+                new XslReport(
                     chain.transform(skeleton),
                     "MMAC", this.params, 0.5d, 0.1d
                 )
@@ -198,7 +198,7 @@ public final class App {
         }
         if (this.params.containsKey("LCOM5")) {
             reports.add(
-                new Report(
+                new XslReport(
                     chain.transform(skeleton),
                     "LCOM5", this.params, 0.5d, -0.1d
                 )
@@ -206,7 +206,7 @@ public final class App {
         }
         if (this.params.containsKey("NHD")) {
             reports.add(
-                new Report(
+                new XslReport(
                     chain.transform(skeleton),
                     "NHD"
                 )
@@ -214,7 +214,7 @@ public final class App {
         }
         if (this.params.containsKey("LCOM2")) {
             reports.add(
-                new Report(
+                new XslReport(
                     chain.transform(skeleton),
                     "LCOM2", this.params
                 )
@@ -222,7 +222,7 @@ public final class App {
         }
         if (this.params.containsKey("LCOM3")) {
             reports.add(
-                new Report(
+                new XslReport(
                     chain.transform(skeleton),
                     "LCOM3", this.params
                 )
@@ -230,7 +230,7 @@ public final class App {
         }
         if (this.params.containsKey("SCOM")) {
             reports.add(
-                new Report(
+                new XslReport(
                     chain.transform(skeleton),
                     "SCOM", this.params
                 )
@@ -238,7 +238,7 @@ public final class App {
         }
         if (this.params.containsKey("OCC")) {
             reports.add(
-                new Report(
+                new XslReport(
                     chain.transform(skeleton),
                     "OCC", this.params
                 )
@@ -246,7 +246,7 @@ public final class App {
         }
         if (this.params.containsKey("PCC")) {
             reports.add(
-                new Report(
+                new XslReport(
                     chain.transform(skeleton),
                     "PCC"
                 )
@@ -254,7 +254,7 @@ public final class App {
         }
         if (this.params.containsKey("TCC")) {
             reports.add(
-                new Report(
+                new XslReport(
                     chain.transform(skeleton),
                     "TCC"
                 )
@@ -262,7 +262,7 @@ public final class App {
         }
         if (this.params.containsKey("LCC")) {
             reports.add(
-                new Report(
+                new XslReport(
                     chain.transform(skeleton),
                     "LCC"
                 )
@@ -270,7 +270,7 @@ public final class App {
         }
         if (this.params.containsKey("CCM")) {
             reports.add(
-                new Report(
+                new XslReport(
                     chain.transform(skeleton),
                     "CCM"
                 )
@@ -278,7 +278,7 @@ public final class App {
         }
         if (this.params.containsKey("MWE")) {
             reports.add(
-                new Report(
+                new XslReport(
                     chain.transform(skeleton),
                     "MWE"
                 )
