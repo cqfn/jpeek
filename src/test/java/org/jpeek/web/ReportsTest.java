@@ -24,16 +24,17 @@
 package org.jpeek.web;
 
 import com.jcabi.log.Logger;
+import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.file.Files;
 import org.cactoos.BiFunc;
 import org.cactoos.Func;
 import org.cactoos.text.TextOf;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.takes.Response;
 import org.takes.facets.hamcrest.HmRsStatus;
@@ -46,20 +47,20 @@ import org.takes.facets.hamcrest.HmRsStatus;
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class ReportsTest {
 
-    @Before
+    @BeforeEach
     public void weAreOnline() {
         try {
             new TextOf(new URL("http://www.jpeek.org/")).asString();
         } catch (final IOException ex) {
             Logger.debug(this, "We are not online: %s", ex.getMessage());
-            Assume.assumeTrue(false);
+            Assumptions.assumeTrue(false);
         }
     }
 
     @Test
-    public void rendersOneReport() throws Exception {
+    public void rendersOneReport(@TempDir final File folder) throws Exception {
         final BiFunc<String, String, Func<String, Response>> reports =
-            new Reports(Files.createTempDirectory("x"));
+            new Reports(folder.toPath());
         new Assertion<>(
             "Must return HTTP 200 OK status",
             reports.apply("com.jcabi", "jcabi-urn").apply("index.html"),
