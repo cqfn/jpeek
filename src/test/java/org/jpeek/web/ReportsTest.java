@@ -24,16 +24,17 @@
 package org.jpeek.web;
 
 import com.jcabi.log.Logger;
+import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.file.Files;
 import org.cactoos.BiFunc;
 import org.cactoos.Func;
 import org.cactoos.text.TextOf;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.takes.Response;
 import org.takes.facets.hamcrest.HmRsStatus;
@@ -57,10 +58,8 @@ public final class ReportsTest {
     }
 
     @Test
-    public void rendersOneReport() throws Exception {
-        final BiFunc<String, String, Func<String, Response>> reports = new Reports(
-            Files.createTempDirectory("x")
-        );
+    public void rendersOneReport(@TempDir final File folder) throws Exception {
+        final BiFunc<String, String, Func<String, Response>> reports = new Reports(folder.toPath());
         new Assertion<>(
             "Must return HTTP 200 OK status",
             reports.apply("com.jcabi", "jcabi-urn").apply("index.html"),
