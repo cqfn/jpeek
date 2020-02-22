@@ -58,6 +58,8 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @todo #323:30min This test is fully written against JUnit 4 API.
  *  Migrate this parametrized test to junit 5, so it won't import any classes from junit 4 anymore.
  * @checkstyle JavadocTagsCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * 
  */
 @RunWith(Parameterized.class)
 @SuppressWarnings({

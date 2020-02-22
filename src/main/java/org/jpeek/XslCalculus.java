@@ -37,11 +37,11 @@ import org.cactoos.text.TextOf;
  * the xml containing the calculation.
  * @since 0.1
  */
-public class XslCalculus implements Calculus {
+public final class XslCalculus implements Calculus {
 
     @Override
-    public XML node(String metric, Map<String, Object> params, XML skeleton)
-        throws IOException {
+    public XML node(final String metric, final Map<String, Object> params,
+        final XML skeleton) throws IOException {
         return new XSLDocument(
             new TextOf(
                 new ResourceOf(

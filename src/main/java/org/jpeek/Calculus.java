@@ -33,7 +33,7 @@ import java.util.Map;
  * @todo #390:30min We have a separate interface to calculate XML metrics.
  *  We should continue to the goal defined in #296 where we should have a java
  *  implementation to calculate metrics. The motivation is to be able to make
- *  calculations impossible or too difficult to implement in xsl. 
+ *  calculations impossible or too difficult to implement in xsl, like LCOM4.
  */
 public interface Calculus {
 

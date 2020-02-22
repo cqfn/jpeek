@@ -125,6 +125,7 @@ final class XslReport implements Report {
      * @param name Name of metric
      * @param args Params for XSL
      * @param calc Calculus
+     * @checkstyle ParameterNumberCheck (5 lines)
      */
     XslReport(final XML xml, final String name, final Map<String, Object> args,
         final Calculus calc) {
