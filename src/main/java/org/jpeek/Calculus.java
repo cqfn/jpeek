@@ -23,20 +23,29 @@
  */
 package org.jpeek;
 
+import com.jcabi.xml.XML;
 import java.io.IOException;
-import java.nio.file.Path;
+import java.util.Map;
 
 /**
- * Report interface.
+ * Metrics calculus interface.
  * @since 0.1
+ * @todo #390:30min We have a separate interface to calculate XML metrics.
+ *  We should continue to the goal defined in #296 where we should have a java
+ *  implementation to calculate metrics. The motivation is to be able to make
+ *  calculations impossible or too difficult to implement in xsl. 
  */
-public interface Report {
+public interface Calculus {
 
     /**
-     * Save report.
-     * @param target Target dir
+     * Produces {@link XML} representing metrics values.
+     * @param metric Desired metric to calculate
+     * @param params Params
+     * @param skeleton Package input
+     * @return XML document giving metrics values for classes
      * @throws IOException If fails
      */
-    void save(Path target) throws IOException;
+    XML node(String metric, Map<String, Object> params, XML skeleton)
+        throws IOException;
 
 }

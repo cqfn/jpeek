@@ -23,20 +23,34 @@
  */
 package org.jpeek;
 
+import com.jcabi.xml.Sources;
+import com.jcabi.xml.XML;
+import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
-import java.nio.file.Path;
+import java.util.Map;
+import org.cactoos.io.ResourceOf;
+import org.cactoos.text.FormattedText;
+import org.cactoos.text.TextOf;
 
 /**
- * Report interface.
+ * Metrics xsl calculus. Use an xsl sheet to transform the input skeleton into
+ * the xml containing the calculation.
  * @since 0.1
  */
-public interface Report {
+public class XslCalculus implements Calculus {
 
-    /**
-     * Save report.
-     * @param target Target dir
-     * @throws IOException If fails
-     */
-    void save(Path target) throws IOException;
+    @Override
+    public XML node(String metric, Map<String, Object> params, XML skeleton)
+        throws IOException {
+        return new XSLDocument(
+            new TextOf(
+                new ResourceOf(
+                    new FormattedText("org/jpeek/metrics/%s.xsl", metric)
+                )
+            ).asString(),
+            Sources.DUMMY,
+            params
+        ).transform(skeleton);
+    }
 
 }

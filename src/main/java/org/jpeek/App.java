@@ -70,16 +70,13 @@ import org.xembly.Xembler;
  *  and in `MetricsTest`).
  *  Once they are resolved add it to reports list.
  */
-@SuppressWarnings
-    (
-        {
-            "PMD.AvoidDuplicateLiterals",
-            "PMD.NPathComplexity",
-            "PMD.CyclomaticComplexity",
-            "PMD.StdCyclomaticComplexity",
-            "PMD.ModifiedCyclomaticComplexity"
-        }
-    )
+@SuppressWarnings({
+    "PMD.AvoidDuplicateLiterals",
+    "PMD.NPathComplexity",
+    "PMD.CyclomaticComplexity",
+    "PMD.StdCyclomaticComplexity",
+    "PMD.ModifiedCyclomaticComplexity"
+})
 public final class App {
 
     /**
@@ -172,11 +169,12 @@ public final class App {
         final XSL chain = new XSLChain(layers);
         this.save(skeleton.toString(), "skeleton.xml");
         final Collection<Report> reports = new LinkedList<>();
+        final Calculus xsl = new XslCalculus();
         if (this.params.containsKey("LCOM")) {
             reports.add(
                 new XslReport(
                     chain.transform(skeleton),
-                    "LCOM", this.params, 10.0d, -5.0d
+                    "LCOM", this.params, xsl, 10.0d, -5.0d
                 )
             );
         }
@@ -184,7 +182,7 @@ public final class App {
             reports.add(
                 new XslReport(
                     chain.transform(skeleton),
-                    "CAMC", this.params
+                    "CAMC", this.params, xsl
                 )
             );
         }
@@ -192,7 +190,7 @@ public final class App {
             reports.add(
                 new XslReport(
                     chain.transform(skeleton),
-                    "MMAC", this.params, 0.5d, 0.1d
+                    "MMAC", this.params, xsl, 0.5d, 0.1d
                 )
             );
         }
@@ -200,7 +198,7 @@ public final class App {
             reports.add(
                 new XslReport(
                     chain.transform(skeleton),
-                    "LCOM5", this.params, 0.5d, -0.1d
+                    "LCOM5", this.params, xsl, 0.5d, -0.1d
                 )
             );
         }
@@ -208,7 +206,7 @@ public final class App {
             reports.add(
                 new XslReport(
                     chain.transform(skeleton),
-                    "NHD"
+                    "NHD", xsl
                 )
             );
         }
@@ -216,7 +214,7 @@ public final class App {
             reports.add(
                 new XslReport(
                     chain.transform(skeleton),
-                    "LCOM2", this.params
+                    "LCOM2", this.params, xsl
                 )
             );
         }
@@ -224,7 +222,7 @@ public final class App {
             reports.add(
                 new XslReport(
                     chain.transform(skeleton),
-                    "LCOM3", this.params
+                    "LCOM3", this.params, xsl
                 )
             );
         }
@@ -232,7 +230,7 @@ public final class App {
             reports.add(
                 new XslReport(
                     chain.transform(skeleton),
-                    "SCOM", this.params
+                    "SCOM", this.params, xsl
                 )
             );
         }
@@ -240,7 +238,7 @@ public final class App {
             reports.add(
                 new XslReport(
                     chain.transform(skeleton),
-                    "OCC", this.params
+                    "OCC", this.params, xsl
                 )
             );
         }
@@ -248,7 +246,7 @@ public final class App {
             reports.add(
                 new XslReport(
                     chain.transform(skeleton),
-                    "PCC"
+                    "PCC", xsl
                 )
             );
         }
@@ -256,7 +254,7 @@ public final class App {
             reports.add(
                 new XslReport(
                     chain.transform(skeleton),
-                    "TCC"
+                    "TCC", xsl
                 )
             );
         }
@@ -264,7 +262,7 @@ public final class App {
             reports.add(
                 new XslReport(
                     chain.transform(skeleton),
-                    "LCC"
+                    "LCC", xsl
                 )
             );
         }
@@ -272,7 +270,7 @@ public final class App {
             reports.add(
                 new XslReport(
                     chain.transform(skeleton),
-                    "CCM"
+                    "CCM", xsl
                 )
             );
         }
@@ -280,7 +278,7 @@ public final class App {
             reports.add(
                 new XslReport(
                     chain.transform(skeleton),
-                    "MWE"
+                    "MWE", xsl
                 )
             );
         }

@@ -25,7 +25,6 @@ package org.jpeek;
 
 import com.jcabi.log.Logger;
 import com.jcabi.xml.ClasspathSources;
-import com.jcabi.xml.Sources;
 import com.jcabi.xml.StrictXML;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
@@ -39,11 +38,8 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import org.cactoos.collection.CollectionOf;
-import org.cactoos.io.ResourceOf;
 import org.cactoos.io.TeeInput;
 import org.cactoos.scalar.LengthOf;
-import org.cactoos.text.FormattedText;
-import org.cactoos.text.TextOf;
 import org.xembly.Directives;
 import org.xembly.Xembler;
 
@@ -96,6 +92,11 @@ final class XslReport implements Report {
     private final String metric;
 
     /**
+     * Calculus.
+     */
+    private final Calculus calculus;
+
+    /**
      * Post processing XSLs.
      */
     private final XSL post;
@@ -109,10 +110,11 @@ final class XslReport implements Report {
      * Ctor.
      * @param xml Skeleton
      * @param name Name of the metric
+     * @param calc Calculus
      */
-    XslReport(final XML xml, final String name) {
+    XslReport(final XML xml, final String name, final Calculus calc) {
         this(
-            xml, name, new HashMap<>(0),
+            xml, name, new HashMap<>(0), calc,
             XslReport.DEFAULT_MEAN, XslReport.DEFAULT_SIGMA
         );
     }
@@ -122,10 +124,12 @@ final class XslReport implements Report {
      * @param xml Skeleton
      * @param name Name of metric
      * @param args Params for XSL
+     * @param calc Calculus
      */
-    XslReport(final XML xml, final String name, final Map<String, Object> args) {
+    XslReport(final XML xml, final String name, final Map<String, Object> args,
+        final Calculus calc) {
         this(
-            xml, name, args,
+            xml, name, args, calc,
             XslReport.DEFAULT_MEAN, XslReport.DEFAULT_SIGMA
         );
     }
@@ -135,16 +139,18 @@ final class XslReport implements Report {
      * @param xml Skeleton
      * @param name Name of the metric
      * @param args Params for XSL
+     * @param calc Calculus
      * @param mean Mean
      * @param sigma Sigma
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     XslReport(final XML xml, final String name,
-        final Map<String, Object> args,
+        final Map<String, Object> args, final Calculus calc,
         final double mean, final double sigma) {
         this.skeleton = xml;
         this.metric = name;
         this.params = args;
+        this.calculus = calc;
         this.post = new XSLChain(
             new CollectionOf<>(
                 new XSLDocument(
@@ -227,18 +233,9 @@ final class XslReport implements Report {
                         XslReport.SCHEMA_FILE
                     )
             ).applyQuietly(
-                new XSLDocument(
-                    new TextOf(
-                        new ResourceOf(
-                            new FormattedText(
-                                "org/jpeek/metrics/%s.xsl",
-                                this.metric
-                            )
-                        )
-                    ).asString(),
-                    Sources.DUMMY,
-                    this.params
-                ).transform(this.skeleton).node()
+                this.calculus.node(
+                    this.metric, this.params, this.skeleton
+                ).node()
             )
         );
     }

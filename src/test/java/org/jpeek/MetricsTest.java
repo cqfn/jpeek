@@ -249,7 +249,7 @@ public final class MetricsTest {
         final Path output = Files.createTempDirectory("");
         new XslReport(
             new Skeleton(new FakeBase(this.target)).xml(),
-            this.metric
+            this.metric, new XslCalculus()
         ).save(output);
         final String xpath;
         if (Double.isNaN(this.value)) {
