@@ -35,7 +35,7 @@ import org.cactoos.text.TextOf;
 /**
  * Metrics xsl calculus. Use an xsl sheet to transform the input skeleton into
  * the xml containing the calculation.
- * @since 0.1
+ * @since 0.30.9
  */
 public final class XslCalculus implements Calculus {
 

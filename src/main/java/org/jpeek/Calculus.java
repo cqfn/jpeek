@@ -29,7 +29,7 @@ import java.util.Map;
 
 /**
  * Metrics calculus interface.
- * @since 0.1
+ * @since 0.30.9
  * @todo #390:30min We have a separate interface to calculate XML metrics.
  *  We should continue to the goal defined in #296 where we should have a java
  *  implementation to calculate metrics. The motivation is to be able to make

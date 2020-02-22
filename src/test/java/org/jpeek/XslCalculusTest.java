@@ -33,7 +33,7 @@ import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link XslCalculus}.
- * @since 0.4
+ * @since 0.30.9
  */
 public final class XslCalculusTest {
 
