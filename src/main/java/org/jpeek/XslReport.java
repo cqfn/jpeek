@@ -143,10 +143,12 @@ final class XslReport implements Report {
      * @param calc Calculus
      * @param mean Mean
      * @param sigma Sigma
-     * @todo #390:30min this constructor now has too many arguments. We should find a way to refactor the constructor
-     *  or the class to have fewer parameters. We could start by analyzing the usage of this.params (args in this
-     *  constructor) and get rid of it if it is not used. Another idea could be to have a data class contaning
-     *  reporting params: name, args, mean, sigma.
+     * @todo #390:30min this constructor now has too many arguments. We should find a way
+     *  to refactor the constructor or the class to have fewer parameters.
+     *  We could start by analyzing the usage of this.params (args in this
+     *  constructor) and get rid of it if it is not used.
+     *  Another idea could be to have a data class contaning reporting params:
+     *  name, args, mean, sigma.
      * @checkstyle ParameterNumberCheck (10 lines)
      */
     XslReport(final XML xml, final String name,
