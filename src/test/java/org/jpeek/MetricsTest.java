@@ -61,6 +61,7 @@ import org.llorllale.cactoos.matchers.Assertion;
  *  junit-vintage-engine dependency. Ideally, we should find a way to exclude
  *  junit 4 from project dependecy, so its API won't be imported anymore.
  * @checkstyle JavadocTagsCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @RunWith(Parameterized.class)
 @SuppressWarnings({
@@ -252,7 +253,7 @@ public final class MetricsTest {
         final Path output = Files.createTempDirectory("");
         new XslReport(
             new Skeleton(new FakeBase(this.target)).xml(),
-            this.metric
+            this.metric, new XslCalculus()
         ).save(output);
         final String xpath;
         if (Double.isNaN(this.value)) {

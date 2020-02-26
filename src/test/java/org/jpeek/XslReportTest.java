@@ -48,7 +48,9 @@ public final class XslReportTest {
     @Test
     public void createsXmlReport() throws IOException {
         final Path output = Files.createTempDirectory("");
-        new XslReport(new Skeleton(new FakeBase()).xml(), "LCOM").save(output);
+        new XslReport(
+            new Skeleton(new FakeBase()).xml(), "LCOM", new XslCalculus()
+        ).save(output);
         new Assertion<>(
             "Must LCOM.xml file exists",
             Files.exists(output.resolve("LCOM.xml")),
@@ -71,7 +73,7 @@ public final class XslReportTest {
                     "OnlyOneMethodWithParams", "WithoutAttributes"
                 )
             ).xml(),
-            "LCOM"
+            "LCOM", new XslCalculus()
         ).save(output);
         new Assertion<>(
             "Must create LCOM report",
@@ -79,7 +81,6 @@ public final class XslReportTest {
                 new TextOf(output.resolve("LCOM.xml")).asString()
             ),
             XhtmlMatchers.hasXPaths(
-                "/metric/app/package/class/vars",
                 "/metric/statistics/mean",
                 "/metric/bars/bar[@x='0' and .='0' and @color='yellow']"
             )
@@ -89,7 +90,9 @@ public final class XslReportTest {
     @Test
     public void createsXmlReportWithEmptyProject() throws IOException {
         final Path output = Files.createTempDirectory("");
-        new XslReport(new Skeleton(new FakeBase()).xml(), "LCOM").save(output);
+        new XslReport(
+            new Skeleton(new FakeBase()).xml(), "LCOM", new XslCalculus()
+        ).save(output);
         new Assertion<>(
             "Report for empty project created",
             XhtmlMatchers.xhtml(
@@ -119,7 +122,7 @@ public final class XslReportTest {
                         .add("class").attr("id", "E").attr("value", "NaN").up()
                 ).xmlQuietly()
             ),
-            "LCOM"
+            "LCOM", new XslCalculus()
         ).save(output);
         new Assertion<>(
             "Must create full report",
@@ -141,7 +144,9 @@ public final class XslReportTest {
     @Test
     public void setsCorrectSchemaLocation() throws IOException {
         final Path output = Files.createTempDirectory("");
-        new XslReport(new Skeleton(new FakeBase()).xml(), "LCOM").save(output);
+        new XslReport(
+            new Skeleton(new FakeBase()).xml(), "LCOM", new XslCalculus()
+        ).save(output);
         new Assertion<>(
             "Must have correct schema location",
             XhtmlMatchers.xhtml(
