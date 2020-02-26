@@ -65,10 +65,6 @@ import org.xembly.Xembler;
  * @checkstyle CyclomaticComplexityCheck (500 lines)
  * @checkstyle MethodLengthCheck (500 lines)
  * @checkstyle JavaNCSSCheck (500 lines)
- *
- * @todo #118:30min LCC metric has impediments (see puzzles in LCC.xml
- *  and in `MetricsTest`).
- *  Once they are resolved add it to reports list.
  */
 @SuppressWarnings({
     "PMD.AvoidDuplicateLiterals",
