@@ -24,10 +24,10 @@
 package org.jpeek.web;
 
 import com.jcabi.matchers.XhtmlMatchers;
+import java.io.File;
 import java.io.IOException;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.takes.facets.fork.RqRegex;
 import org.takes.rq.RqFake;
@@ -41,15 +41,9 @@ import org.takes.rs.RsPrint;
  */
 public final class TkReportTest {
 
-    /**
-     * Temp folder for all tests.
-     */
-    @Rule
-    @SuppressWarnings("PMD.BeanMembersShouldSerialize")
-    public TemporaryFolder folder = new TemporaryFolder();
-
     @Test
-    public void rendersEmptySvgBadge() throws IOException {
+    public void rendersEmptySvgBadge(@TempDir final File folder)
+        throws IOException {
         new Assertion<>(
             "Must render the badge",
             XhtmlMatchers.xhtml(
@@ -57,7 +51,7 @@ public final class TkReportTest {
                     new TkReport(
                         new AsyncReports(
                             new Futures(
-                                new Reports(this.folder.newFolder().toPath())
+                                new Reports(folder.toPath())
                             )
                         ),
                         new Results()

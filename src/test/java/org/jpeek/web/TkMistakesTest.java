@@ -25,7 +25,7 @@ package org.jpeek.web;
 
 import com.jcabi.matchers.XhtmlMatchers;
 import java.io.IOException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.takes.rq.RqFake;
 import org.takes.rq.RqWithHeaders;

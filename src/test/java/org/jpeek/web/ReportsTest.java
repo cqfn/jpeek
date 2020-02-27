@@ -59,8 +59,7 @@ public final class ReportsTest {
 
     @Test
     public void rendersOneReport(@TempDir final File folder) throws Exception {
-        final BiFunc<String, String, Func<String, Response>> reports =
-            new Reports(folder.toPath());
+        final BiFunc<String, String, Func<String, Response>> reports = new Reports(folder.toPath());
         new Assertion<>(
             "Must return HTTP 200 OK status",
             reports.apply("com.jcabi", "jcabi-urn").apply("index.html"),

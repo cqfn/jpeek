@@ -31,7 +31,7 @@ import java.util.concurrent.TimeUnit;
 import org.cactoos.BiFunc;
 import org.cactoos.Func;
 import org.cactoos.func.SolidBiFunc;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.takes.Response;
 import org.takes.facets.hamcrest.HmRsStatus;
@@ -48,19 +48,19 @@ public final class AsyncReportsTest {
     @Test
     public void rendersOneReport() throws Exception {
         final ExecutorService service = Executors.newSingleThreadExecutor();
-        final BiFunc<String, String, Func<String, Response>> bifunc =
-            new AsyncReports(
-                new SolidBiFunc<>(
-                    (first, second) -> service.submit(
-                        () -> input -> {
-                            TimeUnit.DAYS.sleep(1L);
-                            return new RsText("done!");
-                        }
-                    )
+        final BiFunc<String, String, Func<String, Response>> bifunc = new AsyncReports(
+            new SolidBiFunc<>(
+                (first, second) -> service.submit(
+                    () -> input -> {
+                        TimeUnit.DAYS.sleep(1L);
+                        return new RsText("done!");
+                    }
                 )
-            );
-        final Response response =
-            bifunc.apply("org.jpeek", "jpeek").apply("index.html");
+            )
+        );
+        final Response response = bifunc.apply("org.jpeek", "jpeek").apply(
+            "index.html"
+        );
         new Assertion<>(
             "Must return HTTP NOT FOUND status",
             response,
