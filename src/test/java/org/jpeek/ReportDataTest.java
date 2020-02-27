@@ -37,13 +37,12 @@ import org.llorllale.cactoos.matchers.HasValues;
  * Tests for {@link ReportData}.
  * @since 0.30.9
  */
-
 public final class ReportDataTest {
 
-	/**
-	 * Sample map for tests.
-	 */
-	private static final Map<String, Object> ARGS = new MapOf<>(
+    /**
+     * Sample map for tests.
+     */
+    private static final Map<String, Object> ARGS = new MapOf<>(
         new MapEntry<>("a", 1), new MapEntry<>("b", 2)
     );
 
