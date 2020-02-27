@@ -252,8 +252,8 @@ public final class MetricsTest {
     public void testsTarget() throws Exception {
         final Path output = Files.createTempDirectory("");
         new XslReport(
-            new Skeleton(new FakeBase(this.target)).xml(),
-            this.metric, new XslCalculus()
+            new Skeleton(new FakeBase(this.target)).xml(), new XslCalculus(),
+            new ReportData(this.metric)
         ).save(output);
         final String xpath;
         if (Double.isNaN(this.value)) {

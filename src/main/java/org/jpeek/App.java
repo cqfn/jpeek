@@ -169,112 +169,112 @@ public final class App {
         if (this.params.containsKey("LCOM")) {
             reports.add(
                 new XslReport(
-                    chain.transform(skeleton),
-                    "LCOM", this.params, xsl, 10.0d, -5.0d
+                    chain.transform(skeleton), xsl,
+                    new ReportData("LCOM", this.params, 10.0d, -5.0d)
                 )
             );
         }
         if (this.params.containsKey("CAMC")) {
             reports.add(
                 new XslReport(
-                    chain.transform(skeleton),
-                    "CAMC", this.params, xsl
+                    chain.transform(skeleton), xsl,
+                    new ReportData("CAMC", this.params)
                 )
             );
         }
         if (this.params.containsKey("MMAC")) {
             reports.add(
                 new XslReport(
-                    chain.transform(skeleton),
-                    "MMAC", this.params, xsl, 0.5d, 0.1d
+                    chain.transform(skeleton), xsl,
+                    new ReportData("MMAC", this.params, 0.5d, 0.1d)
                 )
             );
         }
         if (this.params.containsKey("LCOM5")) {
             reports.add(
                 new XslReport(
-                    chain.transform(skeleton),
-                    "LCOM5", this.params, xsl, 0.5d, -0.1d
+                    chain.transform(skeleton), xsl,
+                    new ReportData("LCOM5", this.params, 0.5d, -0.1d)
                 )
             );
         }
         if (this.params.containsKey("NHD")) {
             reports.add(
                 new XslReport(
-                    chain.transform(skeleton),
-                    "NHD", xsl
+                    chain.transform(skeleton), xsl,
+                    new ReportData("NHD")
                 )
             );
         }
         if (this.params.containsKey("LCOM2")) {
             reports.add(
                 new XslReport(
-                    chain.transform(skeleton),
-                    "LCOM2", this.params, xsl
+                    chain.transform(skeleton), xsl,
+                    new ReportData("LCOM2", this.params)
                 )
             );
         }
         if (this.params.containsKey("LCOM3")) {
             reports.add(
                 new XslReport(
-                    chain.transform(skeleton),
-                    "LCOM3", this.params, xsl
+                    chain.transform(skeleton), xsl,
+                    new ReportData("LCOM3", this.params)
                 )
             );
         }
         if (this.params.containsKey("SCOM")) {
             reports.add(
                 new XslReport(
-                    chain.transform(skeleton),
-                    "SCOM", this.params, xsl
+                    chain.transform(skeleton), xsl,
+                    new ReportData("SCOM", this.params)
                 )
             );
         }
         if (this.params.containsKey("OCC")) {
             reports.add(
                 new XslReport(
-                    chain.transform(skeleton),
-                    "OCC", this.params, xsl
+                    chain.transform(skeleton), xsl,
+                    new ReportData("OCC", this.params)
                 )
             );
         }
         if (this.params.containsKey("PCC")) {
             reports.add(
                 new XslReport(
-                    chain.transform(skeleton),
-                    "PCC", xsl
+                    chain.transform(skeleton), xsl,
+                    new ReportData("PCC")
                 )
             );
         }
         if (this.params.containsKey("TCC")) {
             reports.add(
                 new XslReport(
-                    chain.transform(skeleton),
-                    "TCC", xsl
+                    chain.transform(skeleton), xsl,
+                    new ReportData("TCC")
                 )
             );
         }
         if (this.params.containsKey("LCC")) {
             reports.add(
                 new XslReport(
-                    chain.transform(skeleton),
-                    "LCC", xsl
+                    chain.transform(skeleton), xsl,
+                    new ReportData("LCC")
                 )
             );
         }
         if (this.params.containsKey("CCM")) {
             reports.add(
                 new XslReport(
-                    chain.transform(skeleton),
-                    "CCM", xsl
+                    chain.transform(skeleton), xsl,
+                    new ReportData("CCM")
                 )
             );
         }
         if (this.params.containsKey("MWE")) {
             reports.add(
                 new XslReport(
-                    chain.transform(skeleton),
-                    "MWE", xsl
+                    chain.transform(skeleton), xsl,
+                    new ReportData("MWE")
                 )
             );
         }
