@@ -39,42 +39,42 @@ import org.llorllale.cactoos.matchers.HasValues;
  */
 public final class ReportDataTest {
 
-    /**
-     * Sample map for tests.
-     */
-    private static final Map<String, Object> ARGS = new MapOf<>(
-        new MapEntry<>("a", 1), new MapEntry<>("b", 2)
-    );
-
     @Test
     public void reportsData() throws Exception {
         final String name = "whatever";
         final Random random = new Random();
         final double mean = random.nextDouble();
         final double sigma = random.nextDouble();
-        final ReportData data = new ReportData(name, ReportDataTest.ARGS, mean, sigma);
+        final Map<String, Object> sample = ReportDataTest.args();
+        final ReportData data = new ReportData(name, sample, mean, sigma);
         new Assertion<>("Must returns name", data.metric(), new IsEqual<>(name)).affirm();
         new Assertion<>("Must returns mean", data.mean(), new IsEqual<>(mean)).affirm();
         new Assertion<>("Must returns sigma", data.sigma(), new IsEqual<>(sigma)).affirm();
         new Assertion<>(
             "Must returns args",
             data.params().entrySet(),
-            new HasValues<>(ReportDataTest.ARGS.entrySet())
+            new HasValues<>(sample.entrySet())
         ).affirm();
     }
 
     @Test
     public void shouldBeImmutable() throws Exception {
         final String name = "metric";
-        final int size = ReportDataTest.ARGS.size();
-        final Map<String, Object> params = new HashMap<>(ReportDataTest.ARGS);
+        final Map<String, Object> sample = ReportDataTest.args();
+        final Map<String, Object> params = new HashMap<>(sample);
         final ReportData data = new ReportData(name, params);
         params.clear();
         data.params().clear();
         new Assertion<>(
             "Must be immutable",
             data.params().entrySet().size(),
-            new IsEqual<>(size)
+            new IsEqual<>(sample.size())
         ).affirm();
+    }
+
+    private static Map<String, Object> args() {
+        return new MapOf<String, Object>(
+            new MapEntry<>("a", 1), new MapEntry<>("b", 2)
+        );
     }
 }
