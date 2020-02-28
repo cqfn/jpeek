@@ -26,8 +26,6 @@ package org.jpeek.web;
 import com.jcabi.xml.XMLDocument;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -37,6 +35,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import org.cactoos.BiFunc;
 import org.cactoos.Func;
+import org.cactoos.io.InputOf;
 import org.cactoos.io.TeeInput;
 import org.cactoos.scalar.IoChecked;
 import org.cactoos.scalar.LengthOf;
@@ -117,8 +116,7 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
                 )
             )
         ).value();
-        final String path = input.toString();
-        extractClasses(path + File.separator + name, path);
+        extractClasses(input.resolve(name));
         final Path output = this.target.resolve(grp).resolve(artifact);
         Reports.deleteIfPresent(output);
         new App(input, output).analyze();
@@ -132,30 +130,30 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
 
     /**
      * Extract classes from passed Jar file.
-     * @param origin File name
-     * @param dest Destination dir
+     * @param path Jar file path
      * @throws IOException If fails
      */
-    private static void extractClasses(final String origin, final String dest) throws IOException {
-        final JarFile jar = new JarFile(origin);
-        final Enumeration<JarEntry> entries = jar.entries();
-        while (entries.hasMoreElements()) {
-            final JarEntry entry = entries.nextElement();
-            final File item = new File(dest + File.separator + entry.getName());
-            if (entry.isDirectory()) {
-                item.mkdir();
-                continue;
-            }
-            try (
-                OutputStream os = Files.newOutputStream(item.toPath());
-                InputStream is = jar.getInputStream(entry)
-            ) {
-                while (is.available() > 0) {
-                    os.write(is.read());
+    private static void extractClasses(final Path path) throws IOException {
+        try (JarFile jar = new JarFile(path.toFile())) {
+            final Enumeration<JarEntry> entries = jar.entries();
+            while (entries.hasMoreElements()) {
+                final JarEntry entry = entries.nextElement();
+                final Path item = path.getParent().resolve(entry.getName());
+                if (entry.isDirectory()) {
+                    item.toFile().mkdir();
+                    continue;
                 }
+                if (!item.getParent().toFile().exists()) {
+                    item.getParent().toFile().mkdirs();
+                }
+                new LengthOf(
+                    new TeeInput(
+                        new InputOf(jar.getInputStream(entry)),
+                        item
+                    )
+                ).intValue();
             }
         }
-        jar.close();
     }
 
     /**
