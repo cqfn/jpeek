@@ -143,8 +143,9 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
                     item.toFile().mkdir();
                     continue;
                 }
-                if (!item.getParent().toFile().exists()) {
-                    item.getParent().toFile().mkdirs();
+                final Path parent = item.getParent();
+                if (!parent.toFile().exists()) {
+                    parent.toFile().mkdirs();
                 }
                 new LengthOf(
                     new TeeInput(
