@@ -40,6 +40,7 @@ import org.llorllale.cactoos.matchers.HasValuesMatching;
 public final class XmlGraphTest {
 
     @Test
+    @SuppressWarnings({"unchecked"})
     public void buildsMethodsAsNodes() throws IOException {
         final List<Node> nodes = new XmlGraph(
             new Skeleton(new FakeBase("MethodMethodCalls"))
