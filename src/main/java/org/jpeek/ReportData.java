@@ -95,7 +95,7 @@ final class ReportData {
     ReportData(final String name, final Map<String, Object> args, final double mean,
         final double sigma) {
         this.metr = name;
-        this.args = Collections.unmodifiableMap(args);
+        this.args = Collections.unmodifiableMap(new HashMap<>(args));
         this.man = mean;
         this.sig = sigma;
     }
