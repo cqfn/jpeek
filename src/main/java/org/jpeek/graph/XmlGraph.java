@@ -26,8 +26,8 @@ package org.jpeek.graph;
 import com.jcabi.xml.XML;
 import java.io.IOException;
 import java.util.List;
-import org.cactoos.Scalar;
 import org.cactoos.list.Mapped;
+import org.cactoos.scalar.Sticky;
 import org.cactoos.scalar.Unchecked;
 import org.cactoos.text.Joined;
 import org.jpeek.skeleton.Skeleton;
@@ -50,9 +50,9 @@ public final class XmlGraph implements Graph {
      */
     public XmlGraph(final Skeleton skeleton) throws IOException {
         this.nds = new Unchecked<>(
-            (Scalar<List<Node>>) () -> {
-                return XmlGraph.build(skeleton);
-            }
+            new Sticky<>(
+                () -> XmlGraph.build(skeleton)
+            )
         );
     }
 
