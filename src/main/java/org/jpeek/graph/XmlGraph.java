@@ -25,8 +25,8 @@ package org.jpeek.graph;
 
 import com.jcabi.xml.XML;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+import org.cactoos.list.Mapped;
 import org.cactoos.text.Joined;
 import org.jpeek.skeleton.Skeleton;
 
@@ -62,19 +62,14 @@ public final class XmlGraph implements Graph {
      * @throws IOException If fails
      */
     private static List<Node> build(final Skeleton skeleton) throws IOException {
-        final List<XML> methods = skeleton.xml().nodes(
-            "//methods/method[@ctor='false' and @abstract='false']"
+        return new Mapped<XML, Node>(
+            method -> new Node.Simple(
+                new Joined(
+                    "", method.xpath("@name").get(0), method.xpath("@desc").get(0)
+                ).asString()
+            ), skeleton.xml().nodes(
+                "//methods/method[@ctor='false' and @abstract='false']"
+            )
         );
-        final List<Node> result = new ArrayList<>(methods.size());
-        for (final XML method:methods) {
-            result.add(
-                new Node.Simple(
-                    new Joined(
-                        "", method.xpath("@name").get(0), method.xpath("@desc").get(0)
-                    ).asString()
-                )
-            );
-        }
-        return result;
     }
 }

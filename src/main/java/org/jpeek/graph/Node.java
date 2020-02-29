@@ -42,7 +42,7 @@ public interface Node {
      * Calculates ingoing and outgoing connected nodes.
      * @return List of nodes connected to this node.
      */
-    List<Node> connected();
+    List<Node> connections();
 
     /**
      * Simple implementation.
@@ -74,7 +74,7 @@ public interface Node {
         }
 
         @Override
-        public List<Node> connected() {
+        public List<Node> connections() {
             return this.connect;
         }
     }
