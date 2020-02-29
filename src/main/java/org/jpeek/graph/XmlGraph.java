@@ -26,7 +26,9 @@ package org.jpeek.graph;
 import com.jcabi.xml.XML;
 import java.io.IOException;
 import java.util.List;
+import org.cactoos.Scalar;
 import org.cactoos.list.Mapped;
+import org.cactoos.scalar.Unchecked;
 import org.cactoos.text.Joined;
 import org.jpeek.skeleton.Skeleton;
 
@@ -39,7 +41,7 @@ public final class XmlGraph implements Graph {
     /**
      * List of the nodes of this graph.
      */
-    private final List<Node> nds;
+    private final Unchecked<List<Node>> nds;
 
     /**
      * Ctor.
@@ -47,12 +49,16 @@ public final class XmlGraph implements Graph {
      * @throws IOException If fails
      */
     public XmlGraph(final Skeleton skeleton) throws IOException {
-        this.nds = XmlGraph.build(skeleton);
+        this.nds = new Unchecked<>(
+            (Scalar<List<Node>>) () -> {
+                return XmlGraph.build(skeleton);
+            }
+        );
     }
 
     @Override
     public List<Node> nodes() {
-        return this.nds;
+        return this.nds.value();
     }
 
     /**
