@@ -25,7 +25,6 @@ package org.jpeek;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 import org.cactoos.map.MapEntry;
 import org.cactoos.map.MapOf;
 import org.hamcrest.core.IsEqual;
@@ -43,9 +42,8 @@ public final class ReportDataTest {
     @Test
     public void reportsData() throws Exception {
         final String name = "whatever";
-        final Random random = new Random();
-        final double mean = random.nextDouble();
-        final double sigma = random.nextDouble();
+        final double mean = 0;
+        final double sigma = 1;
         final Map<String, Object> sample = ReportDataTest.args();
         final ReportData data = new ReportData(name, sample, mean, sigma);
         new Assertion<>(
