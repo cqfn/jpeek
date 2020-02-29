@@ -32,6 +32,7 @@ import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Tests for {@link ReportData}.
@@ -47,9 +48,21 @@ public final class ReportDataTest {
         final double sigma = random.nextDouble();
         final Map<String, Object> sample = ReportDataTest.args();
         final ReportData data = new ReportData(name, sample, mean, sigma);
-        new Assertion<>("Must returns name", data.metric(), new IsEqual<>(name)).affirm();
-        new Assertion<>("Must returns mean", data.mean(), new IsEqual<>(mean)).affirm();
-        new Assertion<>("Must returns sigma", data.sigma(), new IsEqual<>(sigma)).affirm();
+        new Assertion<>(
+            "Must returns name",
+            data.metric(),
+            new IsEqual<>(name)
+        ).affirm();
+        new Assertion<>(
+            "Must returns mean",
+            data.mean(),
+            new IsEqual<>(mean)
+        ).affirm();
+        new Assertion<>(
+            "Must returns sigma",
+            data.sigma(),
+            new IsEqual<>(sigma)
+        ).affirm();
         new Assertion<>(
             "Must returns args",
             data.params().entrySet(),
@@ -64,11 +77,17 @@ public final class ReportDataTest {
         final Map<String, Object> params = new HashMap<>(sample);
         final ReportData data = new ReportData(name, params);
         params.clear();
-        data.params().clear();
         new Assertion<>(
             "Must be immutable",
             data.params().entrySet().size(),
             new IsEqual<>(sample.size())
+        ).affirm();
+        new Assertion<>(
+            "Must throw an exception if retrieved is modified",
+            () -> {
+                data.params().clear();
+                return "";
+            }, new Throws<>(UnsupportedOperationException.class)
         ).affirm();
     }
 

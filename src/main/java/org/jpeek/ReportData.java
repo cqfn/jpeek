@@ -23,6 +23,7 @@
  */
 package org.jpeek;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -94,7 +95,7 @@ final class ReportData {
     ReportData(final String name, final Map<String, Object> args, final double mean,
         final double sigma) {
         this.metr = name;
-        this.args = new HashMap<>(args);
+        this.args = Collections.unmodifiableMap(args);
         this.man = mean;
         this.sig = sigma;
     }
@@ -128,6 +129,6 @@ final class ReportData {
      * @return Params
      */
     public Map<String, Object> params() {
-        return new HashMap<>(this.args);
+        return this.args;
     }
 }
