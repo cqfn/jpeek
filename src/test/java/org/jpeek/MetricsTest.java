@@ -34,8 +34,6 @@ import org.jpeek.skeleton.Skeleton;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.llorllale.cactoos.matchers.Assertion;
 
 // @todo #68:30min SCOM has an impediment on issue #103: cannot currently
@@ -60,11 +58,11 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle JavadocTagsCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-@RunWith(Parameterized.class)
 @SuppressWarnings({
     "PMD.AvoidDuplicateLiterals",
     "PMD.ExcessiveMethodLength",
-    "PMD.UseUnderscoresInNumericLiterals"
+    "PMD.UseUnderscoresInNumericLiterals",
+    "PMD.UnusedPrivateMethod"
 })
 public final class MetricsTest {
 
