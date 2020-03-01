@@ -23,9 +23,9 @@
  */
 package org.jpeek;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import org.cactoos.map.MapOf;
 
 /**
  * Report data holder.
@@ -95,7 +95,7 @@ final class ReportData {
     ReportData(final String name, final Map<String, Object> args, final double mean,
         final double sigma) {
         this.metr = name;
-        this.args = Collections.unmodifiableMap(new HashMap<>(args));
+        this.args = new MapOf<String, Object>(new HashMap<>(args));
         this.man = mean;
         this.sig = sigma;
     }

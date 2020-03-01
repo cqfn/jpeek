@@ -40,27 +40,47 @@ import org.llorllale.cactoos.matchers.Throws;
 public final class ReportDataTest {
 
     @Test
-    public void reportsData() throws Exception {
+    public void reportsName() throws Exception {
         final String name = "whatever";
-        final double mean = 0;
-        final double sigma = 1;
-        final Map<String, Object> sample = ReportDataTest.args();
-        final ReportData data = new ReportData(name, sample, mean, sigma);
+        final ReportData data = new ReportData(name);
         new Assertion<>(
             "Must returns name",
             data.metric(),
             new IsEqual<>(name)
         ).affirm();
+    }
+
+    @Test
+    public void reportsMean() throws Exception {
+        final String name = "whats";
+        final double mean = 0;
+        final double sigma = 1;
+        final ReportData data = new ReportData(name, ReportDataTest.args(), mean, sigma);
         new Assertion<>(
             "Must returns mean",
             data.mean(),
             new IsEqual<>(mean)
         ).affirm();
+    }
+
+    @Test
+    public void reportsSigma() throws Exception {
+        final String name = "whatevermetric";
+        final double mean = 0;
+        final double sigma = 1;
+        final ReportData data = new ReportData(name, ReportDataTest.args(), mean, sigma);
         new Assertion<>(
             "Must returns sigma",
             data.sigma(),
             new IsEqual<>(sigma)
         ).affirm();
+    }
+
+    @Test
+    public void reportsParams() throws Exception {
+        final String name = "name";
+        final Map<String, Object> sample = ReportDataTest.args();
+        final ReportData data = new ReportData(name, sample);
         new Assertion<>(
             "Must returns args",
             data.params().entrySet(),
@@ -69,7 +89,7 @@ public final class ReportDataTest {
     }
 
     @Test
-    public void shouldBeImmutable() throws Exception {
+    public void shouldBeImmutableWhenModifyingPassedParams() throws Exception {
         final String name = "metric";
         final Map<String, Object> sample = ReportDataTest.args();
         final Map<String, Object> params = new HashMap<>(sample);
@@ -80,6 +100,12 @@ public final class ReportDataTest {
             data.params().entrySet().size(),
             new IsEqual<>(sample.size())
         ).affirm();
+    }
+
+    @Test
+    public void throwsExceptionWhenTryingToModifyParams() throws Exception {
+        final String name = "metrics";
+        final ReportData data = new ReportData(name, new HashMap<>(ReportDataTest.args()));
         new Assertion<>(
             "Must throw an exception if retrieved is modified",
             () -> {
