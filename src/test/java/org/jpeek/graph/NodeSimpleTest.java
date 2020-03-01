@@ -39,7 +39,7 @@ public final class NodeSimpleTest {
         final String name = "name";
         final Node.Simple node = new Node.Simple(name);
         new Assertion<>(
-            "Must be more the 2 files",
+            "Must returns name",
             node.name(),
             new IsEqual<>(name)
         ).affirm();
