@@ -53,11 +53,6 @@ SOFTWARE.
     <xsl:variable name="NC" select="$methods_count * ($methods_count - 1) div 2"/>
     <xsl:variable name="directly-related-pairs">
       <xsl:for-each select="$methods">
-        <!--
-        @todo #120:30min TCC: need to come back and refactor the following after
-         #156 is fixed. The ops for fields must be properly filtered to ensure
-         that they belong to the enclosing class.
-        -->
         <xsl:variable name="i" select="position()"/>
         <xsl:variable name="left" select="."/>
         <xsl:variable name="left_attrs" select="$attrs[. = $left/ops/op/text()]"/>

@@ -174,6 +174,7 @@ public final class MetricsTest {
             new Object[] {"Foo", "OCC", 0.5d},
             new Object[] {"Bar", "TCC", 0.0d},
             new Object[] {"Foo", "TCC", 1.0d},
+            new Object[] {"ClassSameAsAnotherPublicField", "TCC", 0.0d},
             new Object[] {"MethodsWithDiffParamTypes", "TCC", 0.2d},
             new Object[] {"OverloadMethods", "TCC", 1.0d},
             new Object[] {"TwoCommonAttributes", "TCC", 0.0d},
