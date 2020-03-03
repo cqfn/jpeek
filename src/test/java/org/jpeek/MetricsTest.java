@@ -252,32 +252,36 @@ public final class MetricsTest {
     @Test
     public void testsTarget() throws Exception {
         final Path output = Files.createTempDirectory("");
-        new XslReport(
-            new Skeleton(new FakeBase(this.target)).xml(),
-            this.metric, new XslCalculus()
-        ).save(output);
-        final String xpath;
-        if (Double.isNaN(this.value)) {
-            xpath = "//class[@id='%s' and @value='NaN']";
-        } else {
-            xpath = "//class[@id='%s' and number(@value)=%.4f]";
-        }
-        new Assertion<>(
-            new FormattedText(
-                "Must exists with target '%s' and value '%s'",
-                this.target, this.value
-            ).asString(),
-            XhtmlMatchers.xhtml(
-                new TextOf(
-                    output.resolve(String.format("%s.xml", this.metric))
-                ).asString()
-            ),
-            XhtmlMatchers.hasXPaths(
-                String.format(
-                    xpath,
+        try {
+            new XslReport(
+                new Skeleton(new FakeBase(this.target)).xml(),
+                this.metric, new XslCalculus()
+            ).save(output);
+            final String xpath;
+            if (Double.isNaN(this.value)) {
+                xpath = "//class[@id='%s' and @value='NaN']";
+            } else {
+                xpath = "//class[@id='%s' and number(@value)=%.4f]";
+            }
+            new Assertion<>(
+                new FormattedText(
+                    "Must exists with target '%s' and value '%s'",
                     this.target, this.value
+                ).asString(),
+                XhtmlMatchers.xhtml(
+                    new TextOf(
+                        output.resolve(String.format("%s.xml", this.metric))
+                    ).asString()
+                ),
+                XhtmlMatchers.hasXPaths(
+                    String.format(
+                        xpath,
+                        this.target, this.value
+                    )
                 )
-            )
-        ).affirm();
+            ).affirm();
+        } finally {
+            output.toFile().delete();
+        }
     }
 }

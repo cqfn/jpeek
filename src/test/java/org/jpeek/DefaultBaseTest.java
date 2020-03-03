@@ -29,6 +29,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
@@ -39,8 +40,7 @@ import org.llorllale.cactoos.matchers.Assertion;
 public final class DefaultBaseTest {
 
     @Test
-    public void listsFiles() throws IOException {
-        final Path temp = Files.createTempDirectory("");
+    public void listsFiles(@TempDir final Path temp) throws IOException {
         temp.resolve("a/b/c").toFile().mkdirs();
         Files.write(
             temp.resolve("a/b/c/x.java"), "Hello".getBytes(),

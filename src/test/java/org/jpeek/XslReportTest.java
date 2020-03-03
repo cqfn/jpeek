@@ -31,6 +31,7 @@ import java.nio.file.Path;
 import org.cactoos.text.TextOf;
 import org.jpeek.skeleton.Skeleton;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
 import org.xembly.Directives;
@@ -46,8 +47,7 @@ import org.xembly.Xembler;
 public final class XslReportTest {
 
     @Test
-    public void createsXmlReport() throws IOException {
-        final Path output = Files.createTempDirectory("");
+    public void createsXmlReport(@TempDir final Path output) throws IOException {
         new XslReport(
             new Skeleton(new FakeBase()).xml(), "LCOM", new XslCalculus()
         ).save(output);
@@ -64,8 +64,7 @@ public final class XslReportTest {
     }
 
     @Test
-    public void createsXmlReportWithXpaths() throws IOException {
-        final Path output = Files.createTempDirectory("");
+    public void createsXmlReportWithXpaths(@TempDir final Path output) throws IOException {
         new XslReport(
             new Skeleton(
                 new FakeBase(
@@ -88,8 +87,7 @@ public final class XslReportTest {
     }
 
     @Test
-    public void createsXmlReportWithEmptyProject() throws IOException {
-        final Path output = Files.createTempDirectory("");
+    public void createsXmlReportWithEmptyProject(@TempDir final Path output) throws IOException {
         new XslReport(
             new Skeleton(new FakeBase()).xml(), "LCOM", new XslCalculus()
         ).save(output);
@@ -105,8 +103,7 @@ public final class XslReportTest {
     }
 
     @Test
-    public void createsFullXmlReport() throws IOException {
-        final Path output = Files.createTempDirectory("");
+    public void createsFullXmlReport(@TempDir final Path output) throws IOException {
         new XslReport(
             new XMLDocument(
                 new Xembler(
@@ -142,8 +139,7 @@ public final class XslReportTest {
     }
 
     @Test
-    public void setsCorrectSchemaLocation() throws IOException {
-        final Path output = Files.createTempDirectory("");
+    public void setsCorrectSchemaLocation(@TempDir final Path output) throws IOException {
         new XslReport(
             new Skeleton(new FakeBase()).xml(), "LCOM", new XslCalculus()
         ).save(output);
