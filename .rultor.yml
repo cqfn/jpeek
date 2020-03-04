@@ -6,6 +6,8 @@ assets:
   id_rsa.pub: yegor256/home#assets/heroku-key.pub
 docker:
   as_root: true
+install: |
+  sudo update-java-alternatives -s java-1.8.0-openjdk-amd64
 architect:
 - paulodamaso
 - yegor256
