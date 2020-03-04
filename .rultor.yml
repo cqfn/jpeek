@@ -4,9 +4,8 @@ assets:
   secring.gpg: yegor256/home#assets/secring.gpg
   id_rsa: yegor256/home#assets/heroku-key
   id_rsa.pub: yegor256/home#assets/heroku-key.pub
-env:
-  MAVEN_OPTS: -XX:MaxPermSize=256m -Xmx1g
-  JAVA_OPTS: -XX:MaxPermSize=256m -Xmx1g
+docker:
+  as_root: true
 architect:
 - paulodamaso
 - yegor256
