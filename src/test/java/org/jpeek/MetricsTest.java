@@ -24,7 +24,6 @@
 package org.jpeek;
 
 import com.jcabi.matchers.XhtmlMatchers;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.TextOf;
@@ -51,6 +50,7 @@ import org.llorllale.cactoos.matchers.Assertion;
  *  to fix puzzles in LCC.xml.
  * @checkstyle JavadocTagsCheck (500 lines)
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ParameterNumberCheck (500 lines)
  */
 public final class MetricsTest {
 
