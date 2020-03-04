@@ -50,6 +50,7 @@ import org.llorllale.cactoos.matchers.Assertion;
  *  to fix puzzles in LCC.xml.
  * @checkstyle JavadocTagsCheck (500 lines)
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class MetricsTest {
 
