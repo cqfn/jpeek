@@ -1,5 +1,3 @@
-docker:
-  image: yegor256/rultor-image
 assets:
   settings.xml: yegor256/home#assets/jpeek/settings.xml
   pubring.gpg: yegor256/home#assets/pubring.gpg
@@ -9,9 +7,6 @@ assets:
 env:
   MAVEN_OPTS: -XX:MaxPermSize=256m -Xmx1g
   JAVA_OPTS: -XX:MaxPermSize=256m -Xmx1g
-install: |
-  sudo gem install pdd -v 0.20.5
-  sudo gem install xcop
 architect:
 - paulodamaso
 - yegor256
