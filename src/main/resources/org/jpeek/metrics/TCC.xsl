@@ -72,7 +72,10 @@ SOFTWARE.
       <xsl:attribute name="value">
         <xsl:choose>
           <xsl:when test="$methods_count le 1">
-            <xsl:text>0</xsl:text>
+            <xsl:text>1</xsl:text>
+          </xsl:when>
+          <xsl:when test="count($attrs) lt 1">
+            <xsl:text>1</xsl:text>
           </xsl:when>
           <xsl:otherwise>
             <xsl:variable name="tcc" select="$NDC div $NC"/>
