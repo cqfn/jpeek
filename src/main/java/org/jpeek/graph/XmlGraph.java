@@ -26,7 +26,9 @@ package org.jpeek.graph;
 import com.jcabi.xml.XML;
 import java.io.IOException;
 import java.util.List;
-import org.cactoos.list.Mapped;
+import java.util.Map;
+import org.cactoos.list.ListOf;
+import org.cactoos.map.MapOf;
 import org.cactoos.scalar.Sticky;
 import org.cactoos.scalar.Unchecked;
 import org.cactoos.text.Joined;
@@ -66,16 +68,39 @@ public final class XmlGraph implements Graph {
      * @param skeleton XML representation on whiwh to build the graph
      * @return List of nodes
      * @throws IOException If fails
+     * @todo #408:30min Nodes connections are built based on method calls. For now, the skeleton
+     *  does not reflect which overloaded method is called, so the identification of the called
+     *  method is made by its name. We should wait for #403 to be solved and enhance
+     *  this implementation to consider the overloaded called method.
      */
     private static List<Node> build(final Skeleton skeleton) throws IOException {
-        return new Mapped<XML, Node>(
+        final String clas = skeleton.xml().xpath("//class/@id").get(0);
+        final Map<XML, Node> byxml = new org.cactoos.map.Sticky<>(
+            method -> method,
             method -> new Node.Simple(
                 new Joined(
-                    "", method.xpath("@name").get(0), method.xpath("@desc").get(0)
+                    "", clas, ".", method.xpath("@name").get(0)
                 ).asString()
             ), skeleton.xml().nodes(
                 "//methods/method[@ctor='false' and @abstract='false']"
             )
         );
+        final Map<String, Node> byname = new MapOf<>(
+            node -> node.name(),
+            node -> node,
+            byxml.values()
+        );
+        for (final XML method : byxml.keySet()) {
+            final List<String> calls = method.xpath("ops/op[@code='call']/text()");
+            final Node caller = byxml.get(method);
+            for (final String call : calls) {
+                if (byname.containsKey(call)) {
+                    final Node callee = byname.get(call);
+                    caller.connections().add(callee);
+                    callee.connections().add(caller);
+                }
+            }
+        }
+        return new ListOf<>(byxml.values());
     }
 }

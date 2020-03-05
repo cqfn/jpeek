@@ -23,8 +23,8 @@
  */
 package org.jpeek.graph;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Graph node description. It should at least provide its name and its neighbors.
@@ -42,7 +42,7 @@ public interface Node {
      * Calculates ingoing and outgoing connected nodes.
      * @return List of nodes connected to this node.
      */
-    List<Node> connections();
+    Set<Node> connections();
 
     /**
      * Simple implementation.
@@ -57,7 +57,7 @@ public interface Node {
         /**
          * Nodes connected to this node.
          */
-        private final List<Node> connect;
+        private final Set<Node> connect;
 
         /**
          * Ctor.
@@ -65,7 +65,7 @@ public interface Node {
          */
         public Simple(final String name) {
             this.nme = name;
-            this.connect = new ArrayList<Node>(1);
+            this.connect = new HashSet<Node>(1);
         }
 
         @Override
@@ -74,7 +74,7 @@ public interface Node {
         }
 
         @Override
-        public List<Node> connections() {
+        public Set<Node> connections() {
             return this.connect;
         }
     }
