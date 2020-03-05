@@ -30,8 +30,12 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Comparator;
+import java.util.Enumeration;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 import org.cactoos.BiFunc;
 import org.cactoos.Func;
+import org.cactoos.io.InputOf;
 import org.cactoos.io.TeeInput;
 import org.cactoos.scalar.IoChecked;
 import org.cactoos.scalar.LengthOf;
@@ -112,34 +116,7 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
                 )
             )
         ).value();
-        try {
-            final File none;
-            final String filepath = "/dev/null";
-            if (new File(filepath).exists()) {
-                none = new File(filepath);
-            } else {
-                none = new File("NUL");
-            }
-            final int exit = new ProcessBuilder()
-                .redirectOutput(ProcessBuilder.Redirect.to(none))
-                .redirectInput(ProcessBuilder.Redirect.from(none))
-                .redirectError(ProcessBuilder.Redirect.to(none))
-                .directory(input.toFile())
-                .command("unzip", name)
-                .start()
-                .waitFor();
-            if (exit != 0) {
-                throw new IllegalStateException(
-                    String.format(
-                        "Failed to unzip %s:%s archive, exit code %d",
-                        group, artifact, exit
-                    )
-                );
-            }
-        } catch (final InterruptedException ex) {
-            Thread.currentThread().interrupt();
-            throw new IllegalStateException(ex);
-        }
+        extractClasses(input.resolve(name));
         final Path output = this.target.resolve(grp).resolve(artifact);
         Reports.deleteIfPresent(output);
         new App(input, output).analyze();
@@ -149,6 +126,35 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
             new Sigmas().add(output);
         }
         return new TypedPages(new Pages(output));
+    }
+
+    /**
+     * Extract classes from passed Jar file.
+     * @param path Jar file path
+     * @throws IOException If fails
+     */
+    private static void extractClasses(final Path path) throws IOException {
+        try (JarFile jar = new JarFile(path.toFile())) {
+            final Enumeration<JarEntry> entries = jar.entries();
+            while (entries.hasMoreElements()) {
+                final JarEntry entry = entries.nextElement();
+                final Path item = path.getParent().resolve(entry.getName());
+                if (entry.isDirectory()) {
+                    item.toFile().mkdir();
+                    continue;
+                }
+                final Path parent = item.getParent();
+                if (!parent.toFile().exists()) {
+                    parent.toFile().mkdirs();
+                }
+                new LengthOf(
+                    new TeeInput(
+                        new InputOf(jar.getInputStream(entry)),
+                        item
+                    )
+                ).intValue();
+            }
+        }
     }
 
     /**
