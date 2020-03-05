@@ -25,12 +25,12 @@ package org.jpeek;
 
 import com.jcabi.matchers.XhtmlMatchers;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.cactoos.text.TextOf;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
@@ -45,8 +45,7 @@ public final class IndexTest {
     private String xml;
 
     @BeforeEach
-    public void setUp() throws IOException {
-        final Path output = Files.createTempDirectory("").resolve("x2");
+    public void setUp(@TempDir final Path output) throws IOException {
         final Path input = Paths.get(".");
         new App(input, output).analyze();
         this.xml = new TextOf(output.resolve("index.xml")).asString();

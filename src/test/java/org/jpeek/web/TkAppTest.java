@@ -26,8 +26,9 @@ package org.jpeek.web;
 import com.jcabi.http.request.JdkRequest;
 import com.jcabi.http.response.RestResponse;
 import java.net.HttpURLConnection;
-import java.nio.file.Files;
+import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.takes.Response;
 import org.takes.Take;
@@ -44,8 +45,8 @@ import org.takes.rs.RsPrint;
 public final class TkAppTest {
 
     @Test
-    public void rendersOneReport() throws Exception {
-        final Take app = new TkApp(Files.createTempDirectory("x"));
+    public void rendersOneReport(@TempDir final Path temp) throws Exception {
+        final Take app = new TkApp(temp);
         new FtRemote(app).exec(
             home -> {
                 new JdkRequest(home)
@@ -69,7 +70,7 @@ public final class TkAppTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
-    public void pingsSimplePages() throws Exception {
+    public void pingsSimplePages(@TempDir final Path temp) throws Exception {
         final String[] pages = {
             "/org/jpeek/web/layout.xsl",
             "/org/jpeek/web/index.xsl",
@@ -78,7 +79,7 @@ public final class TkAppTest {
             "/mistakes",
             "/robots.txt",
         };
-        final Take app = new TkApp(Files.createTempDirectory("x"));
+        final Take app = new TkApp(temp);
         for (final String page : pages) {
             final Response response = app.act(new RqFake("GET", page));
             new Assertion<>(

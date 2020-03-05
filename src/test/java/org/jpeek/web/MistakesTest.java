@@ -24,13 +24,13 @@
 package org.jpeek.web;
 
 import com.jcabi.matchers.XhtmlMatchers;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.cactoos.collection.Joined;
 import org.jpeek.App;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.xembly.Directives;
 import org.xembly.Xembler;
@@ -44,8 +44,7 @@ public final class MistakesTest {
 
     @Test
     @Disabled
-    public void acceptsAndRenders() throws Exception {
-        final Path output = Files.createTempDirectory("").resolve("x2");
+    public void acceptsAndRenders(@TempDir final Path output) throws Exception {
         final Path input = Paths.get(".");
         new App(input, output).analyze();
         final Mistakes mistakes = new Mistakes();

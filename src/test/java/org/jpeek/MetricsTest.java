@@ -24,11 +24,11 @@
 package org.jpeek;
 
 import com.jcabi.matchers.XhtmlMatchers;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.TextOf;
 import org.jpeek.skeleton.Skeleton;
+import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -51,14 +51,15 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle JavadocTagsCheck (500 lines)
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @checkstyle ParameterNumberCheck (500 lines)
  */
 public final class MetricsTest {
 
     @ParameterizedTest
     @CsvFileSource(resources = "/org/jpeek/metricstest-params.csv")
-    public void testsTarget(final String target, final String metric, final double value)
+    public void testsTarget(final String target, final String metric, final double value,
+        @TempDir final Path output)
         throws Exception {
-        final Path output = Files.createTempDirectory("");
         new XslReport(
             new Skeleton(new FakeBase(target)).xml(), new XslCalculus(),
             new ReportData(metric)

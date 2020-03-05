@@ -30,6 +30,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.cactoos.Scalar;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
 import org.llorllale.cactoos.matchers.Throws;
@@ -43,8 +44,8 @@ import org.llorllale.cactoos.matchers.Throws;
 public final class MainTest {
 
     @Test
-    public void createsXmlReports() throws IOException {
-        final Path output = Files.createTempDirectory("").resolve("x3");
+    public void createsXmlReports(@TempDir final Path temp) throws IOException {
+        final Path output = temp.resolve("x3");
         final Path input = Paths.get(".");
         Main.main("--sources", input.toString(), "--target", output.toString());
         new Assertion<>(
@@ -66,8 +67,7 @@ public final class MainTest {
     }
 
     @Test
-    public void crashesIfNoOverwriteAndTargetExists() throws IOException {
-        final Path target = Files.createTempDirectory("");
+    public void crashesIfNoOverwriteAndTargetExists(@TempDir final Path target) {
         new Assertion<>(
             "Must throw an exception if target exists and no overwrite",
             () -> {
@@ -82,15 +82,13 @@ public final class MainTest {
 
     @Test
     @SuppressWarnings({"unchecked", "rawtypes"})
-    public void crashesIfOverwriteAndSourceEqualsToTarget() throws IOException {
-        final Path source = Files.createTempDirectory("sourceequalstarget");
-        final Path target = source;
+    public void crashesIfOverwriteAndSourceEqualsToTarget(@TempDir final Path source) {
         new Assertion(
             "Must throw an exception",
             (Scalar<Boolean>) () -> {
                 Main.main(
                     "--sources", source.toString(),
-                    "--target", target.toString(),
+                    "--target", source.toString(),
                     "--overwrite"
                 );
                 return true;
@@ -104,8 +102,7 @@ public final class MainTest {
 
     @Test
     @SuppressWarnings({"unchecked", "rawtypes"})
-    public void crashesIfMetricsHaveInvalidNames() throws IOException {
-        final Path target = Files.createTempDirectory("");
+    public void crashesIfMetricsHaveInvalidNames(@TempDir final Path target) {
         new Assertion(
             "Must throw an exception",
             (Scalar<Boolean>) () -> {
@@ -124,9 +121,8 @@ public final class MainTest {
     }
 
     @Test
-    public void createsXmlReportsIfOverwriteAndTargetExists()
+    public void createsXmlReportsIfOverwriteAndTargetExists(@TempDir final Path target)
         throws IOException {
-        final Path target = Files.createTempDirectory("");
         Main.main(
             "--sources", Paths.get(".").toString(),
             "--target", target.toString(),

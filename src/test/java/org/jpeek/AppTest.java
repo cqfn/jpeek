@@ -39,6 +39,7 @@ import org.cactoos.text.TextOf;
 import org.hamcrest.collection.IsEmptyIterable;
 import org.hamcrest.core.IsNot;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
 
@@ -51,8 +52,7 @@ import org.llorllale.cactoos.matchers.IsTrue;
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class AppTest {
     @Test
-    public void createsXmlReports() throws IOException {
-        final Path output = Files.createTempDirectory("").resolve("x1");
+    public void createsXmlReports(@TempDir final Path output) throws IOException {
         final Path input = Paths.get(".");
         new App(input, output).analyze();
         new Assertion<>(
@@ -73,8 +73,7 @@ public final class AppTest {
     }
 
     @Test
-    public void canIncludePrivateMethods() throws IOException {
-        final Path output = Files.createTempDirectory("").resolve("x2");
+    public void canIncludePrivateMethods(@TempDir final Path output) throws IOException {
         final Path input = Paths.get(".");
         final Map<String, Object> args = new HashMap<>();
         args.put("include-private-methods", 1);
@@ -91,8 +90,7 @@ public final class AppTest {
     }
 
     @Test
-    public void createsIndexHtml() throws IOException {
-        final Path output = Files.createTempDirectory("").resolve("x2");
+    public void createsIndexHtml(@TempDir final Path output) throws IOException {
         final Path input = Paths.get(".");
         new App(input, output).analyze();
         new Assertion<>(
@@ -103,8 +101,7 @@ public final class AppTest {
     }
 
     @Test
-    public void createsIndexXml() throws IOException {
-        final Path output = Files.createTempDirectory("").resolve("x7");
+    public void createsIndexXml(@TempDir final Path output) throws IOException {
         final Path input = Paths.get(".");
         new App(input, output).analyze();
         new Assertion<>(

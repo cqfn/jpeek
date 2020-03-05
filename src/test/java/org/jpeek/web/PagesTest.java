@@ -29,6 +29,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
@@ -40,10 +41,10 @@ public final class PagesTest {
 
     /**
      * Simple test.
+     * @param temp Temp directory
      */
     @Test
-    public void testApply() throws IOException {
-        final Path temp = Files.createTempDirectory("");
+    public void testApply(@TempDir final Path temp) throws IOException {
         temp.resolve("a").toFile().mkdirs();
         final String path = "a/z.class";
         Files.write(
