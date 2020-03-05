@@ -31,8 +31,8 @@ import java.util.Map;
  * Metrics calculus interface.
  * @since 0.30.9
  * @todo #408:30min We start having the infrastructure for graph building from skeleton with
- *  node connections representing methods intercalls. We should continue to implement an LCOM4
- *  metrics calculus based on the graph.
+ *  node connections representing methods intercalls. We should continue to implement XML metrics
+ *  generation using Java (see original issue #296).
  */
 public interface Calculus {
 
