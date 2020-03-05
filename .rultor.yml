@@ -4,9 +4,10 @@ assets:
   secring.gpg: yegor256/home#assets/secring.gpg
   id_rsa: yegor256/home#assets/heroku-key
   id_rsa.pub: yegor256/home#assets/heroku-key.pub
-env:
-  MAVEN_OPTS: -XX:MaxPermSize=256m -Xmx1g
-  JAVA_OPTS: -XX:MaxPermSize=256m -Xmx1g
+docker:
+  as_root: true
+install: |
+  sudo update-java-alternatives -s java-1.8.0-openjdk-amd64
 architect:
 - paulodamaso
 - yegor256
@@ -21,6 +22,7 @@ deploy:
     mvn clean deploy -Pqulice --errors --settings ../settings.xml
 release:
   script: |-
+    export GPG_TTY=$(tty)
     pdd -f /dev/null
     [[ "${tag}" =~ ^[0-9]+(\.[0-9]+)*$ ]] || exit -1
     mvn versions:set "-DnewVersion=${tag}"

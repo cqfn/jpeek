@@ -50,6 +50,7 @@ import org.llorllale.cactoos.matchers.Assertion;
  *  to fix puzzles in LCC.xml.
  * @checkstyle JavadocTagsCheck (500 lines)
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @checkstyle ParameterNumberCheck (500 lines)
  */
 public final class MetricsTest {
@@ -60,8 +61,8 @@ public final class MetricsTest {
         @TempDir final Path output)
         throws Exception {
         new XslReport(
-            new Skeleton(new FakeBase(target)).xml(),
-            metric, new XslCalculus()
+            new Skeleton(new FakeBase(target)).xml(), new XslCalculus(),
+            new ReportData(metric)
         ).save(output);
         final String xpath;
         if (Double.isNaN(value)) {

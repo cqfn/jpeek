@@ -21,31 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.jpeek;
+package org.jpeek.graph;
 
-import com.jcabi.xml.XML;
-import java.io.IOException;
-import java.util.Map;
+import java.util.List;
 
 /**
- * Metrics calculus interface.
+ * Graph containing list of nodes.
  * @since 0.30.9
- * @todo #397:30min We start having the infrastructure for graph building from skeleton.
- *  The graph have just nodes for now without any connection between them.
- *  We should continue to build nodes connections to reflect methods (inter-)calls.
- *  After that, we should continue to implement an LCOM4 metrics calculus based on the graph.
  */
-public interface Calculus {
+public interface Graph {
 
     /**
-     * Produces {@link XML} representing metrics values.
-     * @param metric Desired metric to calculate
-     * @param params Params
-     * @param skeleton Package input
-     * @return XML document giving metrics values for classes
-     * @throws IOException If fails
+     * Nodes composing this graph.
+     * @return List of the nodes belonging to this graph
      */
-    XML node(String metric, Map<String, Object> params, XML skeleton)
-        throws IOException;
-
+    List<Node> nodes();
 }

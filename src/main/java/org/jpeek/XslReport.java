@@ -35,7 +35,6 @@ import com.jcabi.xml.XSLChain;
 import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.HashMap;
 import java.util.Map;
 import org.cactoos.collection.CollectionOf;
 import org.cactoos.io.TeeInput;
@@ -52,15 +51,6 @@ import org.xembly.Xembler;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class XslReport implements Report {
-    /**
-     * Default mean.
-     */
-    private static final double DEFAULT_MEAN = 0.5d;
-
-    /**
-     * Default sigma.
-     */
-    private static final double DEFAULT_SIGMA = 0.1d;
 
     /**
      * Location to the schema file.
@@ -80,6 +70,11 @@ final class XslReport implements Report {
     private static final XSL STYLESHEET = XSLDocument.make(
         XslReport.class.getResourceAsStream("xsl/metric.xsl")
     ).with(new ClasspathSources());
+
+    /**
+     * XSL params.
+     */
+    private final Map<String, Object> params;
 
     /**
      * The skeleton.
@@ -102,61 +97,16 @@ final class XslReport implements Report {
     private final XSL post;
 
     /**
-     * XSL params.
-     */
-    private final Map<String, Object> params;
-
-    /**
      * Ctor.
      * @param xml Skeleton
-     * @param name Name of the metric
      * @param calc Calculus
-     */
-    XslReport(final XML xml, final String name, final Calculus calc) {
-        this(
-            xml, name, new HashMap<>(0), calc,
-            XslReport.DEFAULT_MEAN, XslReport.DEFAULT_SIGMA
-        );
-    }
-
-    /**
-     * Ctor.
-     * @param xml Skeleton
-     * @param name Name of metric
-     * @param args Params for XSL
-     * @param calc Calculus
-     * @checkstyle ParameterNumberCheck (5 lines)
-     */
-    XslReport(final XML xml, final String name, final Map<String, Object> args,
-        final Calculus calc) {
-        this(
-            xml, name, args, calc,
-            XslReport.DEFAULT_MEAN, XslReport.DEFAULT_SIGMA
-        );
-    }
-
-    /**
-     * Ctor.
-     * @param xml Skeleton
-     * @param name Name of the metric
-     * @param args Params for XSL
-     * @param calc Calculus
-     * @param mean Mean
-     * @param sigma Sigma
-     * @todo #390:30min this constructor now has too many arguments. We should find a way
-     *  to refactor the constructor or the class to have fewer parameters.
-     *  We could start by analyzing the usage of this.params (args in this
-     *  constructor) and get rid of it if it is not used.
-     *  Another idea could be to have a data class contaning reporting params:
-     *  name, args, mean, sigma.
+     * @param data Report data
      * @checkstyle ParameterNumberCheck (10 lines)
      */
-    XslReport(final XML xml, final String name,
-        final Map<String, Object> args, final Calculus calc,
-        final double mean, final double sigma) {
+    XslReport(final XML xml, final Calculus calc, final ReportData data) {
         this.skeleton = xml;
-        this.metric = name;
-        this.params = args;
+        this.metric = data.metric();
+        this.params = data.params();
         this.calculus = calc;
         this.post = new XSLChain(
             new CollectionOf<>(
@@ -164,7 +114,8 @@ final class XslReport implements Report {
                     XslReport.class.getResourceAsStream(
                         "xsl/metric-post-colors.xsl"
                     )
-                ).with("low", mean - sigma).with("high", mean + sigma),
+                ).with("low", data.mean() - data.sigma())
+                .with("high", data.mean() + data.sigma()),
                 new XSLDocument(
                     XslReport.class.getResourceAsStream(
                         "xsl/metric-post-range.xsl"
