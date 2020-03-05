@@ -49,7 +49,7 @@ public final class XslReportTest {
     public void createsXmlReport() throws IOException {
         final Path output = Files.createTempDirectory("");
         new XslReport(
-            new Skeleton(new FakeBase()).xml(), "LCOM", new XslCalculus()
+            new Skeleton(new FakeBase()).xml(), new XslCalculus(), new ReportData("LCOM")
         ).save(output);
         new Assertion<>(
             "Must LCOM.xml file exists",
@@ -72,8 +72,7 @@ public final class XslReportTest {
                     "NoMethods", "Bar", "OverloadMethods",
                     "OnlyOneMethodWithParams", "WithoutAttributes"
                 )
-            ).xml(),
-            "LCOM", new XslCalculus()
+            ).xml(), new XslCalculus(), new ReportData("LCOM")
         ).save(output);
         new Assertion<>(
             "Must create LCOM report",
@@ -91,7 +90,7 @@ public final class XslReportTest {
     public void createsXmlReportWithEmptyProject() throws IOException {
         final Path output = Files.createTempDirectory("");
         new XslReport(
-            new Skeleton(new FakeBase()).xml(), "LCOM", new XslCalculus()
+            new Skeleton(new FakeBase()).xml(), new XslCalculus(), new ReportData("LCOM")
         ).save(output);
         new Assertion<>(
             "Report for empty project created",
@@ -121,8 +120,7 @@ public final class XslReportTest {
                         .add("class").attr("id", "D").attr("value", "0.7").up()
                         .add("class").attr("id", "E").attr("value", "NaN").up()
                 ).xmlQuietly()
-            ),
-            "LCOM", new XslCalculus()
+            ), new XslCalculus(), new ReportData("LCOM")
         ).save(output);
         new Assertion<>(
             "Must create full report",
@@ -145,7 +143,7 @@ public final class XslReportTest {
     public void setsCorrectSchemaLocation() throws IOException {
         final Path output = Files.createTempDirectory("");
         new XslReport(
-            new Skeleton(new FakeBase()).xml(), "LCOM", new XslCalculus()
+            new Skeleton(new FakeBase()).xml(), new XslCalculus(), new ReportData("LCOM")
         ).save(output);
         new Assertion<>(
             "Must have correct schema location",
