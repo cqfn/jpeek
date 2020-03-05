@@ -88,7 +88,8 @@ ClassSameAsAnotherPublicField,TCC,0.0d
 MethodsWithDiffParamTypes,TCC,0.2d
 OverloadMethods,TCC,1.0d
 TwoCommonAttributes,TCC,0.0d
-WithoutAttributes,TCC,0.0d
+WithoutAttributes,TCC,1.0d
+NoMethods,TCC,1.0d
 IndirectlyRelatedPairs,TCC,0.6667
 Foo,TLCOM,1.0d
 MethodsWithDiffParamTypes,TLCOM,15.0d
