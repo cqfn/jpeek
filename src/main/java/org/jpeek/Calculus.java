@@ -35,7 +35,7 @@ import java.util.Map;
  *  @Disabled annotation on all Lcom4CalculusTest class. If we choose to calculate LCOM4 with Java
  *  only we should also remove LCOM4.xsl part that is doing the calculus and let the xsl here just
  *  to build the structure of the xml result. This part is especially the one calculating
- *  <xsl:variable name="E"> L73->L89, and the one doing the division L97 -> L99 
+ *  "xsl:variable name='E'" L73->L89, and the one doing the division L97 -> L99
  */
 public interface Calculus {
 
