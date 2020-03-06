@@ -36,7 +36,6 @@ public final class Disjoint implements Scalar<List<Set<Node>>> {
     /**
      * Graph.
      */
-    @SuppressWarnings("unused")
     private final Graph graph;
 
     /**
@@ -49,6 +48,6 @@ public final class Disjoint implements Scalar<List<Set<Node>>> {
 
     @Override
     public List<Set<Node>> value() throws Exception {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(this.graph.toString());
     }
 }
