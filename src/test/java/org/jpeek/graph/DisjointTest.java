@@ -39,6 +39,7 @@ public final class DisjointTest {
 
     @Test
     @Disabled
+    @SuppressWarnings("unchecked")
     public void calculatesDisjointSets() throws Exception {
         final Node one = new Node.Simple("one");
         final Node two = new Node.Simple("two");
