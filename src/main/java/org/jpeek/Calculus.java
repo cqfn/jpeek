@@ -30,9 +30,12 @@ import java.util.Map;
 /**
  * Metrics calculus interface.
  * @since 0.30.9
- * @todo #408:30min We start having the infrastructure for graph building from skeleton with
- *  node connections representing methods intercalls. We should continue to implement XML metrics
- *  generation using Java (see original issue #296).
+ * @todo #412:30min We start implementing LCOM4Calculus implementation. We should continue
+ *  calculating real 'class@value' and 'class/vars/var[@id=pairs]/text' values and remove
+ *  @Disabled annotation on all Lcom4CalculusTest class. If we choose to calculate LCOM4 with Java
+ *  only we should also remove LCOM4.xsl part that is doing the calculus and let the xsl here just
+ *  to build the structure of the xml result. This part is especially the one calculating
+ *  <xsl:variable name="E"> L73->L89, and the one doing the division L97 -> L99 
  */
 public interface Calculus {
 
