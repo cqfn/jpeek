@@ -23,7 +23,6 @@
  */
 package org.jpeek.graph;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import org.cactoos.Scalar;
@@ -37,6 +36,7 @@ public final class Disjoint implements Scalar<List<Set<Node>>> {
     /**
      * Graph.
      */
+    @SuppressWarnings("unused")
     private final Graph graph;
 
     /**
@@ -49,6 +49,6 @@ public final class Disjoint implements Scalar<List<Set<Node>>> {
 
     @Override
     public List<Set<Node>> value() throws Exception {
-        return new ArrayList<>(this.graph.nodes().size());
+        throw new UnsupportedOperationException();
     }
 }
