@@ -55,27 +55,21 @@ public final class DisjointTest {
         final Graph graph = new FakeGraph(
             new ListOf<>(one, two, three, four, five, six)
         );
-        //@checkstyle MagicNumberCheck (50 lines)
+        // @checkstyle MagicNumberCheck (50 lines)
         new Assertion<>(
             "Must build disjoint sets correctly",
             new Disjoint(graph).value(),
             new AllOf<Iterable<Set<Node>>>(
                 new ListOf<>(
                     new HasValuesMatching<>(
-                        set -> {
-                            return set.contains(one) && set.contains(two) && set.contains(three)
-                                && set.size() == 3;
-                        }
+                        set -> set.contains(one) && set.contains(two) && set.contains(three)
+                            && set.size() == 3
                     ),
                     new HasValuesMatching<>(
-                        set -> {
-                            return set.contains(five) && set.contains(four) && set.size() == 2;
-                        }
+                        set -> set.contains(five) && set.contains(four) && set.size() == 2
                     ),
                     new HasValuesMatching<>(
-                        set -> {
-                            return set.contains(six) && set.size() == 1;
-                        }
+                        set -> set.contains(six) && set.size() == 1
                     )
                 )
             )
