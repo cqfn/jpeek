@@ -74,12 +74,12 @@ public final class XmlGraph implements Graph {
      *  this implementation to consider the overloaded called method.
      */
     private static List<Node> build(final Skeleton skeleton) throws IOException {
-        final String clas = skeleton.xml().xpath("//class/@id").get(0);
         final Map<XML, Node> byxml = new org.cactoos.map.Sticky<>(
             method -> method,
             method -> new Node.Simple(
                 new Joined(
-                    "", clas, ".", method.xpath("@name").get(0)
+                    "", skeleton.xml().xpath("//class/@id").get(0),
+                    ".", method.xpath("@name").get(0)
                 ).asString()
             ), skeleton.xml().nodes(
                 "//methods/method[@ctor='false' and @abstract='false']"
