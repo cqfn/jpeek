@@ -23,11 +23,15 @@
  */
 package org.jpeek;
 
+import com.jcabi.xml.Sources;
 import com.jcabi.xml.XML;
-import com.jcabi.xml.XMLDocument;
+import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import org.cactoos.io.ResourceOf;
+import org.cactoos.text.Joined;
+import org.cactoos.text.TextOf;
 
 /**
  * LCOM4 Metrics java calculus.
@@ -38,15 +42,35 @@ public final class Lcom4Calculus implements Calculus {
     @Override
     public XML node(final String metric, final Map<String, Object> params,
         final XML skeleton) throws IOException {
-        try {
-            return new XMLDocument(
-                new ResourceOf(
-                    "org/jpeek/metrics/LCOM4.xml"
-                ).stream()
-            );
-        } catch (Exception ex) {
-            throw new IOException("Error building LCOM4 xml", ex);
+        final XML result = new XSLDocument(
+            new TextOf(
+                new ResourceOf("org/jpeek/metrics/LCOM4.xsl")
+            ).asString(),
+            Sources.DUMMY,
+            params
+        ).transform(skeleton);
+        final List<XML> packages = result.nodes("//package");
+        for (final XML elt : packages) {
+            final String pack = elt.xpath("/@id").get(0);
+            final List<XML> classes = elt.nodes("//class");
+            for (final XML clazz : classes) {
+                this.update(skeleton, pack, clazz);
+            }
         }
+        return result;
+    }
+
+    /**
+     * Updates the xml node of the class with the proper pair value and metric values.
+     * @param skeleton XML Skeleton
+     * @param pack Package name
+     * @param clazz Class node in the resulting xml
+     * @throws IOException If fails
+     */
+    private void update(final XML skeleton, final String pack, final XML clazz) throws IOException {
+        throw new UnsupportedOperationException(
+            new Joined("", skeleton.toString(), pack, clazz.toString()).asString()
+        );
     }
 
 }
