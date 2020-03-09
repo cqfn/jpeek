@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.jpeek;
+package org.jpeek.calculus.java;
 
 import com.jcabi.xml.Sources;
 import com.jcabi.xml.XML;
@@ -32,12 +32,13 @@ import java.util.Map;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
+import org.jpeek.Calculus;
 
 /**
  * LCOM4 Metrics java calculus.
  * @since 0.30.9
  */
-public final class Lcom4Calculus implements Calculus {
+public final class Lcom4 implements Calculus {
 
     @Override
     public XML node(final String metric, final Map<String, Object> params,

@@ -21,28 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.jpeek;
+package org.jpeek.calculus.java;
 
 import com.jcabi.matchers.XhtmlMatchers;
 import com.jcabi.xml.XML;
 import java.io.IOException;
 import java.util.HashMap;
 import org.hamcrest.core.IsEqual;
+import org.jpeek.FakeBase;
 import org.jpeek.skeleton.Skeleton;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
- * Test case for {@link Lcom4Calculus}.
+ * Test case for {@link Lcom4}.
  * @since 0.30.9
+ * @todo #412:30min The methodMethodCalls test is asserting the expected LCOM4 value
+ *  for MethodMethodCalls. Let's have more test cases for LCOM4 metric
+ *  to cover more realistic cases.
  */
-public final class Lcom4CalculusTest {
+public final class Lcom4Test {
 
     @Test
     @Disabled
     public void createsXmlCalculusWithXpaths() throws IOException {
-        final XML result = new Lcom4Calculus().node(
+        final XML result = new Lcom4().node(
             "LCOM", new HashMap<>(0), new Skeleton(
                 new FakeBase(
                     "NoMethods", "Bar", "OverloadMethods",
@@ -64,7 +68,7 @@ public final class Lcom4CalculusTest {
     @Test
     @Disabled
     public void methodMethodCalls() throws Exception {
-        final XML result = new Lcom4Calculus().node(
+        final XML result = new Lcom4().node(
             "", new HashMap<>(0), new Skeleton(
                 new FakeBase("MethodMethodCalls")
             ).xml()
