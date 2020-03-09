@@ -32,7 +32,7 @@ import java.util.Map;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
-import org.jpeek.Calculus;
+import org.jpeek.calculus.Calculus;
 
 /**
  * LCOM4 Metrics java calculus.

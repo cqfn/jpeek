@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.jpeek;
+package org.jpeek.calculus.xsl;
 
 import com.jcabi.xml.Sources;
 import com.jcabi.xml.XML;
@@ -31,6 +31,7 @@ import java.util.Map;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.TextOf;
+import org.jpeek.calculus.Calculus;
 
 /**
  * Metrics xsl calculus. Use an xsl sheet to transform the input skeleton into

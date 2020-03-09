@@ -47,6 +47,8 @@ import org.cactoos.scalar.And;
 import org.cactoos.scalar.AndInThreads;
 import org.cactoos.scalar.IoChecked;
 import org.cactoos.scalar.LengthOf;
+import org.jpeek.calculus.Calculus;
+import org.jpeek.calculus.xsl.XslCalculus;
 import org.jpeek.skeleton.Skeleton;
 import org.xembly.Directives;
 import org.xembly.Xembler;

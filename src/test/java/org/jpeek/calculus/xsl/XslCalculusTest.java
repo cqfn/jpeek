@@ -21,12 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.jpeek;
+package org.jpeek.calculus.xsl;
 
 import com.jcabi.matchers.XhtmlMatchers;
 import com.jcabi.xml.XML;
 import java.io.IOException;
 import java.util.HashMap;
+import org.jpeek.FakeBase;
 import org.jpeek.skeleton.Skeleton;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
