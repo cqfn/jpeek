@@ -5,7 +5,7 @@ assets:
   id_rsa: yegor256/home#assets/heroku-key
   id_rsa.pub: yegor256/home#assets/heroku-key.pub
 docker:
-  image: yegor256/rultor-image
+  image: g4s8/rultor:alpine3.10
   as_root: true
 install: |
   sudo update-java-alternatives -s java-1.8.0-openjdk-amd64
