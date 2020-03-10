@@ -32,14 +32,13 @@ import org.jpeek.FakeBase;
 import org.jpeek.skeleton.Skeleton;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Lcom4}.
  * @since 0.30.9
- * @todo #412:30min The methodMethodCalls test is asserting the expected LCOM4 value
- *  for MethodMethodCalls. Let's have more test cases for LCOM4 metric
- *  to cover more realistic cases.
  */
 public final class Lcom4Test {
 
@@ -65,18 +64,19 @@ public final class Lcom4Test {
         ).affirm();
     }
 
-    @Test
+    @ParameterizedTest
     @Disabled
-    public void methodMethodCalls() throws Exception {
+    @CsvFileSource(resources = "/org/jpeek/calculus/java/lcom4-params.csv")
+    public void methodMethodCalls(final String file, final String value) throws Exception {
         final XML result = new Lcom4().node(
             "", new HashMap<>(0), new Skeleton(
-                new FakeBase("MethodMethodCalls")
+                new FakeBase(file)
             ).xml()
         );
         new Assertion<>(
             "Must create LCOM4 value",
             result.xpath("/metric/app/package/class/@value").get(0),
-            new IsEqual<>("1")
+            new IsEqual<>(value)
         ).affirm();
     }
 }
