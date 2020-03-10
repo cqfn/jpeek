@@ -26,7 +26,6 @@ package org.jpeek.graph;
 import java.util.Set;
 import org.cactoos.list.ListOf;
 import org.hamcrest.core.AllOf;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValuesMatching;
@@ -38,7 +37,6 @@ import org.llorllale.cactoos.matchers.HasValuesMatching;
 public final class DisjointTest {
 
     @Test
-    @Disabled
     @SuppressWarnings("unchecked")
     public void calculatesDisjointSets() throws Exception {
         final Node one = new Node.Simple("one");

@@ -23,6 +23,8 @@
  */
 package org.jpeek.graph;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import org.cactoos.Scalar;
@@ -48,6 +50,26 @@ public final class Disjoint implements Scalar<List<Set<Node>>> {
 
     @Override
     public List<Set<Node>> value() throws Exception {
-        throw new UnsupportedOperationException(this.graph.toString());
+        final Set<Node> unvisited = new HashSet<>(this.graph.nodes());
+        final List<Set<Node>> result = new ArrayList<>(unvisited.size());
+        while (!unvisited.isEmpty()) {
+            final Node node = unvisited.iterator().next();
+            final Set<Node> adding = new HashSet<>();
+            adding.add(node);
+            final Set<Node> current = new HashSet<>();
+            while (!adding.isEmpty()) {
+                final Node visit = adding.iterator().next();
+                current.add(visit);
+                for (final Node connexion:visit.connections()) {
+                    if (!current.contains(connexion)) {
+                        adding.add(connexion);
+                    }
+                }
+                unvisited.remove(visit);
+                adding.remove(visit);
+            }
+            result.add(current);
+        }
+        return result;
     }
 }
