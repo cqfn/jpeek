@@ -33,6 +33,7 @@ import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import java.util.stream.Stream;
 import org.cactoos.BiFunc;
 import org.cactoos.Func;
 import org.cactoos.io.InputOf;
@@ -164,10 +165,14 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
      */
     private static void deleteIfPresent(final Path dir) throws IOException {
         if (Files.exists(dir)) {
-            Files.walk(dir)
-                .sorted(Comparator.reverseOrder())
-                .map(Path::toFile)
-                .forEach(File::delete);
+            try (
+                Stream<File> walk =
+                    Files.walk(dir)
+                    .sorted(Comparator.reverseOrder())
+                    .map(Path::toFile)
+            ) {
+                walk.forEach(File::delete);
+            }
         }
     }
 
