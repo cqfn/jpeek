@@ -27,6 +27,7 @@ import com.jcabi.matchers.XhtmlMatchers;
 import com.jcabi.xml.XML;
 import java.io.IOException;
 import java.util.HashMap;
+import org.cactoos.scalar.ItemAt;
 import org.hamcrest.core.IsEqual;
 import org.jpeek.FakeBase;
 import org.jpeek.skeleton.Skeleton;
@@ -67,7 +68,7 @@ public final class Lcom4Test {
     @ParameterizedTest
     @Disabled
     @CsvFileSource(resources = "/org/jpeek/calculus/java/lcom4-params.csv")
-    public void methodMethodCalls(final String file, final String value) throws Exception {
+    public void calculatesValue(final String file, final String value) throws Exception {
         final XML result = new Lcom4().node(
             "", new HashMap<>(0), new Skeleton(
                 new FakeBase(file)
@@ -75,7 +76,7 @@ public final class Lcom4Test {
         );
         new Assertion<>(
             "Must create LCOM4 value",
-            result.xpath("/metric/app/package/class/@value").get(0),
+            new ItemAt<>(0, result.xpath("/metric/app/package/class/@value")).value(),
             new IsEqual<>(value)
         ).affirm();
     }
