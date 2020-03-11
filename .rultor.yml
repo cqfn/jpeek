@@ -1,6 +1,5 @@
 docker:
-  image: g4s8/rultor-jdk11:alpine3.10
-  as_root: true
+  image: g4s8/rultor:alpine3.10
 assets:
   settings.xml: yegor256/home#assets/jpeek/settings.xml
   pubring.gpg: yegor256/home#assets/pubring.gpg
