@@ -6,8 +6,6 @@ assets:
   secring.gpg: yegor256/home#assets/secring.gpg
   id_rsa: yegor256/home#assets/heroku-key
   id_rsa.pub: yegor256/home#assets/heroku-key.pub
-env:
-  JAVA_HOME: /usr/lib/jvm/java-11-openjdk
 install: |
   export LC_ALL=en_US.UTF-8
   export LANG=en_US.UTF-8
