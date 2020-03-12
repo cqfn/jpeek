@@ -28,7 +28,6 @@ import com.jcabi.xml.XML;
 import java.io.IOException;
 import java.util.HashMap;
 import org.cactoos.scalar.ItemAt;
-import org.hamcrest.core.IsEqual;
 import org.jpeek.FakeBase;
 import org.jpeek.skeleton.Skeleton;
 import org.junit.jupiter.api.Disabled;
@@ -36,6 +35,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
  * Test case for {@link Lcom4}.
@@ -76,8 +76,8 @@ public final class Lcom4Test {
         );
         new Assertion<>(
             "Must create LCOM4 value",
-            new ItemAt<>(0, result.xpath("/metric/app/package/class/@value")).value(),
-            new IsEqual<>(value)
+            new ItemAt<>(0, result.xpath("/metric/app/package/class/@value")),
+            new ScalarHasValue<>(value)
         ).affirm();
     }
 }
