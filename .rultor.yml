@@ -12,6 +12,7 @@ install: |
   export LANG=en_US.UTF-8
   export LANGUAGE=en_US.UTF-8
   ln -s /usr/lib/jvm/java-1.8-openjdk/bin/javac /usr/bin/javac
+  apk --update add openssh-client
 architect:
 - paulodamaso
 - yegor256
