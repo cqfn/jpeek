@@ -41,8 +41,8 @@ release:
     mkdir ~/.ssh
     chmod 700 ~/.ssh
     mv ../id_rsa ../id_rsa.pub ~/.ssh
-    chmod -R 600 ~/.ssh/*
     echo -e "Host *\n  StrictHostKeyChecking no\n  UserKnownHostsFile=/dev/null" > ~/.ssh/config
+    chmod -R 600 ~/.ssh/*
     git remote add dokku dokku@dokku.jpeek.org:jpeek
     git add settings.xml
     git commit -m 'settings.xml' && git push -f dokku $(git symbolic-ref --short HEAD):master && git reset HEAD~1
