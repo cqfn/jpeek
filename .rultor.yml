@@ -42,6 +42,8 @@ release:
     mv ../id_rsa ../id_rsa.pub ~/.ssh
     chmod -R 600 ~/.ssh/*
     echo -e "Host *\n  StrictHostKeyChecking no\n  UserKnownHostsFile=/dev/null" > ~/.ssh/config
+    echo -e "Host *\n  StrictHostKeyChecking no\n" > /etc/ssh/ssh_config
+    cat ~/.ssh/config
     git add settings.xml
     git fetch
     git commit -m 'settings.xml' && git push -f dokku $(git symbolic-ref --short HEAD):master && git reset HEAD~1
