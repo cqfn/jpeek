@@ -37,11 +37,12 @@ release:
     mvn clean deploy -Pjpeek -Psonar -Pqulice -Psonatype --errors --settings ../settings.xml
     cp ../settings.xml settings.xml
     mvn clean package -Pqulice -Pjpeek --errors --batch-mode
-    git remote add dokku dokku@dokku.jpeek.org:jpeek
+    rm -rf ~/.ssh
     mkdir ~/.ssh
     mv ../id_rsa ../id_rsa.pub ~/.ssh
     chmod -R 600 ~/.ssh/*
     echo -e "Host *\n  StrictHostKeyChecking no\n  UserKnownHostsFile=/dev/null" > ~/.ssh/config
+    git remote add dokku dokku@dokku.jpeek.org:jpeek
     git add settings.xml
-    git commit -m 'settings.xml' && git push -f dokku master && git reset HEAD~1
+    git commit -m 'settings.xml' && git push -f dokku $(git symbolic-ref --short HEAD):master && git reset HEAD~1
     curl -f --connect-timeout 15 --retry 5 --insecure --retry-delay 30 https://i.jpeek.org > /dev/null
