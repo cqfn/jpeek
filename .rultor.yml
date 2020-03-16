@@ -7,27 +7,20 @@ assets:
   id_rsa: yegor256/home#assets/heroku-key
   id_rsa.pub: yegor256/home#assets/heroku-key.pub
 install: |
-  export LC_ALL=en_US.UTF-8
-  export LANG=en_US.UTF-8
-  export LANGUAGE=en_US.UTF-8
-  ln -s /usr/lib/jvm/java-1.8-openjdk/bin/javac /usr/bin/javac
-  apk --update add openssh-client
+  pdd -f /dev/null
 architect:
 - paulodamaso
 - yegor256
 merge:
   script: |
-    pdd -f /dev/null
     mvn clean install -Pqulice --errors --settings ../settings.xml
     mvn clean site -Psite --errors --settings ../settings.xml
 deploy:
   script: |
-    pdd -f /dev/null
     mvn clean deploy -Pqulice --errors --settings ../settings.xml
 release:
   script: |-
     export GPG_TTY=$(tty)
-    pdd -f /dev/null
     gpg --import /home/r/pubring.gpg
     gpg --allow-secret-key-import --no-tty --batch --import /home/r/secring.gpg
     [[ "${tag}" =~ ^[0-9]+(\.[0-9]+)*$ ]] || exit -1
