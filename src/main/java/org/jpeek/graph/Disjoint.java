@@ -54,19 +54,19 @@ public final class Disjoint implements Scalar<List<Set<Node>>> {
         final List<Set<Node>> result = new ArrayList<>(unvisited.size());
         while (!unvisited.isEmpty()) {
             final Node node = unvisited.iterator().next();
-            final Set<Node> adding = new HashSet<>();
-            adding.add(node);
+            final Set<Node> visiting = new HashSet<>();
+            visiting.add(node);
             final Set<Node> current = new HashSet<>();
-            while (!adding.isEmpty()) {
-                final Node visit = adding.iterator().next();
+            while (!visiting.isEmpty()) {
+                final Node visit = visiting.iterator().next();
                 current.add(visit);
                 for (final Node connexion:visit.connections()) {
                     if (!current.contains(connexion)) {
-                        adding.add(connexion);
+                        visiting.add(connexion);
                     }
                 }
                 unvisited.remove(visit);
-                adding.remove(visit);
+                visiting.remove(visit);
             }
             result.add(current);
         }
