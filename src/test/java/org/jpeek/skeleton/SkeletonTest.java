@@ -47,11 +47,14 @@ public final class SkeletonTest {
                 ).xml().toString()
             ),
             XhtmlMatchers.hasXPaths(
-                // @checkstyle LineLength (10 lines)
+                // @checkstyle LineLength (15 lines)
                 "/skeleton/app/package[count(class)=2]",
                 "//class[@id='Bar']/methods[count(method)=5]",
                 "//class[@id='OverloadMethods']/methods[count(method)=5]",
                 "//method[@name='<init>' and @ctor='true']",
+//                "//method[@name='methodOne' and @desc='(Ljava/lang/String;)D']/ops/op[@code='call']/name[.='OverloadMethods.methodOne']",
+//                "//method[@name='methodOne' and @desc='(Ljava/lang/String;)D']/ops/op[@code='call']/args[count(arg)=2]",
+//                "//method[@name='methodOne' and @desc='(Ljava/lang/String;)D']/ops/op[@code='call']/args/arg[@type='Ljava/lang/String' and .='?']",
                 "//class[@id='Bar']//method[@name='getKey']/ops[count(op)=3]",
                 "//class[@id='Bar']//method[@name='getKey']/ops/op[@code='put_static' and .='Bar.singleton']",
                 "//class[@id='Bar']//method[@name='getKey']/ops/op[@code='call' and .='java.lang.String.length']",

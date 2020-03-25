@@ -110,6 +110,20 @@ SOFTWARE.
                     <xs:complexType>
                       <xs:sequence>
                         <xs:element name="op" minOccurs="0" maxOccurs="unbounded">
+                          <!--
+                            @todo #403:30min Should change 'op' element description to support
+                              information about method arguments. That is important to differentiate
+                              overloaded methods to calculate LCOM4. We need to add a tag 'name' to reflect
+                              the method name and a tag 'args' to reflect the method's arguments.
+                              Example:
+                              <op code="call">
+                                <name>OverloadMethods.methodOne</name>
+                                <args>
+                                    <arg type="Ljava/lang/String">?</arg>
+                                    <arg type="Ljava/lang/String">?</arg>
+                                </args>
+                            </op>
+                          -->
                           <xs:complexType>
                             <xs:simpleContent>
                               <xs:extension base="xs:string">
