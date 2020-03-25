@@ -92,12 +92,12 @@ final class OpsOf extends MethodVisitor {
     //  Also, don't forget to uncomment lines in org.jpeek.skeleton.SkeletonTest#createsXml.
     //  Example:
     //  <op code="call">
-    //   <name>OverloadMethods.methodOne</name>
-    //   <args>
-    //    <arg type="Ljava/lang/String">?</arg>
-    //    <arg type="Ljava/lang/String">?</arg>
-    //   </args>
-    // </op>
+    //  <name>OverloadMethods.methodOne</name>
+    //  <args>
+    //  <arg type="Ljava/lang/String">?</arg>
+    //  <arg type="Ljava/lang/String">?</arg>
+    //  </args>
+    //  </op>
     @Override
     public void visitMethodInsn(final int opcode,
         final String owner, final String mtd,
