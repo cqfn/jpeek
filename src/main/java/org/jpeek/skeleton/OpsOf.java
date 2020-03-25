@@ -84,20 +84,20 @@ final class OpsOf extends MethodVisitor {
         ).up().up();
     }
 
-//    @todo #403:30min Method call description has to contain
-//    information about the method's arguments.
-//    That is important to differentiate overloaded methods to calculate LCOM4.
-//    We need to add a tag 'name' to reflect the method name
-//    and a tag 'args' to reflect the method's arguments.
-//    Also, don't forget to uncomment lines in org.jpeek.skeleton.SkeletonTest#createsXml.
-//    Example:
-//    <op code="call">
-//    <name>OverloadMethods.methodOne</name>
-//    <args>
-//    <arg type="Ljava/lang/String">?</arg>
-//    <arg type="Ljava/lang/String">?</arg>
-//    </args>
-//    </op>
+    // @todo #403:30min Method call description has to contain
+    //  information about the method's arguments.
+    //  That is important to differentiate overloaded methods to calculate LCOM4.
+    //  We need to add a tag 'name' to reflect the method name
+    //  and a tag 'args' to reflect the method's arguments.
+    //  Also, don't forget to uncomment lines in org.jpeek.skeleton.SkeletonTest#createsXml.
+    //  Example:
+    //  <op code="call">
+    //   <name>OverloadMethods.methodOne</name>
+    //   <args>
+    //    <arg type="Ljava/lang/String">?</arg>
+    //    <arg type="Ljava/lang/String">?</arg>
+    //   </args>
+    // </op>
     @Override
     public void visitMethodInsn(final int opcode,
         final String owner, final String mtd,
