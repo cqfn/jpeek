@@ -110,7 +110,7 @@ _Revisiting Class Cohesion: An empirical investigation on several systems_,<br/>
 Journal of Object Technology, vol.7, no.6, 2008,
 [PDF](http://www.jot.fm/issues/issue_2008_07/article1.pdf).
 
-Here is a list of metrics we already implement:
+###Here is a list of metrics we already implement:
 
 [`bansiya99`]
 Cohesion Among Methods of Classes (**CAMC**).<br/>
@@ -188,6 +188,15 @@ Martin Hitz et al.,<br/>
 Measuring Coupling and Cohesion In Object-Oriented Systems,<br/>
 Institute of Applied Computer Science and Systems Analysis, University of Vienna, 1995,
 [PDF](http://www.isys.uni-klu.ac.at/PDF/1995-0043-MHBM.pdf).
+
+[`izadkhah17`]
+Loose Class Cohesion (**LCC**),
+Lack of Cohesion in Methods 5 (**LCOM5**),
+Maximal Weighted Entropy (**MWE**).<br/>
+Habib Izadkhah et al.,<br/>
+_Class Cohesion Metrics for Software Engineering: A Critical Review_,<br/>
+Computer Science Journal of Moldova, vol.25, no.1(73), 2017,
+[PDF](http://www.math.md/files/csjm/v25-n1/v25-n1-(pp44-74).pdf).
 
 ## How it works?
 
