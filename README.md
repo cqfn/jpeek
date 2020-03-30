@@ -110,7 +110,7 @@ _Revisiting Class Cohesion: An empirical investigation on several systems_,<br/>
 Journal of Object Technology, vol.7, no.6, 2008,
 [PDF](http://www.jot.fm/issues/issue_2008_07/article1.pdf).
 
-Here is a list of metrics we already implement:
+### Here is a list of metrics we already implement:
 
 [`bansiya99`]
 Cohesion Among Methods of Classes (**CAMC**).<br/>
@@ -171,21 +171,21 @@ International Journal "Information Theories & Applications", Volume 13, 2006,
 [`bieman95`]
 Tight Class Cohesion (**TCC**) and Loose Class Cohesion (**LCC**).<br/>
 James M. Bieman et al.,<br/>
-Cohesion and Reuse in an Object-Oriented System,<br/>
+_Cohesion and Reuse in an Object-Oriented System_,<br/>
 Department of Computer Science, Colorado State University, 1995,
 [PDF](papers/bieman95_TCC.pdf).
 
-[`dallal11.pdf`]
+[`dallal11`]
 Transitive Lack of Cohesion in Methods (**TLCOM**).<br/>
 Jehad Al Dallal,<br/>
-Transitive-based object-oriented lack-of-cohesion metric,<br/>
+_Transitive-based object-oriented lack-of-cohesion metric_,<br/>
 Department of Information Science, Kuwait University, 2011,
 [PDF](papers/dallal11_TLCOM.pdf).
 
 [`hitz95`]
 Lack of Cohesion in Methods 4 (**LCOM4**).<br/>
 Martin Hitz et al.,<br/>
-Measuring Coupling and Cohesion In Object-Oriented Systems,<br/>
+_Measuring Coupling and Cohesion In Object-Oriented Systems_,<br/>
 Institute of Applied Computer Science and Systems Analysis, University of Vienna, 1995,
 [PDF](papers/hitz95_LCOM4.pdf).
 
