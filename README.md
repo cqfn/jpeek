@@ -148,7 +148,7 @@ ACM TOSEM, April 2006,
 [PDF](https://www.researchgate.net/publication/220403868_The_interpretation_and_utility_of_three_cohesion_metrics_for_object-oriented_design).
 
 [`sellers96`]
-Lack of Cohesion in Methods 2-3 (**LCOM 2-3**).<br/>
+Lack of Cohesion in Methods 2-3 (**LCOM 2, 3 and 5**).<br/>
 B. Henderson-Sellers et al.,<br/>
 _Coupling and cohesion (towards a valid metrics suite for object-oriented analysis and design)_,<br/>
 Object Oriented Systems 3, 1996,
@@ -169,7 +169,7 @@ International Journal "Information Theories & Applications", Volume 13, 2006,
 [PDF](http://citeseerx.ist.psu.edu/viewdoc/download;jsessionid=55D08270F99333F15E0937AF137F4468?doi=10.1.1.84.1506&rep=rep1&type=pdf).
 
 [`bieman95`]
-Tight Class Cohesion (**TCC**).<br/>
+Tight Class Cohesion (**TCC**) and Loose Class Cohesion (**LCC**).<br/>
 James M. Bieman et al.,<br/>
 Cohesion and Reuse in an Object-Oriented System,<br/>
 Department of Computer Science, Colorado State University, 1995,
@@ -188,6 +188,27 @@ Martin Hitz et al.,<br/>
 Measuring Coupling and Cohesion In Object-Oriented Systems,<br/>
 Institute of Applied Computer Science and Systems Analysis, University of Vienna, 1995,
 [PDF](http://www.isys.uni-klu.ac.at/PDF/1995-0043-MHBM.pdf).
+
+[`marcus05`]
+Conceptual Cohesion of Classes (**C3**).<br/>
+A. Marcus and D. Poshyvanyk,<br/>
+_The conceptual cohesion of classes_,<br/>
+21st IEEE International Conference on Software Maintenance (ICSM'05), Budapest, Hungary, 2005, pp. 133-142,
+[PDF](papers/marcus05_C3.pdf)
+
+[`liu09`]
+Maximal Weighted Entropy (**MWE**).<br/>
+Y. Liu, D. Poshyvanyk, R. Ferenc, T. Gyim´othy, and N. Chrisochoides,<br/>
+_Modeling class cohesion as mixtures of latent topics_,<br/>
+Software Maintenance, 2009. ICSM 2009. IEEE International Conference on. IEEE, 2009, pp. 233–242,
+[PDF](papers/liu09_MWE.pdf)
+
+[`etzkorn00`]
+LOgical Relatedness of Methods (**LORM**).<br/>
+L. Etzkorn and H. Delugach,<br/>
+_Towards a semantic metrics suite for object-oriented design_,<br/>
+Technology of Object-Oriented Languages and Systems, 2000. TOOLS 34. Proceedings. 34th International Conference on. IEEE, 2000, pp. 71–80,
+[PDF](papers/etzkorn00_LORM.pdf)
 
 ## How it works?
 
