@@ -71,7 +71,7 @@ final class Dynamo implements Region {
     private static Region live() throws IOException {
         final Properties props = Dynamo.pros();
         final Region reg;
-        if (Dynamo.class.getResource("/org/junit/Test.class") == null) {
+        if (Dynamo.class.getResource("/org/junit/jupiter/api/Test.class") == null) {
             reg = new Region.Simple(
                 new Credentials.Simple(
                     props.getProperty("org.jpeek.dynamo.key"),
