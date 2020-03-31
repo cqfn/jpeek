@@ -89,7 +89,8 @@ final class OpsOf extends MethodVisitor {
     //  That is important to differentiate overloaded methods to calculate LCOM4.
     //  We need to add a tag 'name' to reflect the method name
     //  and a tag 'args' to reflect the method's arguments.
-    //  Also, don't forget to delete @Disabled lines in org.jpeek.skeleton.SkeletonTest#createsXml.
+    //  Also, don't forget to delete @Disabled lines in
+    //  SkeletonTest#skeletonShouldReflectExactOverloadedCalledMethod.
     //  Example:
     //  <op code="call">
     //  <name>OverloadMethods.methodOne</name>

@@ -39,7 +39,6 @@ import org.llorllale.cactoos.matchers.Assertion;
 public final class SkeletonTest {
 
     @Test
-    @Disabled
     public void createsXml() {
         new Assertion<>(
             "Must overload bar's methods",
@@ -49,19 +48,35 @@ public final class SkeletonTest {
                 ).xml().toString()
             ),
             XhtmlMatchers.hasXPaths(
-                // @checkstyle LineLength (15 lines)
+                // @checkstyle LineLength (10 lines)
                 "/skeleton/app/package[count(class)=2]",
                 "//class[@id='Bar']/methods[count(method)=5]",
                 "//class[@id='OverloadMethods']/methods[count(method)=5]",
                 "//method[@name='<init>' and @ctor='true']",
-                "//method[@name='methodOne' and @desc='(Ljava/lang/String;)D']/ops/op[@code='call']/name[.='OverloadMethods.methodOne']",
-                "//method[@name='methodOne' and @desc='(Ljava/lang/String;)D']/ops/op[@code='call']/args[count(arg)=2]",
-                "//method[@name='methodOne' and @desc='(Ljava/lang/String;)D']/ops/op[@code='call']/args/arg[@type='Ljava/lang/String' and .='?']",
                 "//class[@id='Bar']//method[@name='getKey']/ops[count(op)=3]",
                 "//class[@id='Bar']//method[@name='getKey']/ops/op[@code='put_static' and .='Bar.singleton']",
                 "//class[@id='Bar']//method[@name='getKey']/ops/op[@code='call' and .='java.lang.String.length']",
                 "//class[@id='Bar']//method[@name='getKey']/ops/op[@code='get' and .='key']",
                 "//class[@id='Bar']//method[@name='<init>']/ops[count(op)=4]"
+            )
+        ).affirm();
+    }
+
+    @Test
+    @Disabled
+    public void skeletonShouldReflectExactOverloadedCalledMethod() {
+        new Assertion<>(
+            "Must overload bar's methods",
+            XhtmlMatchers.xhtml(
+                new Skeleton(
+                    new FakeBase("OverloadMethods", "Bar")
+                ).xml().toString()
+            ),
+            XhtmlMatchers.hasXPaths(
+                // @checkstyle LineLength (3 lines)
+                "//method[@name='methodOne' and @desc='(Ljava/lang/String;)D']/ops/op[@code='call']/name[.='OverloadMethods.methodOne']",
+                "//method[@name='methodOne' and @desc='(Ljava/lang/String;)D']/ops/op[@code='call']/args[count(arg)=2]",
+                "//method[@name='methodOne' and @desc='(Ljava/lang/String;)D']/ops/op[@code='call']/args/arg[@type='Ljava/lang/String' and .='?']"
             )
         ).affirm();
     }
