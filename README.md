@@ -110,7 +110,7 @@ _Revisiting Class Cohesion: An empirical investigation on several systems_,<br/>
 Journal of Object Technology, vol.7, no.6, 2008,
 [PDF](http://www.jot.fm/issues/issue_2008_07/article1.pdf).
 
-### Here is a list of metrics we already implement:
+### Here is a list of metrics we have already implemented:
 
 [`bansiya99`]
 Cohesion Among Methods of Classes (**CAMC**).<br/>
