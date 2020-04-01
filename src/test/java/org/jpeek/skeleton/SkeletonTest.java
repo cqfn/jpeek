@@ -26,6 +26,7 @@ package org.jpeek.skeleton;
 import com.jcabi.matchers.XhtmlMatchers;
 import org.jpeek.Base;
 import org.jpeek.FakeBase;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
@@ -57,6 +58,25 @@ public final class SkeletonTest {
                 "//class[@id='Bar']//method[@name='getKey']/ops/op[@code='call' and .='java.lang.String.length']",
                 "//class[@id='Bar']//method[@name='getKey']/ops/op[@code='get' and .='key']",
                 "//class[@id='Bar']//method[@name='<init>']/ops[count(op)=4]"
+            )
+        ).affirm();
+    }
+
+    @Test
+    @Disabled
+    public void skeletonShouldReflectExactOverloadedCalledMethod() {
+        new Assertion<>(
+            "Must find arguments of overloaded method",
+            XhtmlMatchers.xhtml(
+                new Skeleton(
+                    new FakeBase("OverloadMethods")
+                ).xml().toString()
+            ),
+            XhtmlMatchers.hasXPaths(
+                // @checkstyle LineLength (3 lines)
+                "//method[@name='methodOne' and @desc='(Ljava/lang/String;)D']/ops/op[@code='call']/name[.='OverloadMethods.methodOne']",
+                "//method[@name='methodOne' and @desc='(Ljava/lang/String;)D']/ops/op[@code='call']/args[count(arg)=2]",
+                "//method[@name='methodOne' and @desc='(Ljava/lang/String;)D']/ops/op[@code='call']/args/arg[@type='Ljava/lang/String' and .='?']"
             )
         ).affirm();
     }
