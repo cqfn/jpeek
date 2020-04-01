@@ -66,10 +66,10 @@ public final class SkeletonTest {
     @Disabled
     public void skeletonShouldReflectExactOverloadedCalledMethod() {
         new Assertion<>(
-            "Must overload bar's methods",
+            "Must find arguments of overloaded method",
             XhtmlMatchers.xhtml(
                 new Skeleton(
-                    new FakeBase("OverloadMethods", "Bar")
+                    new FakeBase("OverloadMethods")
                 ).xml().toString()
             ),
             XhtmlMatchers.hasXPaths(
