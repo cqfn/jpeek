@@ -68,10 +68,6 @@ public final class XmlGraph implements Graph {
      * @param skeleton XML representation on whiwh to build the graph
      * @return List of nodes
      * @throws IOException If fails
-     * @todo #408:30min Nodes connections are built based on method calls. For now, the skeleton
-     *  does not reflect which overloaded method is called, so the identification of the called
-     *  method is made by its name. We should wait for #403 to be solved and enhance
-     *  this implementation to consider the overloaded called method.
      */
     private static List<Node> build(final Skeleton skeleton) throws IOException {
         final Map<XML, Node> byxml = new org.cactoos.map.Sticky<>(
@@ -79,7 +75,8 @@ public final class XmlGraph implements Graph {
             method -> new Node.Simple(
                 new Joined(
                     "", skeleton.xml().xpath("//class/@id").get(0),
-                    ".", method.xpath("@name").get(0)
+                    ".", method.xpath("@name").get(0),
+                    ".", XmlGraph.args(method)
                 ).asString()
             ), skeleton.xml().nodes(
                 "//methods/method[@ctor='false' and @abstract='false']"
@@ -91,16 +88,40 @@ public final class XmlGraph implements Graph {
             byxml.values()
         );
         for (final XML method : byxml.keySet()) {
-            final List<String> calls = method.xpath("ops/op[@code='call']/text()");
+            final List<XML> calls = method.nodes("ops/op[@code='call']");
             final Node caller = byxml.get(method);
-            for (final String call : calls) {
-                if (byname.containsKey(call)) {
-                    final Node callee = byname.get(call);
+            for (final XML call : calls) {
+                final Object name = XmlGraph.call(call);
+                if (byname.containsKey(name)) {
+                    final Node callee = byname.get(name);
                     caller.connections().add(callee);
                     callee.connections().add(caller);
                 }
             }
         }
         return new ListOf<>(byxml.values());
+    }
+
+    /**
+     * Serialize method call to a string.
+     * @param call Call operation as XML
+     * @return A string representation of the call operation
+     * @throws IOException If fails
+     */
+    private static String call(final XML call) throws IOException {
+        return new Joined(
+            "", call.xpath("name/text()").get(0),
+            ".", XmlGraph.args(call)
+        ).asString();
+    }
+
+    /**
+     * Serialize method arguments to a string.
+     * @param method Method as XML
+     * @return A string representation of the method args
+     * @throws IOException If fails
+     */
+    private static String args(final XML method) throws IOException {
+        return new Joined(":", method.xpath("args/arg/@type")).asString();
     }
 }
