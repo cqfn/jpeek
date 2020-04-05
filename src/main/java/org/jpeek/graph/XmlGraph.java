@@ -91,7 +91,7 @@ public final class XmlGraph implements Graph {
             final List<XML> calls = method.nodes("ops/op[@code='call']");
             final Node caller = byxml.get(method);
             for (final XML call : calls) {
-                final Object name = XmlGraph.call(call);
+                final String name = XmlGraph.call(call);
                 if (byname.containsKey(name)) {
                     final Node callee = byname.get(name);
                     caller.connections().add(callee);
