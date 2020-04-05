@@ -42,7 +42,7 @@ import org.llorllale.cactoos.matchers.HasValuesMatching;
  * @since 0.30.9
  * @todo #413:30min In #413 we evolved graph connection building to take into account overloaded
  *  method differentiation as stated in #403. Wait until #403 is fully resolved (for now, it still
- *  has the puzzle #473) and then activate back the 2 tests in this class.
+ *  has the puzzle #437) and then activate back the 2 tests in this class.
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class XmlGraphTest {
