@@ -107,6 +107,10 @@ public final class XmlGraph implements Graph {
      * @param call Call operation as XML
      * @return A string representation of the call operation
      * @throws IOException If fails
+     * @todo #413:30min The following 2 private methods (call and args) could be extracted
+     *  in two new class to encapsulate logic of serializing an XML method call
+     *  to its string representation; and the logic of serializing an XML method arguments
+     *  to its string representation.
      */
     private static String call(final XML call) throws IOException {
         return new Joined(
