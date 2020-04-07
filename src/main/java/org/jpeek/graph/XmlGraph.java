@@ -27,6 +27,7 @@ import com.jcabi.xml.XML;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import org.cactoos.Text;
 import org.cactoos.list.ListOf;
 import org.cactoos.map.MapOf;
 import org.cactoos.scalar.Sticky;
@@ -76,7 +77,7 @@ public final class XmlGraph implements Graph {
                 new Joined(
                     "", skeleton.xml().xpath("//class/@id").get(0),
                     ".", method.xpath("@name").get(0),
-                    ".", XmlGraph.args(method)
+                    ".", new XmlMethodArgsText(method).asString()
                 ).asString()
             ), skeleton.xml().nodes(
                 "//methods/method[@ctor='false' and @abstract='false']"
@@ -91,7 +92,7 @@ public final class XmlGraph implements Graph {
             final List<XML> calls = method.nodes("ops/op[@code='call']");
             final Node caller = byxml.get(method);
             for (final XML call : calls) {
-                final String name = XmlGraph.call(call);
+                final String name = new XmlCallText(call).asString();
                 if (byname.containsKey(name)) {
                     final Node callee = byname.get(name);
                     caller.connections().add(callee);
@@ -104,28 +105,61 @@ public final class XmlGraph implements Graph {
 
     /**
      * Serialize method call to a string.
-     * @param call Call operation as XML
-     * @return A string representation of the call operation
-     * @throws IOException If fails
-     * @todo #413:30min The following 2 private methods (call and args) could be extracted
-     *  in two new class to encapsulate logic of serializing an XML method call
-     *  to its string representation; and the logic of serializing an XML method arguments
-     *  to its string representation.
+     *
+     * @since 1.0
+     * @todo #440:30min This class XMLCallText and the following one
+     *  XMLMethodArgsText should be made public and tests should be added
+     *  to validate both their behaviours.
      */
-    private static String call(final XML call) throws IOException {
-        return new Joined(
-            "", call.xpath("name/text()").get(0),
-            ".", XmlGraph.args(call)
-        ).asString();
+    private static final class XmlCallText implements Text {
+
+        /**
+         * XML Call operation.
+         */
+        private final XML call;
+
+        /**
+         * Ctor.
+         *
+         * @param call Call operation as XML.
+         */
+        XmlCallText(final XML call) {
+            this.call = call;
+        }
+
+        @Override
+        public String asString() throws IOException {
+            return new Joined(
+                "", this.call.xpath("name/text()").get(0),
+                ".", new XmlMethodArgsText(call).asString()
+            ).asString();
+        }
     }
 
     /**
      * Serialize method arguments to a string.
-     * @param method Method as XML
-     * @return A string representation of the method args
-     * @throws IOException If fails
+     *
+     * @since 1.0
      */
-    private static String args(final XML method) throws IOException {
-        return new Joined(":", method.xpath("args/arg/@type")).asString();
+    private static final class XmlMethodArgsText implements Text {
+
+        /**
+         * XML Method.
+         */
+        private final XML method;
+
+        /**
+         * Ctor.
+         *
+         * @param method Method as XML
+         */
+        XmlMethodArgsText(final XML method) {
+            this.method = method;
+        }
+
+        @Override
+        public String asString() throws IOException {
+            return new Joined(":", this.method.xpath("args/arg/@type")).asString();
+        }
     }
 }
