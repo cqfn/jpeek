@@ -77,7 +77,7 @@ public final class XmlGraph implements Graph {
                 new Joined(
                     "", skeleton.xml().xpath("//class/@id").get(0),
                     ".", method.xpath("@name").get(0),
-                    ".", new XmlMethodArgsText(method).asString()
+                    ".", new XmlMethodArgs(method).asString()
                 ).asString()
             ), skeleton.xml().nodes(
                 "//methods/method[@ctor='false' and @abstract='false']"
@@ -92,7 +92,7 @@ public final class XmlGraph implements Graph {
             final List<XML> calls = method.nodes("ops/op[@code='call']");
             final Node caller = byxml.get(method);
             for (final XML call : calls) {
-                final String name = new XmlCallText(call).asString();
+                final String name = new XmlCall(call).asString();
                 if (byname.containsKey(name)) {
                     final Node callee = byname.get(name);
                     caller.connections().add(callee);
@@ -107,11 +107,11 @@ public final class XmlGraph implements Graph {
      * Serialize method call to a string.
      *
      * @since 1.0
-     * @todo #440:30min This class XMLCallText and the following one
-     *  XMLMethodArgsText should be made public and tests should be added
+     * @todo #440:30min This class XmlCall and the following one
+     *  XmlMethodArgs should be made public and tests should be added
      *  to validate both their behaviours.
      */
-    private static final class XmlCallText implements Text {
+    private static final class XmlCall implements Text {
 
         /**
          * XML Call operation.
@@ -123,7 +123,7 @@ public final class XmlGraph implements Graph {
          *
          * @param call Call operation as XML.
          */
-        XmlCallText(final XML call) {
+        XmlCall(final XML call) {
             this.call = call;
         }
 
@@ -131,7 +131,7 @@ public final class XmlGraph implements Graph {
         public String asString() throws IOException {
             return new Joined(
                 "", this.call.xpath("name/text()").get(0),
-                ".", new XmlMethodArgsText(call).asString()
+                ".", new XmlMethodArgs(call).asString()
             ).asString();
         }
     }
@@ -141,7 +141,7 @@ public final class XmlGraph implements Graph {
      *
      * @since 1.0
      */
-    private static final class XmlMethodArgsText implements Text {
+    private static final class XmlMethodArgs implements Text {
 
         /**
          * XML Method.
@@ -153,7 +153,7 @@ public final class XmlGraph implements Graph {
          *
          * @param method Method as XML
          */
-        XmlMethodArgsText(final XML method) {
+        XmlMethodArgs(final XML method) {
             this.method = method;
         }
 
