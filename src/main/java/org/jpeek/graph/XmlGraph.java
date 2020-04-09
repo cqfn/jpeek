@@ -27,7 +27,6 @@ import com.jcabi.xml.XML;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import org.cactoos.Text;
 import org.cactoos.list.ListOf;
 import org.cactoos.map.MapOf;
 import org.cactoos.scalar.Sticky;
@@ -38,6 +37,11 @@ import org.jpeek.skeleton.Skeleton;
 /**
  * Graph implementation built on skeleton.
  * @since 0.30.9
+ * @todo #441:30min Continue the work started with extracting XmlMethodCall
+ *  and XmlMethodArgs and extract more code from this class pertaining
+ *  to serializing XML to string. The objective is to have tested classes
+ *  and to remove the checkstyle suppression below.
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class XmlGraph implements Graph {
 
@@ -92,7 +96,7 @@ public final class XmlGraph implements Graph {
             final List<XML> calls = method.nodes("ops/op[@code='call']");
             final Node caller = byxml.get(method);
             for (final XML call : calls) {
-                final String name = new XmlCall(call).asString();
+                final String name = new XmlMethodCall(call).asString();
                 if (byname.containsKey(name)) {
                     final Node callee = byname.get(name);
                     caller.connections().add(callee);
@@ -101,65 +105,5 @@ public final class XmlGraph implements Graph {
             }
         }
         return new ListOf<>(byxml.values());
-    }
-
-    /**
-     * Serialize method call to a string.
-     *
-     * @since 1.0
-     * @todo #440:30min This class XmlCall and the following one
-     *  XmlMethodArgs should be made public and tests should be added
-     *  to validate both their behaviours.
-     */
-    private static final class XmlCall implements Text {
-
-        /**
-         * XML Call operation.
-         */
-        private final XML call;
-
-        /**
-         * Ctor.
-         *
-         * @param call Call operation as XML.
-         */
-        XmlCall(final XML call) {
-            this.call = call;
-        }
-
-        @Override
-        public String asString() throws IOException {
-            return new Joined(
-                "", this.call.xpath("name/text()").get(0),
-                ".", new XmlMethodArgs(call).asString()
-            ).asString();
-        }
-    }
-
-    /**
-     * Serialize method arguments to a string.
-     *
-     * @since 1.0
-     */
-    private static final class XmlMethodArgs implements Text {
-
-        /**
-         * XML Method.
-         */
-        private final XML method;
-
-        /**
-         * Ctor.
-         *
-         * @param method Method as XML
-         */
-        XmlMethodArgs(final XML method) {
-            this.method = method;
-        }
-
-        @Override
-        public String asString() throws IOException {
-            return new Joined(":", this.method.xpath("args/arg/@type")).asString();
-        }
     }
 }
