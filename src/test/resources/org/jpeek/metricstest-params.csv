@@ -33,7 +33,6 @@ Foo,NHD,0.3333d
 MethodsWithDiffParamTypes,NHD,0.7143d
 OverloadMethods,NHD,0.5333d
 TwoCommonAttributes,NHD,0.3333d
-NoMethods,NHD,NaN
 OneVoidMethodWithoutParams,NHD,NaN
 WithoutAttributes,NHD,0.0d
 OneMethodCreatesLambda,NHD,0.0d
@@ -130,10 +129,6 @@ OnlyOneMethodWithParams,MWE,1.0d
 OverloadMethods,MWE,1.0d
 TwoCommonAttributes,MWE,1.0d
 WithoutAttributes,MWE,1.0d
-Foo,CCM,0.1667d
-OverloadMethods,CCM,0.6d
-TwoCommonAttributes,CCM,NaN
-TwoCommonMethods,CCM,0.0238d
 Bar,OCC,0.75d
 BridgeMethod,OCC,0.0d
 ClassWithPublicField,OCC,0.5d
