@@ -31,11 +31,11 @@ SOFTWARE.
         <xsl:text>Class Connection Metric (CCM) is based on the connection
           graph of a class where each node is a method and there exists an
           "edge" or connection between nodes if either both nodes access the
-          same attribute of a class, or if both call another method of the
+          same attribute of a class, or if both call the same method of the
           class. The formula is defined as CCM = NC/(NMP x NCC), where
           NC = number of connections according to the previous criteria,
           NMP = maximum number of possible connections (NMP = (N x (N - 1))/2),
-          and NCC = number of connected nodes.</xsl:text>
+          and NCC = number of connected components.</xsl:text>
       </description>
       <xsl:apply-templates select="node()"/>
     </metric>
