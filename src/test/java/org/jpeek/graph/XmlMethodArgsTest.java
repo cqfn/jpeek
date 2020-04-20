@@ -25,32 +25,39 @@ package org.jpeek.graph;
 
 import com.jcabi.xml.XML;
 import java.io.IOException;
-import org.cactoos.Text;
-import org.cactoos.text.Joined;
+import org.hamcrest.core.IsEqual;
+import org.jpeek.FakeBase;
+import org.jpeek.skeleton.Skeleton;
+import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
- * Serialize method arguments to a string.
- *
- * @since 1.0
+ * Test case for {@link XmlMethodArgs}.
+ * @since 0.30.9
  */
-public final class XmlMethodArgs implements Text {
+public final class XmlMethodArgsTest {
 
-    /**
-     * XML Method.
-     */
-    private final XML method;
-
-    /**
-     * Ctor.
-     *
-     * @param method Method as XML
-     */
-    XmlMethodArgs(final XML method) {
-        this.method = method;
+    @Test
+    public void givesArgsForNoArgs() throws IOException {
+        final XML method = new Skeleton(new FakeBase("MethodMethodCalls")).xml().nodes(
+            "//method[@name='methodOne']"
+        ).get(0);
+        new Assertion<>(
+            "Must returns args when method has no arguments",
+            new XmlMethodArgs(method).asString(),
+            new IsEqual<>("")
+        ).affirm();
     }
 
-    @Override
-    public String asString() throws IOException {
-        return new Joined(":", this.method.xpath("args/arg/@type")).asString();
+    @Test
+    public void givesArgsForMultipleArgs() throws IOException {
+        final XML method = new Skeleton(new FakeBase("MethodsWithDiffParamTypes")).xml().nodes(
+            "//method[@name='methodThree']"
+        ).get(0);
+        new Assertion<>(
+            "Must returns args when method has multiple arguments",
+            new XmlMethodArgs(method).asString(),
+            new IsEqual<>("Ljava/lang/String:I")
+        ).affirm();
     }
 }
