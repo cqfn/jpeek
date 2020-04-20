@@ -46,12 +46,6 @@ import org.xembly.Directives;
  *
  * @see <a href="http://www.pitt.edu/~ckemerer/CK%20research%20papers/MetricForOOD_ChidamberKemerer94.pdf">A packages suite for object oriented design</a>
  * @since 0.27
- * @todo #447:30min This class includes the constructor as part of the methods
- *  it considers, so it breaks some of the metrics. For example the CCM metrics
- *  test on OverloadMethods (see metricstest-params.csv) expects 0.6 as a result
- *  while it should be 1. See #447 for details on that. Find out if the constructor
- *  should be counted as one of the methods or not (does it depend on the metrics
- *  for example?) and fix it this class and the tests if needed.
  * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @checkstyle ParameterNumberCheck (500 lines)

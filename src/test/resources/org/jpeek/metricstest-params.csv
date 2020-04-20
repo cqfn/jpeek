@@ -36,7 +36,7 @@ TwoCommonAttributes,NHD,0.3333d
 OneVoidMethodWithoutParams,NHD,NaN
 WithoutAttributes,NHD,0.0d
 OneMethodCreatesLambda,NHD,0.0d
-MethodsWithDiffParamTypes,CCM,0.0476d
+MethodsWithDiffParamTypes,CCM,0.0667d
 Foo,SCOM,0.5d
 MethodsWithDiffParamTypes,SCOM,0.2381d
 OverloadMethods,SCOM,0.75d
@@ -113,11 +113,11 @@ NoMethods,CCM,NaN
 WithoutAttributes,CCM,NaN
 OneMethodCreatesLambda,CCM,NaN
 OneVoidMethodWithoutParams,CCM,NaN
-Bar,CCM,0.125d
-Foo,CCM,0.1667d
-OverloadMethods,CCM,0.6d
+Bar,CCM,0.2222d
+Foo,CCM,0.5d
+OverloadMethods,CCM,1.0d
 TwoCommonAttributes,CCM,NaN
-TwoCommonMethods,CCM,0.0238d
+TwoCommonMethods,CCM,0.0333d
 Bar,MWE,1.0d
 Foo,MWE,1.0d
 MethodMethodCalls,MWE,1.0d

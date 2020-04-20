@@ -41,7 +41,7 @@ SOFTWARE.
     </metric>
   </xsl:template>
   <xsl:template match="class">
-    <xsl:variable name="methods" select="methods/method"/>
+    <xsl:variable name="methods" select="methods/method[@ctor='false']"/>
     <xsl:variable name="edges">
       <xsl:for-each select="$methods">
         <xsl:variable name="method" select="."/>
