@@ -200,6 +200,14 @@ public final class App {
                 )
             );
         }
+        if (this.params.containsKey("LCOM4")) {
+            reports.add(
+                new XslReport(
+                    chain.transform(skeleton), xsl,
+                    new ReportData("LCOM4", this.params, 0.5d, -0.1d)
+                )
+            );
+        }
         if (this.params.containsKey("NHD")) {
             reports.add(
                 new XslReport(
