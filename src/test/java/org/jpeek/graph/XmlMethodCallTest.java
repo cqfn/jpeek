@@ -23,37 +23,40 @@
  */
 package org.jpeek.graph;
 
-import com.jcabi.xml.XML;
+import com.jcabi.xml.XMLDocument;
 import java.io.IOException;
-import org.cactoos.Text;
 import org.cactoos.text.Joined;
+import org.hamcrest.core.IsEqual;
+import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
- * Serialize method arguments to a string.
- *
- * @since 1.0
+ * Test case for {@link XmlMethodCall}.
+ * @since 0.44
  */
-public final class XmlMethodArgs implements Text {
+final class XmlMethodCallTest {
 
-    /**
-     * XML Method.
-     */
-    private final XML method;
-
-    /**
-     * Ctor.
-     *
-     * @param method Method as XML
-     */
-    XmlMethodArgs(final XML method) {
-        this.method = method;
-    }
-
-    @Override
-    public String asString() throws IOException {
-        return new Joined(
-            ":",
-            this.method.xpath("op/args/arg/@type")
-        ).asString();
+    @Test
+    void hasClassMethodAndArgs() throws IOException {
+        new Assertion<>(
+            "Must have class name, method name and args.",
+            new XmlMethodCall(
+                new XMLDocument(
+                    new Joined(
+                        "",
+                        "<op code=\"call\">",
+                        "  <name>OverloadMethods.methodOne</name>",
+                        "  <args>",
+                        "    <arg type=\"Ljava/lang/String\">?</arg>",
+                        "    <arg type=\"Z\">?</arg>",
+                        "  </args>",
+                        "</op>"
+                    ).asString()
+                )
+            ).asString(),
+            new IsEqual<>(
+                "OverloadMethods.methodOne.Ljava/lang/String:Z"
+            )
+        ).affirm();
     }
 }
