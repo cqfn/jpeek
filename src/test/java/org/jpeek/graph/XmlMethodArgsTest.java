@@ -38,12 +38,12 @@ import org.llorllale.cactoos.matchers.Assertion;
 public final class XmlMethodArgsTest {
 
     @Test
-    public void givesArgsForNoArgs() throws IOException {
+    public void returnsEmptyStringWhenNoArgsSpecificied() throws IOException {
         final XML method = new Skeleton(new FakeBase("MethodMethodCalls")).xml().nodes(
             "//method[@name='methodOne']"
         ).get(0);
         new Assertion<>(
-            "Must returns args when method has no arguments",
+            "Must returns empty string when method has no arguments",
             new XmlMethodArgs(method).asString(),
             new IsEqual<>("")
         ).affirm();
@@ -55,7 +55,7 @@ public final class XmlMethodArgsTest {
             "//method[@name='methodThree']"
         ).get(0);
         new Assertion<>(
-            "Must returns args when method has multiple arguments",
+            "Must serialize args when multiple arguments are in the method node",
             new XmlMethodArgs(method).asString(),
             new IsEqual<>("Ljava/lang/String:I")
         ).affirm();
