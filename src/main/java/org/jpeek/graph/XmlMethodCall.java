@@ -32,11 +32,8 @@ import org.cactoos.text.Joined;
  * Serialize method call to a string.
  *
  * @since 1.0
- * @todo #440:30min This class XmlMethodCall should be made public
- *  and a test class named XmlMethodCallTest should be added to
- *  verify its behaviour.
  */
-final class XmlMethodCall implements Text {
+public final class XmlMethodCall implements Text {
 
     /**
      * XML Call operation.
@@ -55,7 +52,7 @@ final class XmlMethodCall implements Text {
     @Override
     public String asString() throws IOException {
         return new Joined(
-            "", this.call.xpath("name/text()").get(0),
+            "", this.call.xpath("op/name/text()").get(0),
             ".", new XmlMethodArgs(this.call).asString()
         ).asString();
     }
