@@ -135,6 +135,10 @@ public final class App {
     /**
      * Analyze sources.
      * @throws IOException If fails
+     * @todo #452:30min Extract report building
+     *  Analyze method is too big. We need to extract report building from
+     *  here and use a map instead of if statements se we can make
+     *  easier to add and remove metrics from execution.
      */
     @SuppressWarnings({
         "PMD.ExcessiveMethodLength",
