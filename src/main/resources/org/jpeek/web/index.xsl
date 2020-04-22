@@ -127,6 +127,9 @@ SOFTWARE.
   <xsl:template match="best/repo">
     <tr>
       <td>
+        <xsl:attribute name="data-value">
+          <xsl:value-of select="position()"/>
+        </xsl:attribute>
         <xsl:text>#</xsl:text>
         <xsl:value-of select="position()"/>
       </td>
