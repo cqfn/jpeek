@@ -135,6 +135,10 @@ public final class App {
     /**
      * Analyze sources.
      * @throws IOException If fails
+     * @todo #452:30min Extract report building
+     *  Analyze method is too big. We need to extract report building from
+     *  here and use a map instead of if statements se we can make
+     *  easier to add and remove metrics from execution.
      */
     @SuppressWarnings({
         "PMD.ExcessiveMethodLength",
@@ -197,6 +201,14 @@ public final class App {
                 new XslReport(
                     chain.transform(skeleton), xsl,
                     new ReportData("LCOM5", this.params, 0.5d, -0.1d)
+                )
+            );
+        }
+        if (this.params.containsKey("LCOM4")) {
+            reports.add(
+                new XslReport(
+                    chain.transform(skeleton), xsl,
+                    new ReportData("LCOM4", this.params, 0.5d, -0.1d)
                 )
             );
         }

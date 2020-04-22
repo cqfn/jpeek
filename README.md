@@ -44,6 +44,11 @@ and then:
 ```bash
 $ java -jar jpeek-jar-with-dependencies.jar --sources . --target ./jpeek
 ```
+<!--
+@todo #452:30min Improve how to use section on README.md
+ How to Use section must be improved; we need to explain the many parameters
+ that jpeek jar accepts and the default values for each parameter.
+-->
 
 jPeek will analyze Java files in the current directory.
 XML reports will be generated in the `./jpeek` directory. Enjoy.
