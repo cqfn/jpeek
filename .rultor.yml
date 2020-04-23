@@ -20,6 +20,8 @@ deploy:
   script: |
     mvn clean deploy -Pqulice --errors --settings ../settings.xml
 release:
+  sensitive:
+    - settings.xml
   script: |-
     export GPG_TTY=$(tty)
     gpg --import /home/r/pubring.gpg
