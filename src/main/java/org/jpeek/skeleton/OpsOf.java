@@ -84,31 +84,21 @@ final class OpsOf extends MethodVisitor {
         ).up().up();
     }
 
-    // @todo #403:30min Method call description has to contain
-    //  information about the method's arguments.
-    //  That is important to differentiate overloaded methods to calculate LCOM4.
-    //  We need to add a tag 'name' to reflect the method name
-    //  and a tag 'args' to reflect the method's arguments.
-    //  skeleton.xsd should be changed to support the method's arguments.
-    //  Also, don't forget to delete @Disabled lines in
-    //  SkeletonTest#skeletonShouldReflectExactOverloadedCalledMethod.
-    //  Example:
-    //  <op code="call">
-    //  <name>OverloadMethods.methodOne</name>
-    //  <args>
-    //  <arg type="Ljava/lang/String">?</arg>
-    //  <arg type="Ljava/lang/String">?</arg>
-    //  </args>
-    //  </op>
     @Override
     public void visitMethodInsn(final int opcode,
         final String owner, final String mtd,
         final String dsc, final boolean itf) {
         super.visitMethodInsn(opcode, owner, mtd, dsc, itf);
+        final String[] args = dsc.substring(dsc.indexOf('(') + 1, dsc.indexOf(')')).split(";");
         this.target.strict(1).addIf("ops").add("op");
         this.target
             .attr("code", "call")
+            .add("name")
             .set(owner.replace("/", ".").concat(".").concat(mtd))
-            .up().up();
+            .up().add("args");
+        for (final String arg : args) {
+            this.target.add("arg").attr("type", arg).set("?").up();
+        }
+        this.target.up().up().up();
     }
 }
