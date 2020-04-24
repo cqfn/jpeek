@@ -126,16 +126,16 @@ SOFTWARE.
                                   <xs:sequence>
                                     <xs:element name="arg" minOccurs="0" maxOccurs="unbounded">
                                       <xs:complexType>
-                                      <xs:simpleContent>
-                                        <xs:extension base="xs:string">
-                                          <xs:attribute name="type" use="required" type="xs:string">
-                                            <xs:annotation>
-                                              <xs:documentation>
-                                                Argument type
-                                              </xs:documentation>
-                                            </xs:annotation>
-                                          </xs:attribute>
-                                        </xs:extension>
+                                        <xs:simpleContent>
+                                          <xs:extension base="xs:string">
+                                            <xs:attribute name="type" use="required" type="xs:string">
+                                              <xs:annotation>
+                                                <xs:documentation>
+                                                  Argument type
+                                                </xs:documentation>
+                                              </xs:annotation>
+                                            </xs:attribute>
+                                          </xs:extension>
                                         </xs:simpleContent>
                                       </xs:complexType>
                                     </xs:element>
