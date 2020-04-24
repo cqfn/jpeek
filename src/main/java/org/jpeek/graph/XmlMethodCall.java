@@ -53,7 +53,7 @@ public final class XmlMethodCall implements Text {
     public String asString() throws IOException {
         return new Joined(
             "", this.call.xpath("op/name/text()").get(0),
-            ".", new XmlMethodArgs(this.call).asString()
+            ".", new XmlMethodArgs(this.call.nodes("op").get(0)).asString()
         ).asString();
     }
 }
