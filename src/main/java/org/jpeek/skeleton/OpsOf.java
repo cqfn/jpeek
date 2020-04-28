@@ -24,6 +24,8 @@
 package org.jpeek.skeleton;
 
 import org.cactoos.Text;
+import org.cactoos.text.Split;
+import org.cactoos.text.Sub;
 import org.cactoos.text.TextOf;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
@@ -39,8 +41,13 @@ import org.xembly.Directives;
  * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @checkstyle ParameterNumberCheck (500 lines)
+ * @checkstyle IllegalCatchCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+@SuppressWarnings({
+    "PMD.AvoidThrowingRawExceptionTypes",
+    "PMD.AvoidCatchingGenericException",
+    "PMD.AvoidDuplicateLiterals"
+})
 final class OpsOf extends MethodVisitor {
 
     /**
@@ -89,15 +96,22 @@ final class OpsOf extends MethodVisitor {
         final String owner, final String mtd,
         final String dsc, final boolean itf) {
         super.visitMethodInsn(opcode, owner, mtd, dsc, itf);
-        final String[] args = dsc.substring(dsc.indexOf('(') + 1, dsc.indexOf(')')).split(";");
+        final Iterable<Text> args = new Split(
+            new Sub(dsc, dsc.indexOf('(') + 1, dsc.indexOf(')')),
+            ";"
+        );
         this.target.strict(1).addIf("ops").add("op");
         this.target
             .attr("code", "call")
             .add("name")
             .set(owner.replace("/", ".").concat(".").concat(mtd))
             .up().add("args");
-        for (final String arg : args) {
-            this.target.add("arg").attr("type", arg).set("?").up();
+        for (final Text arg : args) {
+            try {
+                this.target.add("arg").attr("type", arg.asString()).set("?").up();
+            } catch (final Exception ex) {
+                throw new RuntimeException(ex);
+            }
         }
         this.target.up().up().up();
     }

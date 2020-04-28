@@ -131,7 +131,7 @@ SOFTWARE.
                                             <xs:attribute name="type" use="required" type="xs:string">
                                               <xs:annotation>
                                                 <xs:documentation>
-                                                  Argument type
+                                                  Argument type. Field descriptor as defined in Section 4.3.2. "Field Descriptors" in the jvm specifications
                                                 </xs:documentation>
                                               </xs:annotation>
                                             </xs:attribute>
