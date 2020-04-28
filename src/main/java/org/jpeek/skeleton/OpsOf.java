@@ -41,13 +41,8 @@ import org.xembly.Directives;
  * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @checkstyle ParameterNumberCheck (500 lines)
- * @checkstyle IllegalCatchCheck (500 lines)
  */
-@SuppressWarnings({
-    "PMD.AvoidThrowingRawExceptionTypes",
-    "PMD.AvoidCatchingGenericException",
-    "PMD.AvoidDuplicateLiterals"
-})
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class OpsOf extends MethodVisitor {
 
     /**
@@ -107,11 +102,7 @@ final class OpsOf extends MethodVisitor {
             .set(owner.replace("/", ".").concat(".").concat(mtd))
             .up().add("args");
         for (final Text arg : args) {
-            try {
-                this.target.add("arg").attr("type", arg.asString()).set("?").up();
-            } catch (final Exception ex) {
-                throw new RuntimeException(ex);
-            }
+            this.target.add("arg").attr("type", arg).set("?").up();
         }
         this.target.up().up().up();
     }
