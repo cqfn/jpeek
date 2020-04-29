@@ -118,7 +118,7 @@ SOFTWARE.
                                 <xs:annotation>
                                   <xs:documentation>
                                     This element lists the argument types with which a method call is done.
-                                    This element is irrelevant if the "code"" attribute of the "op"" element
+                                    This element is irrelevant if the "code" attribute of the "op"" element
                                     is different from "call"
                                   </xs:documentation>
                                 </xs:annotation>
