@@ -26,7 +26,6 @@ package org.jpeek.skeleton;
 import com.jcabi.matchers.XhtmlMatchers;
 import org.jpeek.Base;
 import org.jpeek.FakeBase;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
@@ -55,7 +54,7 @@ public final class SkeletonTest {
                 "//method[@name='<init>' and @ctor='true']",
                 "//class[@id='Bar']//method[@name='getKey']/ops[count(op)=3]",
                 "//class[@id='Bar']//method[@name='getKey']/ops/op[@code='put_static' and .='Bar.singleton']",
-                "//class[@id='Bar']//method[@name='getKey']/ops/op[@code='call' and .='java.lang.String.length']",
+                "//class[@id='Bar']//method[@name='getKey']/ops/op[@code='call']/name[text() ='java.lang.String.length']",
                 "//class[@id='Bar']//method[@name='getKey']/ops/op[@code='get' and .='key']",
                 "//class[@id='Bar']//method[@name='<init>']/ops[count(op)=4]"
             )
@@ -63,7 +62,6 @@ public final class SkeletonTest {
     }
 
     @Test
-    @Disabled
     public void skeletonShouldReflectExactOverloadedCalledMethod() {
         new Assertion<>(
             "Must find arguments of overloaded method",
@@ -113,12 +111,12 @@ public final class SkeletonTest {
             ),
             XhtmlMatchers.hasXPaths(
                 // @checkstyle LineLength (10 lines)
-                "//class[@id='Bar']/methods/method[@name='<init>' and @ctor='true']/ops[op = 'java.lang.Object.<init>']",
-                "//class[@id='Bar']/methods/method[@name='getKey']/ops[op = 'java.lang.String.length']",
-                "//class[@id='Bar']/methods/method[@name='getValue']/ops[op = 'java.lang.String.length']",
-                "//class[@id='Bar']/methods/method[@name='setValue']/ops[op ='java.lang.UnsupportedOperationException.<init>']",
-                "//class[@id='Foo']/methods/method[@name='methodOne']/ops[op = 'Foo.methodTwo']",
-                "//class[@id='Foo']/methods/method[@name='methodTwo']/ops[op = 'Foo.methodOne']"
+                "//class[@id='Bar']/methods/method[@name='<init>' and @ctor='true']/ops/op/name[text() = 'java.lang.Object.<init>']",
+                "//class[@id='Bar']/methods/method[@name='getKey']/ops/op/name[text() = 'java.lang.String.length']",
+                "//class[@id='Bar']/methods/method[@name='getValue']/ops/op/name[text() = 'java.lang.String.length']",
+                "//class[@id='Bar']/methods/method[@name='setValue']/ops/op/name[text() ='java.lang.UnsupportedOperationException.<init>']",
+                "//class[@id='Foo']/methods/method[@name='methodOne']/ops/op/name[text() = 'Foo.methodTwo']",
+                "//class[@id='Foo']/methods/method[@name='methodTwo']/ops/op/name[text() = 'Foo.methodOne']"
             )
         ).affirm();
     }
@@ -150,8 +148,8 @@ public final class SkeletonTest {
                         "ClassAccessingPublicField"
                     )
                 )
-                .xml()
-                .toString()
+                    .xml()
+                    .toString()
             ),
             XhtmlMatchers.hasXPaths(
                 // @checkstyle LineLength (1 line)
@@ -170,8 +168,8 @@ public final class SkeletonTest {
                         "ClassWithDifferentMethodVisibilities"
                     )
                 )
-                .xml()
-                .toString()
+                    .xml()
+                    .toString()
             ),
             XhtmlMatchers.hasXPaths("//skeleton[@schema='xsd/skeleton.xsd']")
         ).affirm();
@@ -187,8 +185,8 @@ public final class SkeletonTest {
                         "ClassWithDifferentMethodVisibilities"
                     )
                 )
-                .xml()
-                .toString()
+                    .xml()
+                    .toString()
             ),
             XhtmlMatchers.hasXPaths(
                 "//method[@name='publicMethod' and @visibility='public']",

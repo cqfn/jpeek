@@ -110,30 +110,51 @@ SOFTWARE.
                     <xs:complexType>
                       <xs:sequence>
                         <xs:element name="op" minOccurs="0" maxOccurs="unbounded">
-                          <xs:complexType>
-                            <xs:simpleContent>
-                              <xs:extension base="xs:string">
+                          <xs:complexType mixed="true">
+                            <xs:sequence>
+                              <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string">
+                              </xs:element>
+                              <xs:element name="args" minOccurs="0" maxOccurs="1">
                                 <xs:annotation>
                                   <xs:documentation>
-                                    The identifier of the 'thing' that is being operated on. If a method is being
-                                    called, then this would be the method's name. If a field is being read or written,
-                                    then the field's name would be here.
+                                    This element lists the argument types with which a method call is done.
+                                    This element is irrelevant if the "code" attribute of the "op"" element
+                                    is different from "call"
                                   </xs:documentation>
                                 </xs:annotation>
-                                <xs:attribute name="code" use="required" type="xs:string">
-                                  <xs:annotation>
-                                    <xs:documentation>
-                                      Value depends on what the instruction is doing. Currently:
-                                      - "get": if an instance field is being read
-                                      - "get_static": if a static field  is being read
-                                      - "put": if an instance field is being written to
-                                      - "put_static": if a static field is being written to
-                                      - "call": if calling a method
-                                    </xs:documentation>
-                                  </xs:annotation>
-                                </xs:attribute>
-                              </xs:extension>
-                            </xs:simpleContent>
+                                <xs:complexType>
+                                  <xs:sequence>
+                                    <xs:element name="arg" minOccurs="0" maxOccurs="unbounded">
+                                      <xs:complexType>
+                                        <xs:simpleContent>
+                                          <xs:extension base="xs:string">
+                                            <xs:attribute name="type" use="required" type="xs:string">
+                                              <xs:annotation>
+                                                <xs:documentation>
+                                                  Argument type. Field descriptor as defined in Section 4.3.2. "Field Descriptors" in the jvm specifications
+                                                </xs:documentation>
+                                              </xs:annotation>
+                                            </xs:attribute>
+                                          </xs:extension>
+                                        </xs:simpleContent>
+                                      </xs:complexType>
+                                    </xs:element>
+                                  </xs:sequence>
+                                </xs:complexType>
+                              </xs:element>
+                            </xs:sequence>
+                            <xs:attribute name="code" use="required" type="xs:string">
+                              <xs:annotation>
+                                <xs:documentation>
+                                  Value depends on what the instruction is doing. Currently:
+                                  - "get": if an instance field is being read
+                                  - "get_static": if a static field  is being read
+                                  - "put": if an instance field is being written to
+                                  - "put_static": if a static field is being written to
+                                  - "call": if calling a method
+                                </xs:documentation>
+                              </xs:annotation>
+                            </xs:attribute>
                           </xs:complexType>
                         </xs:element>
                       </xs:sequence>

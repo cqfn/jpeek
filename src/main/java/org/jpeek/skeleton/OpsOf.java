@@ -24,6 +24,8 @@
 package org.jpeek.skeleton;
 
 import org.cactoos.Text;
+import org.cactoos.text.Split;
+import org.cactoos.text.Sub;
 import org.cactoos.text.TextOf;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
@@ -84,22 +86,6 @@ final class OpsOf extends MethodVisitor {
         ).up().up();
     }
 
-    // @todo #403:30min Method call description has to contain
-    //  information about the method's arguments.
-    //  That is important to differentiate overloaded methods to calculate LCOM4.
-    //  We need to add a tag 'name' to reflect the method name
-    //  and a tag 'args' to reflect the method's arguments.
-    //  skeleton.xsd should be changed to support the method's arguments.
-    //  Also, don't forget to delete @Disabled lines in
-    //  SkeletonTest#skeletonShouldReflectExactOverloadedCalledMethod.
-    //  Example:
-    //  <op code="call">
-    //  <name>OverloadMethods.methodOne</name>
-    //  <args>
-    //  <arg type="Ljava/lang/String">?</arg>
-    //  <arg type="Ljava/lang/String">?</arg>
-    //  </args>
-    //  </op>
     @Override
     public void visitMethodInsn(final int opcode,
         final String owner, final String mtd,
@@ -108,7 +94,16 @@ final class OpsOf extends MethodVisitor {
         this.target.strict(1).addIf("ops").add("op");
         this.target
             .attr("code", "call")
+            .add("name")
             .set(owner.replace("/", ".").concat(".").concat(mtd))
-            .up().up();
+            .up().add("args");
+        final Iterable<Text> args = new Split(
+            new Sub(dsc, dsc.indexOf('(') + 1, dsc.indexOf(')')),
+            ";"
+        );
+        for (final Text arg : args) {
+            this.target.add("arg").attr("type", arg).set("?").up();
+        }
+        this.target.up().up().up();
     }
 }
