@@ -91,16 +91,16 @@ final class OpsOf extends MethodVisitor {
         final String owner, final String mtd,
         final String dsc, final boolean itf) {
         super.visitMethodInsn(opcode, owner, mtd, dsc, itf);
-        final Iterable<Text> args = new Split(
-            new Sub(dsc, dsc.indexOf('(') + 1, dsc.indexOf(')')),
-            ";"
-        );
         this.target.strict(1).addIf("ops").add("op");
         this.target
             .attr("code", "call")
             .add("name")
             .set(owner.replace("/", ".").concat(".").concat(mtd))
             .up().add("args");
+        final Iterable<Text> args = new Split(
+            new Sub(dsc, dsc.indexOf('(') + 1, dsc.indexOf(')')),
+            ";"
+        );
         for (final Text arg : args) {
             this.target.add("arg").attr("type", arg).set("?").up();
         }
