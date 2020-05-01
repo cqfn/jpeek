@@ -53,7 +53,7 @@ public final class XmlMethodArgs implements Text {
     public String asString() throws IOException {
         return new Joined(
             ":",
-            this.method.xpath("op/args/arg/@type")
+            this.method.xpath("args/arg/@type")
         ).asString();
     }
 }

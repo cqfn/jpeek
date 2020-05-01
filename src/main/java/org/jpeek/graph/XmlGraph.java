@@ -31,16 +31,17 @@ import org.cactoos.list.ListOf;
 import org.cactoos.map.MapOf;
 import org.cactoos.scalar.Sticky;
 import org.cactoos.scalar.Unchecked;
-import org.cactoos.text.Joined;
 import org.jpeek.skeleton.Skeleton;
 
 /**
  * Graph implementation built on skeleton.
  * @since 0.30.9
- * @todo #441:30min Continue the work started with extracting XmlMethodCall
- *  and XmlMethodArgs and extract more code from this class pertaining
- *  to serializing XML to string. The objective is to have tested classes
- *  and to remove the checkstyle suppression below.
+ * @todo #445:30min Continue the work started with extracting XmlMethodCall,
+ *  XmlMethodArgs and XmlMethodSignature, and extract more code from this class
+ *  pertaining to serializing XML to string. The objective is to have tested
+ *  classes and to remove the checkstyle suppression below. Finally consider
+ *  extracting the whole 'build' method body into a separate class extending
+ *  ListEnvelope.
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class XmlGraph implements Graph {
@@ -73,28 +74,31 @@ public final class XmlGraph implements Graph {
      * @param skeleton XML representation on whiwh to build the graph
      * @return List of nodes
      * @throws IOException If fails
+     * @todo #445:30min This method works only for skeletons with a single
+     *  class because it assigns all methods in the skeleton to the first class
+     *  it finds. Instead, it should iterate through classes and then through
+     *  methods of each class.
      */
     private static List<Node> build(final Skeleton skeleton) throws IOException {
         final Map<XML, Node> byxml = new org.cactoos.map.Sticky<>(
             method -> method,
             method -> new Node.Simple(
-                new Joined(
-                    "", skeleton.xml().xpath("//class/@id").get(0),
-                    ".", method.xpath("@name").get(0),
-                    ".", new XmlMethodArgs(method).asString()
+                new XmlMethodSignature(
+                    skeleton.xml().nodes("//class").get(0),
+                    method
                 ).asString()
             ), skeleton.xml().nodes(
                 "//methods/method[@ctor='false' and @abstract='false']"
             )
         );
         final Map<String, Node> byname = new MapOf<>(
-            node -> node.name(),
+            Node::name,
             node -> node,
             byxml.values()
         );
-        for (final XML method : byxml.keySet()) {
-            final List<XML> calls = method.nodes("ops/op[@code='call']");
-            final Node caller = byxml.get(method);
+        for (final Map.Entry<XML, Node> entry : byxml.entrySet()) {
+            final List<XML> calls = entry.getKey().nodes("ops/op[@code='call']");
+            final Node caller = entry.getValue();
             for (final XML call : calls) {
                 final String name = new XmlMethodCall(call).asString();
                 if (byname.containsKey(name)) {

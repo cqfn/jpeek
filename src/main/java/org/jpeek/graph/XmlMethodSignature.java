@@ -24,42 +24,29 @@
 package org.jpeek.graph;
 
 import com.jcabi.xml.XML;
-import java.io.IOException;
-import org.hamcrest.core.IsEqual;
-import org.jpeek.FakeBase;
-import org.jpeek.skeleton.Skeleton;
-import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
+import org.cactoos.text.Joined;
+import org.cactoos.text.TextEnvelope;
+import org.cactoos.text.TextOf;
 
 /**
- * Test case for {@link XmlMethodArgs}.
+ * Text signature of a class method, extracted from XML Skeleton.
  * @since 0.30.9
  */
-final class XmlMethodArgsTest {
+public final class XmlMethodSignature extends TextEnvelope {
 
-    @Test
-    void returnsEmptyStringWhenNoArgsSpecificied() throws IOException {
-        final XML method = new Skeleton(new FakeBase("MethodMethodCalls")).xml().nodes(
-            "//method[@name='methodOne']"
-        ).get(0);
-        new Assertion<>(
-            "Must returns empty string when method has no arguments",
-            new XmlMethodArgs(method).asString(),
-            new IsEqual<>("")
-        ).affirm();
-    }
-
-    @Test
-    void givesArgsForMultipleArgs() throws IOException {
-        final XML method = new Skeleton(new FakeBase("MethodsWithDiffParamTypes")).xml().nodes(
-            "//method[@name='methodThree']"
-        ).get(0);
-        new Assertion<>(
-            "Must serialize args when multiple arguments are in the method node",
-            new XmlMethodArgs(method).asString(),
-            new IsEqual<>(
-                "Ljava/lang/String:I"
+    /**
+     * Ctor.
+     * @param clazz The class element of XML skeleton.
+     * @param method The method element of XML skeleton.
+     */
+    public XmlMethodSignature(final XML clazz, final XML method) {
+        super(
+            new Joined(
+                new TextOf("."),
+                new TextOf(clazz.xpath("./@id").get(0)),
+                new TextOf(method.xpath("@name").get(0)),
+                new XmlMethodArgs(method)
             )
-        ).affirm();
+        );
     }
 }
