@@ -24,41 +24,29 @@
 package org.jpeek.graph;
 
 import com.jcabi.xml.XML;
-import org.cactoos.Text;
 import org.cactoos.text.Joined;
+import org.cactoos.text.TextEnvelope;
+import org.cactoos.text.TextOf;
 
 /**
  * Text signature of a class method, extracted from XML Skeleton.
  * @since 0.30.9
  */
-public final class XmlMethodSignature implements Text {
+public final class XmlMethodSignature extends TextEnvelope {
 
     /**
-     * The class element of XML skeleton.
-     */
-    private final XML clazz;
-
-    /**
-     * The method element of XML skeleton.
-     */
-    private final XML method;
-
-    /**
-     * Primary ctor.
+     * Ctor.
      * @param clazz The class element of XML skeleton.
      * @param method The method element of XML skeleton.
      */
     public XmlMethodSignature(final XML clazz, final XML method) {
-        this.clazz = clazz;
-        this.method = method;
-    }
-
-    @Override
-    public String asString() throws Exception {
-        return new Joined(
-            "", this.clazz.xpath("./@id").get(0),
-            ".", this.method.xpath("@name").get(0),
-            ".", new XmlMethodArgs(this.method).asString()
-        ).asString();
+        super(
+            new Joined(
+                new TextOf("."),
+                new TextOf(clazz.xpath("./@id").get(0)),
+                new TextOf(method.xpath("@name").get(0)),
+                new XmlMethodArgs(method)
+            )
+        );
     }
 }
