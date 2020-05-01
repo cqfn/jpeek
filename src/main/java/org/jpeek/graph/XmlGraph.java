@@ -39,7 +39,9 @@ import org.jpeek.skeleton.Skeleton;
  * @todo #445:30min Continue the work started with extracting XmlMethodCall,
  *  XmlMethodArgs and XmlMethodSignature, and extract more code from this class
  *  pertaining to serializing XML to string. The objective is to have tested
- *  classes and to remove the checkstyle suppression below.
+ *  classes and to remove the checkstyle suppression below. Finally consider
+ *  extracting the whole 'build' method body into a separate class extending
+ *  ListEnvelope.
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class XmlGraph implements Graph {
