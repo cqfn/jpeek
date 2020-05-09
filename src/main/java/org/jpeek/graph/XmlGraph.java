@@ -28,7 +28,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import org.cactoos.list.ListOf;
-import org.cactoos.map.MapOf;
 import org.cactoos.scalar.Sticky;
 import org.cactoos.scalar.Unchecked;
 import org.jpeek.skeleton.Skeleton;
@@ -36,13 +35,6 @@ import org.jpeek.skeleton.Skeleton;
 /**
  * Graph implementation built on skeleton.
  * @since 0.30.9
- * @todo #445:30min Continue the work started with extracting XmlMethodCall,
- *  XmlMethodArgs and XmlMethodSignature, and extract more code from this class
- *  pertaining to serializing XML to string. The objective is to have tested
- *  classes and to remove the checkstyle suppression below. Finally consider
- *  extracting the whole 'build' method body into a separate class extending
- *  ListEnvelope.
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class XmlGraph implements Graph {
 
@@ -87,11 +79,12 @@ public final class XmlGraph implements Graph {
                     skeleton.xml().nodes("//class").get(0),
                     method
                 ).asString()
-            ), skeleton.xml().nodes(
+            ),
+            skeleton.xml().nodes(
                 "//methods/method[@ctor='false' and @abstract='false']"
             )
         );
-        final Map<String, Node> byname = new MapOf<>(
+        final Map<String, Node> byname = new org.cactoos.map.Sticky<>(
             Node::name,
             node -> node,
             byxml.values()
