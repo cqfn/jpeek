@@ -28,7 +28,7 @@ import com.jcabi.xml.XSLDocument;
 import java.util.List;
 import java.util.Map;
 import org.cactoos.io.ResourceOf;
-import org.cactoos.scalar.Unchecked;
+import org.cactoos.io.UncheckedInput;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.Joined;
 import org.jpeek.calculus.Calculus;
@@ -53,11 +53,11 @@ public final class Ccm implements Calculus {
             );
         }
         return Ccm.withFixedNcc(
-            new Unchecked<>(
-                () -> new XSLDocument(
-                    new ResourceOf("org/jpeek/metrics/CCM.xsl").stream()
-                ).transform(skeleton)
-            ).value(),
+            new XSLDocument(
+                new UncheckedInput(
+                    new ResourceOf("org/jpeek/metrics/CCM.xsl")
+                ).stream()
+            ).transform(skeleton),
             skeleton
         );
     }
