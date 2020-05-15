@@ -50,6 +50,7 @@ $ java -jar jpeek-jar-with-dependencies.jar --sources . --target ./jpeek
  that jpeek jar accepts and the default values for each parameter.
 -->
 
+
 jPeek will analyze Java files in the current directory.
 XML reports will be generated in the `./jpeek` directory. Enjoy.
 
@@ -266,6 +267,9 @@ Then, we have a collection of XSL stylesheets, one per each metric. For example,
 Thus, all calculations happen inside the XSLT files. We decided to implement
 it this way after a less successful attempt to do it all in Java. It seems
 that XSL is much more suitable for manipulations with data than Java.
+
+### jPeek maven plugin
+We are developing a jPeek plugin for Maven, see [jPeek Maven plugin](https://github.com/yegor256/jpeek-maven-plugin) project.
 
 ## Known Limitations
 
