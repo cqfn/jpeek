@@ -23,15 +23,14 @@
  */
 package org.jpeek.calculus.java;
 
-import com.jcabi.xml.Sources;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XSLDocument;
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import org.cactoos.io.ResourceOf;
+import org.cactoos.scalar.Unchecked;
+import org.cactoos.text.FormattedText;
 import org.cactoos.text.Joined;
-import org.cactoos.text.TextOf;
 import org.jpeek.calculus.Calculus;
 
 /**
@@ -41,16 +40,36 @@ import org.jpeek.calculus.Calculus;
 public final class Ccm implements Calculus {
 
     @Override
-    public XML node(final String metric, final Map<String, Object> params,
-        final XML skeleton) throws IOException {
-        final XML result = new XSLDocument(
-            new TextOf(
-                new ResourceOf("org/jpeek/metrics/CCM.xsl")
-            ).asString(),
-            Sources.DUMMY,
-            params
-        ).transform(skeleton);
-        final List<XML> packages = result.nodes("//package");
+    public XML node(
+        final String metric,
+        final Map<String, Object> params,
+        final XML skeleton
+    ) {
+        if (!"ccm".equalsIgnoreCase(metric)) {
+            throw new IllegalArgumentException(
+                new FormattedText(
+                    "This metric is CCM, not %s.", metric
+                ).toString()
+            );
+        }
+        return Ccm.withFixedNcc(
+            new Unchecked<>(
+                () -> new XSLDocument(
+                    new ResourceOf("org/jpeek/metrics/CCM.xsl").stream()
+                ).transform(skeleton)
+            ).value(),
+            skeleton
+        );
+    }
+
+    /**
+     * Updates the transformed xml with proper NCC value.
+     * @param transformed The transformed XML skeleton.
+     * @param skeleton XML Skeleton
+     * @return XML with fixed NCC.
+     */
+    private static XML withFixedNcc(final XML transformed, final XML skeleton) {
+        final List<XML> packages = transformed.nodes("//package");
         for (final XML elt : packages) {
             final String pack = elt.xpath("/@id").get(0);
             final List<XML> classes = elt.nodes("//class");
@@ -58,7 +77,7 @@ public final class Ccm implements Calculus {
                 Ccm.updateNcc(skeleton, pack, clazz);
             }
         }
-        return result;
+        return transformed;
     }
 
     /**
@@ -70,7 +89,7 @@ public final class Ccm implements Calculus {
      *  class to fix CCM metric (see issue #449). To do this, this class, once
      *  it works correctly, should be integrated with XSL based calculuses in
      *  `XslReport` (see `todo #449` in Calculus). Also, decide whether the
-     *  whole NCC metric should be implemented in Java, or only the NCC part.
+     *  whole CCM metric should be implemented in Java, or only the NCC part.
      *  Update this `todo` accordingly.
      */
     private static void updateNcc(
