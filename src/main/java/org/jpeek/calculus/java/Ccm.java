@@ -88,7 +88,8 @@ public final class Ccm implements Calculus {
      * @todo #449:30min Implement NCC calculation with `XmlGraph` and use this
      *  class to fix CCM metric (see issue #449). To do this, this class, once
      *  it works correctly, should be integrated with XSL based calculuses in
-     *  `XslReport` (see `todo #449` in Calculus). Also, decide whether the
+     *  `XslReport` (see `todo #449` in Calculus). Write a test to make sure
+     *  the metric is calculated correctly. Also, decide whether the
      *  whole CCM metric should be implemented in Java, or only the NCC part.
      *  Update this `todo` accordingly.
      */
