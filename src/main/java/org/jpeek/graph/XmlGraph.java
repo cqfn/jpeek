@@ -46,9 +46,8 @@ public final class XmlGraph implements Graph {
     /**
      * Ctor.
      * @param skeleton XMl representation on whiwh to build the graph
-     * @throws IOException If fails
      */
-    public XmlGraph(final Skeleton skeleton) throws IOException {
+    public XmlGraph(final Skeleton skeleton) {
         this.nds = new Unchecked<>(
             new Sticky<>(
                 () -> XmlGraph.build(skeleton)

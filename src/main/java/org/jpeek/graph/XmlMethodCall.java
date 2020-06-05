@@ -52,8 +52,8 @@ public final class XmlMethodCall implements Text {
     @Override
     public String asString() throws IOException {
         return new Joined(
-            "", this.call.xpath("op/name/text()").get(0),
-            ".", new XmlMethodArgs(this.call.nodes("op").get(0)).asString()
+            "", this.call.xpath("name/text()").get(0),
+            ".", new XmlMethodArgs(this.call).asString()
         ).asString();
     }
 }

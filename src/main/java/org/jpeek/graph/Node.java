@@ -52,7 +52,7 @@ public interface Node {
         /**
          * Node name.
          */
-        private final String nme;
+        private final String name;
 
         /**
          * Nodes connected to this node.
@@ -64,18 +64,23 @@ public interface Node {
          * @param name Node name
          */
         public Simple(final String name) {
-            this.nme = name;
+            this.name = name;
             this.connect = new HashSet<Node>(1);
         }
 
         @Override
         public String name() {
-            return this.nme;
+            return this.name;
         }
 
         @Override
         public Set<Node> connections() {
             return this.connect;
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
         }
     }
 }

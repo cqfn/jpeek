@@ -52,7 +52,7 @@ final class XmlMethodCallTest {
                         "  </args>",
                         "</op>"
                     ).asString()
-                )
+                ).nodes("//op").get(0)
             ).asString(),
             new IsEqual<>(
                 "OverloadMethods.methodOne.Ljava/lang/String:Z"
