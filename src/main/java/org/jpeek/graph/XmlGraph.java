@@ -30,6 +30,7 @@ import java.util.Map;
 import org.cactoos.list.ListOf;
 import org.cactoos.scalar.Sticky;
 import org.cactoos.scalar.Unchecked;
+import org.cactoos.text.Joined;
 import org.jpeek.skeleton.Skeleton;
 
 /**
@@ -46,12 +47,15 @@ public final class XmlGraph implements Graph {
     /**
      * Ctor.
      * @param skeleton XMl representation on whiwh to build the graph
-     * @throws IOException If fails
+     * @param pname Package of the class this graph is for
+     * @param cname Class in the skeleton this graph is for
      */
-    public XmlGraph(final Skeleton skeleton) throws IOException {
+    public XmlGraph(
+        final Skeleton skeleton, final String pname, final String cname
+    ) {
         this.nds = new Unchecked<>(
             new Sticky<>(
-                () -> XmlGraph.build(skeleton)
+                () -> XmlGraph.build(skeleton, pname, cname)
             )
         );
     }
@@ -64,19 +68,25 @@ public final class XmlGraph implements Graph {
     /**
      * Builds the graph from the skeleton.
      * @param skeleton XML representation on whiwh to build the graph
+     * @param pname Package of the class this graph is for
+     * @param cname Class in the skeleton this graph is for
      * @return List of nodes
      * @throws IOException If fails
-     * @todo #445:30min This method works only for skeletons with a single
-     *  class because it assigns all methods in the skeleton to the first class
-     *  it finds. Instead, it should iterate through classes and then through
-     *  methods of each class.
      */
-    private static List<Node> build(final Skeleton skeleton) throws IOException {
+    private static List<Node> build(
+        final Skeleton skeleton, final String pname, final String cname
+    ) throws IOException {
         final Map<XML, Node> byxml = new org.cactoos.map.Sticky<>(
             method -> method,
             method -> new Node.Simple(
                 new XmlMethodSignature(
-                    skeleton.xml().nodes("//class").get(0),
+                    skeleton.xml()
+                        .nodes(
+                            new Joined("", "//package[@id=", pname).toString()
+                        ).get(0)
+                        .nodes(
+                            new Joined("", "//class[@id=" + cname).toString()
+                        ).get(0),
                     method
                 ).asString()
             ),

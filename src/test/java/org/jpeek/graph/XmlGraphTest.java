@@ -81,7 +81,8 @@ public final class XmlGraphTest {
     @SuppressWarnings("unchecked")
     public void buildsMethodsAsNodes() throws IOException {
         final List<Node> nodes = new XmlGraph(
-            new Skeleton(new FakeBase(XmlGraphTest.CLASS_NAME))
+            new Skeleton(new FakeBase(XmlGraphTest.CLASS_NAME)),
+            "", XmlGraphTest.CLASS_NAME
         ).nodes();
         new Assertion<>(
             "Must build nodes representing methods",
@@ -124,7 +125,8 @@ public final class XmlGraphTest {
             node -> node.name(),
             node -> node,
             new XmlGraph(
-                new Skeleton(new FakeBase(XmlGraphTest.CLASS_NAME))
+                new Skeleton(new FakeBase(XmlGraphTest.CLASS_NAME)),
+                "", XmlGraphTest.CLASS_NAME
             ).nodes()
         );
         final Node one = byname.get(XmlGraphTest.METHOD_ONE);
