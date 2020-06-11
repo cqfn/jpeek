@@ -24,7 +24,6 @@
 package org.jpeek.graph;
 
 import com.jcabi.xml.XML;
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import org.cactoos.list.ListOf;
@@ -71,11 +70,10 @@ public final class XmlGraph implements Graph {
      * @param pname Package of the class this graph is for
      * @param cname Class in the skeleton this graph is for
      * @return List of nodes
-     * @throws IOException If fails
      */
     private static List<Node> build(
         final Skeleton skeleton, final String pname, final String cname
-    ) throws IOException {
+    ) {
         final Map<XML, Node> byxml = new org.cactoos.map.Sticky<>(
             method -> method,
             method -> new Node.Simple(
@@ -85,7 +83,7 @@ public final class XmlGraph implements Graph {
                             new Joined("", "//package[@id=", pname).toString()
                         ).get(0)
                         .nodes(
-                            new Joined("", "//class[@id=" + cname).toString()
+                            new Joined("", "//class[@id=", cname).toString()
                         ).get(0),
                     method
                 ).asString()
@@ -103,7 +101,7 @@ public final class XmlGraph implements Graph {
             final List<XML> calls = entry.getKey().nodes("ops/op[@code='call']");
             final Node caller = entry.getValue();
             for (final XML call : calls) {
-                final String name = new XmlMethodCall(call).asString();
+                final String name = new XmlMethodCall(call).toString();
                 if (byname.containsKey(name)) {
                     final Node callee = byname.get(name);
                     caller.connections().add(callee);

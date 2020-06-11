@@ -24,21 +24,15 @@
 package org.jpeek.graph;
 
 import com.jcabi.xml.XML;
-import java.io.IOException;
-import org.cactoos.Text;
 import org.cactoos.text.Joined;
+import org.cactoos.text.TextEnvelope;
 
 /**
  * Serialize method arguments to a string.
  *
  * @since 1.0
  */
-public final class XmlMethodArgs implements Text {
-
-    /**
-     * XML Method.
-     */
-    private final XML method;
+public final class XmlMethodArgs extends TextEnvelope {
 
     /**
      * Ctor.
@@ -46,14 +40,6 @@ public final class XmlMethodArgs implements Text {
      * @param method Method as XML
      */
     XmlMethodArgs(final XML method) {
-        this.method = method;
-    }
-
-    @Override
-    public String asString() throws IOException {
-        return new Joined(
-            ":",
-            this.method.xpath("args/arg/@type")
-        ).asString();
+        super(new Joined(":", method.xpath("args/arg/@type")));
     }
 }
