@@ -29,7 +29,7 @@ import java.util.Map;
 import org.cactoos.list.ListOf;
 import org.cactoos.scalar.Sticky;
 import org.cactoos.scalar.Unchecked;
-import org.cactoos.text.Joined;
+import org.cactoos.text.FormattedText;
 import org.jpeek.skeleton.Skeleton;
 
 /**
@@ -85,10 +85,14 @@ public final class XmlGraph implements Graph {
                 new XmlMethodSignature(
                     skeleton.xml()
                         .nodes(
-                            new Joined("", "//package[@id=", pname).toString()
+                            new FormattedText(
+                                "//package[@id=%s]", pname
+                            ).toString()
                         ).get(0)
                         .nodes(
-                            new Joined("", "//class[@id=", cname).toString()
+                            new FormattedText(
+                                "//class[@id=%s]", cname
+                            ).toString()
                         ).get(0),
                     method
                 ).asString()
