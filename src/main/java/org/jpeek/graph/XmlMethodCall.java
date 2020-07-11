@@ -42,8 +42,8 @@ public final class XmlMethodCall extends TextEnvelope {
     XmlMethodCall(final XML call) {
         super(
             new Joined(
-                "", call.xpath("op/name/text()").get(0),
-                ".", new XmlMethodArgs(call.nodes("op").get(0)).toString()
+                "", call.xpath("name/text()").get(0),
+                ".", new XmlMethodArgs(call).toString()
             )
         );
     }

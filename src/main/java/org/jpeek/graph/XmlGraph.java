@@ -86,12 +86,12 @@ public final class XmlGraph implements Graph {
                     skeleton.xml()
                         .nodes(
                             new FormattedText(
-                                "//package[@id=%s]", pname
+                                "//package[@id='%s']", pname
                             ).toString()
                         ).get(0)
                         .nodes(
                             new FormattedText(
-                                "//class[@id=%s]", cname
+                                "//class[@id='%s']", cname
                             ).toString()
                         ).get(0),
                     method
