@@ -29,7 +29,6 @@ import java.util.List;
 import java.util.Map;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.io.UncheckedInput;
-import org.cactoos.text.FormattedText;
 import org.cactoos.text.Joined;
 import org.jpeek.calculus.Calculus;
 
@@ -40,18 +39,7 @@ import org.jpeek.calculus.Calculus;
 public final class Ccm implements Calculus {
 
     @Override
-    public XML node(
-        final String metric,
-        final Map<String, Object> params,
-        final XML skeleton
-    ) {
-        if (!"ccm".equalsIgnoreCase(metric)) {
-            throw new IllegalArgumentException(
-                new FormattedText(
-                    "This metric is CCM, not %s.", metric
-                ).toString()
-            );
-        }
+    public XML node(final Map<String, Object> params, final XML skeleton) {
         return Ccm.withFixedNcc(
             new XSLDocument(
                 new UncheckedInput(

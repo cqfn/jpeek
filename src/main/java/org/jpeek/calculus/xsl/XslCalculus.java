@@ -40,13 +40,27 @@ import org.jpeek.calculus.Calculus;
  */
 public final class XslCalculus implements Calculus {
 
+    /**
+     * Name of the metric this Calculus is for.
+     */
+    private final String metric;
+
+    /**
+     * Ctor.
+     * @param metric Name of the metric this Calculus is for.
+     */
+    public XslCalculus(final String metric) {
+        this.metric = metric;
+    }
+
     @Override
-    public XML node(final String metric, final Map<String, Object> params,
-        final XML skeleton) throws IOException {
+    public XML node(
+        final Map<String, Object> params, final XML skeleton
+    ) throws IOException {
         return new XSLDocument(
             new TextOf(
                 new ResourceOf(
-                    new FormattedText("org/jpeek/metrics/%s.xsl", metric)
+                    new FormattedText("org/jpeek/metrics/%s.xsl", this.metric)
                 )
             ).asString(),
             Sources.DUMMY,

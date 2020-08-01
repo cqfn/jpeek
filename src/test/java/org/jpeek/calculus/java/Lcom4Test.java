@@ -47,7 +47,7 @@ public final class Lcom4Test {
     @Disabled
     public void createsXmlCalculusWithXpaths() throws IOException {
         final XML result = new Lcom4().node(
-            "LCOM", new HashMap<>(0), new Skeleton(
+            new HashMap<>(0), new Skeleton(
                 new FakeBase(
                     "NoMethods", "Bar", "OverloadMethods",
                     "OnlyOneMethodWithParams", "WithoutAttributes"
@@ -70,7 +70,7 @@ public final class Lcom4Test {
     @CsvFileSource(resources = "/org/jpeek/calculus/java/lcom4-params.csv")
     public void calculatesValue(final String file, final String value) throws Exception {
         final XML result = new Lcom4().node(
-            "", new HashMap<>(0), new Skeleton(
+            new HashMap<>(0), new Skeleton(
                 new FakeBase(file)
             ).xml()
         );

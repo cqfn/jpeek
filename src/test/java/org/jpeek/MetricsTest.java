@@ -72,7 +72,7 @@ public final class MetricsTest {
         @TempDir final Path output)
         throws Exception {
         new XslReport(
-            new Skeleton(new FakeBase(target)).xml(), new XslCalculus(),
+            new Skeleton(new FakeBase(target)).xml(), new XslCalculus(metric),
             new ReportData(metric)
         ).save(output);
         final String xpath;

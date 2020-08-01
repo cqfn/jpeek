@@ -36,30 +36,16 @@ import java.util.Map;
  *  only we should also remove LCOM4.xsl part that is doing the calculus and let the xsl here just
  *  to build the structure of the xml result. This part is especially the one calculating
  *  "xsl:variable name='E'" L73->L89, and the one doing the division L97 -> L99
- * @todo #449:30min The `node` method in this interface was designed with only
- *  XSL implementation in mind - it uses the `metric` parameter to select the
- *  XSL file and uses that file to transform the `skeleton`. This makes Java
- *  based implementations a little awkward because the `metric` parameter
- *  becomes redundant: there is a Java implementation for each metric, and these
- *  implementations already know which metric they are for. The question becomes
- *  - how to select correct java implementation for a given metric and integrate
- *  it seamlessly with XSL calculus in `XslReport`. One option could be removing
- *  the `metric` parameter from the method and injecting a Calculus for a
- *  concrete metric in `XslReport` directly. Another could be implementing
- *  Chain Of Responsibility pattern. Decide on the best way to integrate Java
- *  based Calculus with XSL based Calculus in `XslReport` and implement it.
  */
 public interface Calculus {
 
     /**
      * Produces {@link XML} representing metrics values.
-     * @param metric Desired metric to calculate
      * @param params Params
      * @param skeleton Package input
      * @return XML document giving metrics values for classes
      * @throws IOException If fails
      */
-    XML node(String metric, Map<String, Object> params, XML skeleton)
-        throws IOException;
+    XML node(Map<String, Object> params, XML skeleton) throws IOException;
 
 }

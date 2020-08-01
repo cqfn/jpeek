@@ -40,8 +40,8 @@ public final class XslCalculusTest {
 
     @Test
     public void createsXmlCalculusWithXpaths() throws IOException {
-        final XML result = new XslCalculus().node(
-            "LCOM", new HashMap<>(0), new Skeleton(
+        final XML result = new XslCalculus("LCOM").node(
+            new HashMap<>(0), new Skeleton(
                 new FakeBase(
                     "NoMethods", "Bar", "OverloadMethods",
                     "OnlyOneMethodWithParams", "WithoutAttributes"
@@ -61,8 +61,8 @@ public final class XslCalculusTest {
 
     @Test
     public void createsXmlCalculusWithEmptyProject() throws IOException {
-        final XML result = new XslCalculus().node(
-            "LCOM2", new HashMap<>(0), new Skeleton(new FakeBase()).xml()
+        final XML result = new XslCalculus("LCOM2").node(
+            new HashMap<>(0), new Skeleton(new FakeBase()).xml()
         );
         new Assertion<>(
             "Report for empty project created",

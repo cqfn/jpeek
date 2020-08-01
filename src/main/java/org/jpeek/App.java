@@ -47,7 +47,6 @@ import org.cactoos.scalar.And;
 import org.cactoos.scalar.AndInThreads;
 import org.cactoos.scalar.IoChecked;
 import org.cactoos.scalar.LengthOf;
-import org.jpeek.calculus.Calculus;
 import org.jpeek.calculus.xsl.XslCalculus;
 import org.jpeek.skeleton.Skeleton;
 import org.xembly.Directives;
@@ -171,11 +170,10 @@ public final class App {
         final XSL chain = new XSLChain(layers);
         this.save(skeleton.toString(), "skeleton.xml");
         final Collection<Report> reports = new LinkedList<>();
-        final Calculus xsl = new XslCalculus();
         if (this.params.containsKey("LCOM")) {
             reports.add(
                 new XslReport(
-                    chain.transform(skeleton), xsl,
+                    chain.transform(skeleton), new XslCalculus("LCOM"),
                     new ReportData("LCOM", this.params, 10.0d, -5.0d)
                 )
             );
@@ -183,7 +181,7 @@ public final class App {
         if (this.params.containsKey("CAMC")) {
             reports.add(
                 new XslReport(
-                    chain.transform(skeleton), xsl,
+                    chain.transform(skeleton), new XslCalculus("CAMC"),
                     new ReportData("CAMC", this.params)
                 )
             );
@@ -191,7 +189,7 @@ public final class App {
         if (this.params.containsKey("MMAC")) {
             reports.add(
                 new XslReport(
-                    chain.transform(skeleton), xsl,
+                    chain.transform(skeleton), new XslCalculus("MMAC"),
                     new ReportData("MMAC", this.params, 0.5d, 0.1d)
                 )
             );
@@ -199,7 +197,7 @@ public final class App {
         if (this.params.containsKey("LCOM5")) {
             reports.add(
                 new XslReport(
-                    chain.transform(skeleton), xsl,
+                    chain.transform(skeleton), new XslCalculus("LCOM5"),
                     new ReportData("LCOM5", this.params, 0.5d, -0.1d)
                 )
             );
@@ -207,7 +205,7 @@ public final class App {
         if (this.params.containsKey("LCOM4")) {
             reports.add(
                 new XslReport(
-                    chain.transform(skeleton), xsl,
+                    chain.transform(skeleton), new XslCalculus("LCOM4"),
                     new ReportData("LCOM4", this.params, 0.5d, -0.1d)
                 )
             );
@@ -215,7 +213,7 @@ public final class App {
         if (this.params.containsKey("NHD")) {
             reports.add(
                 new XslReport(
-                    chain.transform(skeleton), xsl,
+                    chain.transform(skeleton), new XslCalculus("NHD"),
                     new ReportData("NHD")
                 )
             );
@@ -223,7 +221,7 @@ public final class App {
         if (this.params.containsKey("LCOM2")) {
             reports.add(
                 new XslReport(
-                    chain.transform(skeleton), xsl,
+                    chain.transform(skeleton), new XslCalculus("LCOM2"),
                     new ReportData("LCOM2", this.params)
                 )
             );
@@ -231,7 +229,7 @@ public final class App {
         if (this.params.containsKey("LCOM3")) {
             reports.add(
                 new XslReport(
-                    chain.transform(skeleton), xsl,
+                    chain.transform(skeleton), new XslCalculus("LCOM3"),
                     new ReportData("LCOM3", this.params)
                 )
             );
@@ -239,7 +237,7 @@ public final class App {
         if (this.params.containsKey("SCOM")) {
             reports.add(
                 new XslReport(
-                    chain.transform(skeleton), xsl,
+                    chain.transform(skeleton), new XslCalculus("SCOM"),
                     new ReportData("SCOM", this.params)
                 )
             );
@@ -247,7 +245,7 @@ public final class App {
         if (this.params.containsKey("OCC")) {
             reports.add(
                 new XslReport(
-                    chain.transform(skeleton), xsl,
+                    chain.transform(skeleton), new XslCalculus("OCC"),
                     new ReportData("OCC", this.params)
                 )
             );
@@ -255,7 +253,7 @@ public final class App {
         if (this.params.containsKey("PCC")) {
             reports.add(
                 new XslReport(
-                    chain.transform(skeleton), xsl,
+                    chain.transform(skeleton), new XslCalculus("PCC"),
                     new ReportData("PCC")
                 )
             );
@@ -263,7 +261,7 @@ public final class App {
         if (this.params.containsKey("TCC")) {
             reports.add(
                 new XslReport(
-                    chain.transform(skeleton), xsl,
+                    chain.transform(skeleton), new XslCalculus("TCC"),
                     new ReportData("TCC")
                 )
             );
@@ -271,7 +269,7 @@ public final class App {
         if (this.params.containsKey("LCC")) {
             reports.add(
                 new XslReport(
-                    chain.transform(skeleton), xsl,
+                    chain.transform(skeleton), new XslCalculus("LCC"),
                     new ReportData("LCC")
                 )
             );
@@ -279,7 +277,7 @@ public final class App {
         if (this.params.containsKey("CCM")) {
             reports.add(
                 new XslReport(
-                    chain.transform(skeleton), xsl,
+                    chain.transform(skeleton), new XslCalculus("CCM"),
                     new ReportData("CCM")
                 )
             );
@@ -287,7 +285,7 @@ public final class App {
         if (this.params.containsKey("MWE")) {
             reports.add(
                 new XslReport(
-                    chain.transform(skeleton), xsl,
+                    chain.transform(skeleton), new XslCalculus("MWE"),
                     new ReportData("MWE")
                 )
             );

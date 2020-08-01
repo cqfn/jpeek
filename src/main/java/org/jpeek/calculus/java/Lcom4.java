@@ -41,8 +41,9 @@ import org.jpeek.calculus.Calculus;
 public final class Lcom4 implements Calculus {
 
     @Override
-    public XML node(final String metric, final Map<String, Object> params,
-        final XML skeleton) throws IOException {
+    public XML node(
+        final Map<String, Object> params, final XML skeleton
+    ) throws IOException {
         final XML result = new XSLDocument(
             new TextOf(
                 new ResourceOf("org/jpeek/metrics/LCOM4.xsl")

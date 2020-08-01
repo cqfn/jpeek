@@ -131,11 +131,7 @@ final class XslReport implements Report {
         );
     }
 
-    /**
-     * Save report.
-     * @param target Target dir
-     * @throws IOException If fails
-     */
+    @Override
     @SuppressWarnings("PMD.GuardLogStatement")
     public void save(final Path target) throws IOException {
         final long start = System.currentTimeMillis();
@@ -192,9 +188,7 @@ final class XslReport implements Report {
                         XslReport.SCHEMA_FILE
                     )
             ).applyQuietly(
-                this.calculus.node(
-                    this.metric, this.params, this.skeleton
-                ).node()
+                this.calculus.node(this.params, this.skeleton).node()
             )
         );
     }
