@@ -119,7 +119,7 @@ SOFTWARE.
     <dependency>
       <groupId>com.beust</groupId>
       <artifactId>jcommander</artifactId>
-      <version>1.72</version>
+      <version>1.78</version>
     </dependency>
     <dependency>
       <groupId>com.amazonaws</groupId>
