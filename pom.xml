@@ -199,7 +199,7 @@ SOFTWARE.
     <dependency>
       <groupId>net.sf.saxon</groupId>
       <artifactId>Saxon-HE</artifactId>
-      <version>9.8.0-5</version>
+      <version>10.3</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
