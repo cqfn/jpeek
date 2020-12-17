@@ -27,6 +27,8 @@ import com.jcabi.matchers.XhtmlMatchers;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import org.apache.maven.plugin.MojoFailureException;
 import org.cactoos.text.TextOf;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -45,7 +47,7 @@ public final class MatrixTest {
     private String xml;
 
     @BeforeEach
-    public void setUp(@TempDir final Path output) throws IOException {
+    public void setUp(@TempDir final Path output) throws IOException, MojoFailureException {
         final Path input = Paths.get(".");
         new App(input, output).analyze();
         this.xml = new TextOf(output.resolve("matrix.xml")).asString();

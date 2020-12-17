@@ -28,6 +28,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import org.apache.maven.plugin.MojoFailureException;
 import org.cactoos.Scalar;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -44,7 +46,7 @@ import org.llorllale.cactoos.matchers.Throws;
 public final class MainTest {
 
     @Test
-    public void createsXmlReports(@TempDir final Path temp) throws IOException {
+    public void createsXmlReports(@TempDir final Path temp) throws IOException, MojoFailureException {
         final Path output = temp.resolve("x3");
         final Path input = Paths.get(".");
         Main.main("--sources", input.toString(), "--target", output.toString());
@@ -122,7 +124,7 @@ public final class MainTest {
 
     @Test
     public void createsXmlReportsIfOverwriteAndTargetExists(@TempDir final Path target)
-        throws IOException {
+            throws IOException, MojoFailureException {
         Main.main(
             "--sources", Paths.get(".").toString(),
             "--target", target.toString(),

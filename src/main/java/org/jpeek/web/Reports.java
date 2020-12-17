@@ -33,6 +33,8 @@ import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+
+import org.apache.maven.plugin.MojoFailureException;
 import org.cactoos.BiFunc;
 import org.cactoos.Func;
 import org.cactoos.io.InputOf;
@@ -87,7 +89,7 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
     @SuppressWarnings("PMD.CyclomaticComplexity")
     @Override
     public Func<String, Response> apply(final String group,
-        final String artifact) throws IOException {
+        final String artifact) throws IOException, MojoFailureException {
         final String grp = group.replace(".", "/");
         final Path input = this.sources.resolve(grp).resolve(artifact);
         Reports.deleteIfPresent(input);

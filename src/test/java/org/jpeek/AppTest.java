@@ -35,6 +35,8 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.maven.plugin.MojoFailureException;
 import org.cactoos.text.TextOf;
 import org.hamcrest.collection.IsEmptyIterable;
 import org.hamcrest.core.IsNot;
@@ -52,7 +54,7 @@ import org.llorllale.cactoos.matchers.IsTrue;
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class AppTest {
     @Test
-    public void createsXmlReports(@TempDir final Path output) throws IOException {
+    public void createsXmlReports(@TempDir final Path output) throws IOException, MojoFailureException {
         final Path input = Paths.get(".");
         new App(input, output).analyze();
         new Assertion<>(
@@ -73,7 +75,7 @@ public final class AppTest {
     }
 
     @Test
-    public void canIncludePrivateMethods(@TempDir final Path output) throws IOException {
+    public void canIncludePrivateMethods(@TempDir final Path output) throws IOException, MojoFailureException {
         final Path input = Paths.get(".");
         final Map<String, Object> args = new HashMap<>();
         args.put("include-private-methods", 1);
@@ -90,7 +92,7 @@ public final class AppTest {
     }
 
     @Test
-    public void createsIndexHtml(@TempDir final Path output) throws IOException {
+    public void createsIndexHtml(@TempDir final Path output) throws IOException, MojoFailureException {
         final Path input = Paths.get(".");
         new App(input, output).analyze();
         new Assertion<>(
@@ -101,7 +103,7 @@ public final class AppTest {
     }
 
     @Test
-    public void createsIndexXml(@TempDir final Path output) throws IOException {
+    public void createsIndexXml(@TempDir final Path output) throws IOException, MojoFailureException {
         final Path input = Paths.get(".");
         new App(input, output).analyze();
         new Assertion<>(

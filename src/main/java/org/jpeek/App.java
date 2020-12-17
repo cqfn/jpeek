@@ -37,6 +37,8 @@ import java.nio.file.Path;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Map;
+
+import org.apache.maven.plugin.MojoFailureException;
 import org.cactoos.collection.CollectionOf;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.io.TeeInput;
@@ -145,7 +147,7 @@ public final class App {
         "PMD.NcssCount",
         "PMD.GuardLogStatement"
     })
-    public void analyze() throws IOException {
+    public void analyze() throws IOException, MojoFailureException {
         final long start = System.currentTimeMillis();
         final Base base = new DefaultBase(this.input);
         final XML skeleton = new Skeleton(base).xml();
@@ -361,6 +363,11 @@ public final class App {
                 new ListOf<>("index", "matrix", "metric", "skeleton")
             )
         ).value();
+
+        // temporary expected ratio
+        if(Double.parseDouble(index.xpath("/index/@score").get(0)) < 8.0) {
+            throw new MojoFailureException("Summary cohesion ratio is less than configured expected ratio");
+        }
     }
 
     /**
