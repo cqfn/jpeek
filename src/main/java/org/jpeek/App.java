@@ -364,10 +364,6 @@ public final class App {
             )
         ).value();
 
-        // temporary expected ratio
-        if(Double.parseDouble(index.xpath("/index/@score").get(0)) < 8.0) {
-            throw new MojoFailureException("Summary cohesion ratio is less than configured expected ratio");
-        }
     }
 
     /**
