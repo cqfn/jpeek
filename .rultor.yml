@@ -1,11 +1,11 @@
 docker:
   image: yegor256/rultor-image:1.3
 assets:
-  settings.xml: yegor256/home#assets/jpeek/settings.xml
-  pubring.gpg: yegor256/home#assets/pubring.gpg
-  secring.gpg: yegor256/home#assets/secring.gpg
-  id_rsa: yegor256/home#assets/heroku-key
-  id_rsa.pub: yegor256/home#assets/heroku-key.pub
+  settings.xml: cqfn/secrets#jpeek-settings.xml
+  pubring.gpg: cqfn/secrets#pubring.gpg
+  secring.gpg: cqfn/secrets#secring.gpg
+  id_rsa: cqfn/secrets#jpeek-heroku
+  id_rsa.pub: cqfn/secrets#jpeek-heroku.pub
 install: |
   sudo update-java-alternatives -s java-1.8.0-openjdk-amd64
   pdd -f /dev/null
@@ -21,6 +21,8 @@ deploy:
     mvn clean deploy -Pqulice --errors --settings ../settings.xml
 release:
   sensitive:
+    - id_rsa
+    - id_rsa.pub
     - settings.xml
   script: |-
     export GPG_TTY=$(tty)
