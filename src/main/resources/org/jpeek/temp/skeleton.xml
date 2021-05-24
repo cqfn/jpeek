@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type = "text/xsl" href = "../metrics/CCM.xsl"?>
+<skeleton>
+  <app id="D:\HSE\BUSINESS RF\JPEEK DOCS\jpeek_fix_projects">
+    <package id="org.jpeek.fix.ccm">
+      <class id="Worker"><!--Package: org.jpeek.fix.ccm; name: org.jpeek.fix.ccm.Worker; file: org.jpeek.fix.ccm.Worker-->
+        <attributes>
+          <attribute final="false"
+            public="false"
+            static="false"
+            type="Ljava/lang/String">name</attribute>
+        </attributes>
+        <methods>
+          <method abstract="false"
+            bridge="false"
+            ctor="true"
+            desc="()V"
+            name="&lt;init&gt;"
+            static="false"
+            visibility="public">
+            <args/>
+            <return>V</return>
+            <ops>
+              <op code="call">
+                <name>java.lang.Object.&lt;init&gt;</name>
+                <args>
+                  <arg type="">?</arg>
+                </args>
+              </op>
+            </ops>
+          </method>
+          <method abstract="false"
+            bridge="false"
+            ctor="false"
+            desc="()V"
+            name="one"
+            static="false"
+            visibility="public">
+            <args/>
+            <return>V</return>
+            <ops>
+              <op code="put">name</op>
+            </ops>
+          </method>
+          <method abstract="false"
+            bridge="false"
+            ctor="false"
+            desc="()V"
+            name="two"
+            static="false"
+            visibility="public">
+            <args/>
+            <return>V</return>
+            <ops>
+              <op code="put">name</op>
+            </ops>
+          </method>
+          <method abstract="false"
+            bridge="false"
+            ctor="false"
+            desc="()V"
+            name="three"
+            static="false"
+            visibility="public">
+            <args/>
+            <return>V</return>
+            <ops>
+              <op code="put">name</op>
+              <op code="get">name</op>
+            </ops>
+          </method>
+          <method abstract="false"
+            bridge="false"
+            ctor="false"
+            desc="()V"
+            name="four"
+            static="false"
+            visibility="public">
+            <args/>
+            <return>V</return>
+            <ops>
+              <op code="put">name</op>
+            </ops>
+          </method>
+          <method abstract="false"
+            bridge="false"
+            ctor="false"
+            desc="()V"
+            name="five"
+            static="false"
+            visibility="public">
+            <args/>
+            <return>V</return>
+            <ops>
+              <op code="put">name</op>
+            </ops>
+          </method>
+        </methods>
+      </class>
+    </package>
+  </app>
+</skeleton>

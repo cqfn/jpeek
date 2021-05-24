@@ -58,9 +58,37 @@ SOFTWARE.
             </edge>
           </xsl:if>
         </xsl:for-each>
+        <xsl:for-each select="$method/preceding-sibling::method">
+          <xsl:variable name="other" select="."/>
+          <xsl:if test="$method/ops/op/text()[. = $other/ops/op/text()]">
+            <edge>
+              <method>
+                <xsl:value-of select="$method/@name"/>
+              </method>
+              <method>
+                <xsl:value-of select="$other/@name"/>
+              </method>
+            </edge>
+          </xsl:if>
+        </xsl:for-each>
       </xsl:for-each>
     </xsl:variable>
+
+    <xsl:variable name="graph">
+      <xsl:for-each-group select="$edges/edge" group-by="method">
+        <v name="{current-grouping-key()}">
+          <xsl:value-of select="current-group()"/>
+        </v>
+      </xsl:for-each-group>
+    </xsl:variable>
+
     <xsl:copy>
+      <xsl:variable name="groups">
+        <xsl:call-template name="groups">
+          <xsl:with-param name="root" select="$graph"/>
+        </xsl:call-template>
+      </xsl:variable>
+
       <xsl:variable name="nc" select="count($edges/edge)"/>
       <xsl:variable name="ncc" select="count(distinct-values($edges/edge/method/text()))"/>
       <xsl:variable name="nmp" select="(count($methods) * (count($methods) - 1)) div 2"/>
@@ -88,9 +116,86 @@ SOFTWARE.
         <var id="nmp">
           <xsl:value-of select="$nmp"/>
         </var>
+
+        <var id="graph">
+          <xsl:copy-of select="$graph"/>
+        </var>
+
+        <var id="groups">
+          <xsl:copy-of select="$groups"/>
+<!--          <groups>-->
+<!--            <xsl:for-each select="$groups/groups/group">-->
+<!--              <xsl:variable name="group" select="."/>-->
+<!--              <group>-->
+<!--                <xsl:for-each select="$group/e">-->
+<!--                  <e>-->
+<!--                    <xsl:value-of select="."/>-->
+<!--                  </e>-->
+<!--                </xsl:for-each>-->
+<!--              </group>-->
+<!--            </xsl:for-each>-->
+<!--          </groups>-->
+        </var>
       </vars>
     </xsl:copy>
   </xsl:template>
+
+  <xsl:template name="group">
+    <xsl:param name="root"/>
+    <xsl:param name="x" as="element()"/>
+    <xsl:param name="seen"/>
+
+    <xsl:element name="group">
+      <xsl:attribute name="name">
+        <xsl:value-of select="$x/@name"/>
+      </xsl:attribute>
+
+      <xsl:for-each select="$x/edge">
+        <xsl:for-each select="./method">
+          <xsl:variable name="r" select="."/>
+          <xsl:if test="not($seen[@name=$r])">
+            <xsl:element name="e">
+              <xsl:value-of select="$r"/>
+            </xsl:element>
+
+            <xsl:call-template name="group">
+              <xsl:with-param name="root" select="$root"/>
+              <xsl:with-param name="x" select="$root/v[@name=$r]"/>
+              <xsl:with-param name="seen">
+                <xsl:copy-of select="$seen"/>
+                <xsl:copy-of select="$r"/>
+              </xsl:with-param>
+            </xsl:call-template>
+          </xsl:if>
+        </xsl:for-each>
+      </xsl:for-each>
+    </xsl:element>
+
+  </xsl:template>
+
+  <xsl:template name="groups">
+    <xsl:param name="root"/>
+
+    <xsl:element name="groups">
+      <xsl:for-each select="$root/v">
+        <xsl:variable name="g">
+          <xsl:call-template name="group">
+            <xsl:with-param name="root" select="$root"/>
+            <xsl:with-param name="x" select="."/>
+            <xsl:with-param name="seen"/>
+          </xsl:call-template>
+        </xsl:variable>
+
+        <xsl:element name="group">
+          <xsl:for-each select="$g/e">
+            <xsl:sort select="."/>
+            <xsl:copy-of select="."/>
+          </xsl:for-each>
+        </xsl:element>
+      </xsl:for-each>
+    </xsl:element>
+  </xsl:template>
+
   <xsl:template match="node()|@*">
     <xsl:copy>
       <xsl:apply-templates select="node()|@*"/>
