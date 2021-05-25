@@ -2,8 +2,6 @@ package org.jpeek.calculus.java.fix;
 
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
