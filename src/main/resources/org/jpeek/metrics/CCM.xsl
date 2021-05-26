@@ -58,6 +58,19 @@ SOFTWARE.
             </edge>
           </xsl:if>
         </xsl:for-each>
+        <xsl:for-each select="$method/preceding-sibling::method">
+          <xsl:variable name="other" select="."/>
+          <xsl:if test="$method/ops/op/text()[. = $other/ops/op/text()]">
+            <edge>
+              <method>
+                <xsl:value-of select="$method/@name"/>
+              </method>
+              <method>
+                <xsl:value-of select="$other/@name"/>
+              </method>
+            </edge>
+          </xsl:if>
+        </xsl:for-each>
       </xsl:for-each>
     </xsl:variable>
     <xsl:copy>
@@ -87,6 +100,9 @@ SOFTWARE.
         </var>
         <var id="nmp">
           <xsl:value-of select="$nmp"/>
+        </var>
+        <var id="edges">
+          <xsl:copy-of select="$edges"/>
         </var>
       </vars>
     </xsl:copy>
