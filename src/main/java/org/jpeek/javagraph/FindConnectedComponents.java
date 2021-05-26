@@ -18,7 +18,6 @@ public class FindConnectedComponents {
 
   void DFS(int v, boolean[] visited) {
     visited[v] = true;
-    System.out.print(v + " ");
     for (int x : graph.get(v)) {
       if (!visited[x]) {
         DFS(x, visited);
@@ -32,7 +31,6 @@ public class FindConnectedComponents {
     for (int v = 0; v < V; ++v) {
       if (!visited[v]) {
         DFS(v, visited);
-        System.out.println();
         countConnectedComponents++;
       }
     }

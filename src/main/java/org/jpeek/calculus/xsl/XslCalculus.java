@@ -57,7 +57,7 @@ public final class XslCalculus implements Calculus {
     ).transform(skeleton);
 
     if (metric.equals("CCM")) {
-      return new CCM().getFixedResult(skeleton, tempRes);
+      return new CCM(skeleton, tempRes).getFixedResult();
     } else {
       return tempRes;
     }

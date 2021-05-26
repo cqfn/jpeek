@@ -12,9 +12,21 @@ import org.jpeek.javagraph.FindConnectedComponents;
 
 public class CCM {
 
-  public XML getFixedResult(XML skeleton, XML tempRes) {
+  private final XML skeleton;
+  private final XML tempRes;
+
+  public CCM(XML skeleton, XML tempRes) {
+    this.skeleton = skeleton;
+    this.tempRes = tempRes;
+  }
+
+  public XML getFixedResult() {
     List<XML> methods = skeleton.nodes("//methods/method[@ctor='false' and @abstract='false']");
     List<XML> edges = tempRes.nodes("//edge");
+
+    if (methods.size() <= 1) {
+      return new XMLDocument(removeTempVars());
+    }
 
     Map<String, Integer> methodIds = new HashMap<>();
 
@@ -43,15 +55,20 @@ public class CCM {
 
     final Pattern nccReplacePattern = Pattern.compile("ncc\\\">(\\w+)");
     final Pattern valueReplacePattern = Pattern.compile("value=\\\"([0-9]+.[0-9]+)");
+
+    String tempWithNccRes = nccReplacePattern.matcher(removeTempVars())
+        .replaceAll(String.format("ncc\">%d", ncc));
+    String finalRes = valueReplacePattern.matcher(tempWithNccRes)
+        .replaceAll(String.format(Locale.US, "value=\"%.2f", value));
+
+    return new XMLDocument(finalRes);
+  }
+
+  private String removeTempVars() {
     final Pattern finalReplacePattern = Pattern
         .compile("(   )(<var id=\\\"edges\\\">)(?s).*(</vars>)");
 
-    String tempWithNccRes = nccReplacePattern.matcher(tempRes.toString())
-        .replaceAll(String.format("ncc\">%d", ncc));
-    String tempWithValueRes = valueReplacePattern.matcher(tempWithNccRes)
-        .replaceAll(String.format(Locale.US, "value=\"%.2f", value));
-    String finalRes = finalReplacePattern.matcher(tempWithValueRes).replaceAll("</vars>");
-
-    return new XMLDocument(finalRes);
+    String finalRes = finalReplacePattern.matcher(tempRes.toString()).replaceAll("</vars>");
+    return finalRes.replaceAll("               <var id=\"edges\"/>\n", "");
   }
 }
