@@ -102,7 +102,7 @@ public final class Main {
      * Ctor.
      */
     private Main() {
-        this.metrics = "CCM";
+        this.metrics = "CCM,LCOM,LCOM2,LCOM3,LCOM4,LCOM5,MMAC,NHD,TCC,LCC,PCC";
     }
 
     /**
