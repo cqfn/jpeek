@@ -31,19 +31,42 @@ public class CCM {
     Map<String, Integer> methodIds = new HashMap<>();
 
     for (int i = 0; i < methods.size(); i++) {
-      methodIds.put(((XMLDocument) methods.get(i)).xpath("//method/@name").get(i), i);
+      String name = methods.get(i).node().getAttributes().getNamedItem("name").getNodeValue();
+      String desc = methods.get(i).node().getAttributes().getNamedItem("desc").getNodeValue();
+
+      methodIds.put(name + desc, i);
     }
 
-    final Pattern pattern = Pattern
-        .compile("(<method>)(\\w+)(</method>)(\\r\\n|\\r|\\n   )(<method>)(\\w+)(</method>)");
+    final Pattern pattern = Pattern.compile(
+        "<method>[\\n\\r\\s]+<name>(\\w+)<\\/name>[\\n\\r\\s]+(<desc>([\\n\\r\\s\\w;\\/()]+)<\\/desc>|<desc\\/>)[\\n\\r\\s]+<\\/method>"
+    );
 
     FindConnectedComponents f = new FindConnectedComponents(methods.size());
 
     for (XML method : edges) {
       Matcher name = pattern.matcher(method.toString());
 
+      int from = -1;
+      int to = -1;
+
       if (name.find()) {
-        f.addEdge(methodIds.get(name.group(2)), methodIds.get(name.group(6)));
+        if (name.group(2).equals("<desc/>")) {
+          from = methodIds.get(clearSpaces(name.group(1)));
+        } else {
+          from = methodIds.get(clearSpaces(name.group(1) + name.group(3)));
+        }
+      }
+
+      if (name.find()) {
+        if (name.group(2).equals("<desc/>")) {
+          to = methodIds.get(clearSpaces(name.group(1)));
+        } else {
+          to = methodIds.get(clearSpaces(name.group(1) + name.group(3)));
+        }
+      }
+
+      if (from != -1 && to != -1) {
+        f.addEdge(from, to);
       }
     }
 
@@ -56,10 +79,19 @@ public class CCM {
     final Pattern nccReplacePattern = Pattern.compile("ncc\\\">(\\w+)");
     final Pattern valueReplacePattern = Pattern.compile("value=\\\"([0-9]+.[0-9]+)");
 
-    String tempWithNccRes = nccReplacePattern.matcher(removeTempVars())
-        .replaceAll(String.format("ncc\">%d", ncc));
-    String finalRes = valueReplacePattern.matcher(tempWithNccRes)
-        .replaceAll(String.format(Locale.US, "value=\"%.2f", value));
+    String finalRes = tempRes.toString();
+    String finalValue = String.format(Locale.US, "value=\"%.2f\"", value);
+
+    if (nccReplacePattern.matcher(removeTempVars()).find()) {
+      finalRes = nccReplacePattern.matcher(removeTempVars())
+          .replaceAll(String.format("ncc\">%d", ncc));
+    }
+
+    if (valueReplacePattern.matcher(finalRes).find()) {
+      finalRes = valueReplacePattern.matcher(finalRes).replaceAll(finalValue);
+    } else {
+      finalRes = finalRes.replace("value=\"NaN\"", finalValue);
+    }
 
     return new XMLDocument(finalRes);
   }
@@ -70,5 +102,9 @@ public class CCM {
 
     String finalRes = finalReplacePattern.matcher(tempRes.toString()).replaceAll("</vars>");
     return finalRes.replaceAll("               <var id=\"edges\"/>\n", "");
+  }
+
+  private String clearSpaces(String old) {
+    return old.replace(" ", "").replace("\n", "");
   }
 }

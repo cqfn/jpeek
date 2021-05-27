@@ -50,6 +50,11 @@ SOFTWARE.
                 </xs:simpleContent>
               </xs:complexType>
             </xs:element>
+            <xs:element name="edges" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>List of class method relationships - edges</xs:documentation>
+              </xs:annotation>
+            </xs:element>
           </xs:sequence>
         </xs:complexType>
         <xs:unique name="varUnique">
