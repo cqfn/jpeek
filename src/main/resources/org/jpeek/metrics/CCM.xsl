@@ -46,9 +46,9 @@ SOFTWARE.
     <xsl:variable name="edges">
       <xsl:for-each select="$methods">
         <xsl:variable name="method" select="."/>
-        <xsl:for-each select="$methods">
+        <xsl:for-each select="$method/following-sibling::method">
           <xsl:variable name="other" select="."/>
-          <xsl:if test="((not(concat($method/@name, $method/@desc) = concat($other/@name, $other/@desc))) and ($method/ops/op/text()[. = $other/ops/op/text()]))">
+          <xsl:if test="$method/ops/op/text()[. = $other/ops/op/text()]">
             <edge>
               <method>
                 <name>
@@ -72,7 +72,7 @@ SOFTWARE.
       </xsl:for-each>
     </xsl:variable>
     <xsl:copy>
-      <xsl:variable name="nc" select="count($edges/edge) div 2"/>
+      <xsl:variable name="nc" select="count($edges/edge)"/>
       <xsl:variable name="ncc" select="count(distinct-values($edges/edge/method/text()))"/>
       <xsl:variable name="nmp" select="(count($methods) * (count($methods) - 1)) div 2"/>
       <xsl:attribute name="value">
