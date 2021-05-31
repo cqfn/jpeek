@@ -34,9 +34,11 @@ import com.jcabi.xml.XSLChain;
 import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.*;
-
-import org.apache.maven.plugin.MojoFailureException;
+import java.util.Map;
+import java.util.Collection;
+import java.util.List;
+import java.util.LinkedList;
+import java.util.ArrayList;
 import org.cactoos.collection.CollectionOf;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.io.TeeInput;
@@ -145,7 +147,7 @@ public final class App {
         "PMD.NcssCount",
         "PMD.GuardLogStatement"
     })
-    public void analyze() throws IOException, MojoFailureException {
+    public void analyze() throws IOException {
         final long start = System.currentTimeMillis();
         final Base base = new DefaultBase(this.input);
         final XML skeleton = new Skeleton(base).xml();
@@ -172,9 +174,8 @@ public final class App {
         this.save(skeleton.toString(), "skeleton.xml");
         final Collection<Report> reports = new LinkedList<>();
         final Calculus xsl = new XslCalculus();
-        List<String> metrics = new ArrayList<>();
+        final List<String> metrics = new ArrayList<>();
         if (this.params.containsKey("LCOM")) {
-            metrics.add("LCOM");
             reports.add(
                 new XslReport(
                     chain.transform(skeleton), xsl,
@@ -183,7 +184,6 @@ public final class App {
             );
         }
         if (this.params.containsKey("CAMC")) {
-            metrics.add("CAMC");
             reports.add(
                 new XslReport(
                     chain.transform(skeleton), xsl,
@@ -210,7 +210,6 @@ public final class App {
             );
         }
         if (this.params.containsKey("LCOM4")) {
-            metrics.add("LCOM4");
             reports.add(
                 new XslReport(
                     chain.transform(skeleton), xsl,
@@ -237,7 +236,6 @@ public final class App {
             );
         }
         if (this.params.containsKey("LCOM3")) {
-            metrics.add("LCOM3");
             reports.add(
                 new XslReport(
                     chain.transform(skeleton), xsl,
@@ -246,7 +244,6 @@ public final class App {
             );
         }
         if (this.params.containsKey("SCOM")) {
-            metrics.add("SCOM");
             reports.add(
                 new XslReport(
                     chain.transform(skeleton), xsl,
@@ -255,7 +252,6 @@ public final class App {
             );
         }
         if (this.params.containsKey("OCC")) {
-            metrics.add("OCC");
             reports.add(
                 new XslReport(
                     chain.transform(skeleton), xsl,
@@ -300,7 +296,6 @@ public final class App {
             );
         }
         if (this.params.containsKey("MWE")) {
-            metrics.add("MWE");
             reports.add(
                 new XslReport(
                     chain.transform(skeleton), xsl,
@@ -364,7 +359,9 @@ public final class App {
             App.xsl("matrix.xsl").transform(matrix).toString(),
             "matrix.html"
         );
-        GeneralCalculation.createReport(this.output, metrics);
+        if(metrics.size() > 0 && metrics.size() == 8) {
+            GeneralCalculation.createReport(this.output, metrics);
+        }
         this.copy("jpeek.css");
         new IoChecked<>(
             new And(
@@ -378,7 +375,6 @@ public final class App {
                 new ListOf<>("index", "matrix", "metric", "skeleton")
             )
         ).value();
-
     }
 
     /**

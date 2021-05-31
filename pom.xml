@@ -260,7 +260,7 @@ SOFTWARE.
         <executions>
           <execution>
             <id>make-assembly</id>
-            <phase>verify</phase>
+            <phase>package</phase>
             <goals>
               <goal>single</goal>
             </goals>

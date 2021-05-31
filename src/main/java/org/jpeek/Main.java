@@ -33,7 +33,6 @@ import java.util.Map;
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
-import org.apache.maven.plugin.MojoFailureException;
 
 /**
  * Main entry point.
@@ -110,7 +109,7 @@ public final class Main {
      * @param args Command line args
      * @throws IOException If fails
      */
-    public static void main(final String... args) throws IOException, MojoFailureException {
+    public static void main(final String... args) throws IOException {
         final Main main = new Main();
         JCommander.newBuilder()
             .addObject(main)
@@ -123,7 +122,7 @@ public final class Main {
      * Run it.
      * @throws IOException If fails
      */
-    private void run() throws IOException, MojoFailureException {
+    private void run() throws IOException {
         if (this.overwrite && this.sources.equals(this.target)) {
             throw new IllegalArgumentException(
                 "Invalid paths - can't be equal if overwrite option is set."

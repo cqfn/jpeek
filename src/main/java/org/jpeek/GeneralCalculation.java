@@ -89,6 +89,7 @@ public class GeneralCalculation {
         for(int i = 0; i < classNames.size(); i++){
             classNames.set(i, classNames.get(i).substring(classNames.get(i).lastIndexOf('.')+1));
         }
+
         HashMap<String,String[]> output = new HashMap<>();
         for(String elem : classNames){
             HashMap<String, Double> values = new HashMap<String, Double>();

@@ -23,8 +23,8 @@
  */
 
 /**
- * JPeek java calculus.
+ * JPeek java metric calculation fix.
  *
- * @since 0.30.9
+ * @since 1.0-SNAPSHOT
  */
 package org.jpeek.calculus.java;

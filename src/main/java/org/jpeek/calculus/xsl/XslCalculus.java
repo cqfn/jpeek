@@ -32,7 +32,7 @@ import org.cactoos.io.ResourceOf;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.TextOf;
 import org.jpeek.calculus.Calculus;
-import org.jpeek.calculus.java.fix.CCM;
+import org.jpeek.calculus.java.fix.Ccm;
 
 /**
  * Metrics xsl calculus. Use an xsl sheet to transform the input skeleton into the xml containing
@@ -57,7 +57,7 @@ public final class XslCalculus implements Calculus {
     ).transform(skeleton);
 
     if (metric.equals("CCM")) {
-      return new CCM(skeleton, tempRes).getFixedResult();
+      return new Ccm(skeleton, tempRes).getFixedResult();
     } else {
       return tempRes;
     }
