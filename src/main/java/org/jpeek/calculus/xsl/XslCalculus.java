@@ -42,24 +42,21 @@ import org.jpeek.calculus.java.fix.Ccm;
  */
 public final class XslCalculus implements Calculus {
 
-  @Override
-  public XML node(final String metric, final Map<String, Object> params,
-      final XML skeleton) throws IOException {
-
-    XML tempRes = new XSLDocument(
-        new TextOf(
-            new ResourceOf(
-                new FormattedText("org/jpeek/metrics/%s.xsl", metric)
-            )
-        ).asString(),
-        Sources.DUMMY,
-        params
-    ).transform(skeleton);
-
-    if (metric.equals("CCM")) {
-      return new Ccm(skeleton, tempRes).getFixedResult();
-    } else {
-      return tempRes;
+    @Override
+    public XML node(final String metric, final Map<String, Object> params,
+        final XML skeleton) throws IOException {
+        XML tempxsl = new XSLDocument(
+            new TextOf(
+                new ResourceOf(
+                    new FormattedText("org/jpeek/metrics/%s.xsl", metric)
+                )
+            ).asString(),
+            Sources.DUMMY,
+            params
+        ).transform(skeleton);
+        if (metric.equals("CCM")) {
+            tempxsl = new Ccm(skeleton, tempxsl).getFixedResult();
+        }
+        return tempxsl;
     }
-  }
 }

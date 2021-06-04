@@ -23,9 +23,9 @@
  */
 
 /**
- * JPeek java metric CCM calculation fix.
+ * JPeek java graph connected components search.
  *
  * @since 1.0-SNAPSHOT
  */
-package org.jpeek.calculus.java.fix;
+package org.jpeek.graph.java;
 

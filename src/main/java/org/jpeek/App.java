@@ -34,11 +34,11 @@ import com.jcabi.xml.XSLChain;
 import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Map;
-import java.util.Collection;
-import java.util.List;
-import java.util.LinkedList;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import org.cactoos.collection.CollectionOf;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.io.TeeInput;
@@ -174,7 +174,7 @@ public final class App {
         this.save(skeleton.toString(), "skeleton.xml");
         final Collection<Report> reports = new LinkedList<>();
         final Calculus xsl = new XslCalculus();
-        final List<String> metrics = new ArrayList<>();
+        final List<String> metrics = new ArrayList<>(this.params.size());
         if (this.params.containsKey("LCOM")) {
             reports.add(
                 new XslReport(
@@ -359,8 +359,8 @@ public final class App {
             App.xsl("matrix.xsl").transform(matrix).toString(),
             "matrix.html"
         );
-        if(metrics.size() > 0 && metrics.size() == 8) {
-            GeneralCalculation.createReport(this.output, metrics);
+        if (metrics.size() == 8) {
+            new GeneralCalculation().createReport(this.output, metrics);
         }
         this.copy("jpeek.css");
         new IoChecked<>(
