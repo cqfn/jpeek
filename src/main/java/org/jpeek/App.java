@@ -34,8 +34,10 @@ import com.jcabi.xml.XSLChain;
 import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import org.cactoos.collection.CollectionOf;
 import org.cactoos.io.ResourceOf;
@@ -48,6 +50,7 @@ import org.cactoos.scalar.AndInThreads;
 import org.cactoos.scalar.IoChecked;
 import org.cactoos.scalar.LengthOf;
 import org.jpeek.calculus.Calculus;
+import org.jpeek.calculus.GeneralCalculation;
 import org.jpeek.calculus.xsl.XslCalculus;
 import org.jpeek.skeleton.Skeleton;
 import org.xembly.Directives;
@@ -172,6 +175,7 @@ public final class App {
         this.save(skeleton.toString(), "skeleton.xml");
         final Collection<Report> reports = new LinkedList<>();
         final Calculus xsl = new XslCalculus();
+        final List<String> metrics = new ArrayList<>(this.params.size());
         if (this.params.containsKey("LCOM")) {
             reports.add(
                 new XslReport(
@@ -189,6 +193,7 @@ public final class App {
             );
         }
         if (this.params.containsKey("MMAC")) {
+            metrics.add("MMAC");
             reports.add(
                 new XslReport(
                     chain.transform(skeleton), xsl,
@@ -197,6 +202,7 @@ public final class App {
             );
         }
         if (this.params.containsKey("LCOM5")) {
+            metrics.add("LCOM5");
             reports.add(
                 new XslReport(
                     chain.transform(skeleton), xsl,
@@ -213,6 +219,7 @@ public final class App {
             );
         }
         if (this.params.containsKey("NHD")) {
+            metrics.add("NHD");
             reports.add(
                 new XslReport(
                     chain.transform(skeleton), xsl,
@@ -221,6 +228,7 @@ public final class App {
             );
         }
         if (this.params.containsKey("LCOM2")) {
+            metrics.add("LCOM2");
             reports.add(
                 new XslReport(
                     chain.transform(skeleton), xsl,
@@ -253,6 +261,7 @@ public final class App {
             );
         }
         if (this.params.containsKey("PCC")) {
+            metrics.add("PCC");
             reports.add(
                 new XslReport(
                     chain.transform(skeleton), xsl,
@@ -261,6 +270,7 @@ public final class App {
             );
         }
         if (this.params.containsKey("TCC")) {
+            metrics.add("TCC");
             reports.add(
                 new XslReport(
                     chain.transform(skeleton), xsl,
@@ -269,6 +279,7 @@ public final class App {
             );
         }
         if (this.params.containsKey("LCC")) {
+            metrics.add("LCC");
             reports.add(
                 new XslReport(
                     chain.transform(skeleton), xsl,
@@ -277,6 +288,7 @@ public final class App {
             );
         }
         if (this.params.containsKey("CCM")) {
+            metrics.add("CCM");
             reports.add(
                 new XslReport(
                     chain.transform(skeleton), xsl,
@@ -348,6 +360,9 @@ public final class App {
             App.xsl("matrix.xsl").transform(matrix).toString(),
             "matrix.html"
         );
+        if (metrics.size() == 8) {
+            new GeneralCalculation().createReport(this.output, metrics);
+        }
         this.copy("jpeek.css");
         new IoChecked<>(
             new And(
