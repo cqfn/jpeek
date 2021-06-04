@@ -50,10 +50,20 @@ SOFTWARE.
           <xsl:if test="$method/ops/op/text()[. = $other/ops/op/text()]">
             <edge>
               <method>
-                <xsl:value-of select="$method/@name"/>
+                <name>
+                  <xsl:value-of select="$method/@name"/>
+                </name>
+                <desc>
+                  <xsl:value-of select="$method/@desc"/>
+                </desc>
               </method>
               <method>
-                <xsl:value-of select="$other/@name"/>
+                <name>
+                  <xsl:value-of select="$other/@name"/>
+                </name>
+                <desc>
+                  <xsl:value-of select="$other/@desc"/>
+                </desc>
               </method>
             </edge>
           </xsl:if>
@@ -88,6 +98,9 @@ SOFTWARE.
         <var id="nmp">
           <xsl:value-of select="$nmp"/>
         </var>
+        <edges>
+          <xsl:copy-of select="$edges"/>
+        </edges>
       </vars>
     </xsl:copy>
   </xsl:template>

@@ -21,43 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.jpeek.calculus.xsl;
-
-import com.jcabi.xml.Sources;
-import com.jcabi.xml.XML;
-import com.jcabi.xml.XSLDocument;
-import java.io.IOException;
-import java.util.Map;
-import org.cactoos.io.ResourceOf;
-import org.cactoos.text.FormattedText;
-import org.cactoos.text.TextOf;
-import org.jpeek.calculus.Calculus;
-import org.jpeek.calculus.java.fix.Ccm;
 
 /**
- * Metrics xsl calculus. Use an xsl sheet to transform the input skeleton into
- * the xml containing the calculation.
- * @since 0.30.9
+ * JPeek java metric CCM calculation fix.
+ *
+ * @since 1.0-SNAPSHOT
  */
-public final class XslCalculus implements Calculus {
-
-    @Override
-    public XML node(final String metric, final Map<String, Object> params,
-        final XML skeleton) throws IOException {
-        XML tempxsl = new XSLDocument(
-            new TextOf(
-                new ResourceOf(
-                    new FormattedText("org/jpeek/metrics/%s.xsl", metric)
-                )
-            ).asString(),
-            Sources.DUMMY,
-            params
-        ).transform(skeleton);
-        if (metric.equals("CCM")) {
-            tempxsl = new Ccm(skeleton, tempxsl).getFixedResult();
-        }
-        return tempxsl;
-    }
-
-}
+package org.jpeek.calculus.java.fix;
 
