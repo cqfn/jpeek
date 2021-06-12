@@ -37,7 +37,7 @@ import org.jsoup.select.Elements;
  *
  * @since 1.0.0
  */
-@SuppressWarnings("PMD.ConstructorShouldDoInitialization")
+@SuppressWarnings({"PMD.ConstructorShouldDoInitialization", "PMD.AvoidDuplicateLiterals"})
 public class MetricPresentation {
 
     /**
@@ -79,6 +79,9 @@ public class MetricPresentation {
      * Gets classes values from metric file.
      */
     private void parseValues() {
+        if (this.doc.select("table").size() == 0) {
+            return;
+        }
         final Element table = this.doc.select("table").get(0);
         final Elements rows = table.select("tr");
         for (int ind = 1; ind < rows.size(); ind += 1) {

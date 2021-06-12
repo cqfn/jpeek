@@ -1,0 +1,17 @@
+MethodsWithDiffParamTypes,0.14d,0.33335d,0.375d
+Bar,0.16665d,0.16665d,-0.239575d
+BridgeMethod,-0.5d,-1.0d,0.75d
+ClassWithDifferentMethodVisibilities,-0.5d,-1.0d,0.75d
+ClassWithPublicField,-0.5d,-1.0d,0.5d
+MethodMethodCalls,0.09d,-1.0d,0.25d
+NoMethods,-0.5d,-1.0d,0.5d
+NotCommonAttributes,-0.5d,-1.0,-0.125d
+NotCommonAttributesWithAllArgsConstructor,-0.5d,-1.0d,-0.125d
+OneCommonAttribute,0.75d,-1.0d,1.0d
+OneMethodCreatesLambda,-0.5d,-1.0d,0.5d
+OneVoidMethodWithoutParams,-0.5d,-1.0d,0.75d
+OnlyOneMethodWithParams,-0.5d,-1.0d,0.75d
+OverloadMethods,1.0d,0.5d,1.75d
+TwoCommonAttributes,-0.5d,0.3333d,-0.166675d
+TwoCommonMethods,0.05d,0.33335d,0.75d
+WithoutAttributes,-0.5d,-1.0d,0.75d
