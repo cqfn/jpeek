@@ -24,12 +24,11 @@
 package org.jpeek.calculus;
 
 import com.amazonaws.util.IOUtils;
-import com.jcabi.log.Logger;
-import java.io.BufferedWriter;
-import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,7 +40,12 @@ import java.util.Map;
  * @since 1.0.0
  * @checkstyle StringLiteralsConcatenationCheck (250 lines)
  */
-public class GeneralCalculation {
+public final class GeneralCalculation {
+
+    /**
+     * Default constructor.
+     */
+    private GeneralCalculation() { }
 
     /**
      * Created report with aggregated value.
@@ -54,14 +58,15 @@ public class GeneralCalculation {
         "PMD.AvoidDuplicateLiterals",
         "PMD.ExcessiveMethodLength"
     })
-    public void createReport(final Path target, final List<String> metrics) throws IOException {
+    public static void createReport(final Path target, final List<String> metrics)
+        throws IOException {
         final Map<String, MetricPresentation> res = new HashMap<>();
         for (final String metric : metrics) {
             res.put(
                 metric,
-                new MetricPresentation(
+                MetricPresentation.initialize(
                     String.format(
-                        "%s/%s.html",
+                        "%s/%s.xml",
                         target.toString(),
                         metric
                     )
@@ -114,14 +119,12 @@ public class GeneralCalculation {
                     tbody
                 )
             );
-        try {
-            final File file = new File(String.format("%s%s", target.toString(), "/total.html"));
-            final BufferedWriter bwriter = Files.newBufferedWriter(file.getAbsoluteFile().toPath());
-            bwriter.write(template);
-            bwriter.close();
-        } catch (final IOException ioex) {
-            Logger.error(this, ioex.getMessage());
-        }
+        Files.write(
+            Paths.get(
+                String.format("%s%s", target.toString(), "/total.html")
+            ),
+            template.getBytes(StandardCharsets.UTF_8)
+        );
     }
 
     /**

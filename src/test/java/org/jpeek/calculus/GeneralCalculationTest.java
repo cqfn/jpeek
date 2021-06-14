@@ -70,7 +70,7 @@ class GeneralCalculationTest {
             Files.exists(output.resolve("total.html")),
             new IsTrue()
         ).affirm();
-        new GeneralCalculation().createReport(output, metricslist);
+        GeneralCalculation.createReport(output, metricslist);
         new Assertion<>(
             "Must total.html file exists",
             Files.exists(output.resolve("total.html")),
@@ -97,11 +97,11 @@ class GeneralCalculationTest {
         for (final String mtc : metricslist) {
             mres.put(
                 mtc,
-                new MetricPresentation(
+                MetricPresentation.initialize(
                     String.format(
-                        "%s/%s.html",
+                        "%s/%s.xml",
                         output,
-                            mtc
+                        mtc
                     )
                 )
             );

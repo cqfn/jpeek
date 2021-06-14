@@ -23,14 +23,12 @@
  */
 package org.jpeek.calculus;
 
+import com.jcabi.xml.XMLDocument;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 /**
  * Represents metric information.
@@ -41,9 +39,9 @@ import org.jsoup.select.Elements;
 public class MetricPresentation {
 
     /**
-     * File with metric results.
+     * XML file with metric results.
      */
-    private final Document doc;
+    private final XMLDocument xml;
 
     /**
      * Contains values for classes.
@@ -53,17 +51,13 @@ public class MetricPresentation {
     /**
      * Initializes object of metric representation.
      *
-     * @param path Path to metric file
-     * @throws IOException if fails
+     * @param path Path to metric XML file
+     * @throws FileNotFoundException if fails
      */
-    @SuppressWarnings({
-        "PMD.ConstructorOnlyInitializesOrCallOtherConstructors",
-        "PMD.ConstructorShouldDoInitialization"
-    })
-    public MetricPresentation(final String path) throws IOException {
-        final File input = new File(path);
-        this.doc = Jsoup.parse(input, "UTF-8");
-        this.parseValues();
+    public MetricPresentation(final String path) throws FileNotFoundException {
+        this.xml = new XMLDocument(
+            new File(path)
+        );
     }
 
     /**
@@ -76,19 +70,27 @@ public class MetricPresentation {
     }
 
     /**
+     * Initializes object of metric representation and parses values.
+     *
+     * @param path Path to metric file
+     * @return Instance of metric representation
+     * @throws IOException if fails
+     */
+    static MetricPresentation initialize(final String path) throws IOException {
+        final MetricPresentation metpres = new MetricPresentation(path);
+        metpres.parseValues();
+        return metpres;
+    }
+
+    /**
      * Gets classes values from metric file.
      */
     private void parseValues() {
-        if (this.doc.select("table").size() == 0) {
-            return;
-        }
-        final Element table = this.doc.select("table").get(0);
-        final Elements rows = table.select("tr");
-        for (int ind = 1; ind < rows.size(); ind += 1) {
-            String label = rows.get(ind).select("td").get(0).select("code").get(0).text();
-            label = label.substring(label.lastIndexOf('.') + 1);
-            final String value = rows.get(ind).select("td").get(1).text();
-            this.values.put(label, value);
+        for (final String clazz : this.xml.xpath("//class/@id")) {
+            final String value = this.xml.xpath(
+                String.format("//class[@id=\"%s\"]/@value", clazz)
+            ).get(0);
+            this.values.put(clazz, value);
         }
     }
 }

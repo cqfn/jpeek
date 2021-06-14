@@ -70,6 +70,7 @@ import org.xembly.Xembler;
  * @checkstyle CyclomaticComplexityCheck (500 lines)
  * @checkstyle MethodLengthCheck (500 lines)
  * @checkstyle JavaNCSSCheck (500 lines)
+ * @checkstyle BooleanExpressionComplexityCheck (500 lines)
  */
 @SuppressWarnings({
     "PMD.AvoidDuplicateLiterals",
@@ -360,8 +361,11 @@ public final class App {
             App.xsl("matrix.xsl").transform(matrix).toString(),
             "matrix.html"
         );
-        if (metrics.size() == 8) {
-            new GeneralCalculation().createReport(this.output, metrics);
+        if (this.params.containsKey("LCOM2") && this.params.containsKey("LCOM5")
+            && this.params.containsKey("CCM") && this.params.containsKey("NHD")
+            && this.params.containsKey("MMAC") && this.params.containsKey("LCC")
+            && this.params.containsKey("TCC") && this.params.containsKey("PCC")) {
+            GeneralCalculation.createReport(this.output, metrics);
         }
         this.copy("jpeek.css");
         new IoChecked<>(
