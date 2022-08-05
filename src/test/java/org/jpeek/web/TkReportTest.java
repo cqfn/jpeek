@@ -27,6 +27,8 @@ import com.jcabi.matchers.XhtmlMatchers;
 import java.io.File;
 import java.io.IOException;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.takes.facets.fork.RqRegex;
@@ -42,6 +44,7 @@ import org.takes.rs.RsPrint;
 public final class TkReportTest {
 
     @Test
+    @DisabledOnOs(OS.WINDOWS)
     public void rendersEmptySvgBadge(@TempDir final File folder)
         throws IOException {
         new Assertion<>(
