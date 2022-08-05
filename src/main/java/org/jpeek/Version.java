@@ -34,7 +34,6 @@ import org.cactoos.scalar.PropertiesOf;
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.11
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class Version implements Scalar<String> {
 

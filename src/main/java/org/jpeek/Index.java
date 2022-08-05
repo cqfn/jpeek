@@ -44,7 +44,6 @@ import org.xembly.Directives;
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.6
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class Index implements Iterable<Directive> {
 

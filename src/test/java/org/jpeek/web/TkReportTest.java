@@ -39,7 +39,6 @@ import org.takes.rs.RsPrint;
  * Test case for {@link TkReport}.
  * @since 0.23
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class TkReportTest {
 

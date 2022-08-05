@@ -35,7 +35,6 @@ import org.takes.rs.RsWithType;
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.8
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class TypedPages implements Func<String, Response> {
 

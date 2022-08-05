@@ -53,7 +53,6 @@ import org.takes.Response;
  * {@link Futures}.
  *
  * @since 0.7
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class Reports implements BiFunc<String, String, Func<String, Response>> {
 

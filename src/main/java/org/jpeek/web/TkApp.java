@@ -60,7 +60,6 @@ import org.takes.tk.TkWrap;
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.5
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @checkstyle ClassFanOutComplexityCheck (500 lines)
  */
 @SuppressWarnings("PMD.UseUtilityClass")
@@ -106,7 +105,6 @@ public final class TkApp extends TkWrap {
         );
         final BiFunc<String, String, Func<String, Response>> reports =
             new AsyncReports(
-                // @checkstyle MagicNumber (1 line)
                 new StickyFutures(futures, 100)
             );
         return new TkSslOnly(

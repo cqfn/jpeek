@@ -51,7 +51,6 @@ import org.xembly.Directives;
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.8
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class Results {
@@ -110,7 +109,6 @@ final class Results {
             index.xpath("/index/@score").get(0)
         ).longValue();
         final long rank = (long) ((double) score * (1.0d - diff.doubleValue()));
-        // @checkstyle MagicNumber (1 line)
         if (elements < 100) {
             Logger.info(
                 this, "%d elements NOT saved for %s by %s, rank=%d, score=%d, metrics=%d",
@@ -146,7 +144,6 @@ final class Results {
                         "ttl",
                         System.currentTimeMillis()
                             / TimeUnit.SECONDS.toMillis(1L)
-                            // @checkstyle MagicNumber (1 line)
                             + TimeUnit.DAYS.toSeconds(100L)
                     )
             );
@@ -205,7 +202,6 @@ final class Results {
                         .withScanIndexForward(false)
                         .withIndexName("recent")
                         .withConsistentRead(false)
-                        // @checkstyle MagicNumber (1 line)
                         .withLimit(25)
                         .withAttributesToGet("artifact")
                 )
@@ -263,7 +259,6 @@ final class Results {
                 )
                 .through(
                     new ScanValve()
-                        // @checkstyle MagicNumber (1 line)
                         .withLimit(1000)
                         .withAttributeToGet(
                             "artifact", "classes", "defects", "version",
@@ -313,7 +308,6 @@ final class Results {
                         .withScanIndexForward(false)
                         .withIndexName("ranks")
                         .withConsistentRead(false)
-                        // @checkstyle MagicNumber (1 line)
                         .withLimit(20)
                         .withAttributesToGet(
                             "artifact", "score", "diff", "defects",

@@ -32,7 +32,6 @@ import org.junit.jupiter.api.Test;
  * LORM = Logical Relatedness of Methods.
  * @since 0.28
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class LormTest {
 

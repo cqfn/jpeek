@@ -39,7 +39,6 @@ import org.llorllale.cactoos.matchers.HasValuesMatching;
 /**
  * Test case for {@link XmlGraph}.
  * @since 0.30.9
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class XmlGraphTest {
 

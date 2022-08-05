@@ -45,9 +45,7 @@ import org.takes.rs.xe.XeAppend;
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.8
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class AsyncReports implements
     BiFunc<String, String, Func<String, Response>> {
 

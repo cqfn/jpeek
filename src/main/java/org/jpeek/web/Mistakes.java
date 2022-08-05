@@ -49,7 +49,6 @@ import org.xembly.Directives;
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.8
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class Mistakes {
@@ -120,7 +119,6 @@ final class Mistakes {
                         .withScanIndexForward(false)
                         .withIndexName("mistakes")
                         .withConsistentRead(false)
-                        // @checkstyle MagicNumber (1 line)
                         .withLimit(20)
                         .withSelect(Select.ALL_ATTRIBUTES)
                 )
@@ -157,7 +155,6 @@ final class Mistakes {
                         "ttl",
                         System.currentTimeMillis()
                             / TimeUnit.SECONDS.toMillis(1L)
-                            // @checkstyle MagicNumber (1 line)
                             + TimeUnit.DAYS.toSeconds(100L)
                     )
                     .with("pos", 0L)

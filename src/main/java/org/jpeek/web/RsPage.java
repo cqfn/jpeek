@@ -48,7 +48,6 @@ import org.takes.rs.xe.XeStylesheet;
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.14
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class RsPage extends RsWrap {
 
@@ -79,7 +78,6 @@ final class RsPage extends RsWrap {
      * @param src Sources
      * @return Response
      */
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     private static Response make(final Request req, final String xsl,
         final Scalar<Iterable<XeSource>> src) {
         final Response raw = new RsXembly(

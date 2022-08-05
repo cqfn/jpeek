@@ -32,7 +32,6 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 0.27
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class XmlClassTest {
 
     @Test

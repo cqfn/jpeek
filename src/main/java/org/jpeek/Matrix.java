@@ -44,7 +44,6 @@ import org.xembly.Directives;
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.6
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class Matrix implements Iterable<Directive> {
 
@@ -141,10 +140,8 @@ final class Matrix implements Iterable<Directive> {
         if ("red".equals(color)) {
             rank = 1;
         } else if ("yellow".equals(color)) {
-            // @checkstyle MagicNumber (1 line)
             rank = 3;
         } else {
-            // @checkstyle MagicNumber (1 line)
             rank = 5;
         }
         return rank;

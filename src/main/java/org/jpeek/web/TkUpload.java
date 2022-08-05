@@ -41,7 +41,6 @@ import org.takes.rs.RsText;
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.32
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class TkUpload implements Take {
 

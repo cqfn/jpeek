@@ -40,7 +40,6 @@ import org.jpeek.skeleton.Skeleton;
  *  ClassDataAbstractionCouplingCheck. The class probably needs to be split
  *  into smaller ones, perhaps extracting the maps into separate objects
  *  (extending MapEnvelopes), or maybe the list itself.
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class XmlGraph implements Graph {
 

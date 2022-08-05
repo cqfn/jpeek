@@ -58,11 +58,9 @@ import org.xembly.Xembler;
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.1
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @checkstyle ClassFanOutComplexityCheck (500 lines)
  * @checkstyle ExecutableStatementCountCheck (500 lines)
  * @checkstyle NPathComplexityCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 lines)
  * @checkstyle CyclomaticComplexityCheck (500 lines)
  * @checkstyle MethodLengthCheck (500 lines)
  * @checkstyle JavaNCSSCheck (500 lines)

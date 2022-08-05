@@ -37,7 +37,6 @@ import org.takes.rs.RsWithBody;
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.8
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class Pages implements Func<String, Response> {
 

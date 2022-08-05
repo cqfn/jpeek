@@ -36,8 +36,6 @@ import org.junit.jupiter.api.Test;
  * "Into how many independent classes can you split this class?"
  * @since 0.28
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 lines)
  */
 public final class Lcom4Test {
 

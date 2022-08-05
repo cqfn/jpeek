@@ -41,7 +41,6 @@ import org.xembly.Xembler;
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.16
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class ReportWithStatistics implements XML {
 

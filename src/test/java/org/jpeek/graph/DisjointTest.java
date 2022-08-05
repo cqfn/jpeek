@@ -53,7 +53,6 @@ public final class DisjointTest {
         final Graph graph = new FakeGraph(
             new ListOf<>(one, two, three, four, five, six)
         );
-        // @checkstyle MagicNumberCheck (50 lines)
         new Assertion<>(
             "Must build disjoint sets correctly",
             new Disjoint(graph).value(),

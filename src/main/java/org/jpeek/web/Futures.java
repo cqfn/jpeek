@@ -53,7 +53,6 @@ import org.takes.rs.xe.XeAppend;
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.8
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class Futures implements
     BiFunc<String, String, Future<Func<String, Response>>>, Text {
@@ -85,7 +84,6 @@ final class Futures implements
     Futures(final BiFunc<String, String, Func<String, Response>> func) {
         this.origin = func;
         this.service = Executors.newFixedThreadPool(
-            // @checkstyle MagicNumber (1 line)
             Math.min(Runtime.getRuntime().availableProcessors(), 4),
             new VerboseThreads(Futures.class)
         );
@@ -99,7 +97,6 @@ final class Futures implements
         final String artifact) {
         final String target = String.format("%s:%s", group, artifact);
         this.queue.put(target, System.currentTimeMillis());
-        // @checkstyle MagicNumber (1 line)
         if (this.times.size() > 1000) {
             this.times.clear();
         }
@@ -157,7 +154,6 @@ final class Futures implements
             this.queue.size(),
             Runtime.getRuntime().availableProcessors(),
             Thread.getAllStackTraces().keySet().size(),
-            // @checkstyle MagicNumber (3 lines)
             Runtime.getRuntime().freeMemory() / (1024L << 10),
             Runtime.getRuntime().maxMemory() / (1024L << 10),
             Runtime.getRuntime().totalMemory() / (1024L << 10),

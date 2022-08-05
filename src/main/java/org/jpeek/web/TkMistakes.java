@@ -38,7 +38,6 @@ import org.takes.rs.xe.XeDirectives;
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.14
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class TkMistakes implements Take {
 
@@ -52,7 +51,6 @@ final class TkMistakes implements Take {
                     new XeDirectives(
                         new Joined<>(
                             new HeadOf<>(
-                                // @checkstyle MagicNumber (1 line)
                                 20, new Mistakes().worst()
                             )
                         )

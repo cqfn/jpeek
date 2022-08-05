@@ -45,9 +45,7 @@ import org.jpeek.Version;
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.17
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class Sigmas {
 
     /**
@@ -85,7 +83,6 @@ final class Sigmas {
         final int classes = Integer.parseInt(
             index.xpath("/index/metric[1]/classes/text()").get(0)
         );
-        // @checkstyle MagicNumber (1 line)
         if (defects < 0.15d && classes > 200) {
             for (final XML metric : index.nodes("//metric")) {
                 this.add(metric);
@@ -118,7 +115,6 @@ final class Sigmas {
                     .with("version", new Version().value())
                     .with("artifact", "?")
                     .with("champions", 0L)
-                    // @checkstyle MagicNumber (2 lines)
                     .with("mean", new DyNum(0.5d).longValue())
                     .with("sigma", new DyNum(0.1d).longValue())
             );

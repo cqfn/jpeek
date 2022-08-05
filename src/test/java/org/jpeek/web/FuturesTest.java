@@ -35,7 +35,6 @@ import org.takes.rs.xe.XeAppend;
  * Test case for {@link Futures}.
  * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class FuturesTest {
 

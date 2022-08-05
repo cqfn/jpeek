@@ -50,7 +50,6 @@ import org.xembly.Xembler;
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.5
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class TkReport implements TkRegex {
 
@@ -78,7 +77,6 @@ final class TkReport implements TkRegex {
     @Override
     public Response act(final RqRegex req) throws IOException {
         final Matcher matcher = req.matcher();
-        // @checkstyle MagicNumber (1 line)
         final String path = matcher.group(3);
         if (path.isEmpty()) {
             throw new RsForward(
@@ -91,7 +89,6 @@ final class TkReport implements TkRegex {
             )
         ).apply(path.substring(1));
         if (new RsStatus.Base(response).status() == HttpURLConnection.HTTP_NOT_FOUND
-            // @checkstyle MagicNumber (1 line)
             && "badge.svg".equals(matcher.group(3))) {
             final String artifact = String.format(
                 "%s:%s", matcher.group(1), matcher.group(2)
