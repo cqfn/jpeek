@@ -4,8 +4,8 @@ assets:
   settings.xml: yegor256/cqfn-secrets#jpeek-settings.xml
   pubring.gpg: yegor256/cqfn-secrets#pubring.gpg
   secring.gpg: yegor256/cqfn-secrets#secring.gpg
-  id_rsa: yegor256/cqfn-secrets#jpeek-heroku
-  id_rsa.pub: yegor256/cqfn-secrets#jpeek-heroku.pub
+  id_rsa: yegor256/cqfn-secrets#dokku-id_rsa
+  id_rsa.pub: yegor256/cqfn-secrets#dokku-id_rsa.pub
 install: |
   pdd -f /dev/null
 merge:
