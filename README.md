@@ -14,6 +14,7 @@
 [![jpeek report](https://i.jpeek.org/org.jpeek/jpeek/badge.svg)](https://i.jpeek.org/org.jpeek/jpeek/)
 [![SonarQube](https://img.shields.io/badge/sonar-ok-green.svg)](https://sonarcloud.io/dashboard?id=org.jpeek%3Ajpeek)
 [![Hits-of-Code](https://hitsofcode.com/github/cqfn/jpeek)](https://hitsofcode.com/view/github/cqfn/jpeek)
+![Lines of code](https://img.shields.io/tokei/lines/github/cqfn/jpeek)
 
 jPeek is a static collector of Java code metrics.
 
