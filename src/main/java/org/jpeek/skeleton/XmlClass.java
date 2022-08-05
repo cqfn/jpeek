@@ -29,8 +29,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import javassist.CannotCompileException;
 import javassist.CtClass;
-import org.cactoos.collection.Joined;
-import org.cactoos.collection.Mapped;
+import org.cactoos.iterable.Joined;
+import org.cactoos.iterable.Mapped;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.FieldVisitor;
@@ -94,7 +94,7 @@ final class XmlClass extends ClassVisitor implements Iterable<Directive> {
             .up()
             .add("methods")
             .append(
-                new Joined<Directive>(
+                new Joined<>(
                     new Mapped<>(
                         dirs -> new Directives().append(dirs).up(),
                         this.methods

@@ -33,9 +33,9 @@ import java.util.Iterator;
 import java.util.TreeSet;
 import javassist.ClassPool;
 import javassist.CtClass;
-import org.cactoos.collection.CollectionOf;
-import org.cactoos.collection.Filtered;
-import org.cactoos.collection.Mapped;
+import org.cactoos.iterable.Filtered;
+import org.cactoos.iterable.Mapped;
+import org.cactoos.list.ListOf;
 import org.jpeek.Base;
 
 /**
@@ -77,10 +77,10 @@ final class Classes implements Iterable<CtClass> {
         "PMD.GuardLogStatement"
     })
     public Iterator<CtClass> iterator() {
-        final Collection<CtClass> classes;
+        final Iterable<CtClass> classes;
         final long start = System.currentTimeMillis();
         try {
-            classes = new Filtered<>(
+            classes = new Filtered<CtClass>(
                 // @checkstyle BooleanExpressionComplexityCheck (10 lines)
                 ctClass -> !ctClass.isInterface()
                     && !ctClass.isEnum()
@@ -96,7 +96,7 @@ final class Classes implements Iterable<CtClass> {
                     new Filtered<>(
                         path -> Files.isRegularFile(path)
                             && path.toString().endsWith(".class"),
-                        new CollectionOf<>(this.base.files())
+                        new ListOf<>(this.base.files())
                     )
                 )
             );
@@ -106,7 +106,7 @@ final class Classes implements Iterable<CtClass> {
         final Collection<CtClass> unique = new TreeSet<>(
             Comparator.comparing(CtClass::getName)
         );
-        unique.addAll(classes);
+        unique.addAll(new ListOf<>(classes));
         Logger.debug(
             this, "%d classes found and parsed via Javassist in %[ms]s",
             unique.size(), System.currentTimeMillis() - start

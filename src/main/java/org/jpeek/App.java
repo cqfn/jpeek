@@ -37,7 +37,6 @@ import java.nio.file.Path;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Map;
-import org.cactoos.collection.CollectionOf;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.io.TeeInput;
 import org.cactoos.list.ListOf;
@@ -294,9 +293,7 @@ public final class App {
         }
         new IoChecked<>(
             new AndInThreads(
-                report -> {
-                    report.save(this.output);
-                },
+                report -> report.save(this.output),
                 reports
             )
         ).value();
@@ -306,7 +303,7 @@ public final class App {
         );
         final XML index = new StrictXML(
             new XSLChain(
-                new CollectionOf<>(
+                new ListOf<>(
                     App.xsl("index-post-metric-diff.xsl"),
                     App.xsl("index-post-diff-and-defects.xsl")
                 )
@@ -382,19 +379,23 @@ public final class App {
     /**
      * Copy XSL.
      * @param name The name of resource
+     * @return TRUE if copied
      * @throws IOException If fails
      */
-    private void copyXsl(final String name) throws IOException {
+    private boolean copyXsl(final String name) throws IOException {
         this.copy(String.format("xsl/%s.xsl", name));
+        return true;
     }
 
     /**
      * Copy XSL.
      * @param name The name of resource
+     * @return TRUE if copied
      * @throws IOException If fails
      */
-    private void copyXsd(final String name) throws IOException {
+    private boolean copyXsd(final String name) throws IOException {
         this.copy(String.format("xsd/%s.xsd", name));
+        return true;
     }
 
     /**

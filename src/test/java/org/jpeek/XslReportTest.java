@@ -65,7 +65,7 @@ public final class XslReportTest {
     }
 
     @Test
-    public void createsXmlReportWithXpaths(@TempDir final Path output) throws IOException {
+    public void createsXmlReportWithXpaths(@TempDir final Path output) throws Exception {
         new XslReport(
             new Skeleton(
                 new FakeBase(
@@ -87,7 +87,7 @@ public final class XslReportTest {
     }
 
     @Test
-    public void createsXmlReportWithEmptyProject(@TempDir final Path output) throws IOException {
+    public void createsXmlReportWithEmptyProject(@TempDir final Path output) throws Exception {
         new XslReport(
             new Skeleton(new FakeBase()).xml(), new XslCalculus(), new ReportData("LCOM")
         ).save(output);
@@ -103,7 +103,7 @@ public final class XslReportTest {
     }
 
     @Test
-    public void createsFullXmlReport(@TempDir final Path output) throws IOException {
+    public void createsFullXmlReport(@TempDir final Path output) throws Exception {
         new XslReport(
             new XMLDocument(
                 new Xembler(
@@ -138,7 +138,7 @@ public final class XslReportTest {
     }
 
     @Test
-    public void setsCorrectSchemaLocation(@TempDir final Path output) throws IOException {
+    public void setsCorrectSchemaLocation(@TempDir final Path output) throws Exception {
         new XslReport(
             new Skeleton(new FakeBase()).xml(), new XslCalculus(), new ReportData("LCOM")
         ).save(output);

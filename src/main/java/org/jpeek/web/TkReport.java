@@ -38,7 +38,7 @@ import org.takes.Response;
 import org.takes.facets.fork.RqRegex;
 import org.takes.facets.fork.TkRegex;
 import org.takes.facets.forward.RsForward;
-import org.takes.facets.hamcrest.HmRsStatus;
+import org.takes.rs.RsStatus;
 import org.takes.rs.RsText;
 import org.takes.rs.RsWithType;
 import org.xembly.Directives;
@@ -90,7 +90,7 @@ final class TkReport implements TkRegex {
                 matcher.group(1), matcher.group(2)
             )
         ).apply(path.substring(1));
-        if (new HmRsStatus(HttpURLConnection.HTTP_NOT_FOUND).matches(response)
+        if (new RsStatus.Base(response).status() == HttpURLConnection.HTTP_NOT_FOUND
             // @checkstyle MagicNumber (1 line)
             && "badge.svg".equals(matcher.group(3))) {
             final String artifact = String.format(

@@ -23,11 +23,11 @@
  */
 package org.jpeek.web;
 
+import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
 import org.jpeek.Header;
 import org.takes.Request;
 import org.takes.Response;
-import org.takes.Scalar;
 import org.takes.facets.fork.FkTypes;
 import org.takes.facets.fork.RsFork;
 import org.takes.rs.RsPrettyXml;

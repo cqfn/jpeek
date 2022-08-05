@@ -25,10 +25,10 @@ package org.jpeek;
 
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
-import java.util.Collection;
 import java.util.List;
 import javax.xml.namespace.NamespaceContext;
-import org.cactoos.collection.Mapped;
+import org.cactoos.iterable.Mapped;
+import org.cactoos.list.ListOf;
 import org.cactoos.scalar.Solid;
 import org.cactoos.scalar.Unchecked;
 import org.w3c.dom.Node;
@@ -56,16 +56,16 @@ final class ReportWithStatistics implements XML {
      */
     ReportWithStatistics(final XML xml) {
         this.output = new Unchecked<>(
-            new Solid<XML>(
+            new Solid<>(
                 () -> {
-                    final Collection<Double> values = new Mapped<>(
+                    final Iterable<Double> values = new Mapped<>(
                         Double::parseDouble,
                         xml.xpath(
                             // @checkstyle LineLength (1 line)
                             "//class[@value<=/metric/max and @value>=/metric/min]/@value"
                         )
                     );
-                    final double total = (double) values.size();
+                    final double total = (double) new ListOf<>(values).size();
                     double sum = 0.0d;
                     for (final Double value : values) {
                         sum += value;

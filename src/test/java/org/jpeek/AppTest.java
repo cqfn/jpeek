@@ -73,7 +73,7 @@ public final class AppTest {
     }
 
     @Test
-    public void canIncludePrivateMethods(@TempDir final Path output) throws IOException {
+    public void canIncludePrivateMethods(@TempDir final Path output) throws Exception {
         final Path input = Paths.get(".");
         final Map<String, Object> args = new HashMap<>();
         args.put("include-private-methods", 1);
@@ -101,7 +101,7 @@ public final class AppTest {
     }
 
     @Test
-    public void createsIndexXml(@TempDir final Path output) throws IOException {
+    public void createsIndexXml(@TempDir final Path output) throws Exception {
         final Path input = Paths.get(".");
         new App(input, output).analyze();
         new Assertion<>(

@@ -31,6 +31,7 @@ import java.util.Map;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.TextOf;
+import org.cactoos.text.UncheckedText;
 import org.jpeek.calculus.Calculus;
 
 /**
@@ -44,9 +45,11 @@ public final class XslCalculus implements Calculus {
     public XML node(final String metric, final Map<String, Object> params,
         final XML skeleton) throws IOException {
         return new XSLDocument(
-            new TextOf(
-                new ResourceOf(
-                    new FormattedText("org/jpeek/metrics/%s.xsl", metric)
+            new UncheckedText(
+                new TextOf(
+                    new ResourceOf(
+                        new FormattedText("org/jpeek/metrics/%s.xsl", metric)
+                    )
                 )
             ).asString(),
             Sources.DUMMY,

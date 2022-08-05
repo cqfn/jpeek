@@ -27,14 +27,14 @@ SOFTWARE.
   <parent>
     <groupId>com.jcabi</groupId>
     <artifactId>parent</artifactId>
-    <version>0.49.9</version>
+    <version>0.60.0</version>
   </parent>
   <groupId>org.jpeek</groupId>
   <artifactId>jpeek</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>jpeek</name>
-  <description>Static collector of Java code metrics</description>
+  <description>Hosted and command-line calculator of cohesion metrics for Java code</description>
   <url>https://github.com/yegor256/jpeek</url>
   <inceptionYear>2017</inceptionYear>
   <organization>
@@ -59,7 +59,7 @@ SOFTWARE.
         <role>Architect</role>
         <role>Developer</role>
       </roles>
-      <timezone>-7</timezone>
+      <timezone>+3</timezone>
     </developer>
   </developers>
   <issueManagement>
@@ -86,12 +86,12 @@ SOFTWARE.
       <dependency>
         <groupId>org.hamcrest</groupId>
         <artifactId>hamcrest-core</artifactId>
-        <version>1.3</version>
+        <version>2.2</version>
       </dependency>
       <dependency>
         <groupId>org.hamcrest</groupId>
         <artifactId>hamcrest-library</artifactId>
-        <version>1.3</version>
+        <version>2.2</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -99,51 +99,52 @@ SOFTWARE.
     <dependency>
       <groupId>org.cactoos</groupId>
       <artifactId>cactoos</artifactId>
-      <version>0.43</version>
+      <version>0.52.0</version>
     </dependency>
     <dependency>
       <groupId>org.takes</groupId>
       <artifactId>takes</artifactId>
-      <version>1.19</version>
+      <version>1.22.0</version>
     </dependency>
     <dependency>
       <groupId>com.jcabi.incubator</groupId>
       <artifactId>xembly</artifactId>
-      <version>0.23.0</version>
+      <version>0.26.2</version>
     </dependency>
     <dependency>
       <groupId>io.sentry</groupId>
       <artifactId>sentry</artifactId>
-      <version>1.6.1</version>
+      <version>6.3.1</version>
     </dependency>
     <dependency>
       <groupId>com.beust</groupId>
       <artifactId>jcommander</artifactId>
-      <version>1.72</version>
+      <version>1.82</version>
     </dependency>
     <dependency>
       <groupId>com.amazonaws</groupId>
       <artifactId>aws-java-sdk-dynamodb</artifactId>
-      <version>1.11.211</version>
+      <version>1.12.276</version>
     </dependency>
     <dependency>
       <groupId>com.jcabi</groupId>
       <artifactId>jcabi-dynamo</artifactId>
-      <version>0.21.8</version>
+      <version>0.22.2</version>
     </dependency>
     <dependency>
       <groupId>org.javassist</groupId>
       <artifactId>javassist</artifactId>
-      <version>3.22.0-GA</version>
+      <version>3.29.0-GA</version>
     </dependency>
     <dependency>
       <groupId>org.ow2.asm</groupId>
       <artifactId>asm</artifactId>
-      <version>7.2</version>
+      <version>9.3</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-log4j12</artifactId>
+      <version>2.0.0-alpha5</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
@@ -155,46 +156,59 @@ SOFTWARE.
     <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
+      <version>1.2.17</version>
     </dependency>
     <dependency>
       <groupId>com.jcabi</groupId>
       <artifactId>jcabi-xml</artifactId>
-      <version>0.21.1</version>
+      <version>0.23.2</version>
     </dependency>
     <dependency>
       <groupId>com.jcabi</groupId>
       <artifactId>jcabi-log</artifactId>
+      <version>0.21.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-params</artifactId>
+      <version>5.9.0</version>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.jcabi</groupId>
       <artifactId>jcabi-matchers</artifactId>
+      <version>1.5.3</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.jcabi</groupId>
       <artifactId>jcabi-jdbc</artifactId>
+      <version>0.17.8</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
-      <version>1.4.193</version>
+      <version>2.1.214</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.jcabi</groupId>
       <artifactId>jcabi-http</artifactId>
+      <version>1.20.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.hamcrest</groupId>
       <artifactId>hamcrest-core</artifactId>
-      <scope>compile</scope>
+      <version>2.2</version>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.hamcrest</groupId>
       <artifactId>hamcrest-library</artifactId>
-      <scope>compile</scope>
+      <version>2.2</version>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>net.sf.saxon</groupId>
@@ -205,13 +219,13 @@ SOFTWARE.
     <dependency>
       <groupId>org.llorllale</groupId>
       <artifactId>cactoos-matchers</artifactId>
-      <version>0.18</version>
+      <version>0.25</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.google.code.findbugs</groupId>
       <artifactId>annotations</artifactId>
-      <version>3.0.1</version>
+      <version>3.0.1u2</version>
       <scope>provided</scope>
       <exclusions>
         <exclusion>
@@ -223,22 +237,6 @@ SOFTWARE.
           <artifactId>jsr305</artifactId>
         </exclusion>
       </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-api</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-params</artifactId>
-      <version>${junit-platform.version}</version>
-      <scope>test</scope>
     </dependency>
   </dependencies>
   <build>
@@ -268,7 +266,6 @@ SOFTWARE.
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.22.1</version>
         <configuration>
           <argLine>-Duser.language=en -Duser.country=US</argLine>
         </configuration>
@@ -278,7 +275,6 @@ SOFTWARE.
       <plugins>
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.8.0</version>
           <configuration>
             <useIncrementalCompilation>false</useIncrementalCompilation>
           </configuration>
@@ -294,7 +290,6 @@ SOFTWARE.
           <plugin>
             <groupId>com.qulice</groupId>
             <artifactId>qulice-maven-plugin</artifactId>
-            <version>0.18.17</version>
             <configuration>
               <excludes combine.children="append">
                 <exclude>checkstyle:/src/site/resources/.*</exclude>
@@ -310,7 +305,6 @@ SOFTWARE.
           <plugin>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
-            <version>0.8.5</version>
             <configuration>
               <output>file</output>
             </configuration>

@@ -26,7 +26,7 @@ package org.jpeek.web;
 import com.jcabi.matchers.XhtmlMatchers;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import org.cactoos.collection.Joined;
+import org.cactoos.iterable.Joined;
 import org.jpeek.App;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;

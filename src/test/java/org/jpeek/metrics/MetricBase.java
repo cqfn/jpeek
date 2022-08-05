@@ -25,15 +25,15 @@ package org.jpeek.metrics;
 
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XSLDocument;
-import java.io.IOException;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.TextOf;
+import org.cactoos.text.UncheckedText;
 import org.hamcrest.number.IsCloseTo;
 import org.jpeek.FakeBase;
 import org.jpeek.skeleton.Skeleton;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextIs;
+import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Metric test helper.
@@ -122,7 +122,7 @@ public final class MetricBase {
                         ).asString()
                     ).get(0)
                 ),
-                new TextIs(
+                new IsText(
                     String.valueOf(
                         expected
                     )
@@ -134,17 +134,17 @@ public final class MetricBase {
          * Asserts the main metric value.
          * @param value Expected value of the metric
          * @param error Rounding tolerance since the metric is float number
-         * @throws IOException String format exception
          */
-        public void assertValue(final double value, final double error)
-            throws IOException {
+        public void assertValue(final double value, final double error) {
             new Assertion<>(
                 "The metric value is not calculated properly",
                 Double.parseDouble(
                     this.xml.xpath(
-                        new FormattedText(
-                            "//class[@id='%s']/@value",
-                            this.name
+                        new UncheckedText(
+                            new FormattedText(
+                                "//class[@id='%s']/@value",
+                                this.name
+                            )
                         ).asString()
                     ).get(0)
                 ),

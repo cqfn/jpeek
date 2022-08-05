@@ -36,9 +36,10 @@ import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Map;
-import org.cactoos.collection.CollectionOf;
 import org.cactoos.io.TeeInput;
+import org.cactoos.list.ListOf;
 import org.cactoos.scalar.LengthOf;
+import org.cactoos.scalar.Unchecked;
 import org.jpeek.calculus.Calculus;
 import org.xembly.Directives;
 import org.xembly.Xembler;
@@ -110,7 +111,7 @@ final class XslReport implements Report {
         this.params = data.params();
         this.calculus = calc;
         this.post = new XSLChain(
-            new CollectionOf<>(
+            new ListOf<>(
                 new XSLDocument(
                     XslReport.class.getResourceAsStream(
                         "xsl/metric-post-colors.xsl"
@@ -134,10 +135,11 @@ final class XslReport implements Report {
     /**
      * Save report.
      * @param target Target dir
+     * @return TRUE if saved
      * @throws IOException If fails
      */
     @SuppressWarnings("PMD.GuardLogStatement")
-    public void save(final Path target) throws IOException {
+    public boolean save(final Path target) throws IOException {
         final long start = System.currentTimeMillis();
         final XML xml = new StrictXML(
             new ReportWithStatistics(
@@ -145,26 +147,31 @@ final class XslReport implements Report {
             ),
             XslReport.SCHEMA
         );
-        new LengthOf(
-            new TeeInput(
-                xml.toString(),
-                target.resolve(
-                    String.format("%s.xml", this.metric)
+        new Unchecked<>(
+            new LengthOf(
+                new TeeInput(
+                    xml.toString(),
+                    target.resolve(
+                        String.format("%s.xml", this.metric)
+                    )
                 )
             )
-        ).intValue();
-        new LengthOf(
-            new TeeInput(
-                XslReport.STYLESHEET.transform(xml).toString(),
-                target.resolve(
-                    String.format("%s.html", this.metric)
+        ).value();
+        new Unchecked<>(
+            new LengthOf(
+                new TeeInput(
+                    XslReport.STYLESHEET.transform(xml).toString(),
+                    target.resolve(
+                        String.format("%s.html", this.metric)
+                    )
                 )
             )
-        ).intValue();
+        ).value();
         Logger.debug(
             this, "%s.xml generated in %[ms]s",
             this.metric, System.currentTimeMillis() - start
         );
+        return true;
     }
 
     /**

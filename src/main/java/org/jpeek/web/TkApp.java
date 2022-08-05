@@ -33,6 +33,7 @@ import org.cactoos.Func;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.scalar.PropertiesOf;
 import org.cactoos.text.TextOf;
+import org.cactoos.text.UncheckedText;
 import org.takes.Response;
 import org.takes.Take;
 import org.takes.facets.fallback.Fallback;
@@ -139,8 +140,10 @@ public final class TkApp extends TkWrap {
                             "/jpeek\\.css",
                             new TkWithType(
                                 new TkText(
-                                    new TextOf(
-                                        new ResourceOf("org/jpeek/jpeek.css")
+                                    new UncheckedText(
+                                        new TextOf(
+                                            new ResourceOf("org/jpeek/jpeek.css")
+                                        )
                                     ).asString()
                                 ),
                                 "text/css"
@@ -163,7 +166,7 @@ public final class TkApp extends TkWrap {
                         )
                     ),
                     req -> {
-                        Sentry.capture(req.throwable());
+                        Sentry.captureException(req.throwable());
                         return new Opt.Single<>(
                             new RsWithStatus(
                                 new RsText(

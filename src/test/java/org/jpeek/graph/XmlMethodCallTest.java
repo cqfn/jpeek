@@ -24,7 +24,6 @@
 package org.jpeek.graph;
 
 import com.jcabi.xml.XMLDocument;
-import java.io.IOException;
 import org.cactoos.text.Joined;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
@@ -37,7 +36,7 @@ import org.llorllale.cactoos.matchers.Assertion;
 final class XmlMethodCallTest {
 
     @Test
-    void hasClassMethodAndArgs() throws IOException {
+    void hasClassMethodAndArgs() throws Exception {
         new Assertion<>(
             "Must have class name, method name and args.",
             new XmlMethodCall(

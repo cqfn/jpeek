@@ -24,7 +24,6 @@
 package org.jpeek.graph;
 
 import com.jcabi.xml.XML;
-import java.io.IOException;
 import org.hamcrest.core.IsEqual;
 import org.jpeek.FakeBase;
 import org.jpeek.skeleton.Skeleton;
@@ -38,7 +37,7 @@ import org.llorllale.cactoos.matchers.Assertion;
 final class XmlMethodArgsTest {
 
     @Test
-    void returnsEmptyStringWhenNoArgsSpecificied() throws IOException {
+    void returnsEmptyStringWhenNoArgsSpecificied() throws Exception {
         final XML method = new Skeleton(new FakeBase("MethodMethodCalls")).xml().nodes(
             "//method[@name='methodOne']"
         ).get(0);
@@ -50,7 +49,7 @@ final class XmlMethodArgsTest {
     }
 
     @Test
-    void givesArgsForMultipleArgs() throws IOException {
+    void givesArgsForMultipleArgs() throws Exception {
         final XML method = new Skeleton(new FakeBase("MethodsWithDiffParamTypes")).xml().nodes(
             "//method[@name='methodThree']"
         ).get(0);

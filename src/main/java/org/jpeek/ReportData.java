@@ -23,6 +23,7 @@
  */
 package org.jpeek;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import org.cactoos.map.MapOf;
@@ -129,6 +130,6 @@ final class ReportData {
      * @return Params
      */
     public Map<String, Object> params() {
-        return this.args;
+        return Collections.unmodifiableMap(this.args);
     }
 }

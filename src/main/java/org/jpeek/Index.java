@@ -29,11 +29,12 @@ import java.io.FileNotFoundException;
 import java.nio.file.Path;
 import java.util.Iterator;
 import java.util.List;
-import org.cactoos.collection.Filtered;
-import org.cactoos.collection.Joined;
 import org.cactoos.io.Directory;
+import org.cactoos.iterable.Filtered;
+import org.cactoos.iterable.Joined;
 import org.cactoos.iterable.Mapped;
-import org.cactoos.list.Sorted;
+import org.cactoos.iterable.Sorted;
+import org.cactoos.list.ListOf;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -105,10 +106,12 @@ final class Index implements Iterable<Directive> {
         final String name = file.getFileName()
             .toString().replaceAll("\\.xml$", "");
         final XML xml = new XMLDocument(file.toFile());
-        final List<Double> values = new Sorted<>(
-            new org.cactoos.list.Mapped<>(
-                Double::parseDouble,
-                xml.xpath("//class[@element='true' and @value!='NaN']/@value")
+        final List<Double> values = new ListOf<>(
+            new Sorted<>(
+                new Mapped<>(
+                    Double::parseDouble,
+                    xml.xpath("//class[@element='true' and @value!='NaN']/@value")
+                )
             )
         );
         final double green = (double) xml.nodes(

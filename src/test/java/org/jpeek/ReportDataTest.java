@@ -40,7 +40,7 @@ import org.llorllale.cactoos.matchers.Throws;
 public final class ReportDataTest {
 
     @Test
-    public void reportsName() throws Exception {
+    public void reportsName() {
         final String name = "whatever";
         final ReportData data = new ReportData(name);
         new Assertion<>(
@@ -51,7 +51,7 @@ public final class ReportDataTest {
     }
 
     @Test
-    public void reportsMean() throws Exception {
+    public void reportsMean() {
         final String name = "whats";
         final double mean = 0;
         final double sigma = 1;
@@ -64,7 +64,7 @@ public final class ReportDataTest {
     }
 
     @Test
-    public void reportsSigma() throws Exception {
+    public void reportsSigma() {
         final String name = "whatevermetric";
         final double mean = 0;
         final double sigma = 1;
@@ -77,7 +77,7 @@ public final class ReportDataTest {
     }
 
     @Test
-    public void reportsParams() throws Exception {
+    public void reportsParams() {
         final String name = "name";
         final Map<String, Object> sample = ReportDataTest.args();
         final ReportData data = new ReportData(name, sample);
@@ -89,7 +89,7 @@ public final class ReportDataTest {
     }
 
     @Test
-    public void shouldBeImmutableWhenModifyingPassedParams() throws Exception {
+    public void shouldBeImmutableWhenModifyingPassedParams() {
         final String name = "metric";
         final Map<String, Object> sample = ReportDataTest.args();
         final Map<String, Object> params = new HashMap<>(sample);
@@ -103,7 +103,7 @@ public final class ReportDataTest {
     }
 
     @Test
-    public void throwsExceptionWhenTryingToModifyParams() throws Exception {
+    public void throwsExceptionWhenTryingToModifyParams() {
         final String name = "metrics";
         final ReportData data = new ReportData(name, new HashMap<>(ReportDataTest.args()));
         new Assertion<>(
@@ -117,7 +117,8 @@ public final class ReportDataTest {
 
     private static Map<String, Object> args() {
         return new MapOf<String, Object>(
-            new MapEntry<>("a", 1), new MapEntry<>("b", 2)
+            new MapEntry<>("a", 1),
+            new MapEntry<>("b", 2)
         );
     }
 }

@@ -31,7 +31,6 @@ import org.takes.Response;
 import org.takes.Take;
 import org.takes.rs.xe.XeAppend;
 import org.takes.rs.xe.XeDirectives;
-import org.xembly.Directive;
 
 /**
  * Mistakes page.
@@ -52,7 +51,7 @@ final class TkMistakes implements Take {
                     "worst",
                     new XeDirectives(
                         new Joined<>(
-                            new HeadOf<Iterable<Directive>>(
+                            new HeadOf<>(
                                 // @checkstyle MagicNumber (1 line)
                                 20, new Mistakes().worst()
                             )

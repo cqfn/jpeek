@@ -48,9 +48,9 @@ import org.takes.facets.hamcrest.HmRsStatus;
 public final class ReportsTest {
 
     @BeforeEach
-    public void weAreOnline() {
+    public void weAreOnline() throws Exception {
         try {
-            new TextOf(new URL("http://www.jpeek.org/")).asString();
+            new TextOf(new URL("https://www.jpeek.org/")).asString();
         } catch (final IOException ex) {
             Logger.debug(this, "We are not online: %s", ex.getMessage());
             Assumptions.assumeTrue(false);

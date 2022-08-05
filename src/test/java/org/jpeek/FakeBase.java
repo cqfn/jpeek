@@ -26,9 +26,9 @@ package org.jpeek;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import org.cactoos.collection.Joined;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.io.TeeInput;
+import org.cactoos.iterable.Joined;
 import org.cactoos.iterable.Mapped;
 import org.cactoos.list.ListOf;
 import org.cactoos.scalar.And;
@@ -83,6 +83,7 @@ public final class FakeBase implements Base {
                             temp.resolve(java)
                         )
                     ).value();
+                    return true;
                 },
                 sources
             )

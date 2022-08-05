@@ -32,6 +32,7 @@ import java.util.Map;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
+import org.cactoos.text.UncheckedText;
 import org.jpeek.calculus.Calculus;
 
 /**
@@ -44,8 +45,10 @@ public final class Lcom4 implements Calculus {
     public XML node(final String metric, final Map<String, Object> params,
         final XML skeleton) throws IOException {
         final XML result = new XSLDocument(
-            new TextOf(
-                new ResourceOf("org/jpeek/metrics/LCOM4.xsl")
+            new UncheckedText(
+                new TextOf(
+                    new ResourceOf("org/jpeek/metrics/LCOM4.xsl")
+                )
             ).asString(),
             Sources.DUMMY,
             params
@@ -70,7 +73,9 @@ public final class Lcom4 implements Calculus {
      */
     private void update(final XML skeleton, final String pack, final XML clazz) throws IOException {
         throw new UnsupportedOperationException(
-            new Joined("", skeleton.toString(), pack, clazz.toString()).asString()
+            new UncheckedText(
+                new Joined("", skeleton.toString(), pack, clazz.toString())
+            ).asString()
         );
     }
 

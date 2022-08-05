@@ -35,8 +35,9 @@ public interface Report {
     /**
      * Save report.
      * @param target Target dir
+     * @return TRUE if everything was good
      * @throws IOException If fails
      */
-    void save(Path target) throws IOException;
+    boolean save(Path target) throws IOException;
 
 }

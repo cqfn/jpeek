@@ -188,7 +188,7 @@ final class Results {
      * Recent artifacts..
      * @return List of them
      */
-    public Iterable<Iterable<Directive>> recent() {
+    public Iterable<Iterable<? extends Directive>> recent() {
         return new Mapped<>(
             item -> {
                 final String[] parts = item.get("artifact").getS().split(":");
@@ -216,7 +216,7 @@ final class Results {
      * All of them.
      * @return List of them
      */
-    public Iterable<Iterable<Directive>> all() {
+    public Iterable<Iterable<? extends Directive>> all() {
         return new Mapped<>(
             item -> {
                 final String[] parts = item.get("artifact").getS().split(":");

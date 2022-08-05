@@ -96,7 +96,7 @@ final class Mistakes {
      * @return List of them
      * @throws IOException If fails
      */
-    public Iterable<Iterable<Directive>> worst() throws IOException {
+    public Iterable<Iterable<? extends Directive>> worst() throws IOException {
         return new Mapped<>(
             item -> new Directives()
                 .add("metric")

@@ -29,9 +29,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
-import org.cactoos.collection.Filtered;
-import org.cactoos.collection.Joined;
 import org.cactoos.io.Directory;
+import org.cactoos.iterable.Filtered;
+import org.cactoos.iterable.Joined;
 import org.cactoos.iterable.Mapped;
 import org.cactoos.scalar.And;
 import org.cactoos.scalar.Unchecked;
@@ -66,23 +66,22 @@ final class Matrix implements Iterable<Directive> {
         final SortedMap<String, Map<String, String>> matrix = new TreeMap<>();
         new Unchecked<>(
             new And(
-                path -> {
-                    new And(
-                        node -> {
-                            final String name = String.format(
-                                "%s.%s",
-                                node.xpath("../../package/@id").get(0),
-                                node.xpath("@id").get(0)
-                            );
-                            matrix.putIfAbsent(name, new TreeMap<>());
-                            matrix.get(name).put(
-                                node.xpath("/metric/title/text()").get(0),
-                                node.xpath("@color").get(0)
-                            );
-                        },
-                        new XMLDocument(path.toFile()).nodes("//class")
-                    ).value();
-                },
+                path -> new And(
+                    node -> {
+                        final String name = String.format(
+                            "%s.%s",
+                            node.xpath("../../package/@id").get(0),
+                            node.xpath("@id").get(0)
+                        );
+                        matrix.putIfAbsent(name, new TreeMap<>());
+                        matrix.get(name).put(
+                            node.xpath("/metric/title/text()").get(0),
+                            node.xpath("@color").get(0)
+                        );
+                        return true;
+                    },
+                    new XMLDocument(path.toFile()).nodes("//class")
+                ).value(),
                 new Filtered<>(
                     path -> path.getFileName().toString().matches(
                         "^[A-Z].+\\.xml$"
@@ -107,10 +106,10 @@ final class Matrix implements Iterable<Directive> {
                     .iterator())
             .add("classes")
             .append(
-                new Joined<Directive>(
+                new Joined<>(
                     new Mapped<>(
                         ent -> new Directives().add("class").append(
-                            new Joined<Directive>(
+                            new Joined<>(
                                 new Mapped<>(
                                     mtd -> new Directives()
                                         .add("metric")

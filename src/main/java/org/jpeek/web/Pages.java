@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import org.cactoos.Func;
 import org.cactoos.text.TextOf;
+import org.cactoos.text.UncheckedText;
 import org.takes.Response;
 import org.takes.rs.RsWithBody;
 
@@ -56,8 +57,10 @@ final class Pages implements Func<String, Response> {
     @Override
     public Response apply(final String path) throws IOException {
         return new RsWithBody(
-            new TextOf(
-                this.home.resolve(path)
+            new UncheckedText(
+                new TextOf(
+                    this.home.resolve(path)
+                )
             ).asString()
         );
     }

@@ -26,7 +26,6 @@ package org.jpeek.web;
 import com.jcabi.log.Logger;
 import com.jcabi.log.VerboseCallable;
 import com.jcabi.log.VerboseThreads;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
@@ -37,12 +36,13 @@ import java.util.concurrent.Future;
 import org.cactoos.BiFunc;
 import org.cactoos.Func;
 import org.cactoos.Text;
-import org.cactoos.collection.Mapped;
 import org.cactoos.io.InputOf;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.scalar.AvgOf;
+import org.cactoos.iterable.Mapped;
+import org.cactoos.number.AvgOf;
 import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
+import org.cactoos.text.UncheckedText;
 import org.takes.Response;
 import org.takes.rq.RqFake;
 import org.takes.rs.xe.XeAppend;
@@ -135,7 +135,9 @@ final class Futures implements
                                 new XeAppend("artifact", artifact),
                                 new XeAppend(
                                     "stacktrace",
-                                    new TextOf(new InputOf(ex)).asString()
+                                    new UncheckedText(
+                                        new TextOf(new InputOf(ex))
+                                    ).asString()
                                 )
                             )
                         );
@@ -148,7 +150,7 @@ final class Futures implements
     }
 
     @Override
-    public String asString() throws IOException {
+    public String asString() throws Exception {
         return Logger.format(
             // @checkstyle LineLength (1 line)
             "Artifacts=%d, processors=%d, threads=%d, freeMemory=%dM, maxMemory=%dM, totalMemory=%dM, ETA=%[ms]s:\n%s\n\nThreads: %s",

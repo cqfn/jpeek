@@ -39,7 +39,9 @@ import org.cactoos.io.InputOf;
 import org.cactoos.io.TeeInput;
 import org.cactoos.scalar.IoChecked;
 import org.cactoos.scalar.LengthOf;
+import org.cactoos.scalar.Unchecked;
 import org.cactoos.text.TextOf;
+import org.cactoos.text.UncheckedText;
 import org.jpeek.App;
 import org.takes.Response;
 
@@ -92,12 +94,14 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
         final Path input = this.sources.resolve(grp).resolve(artifact);
         Reports.deleteIfPresent(input);
         final String version = new XMLDocument(
-            new TextOf(
-                new URL(
-                    String.format(
-                        // @checkstyle LineLength (1 line)
-                        "https://repo1.maven.org/maven2/%s/%s/maven-metadata.xml",
-                        grp, artifact
+            new UncheckedText(
+                new TextOf(
+                    new URL(
+                        String.format(
+                            // @checkstyle LineLength (1 line)
+                            "https://repo1.maven.org/maven2/%s/%s/maven-metadata.xml",
+                            grp, artifact
+                        )
                     )
                 )
             ).asString()
@@ -147,12 +151,14 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
                 if (!parent.toFile().exists()) {
                     parent.toFile().mkdirs();
                 }
-                new LengthOf(
-                    new TeeInput(
-                        new InputOf(jar.getInputStream(entry)),
-                        item
+                new Unchecked<>(
+                    new LengthOf(
+                        new TeeInput(
+                            new InputOf(jar.getInputStream(entry)),
+                            item
+                        )
                     )
-                ).intValue();
+                ).value();
             }
         }
     }

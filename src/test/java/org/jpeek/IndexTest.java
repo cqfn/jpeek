@@ -24,7 +24,6 @@
 package org.jpeek;
 
 import com.jcabi.matchers.XhtmlMatchers;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.cactoos.text.TextOf;
@@ -45,7 +44,7 @@ public final class IndexTest {
     private String xml;
 
     @BeforeEach
-    public void setUp(@TempDir final Path output) throws IOException {
+    public void setUp(@TempDir final Path output) throws Exception {
         final Path input = Paths.get(".");
         new App(input, output).analyze();
         this.xml = new TextOf(output.resolve("index.xml")).asString();
