@@ -31,7 +31,7 @@ SOFTWARE.
   </parent>
   <groupId>org.jpeek</groupId>
   <artifactId>jpeek</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>0.32.0</version>
   <packaging>jar</packaging>
   <name>jpeek</name>
   <description>Hosted and command-line calculator of cohesion metrics for Java code</description>
