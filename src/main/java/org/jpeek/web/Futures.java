@@ -179,6 +179,6 @@ final class Futures implements
      */
     public boolean shutdown() throws InterruptedException {
         this.service.shutdown();
-        return this.service.awaitTermination(16L, TimeUnit.SECONDS);
+        return this.service.awaitTermination(1L, TimeUnit.MINUTES);
     }
 }
