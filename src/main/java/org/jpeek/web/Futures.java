@@ -33,6 +33,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 import org.cactoos.BiFunc;
 import org.cactoos.Func;
 import org.cactoos.Text;
@@ -169,5 +170,15 @@ final class Futures implements
                 )
             ).asString()
         );
+    }
+
+    /**
+     * Shut it down.
+     * @return TRUE if terminated OK
+     * @throws InterruptedException If interrupted while waiting
+     */
+    public boolean shutdown() throws InterruptedException {
+        this.service.shutdown();
+        return this.service.awaitTermination(1L, TimeUnit.SECONDS);
     }
 }

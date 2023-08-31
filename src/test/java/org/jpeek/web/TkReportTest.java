@@ -45,17 +45,16 @@ public final class TkReportTest {
     @Test
     @DisabledOnOs(OS.WINDOWS)
     public void rendersEmptySvgBadge(@TempDir final File folder)
-        throws IOException {
+        throws IOException, InterruptedException {
+        final Futures futures = new Futures(
+            new Reports(folder.toPath())
+        );
         new Assertion<>(
             "Must render the badge",
             XhtmlMatchers.xhtml(
                 new RsPrint(
                     new TkReport(
-                        new AsyncReports(
-                            new Futures(
-                                new Reports(folder.toPath())
-                            )
-                        ),
+                        new AsyncReports(futures),
                         new Results()
                     ).act(
                         new RqRegex.Fake(
@@ -68,6 +67,7 @@ public final class TkReportTest {
             ),
             XhtmlMatchers.hasXPath("//svg:svg")
         ).affirm();
+        futures.shutdown();
     }
 
 }
