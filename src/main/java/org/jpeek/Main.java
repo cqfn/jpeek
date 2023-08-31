@@ -45,6 +45,13 @@ import org.apache.log4j.PatternLayout;
 public final class Main {
 
     @Parameter(
+        names = "--help",
+        help = true,
+        description = "Print usage options"
+    )
+    private boolean help;
+
+    @Parameter(
         names = { "--sources", "-s" },
         converter = FileConverter.class,
         required = true,
@@ -111,18 +118,23 @@ public final class Main {
      */
     public static void main(final String... args) throws IOException {
         final Main main = new Main();
-        JCommander.newBuilder()
+        final JCommander jcmd = JCommander.newBuilder()
             .addObject(main)
-            .build()
-            .parse(args);
-        main.run();
+            .build();
+        jcmd.parse(args);
+        main.run(jcmd);
     }
 
     /**
      * Run it.
+     * @param jcmd The command line opts
      * @throws IOException If fails
      */
-    private void run() throws IOException {
+    private void run(final JCommander jcmd) throws IOException {
+        if (this.help) {
+            jcmd.usage();
+            return;
+        }
         if (this.overwrite && this.sources.equals(this.target)) {
             throw new IllegalArgumentException(
                 "Invalid paths - can't be equal if overwrite option is set."
