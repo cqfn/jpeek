@@ -1,5 +1,5 @@
 docker:
-  image: yegor256/rultor-image:1.11.0
+  image: yegor256/rultor-image:1.21.0
 assets:
   settings.xml: yegor256/cqfn-secrets#jpeek-settings.xml
   pubring.gpg: yegor256/cqfn-secrets#pubring.gpg
