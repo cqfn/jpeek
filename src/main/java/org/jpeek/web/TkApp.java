@@ -68,9 +68,8 @@ public final class TkApp extends TkWrap {
     /**
      * Ctor.
      * @param home Home directory
-     * @throws IOException If fails
      */
-    public TkApp(final Path home) throws IOException {
+    public TkApp(final Path home) {
         super(TkApp.make(home));
     }
 
@@ -97,9 +96,8 @@ public final class TkApp extends TkWrap {
      * Ctor.
      * @param home Home directory
      * @return The take
-     * @throws IOException If fails
      */
-    private static Take make(final Path home) throws IOException {
+    private static Take make(final Path home) {
         final Futures futures = new Futures(
             new Reports(home)
         );
@@ -112,6 +110,10 @@ public final class TkApp extends TkWrap {
                 new TkForward(
                     new TkFork(
                         new FkRegex("/", new TkIndex()),
+                        new FkRegex(
+                            "/shutdown",
+                            (Take) req -> new RsText(Boolean.toString(futures.shutdown()))
+                        ),
                         new FkRegex("/robots.txt", new TkText("")),
                         new FkRegex("/mistakes", new TkMistakes()),
                         new FkRegex(

@@ -27,6 +27,7 @@ import com.jcabi.http.request.JdkRequest;
 import com.jcabi.http.response.RestResponse;
 import java.net.HttpURLConnection;
 import java.nio.file.Path;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -64,6 +65,10 @@ public final class TkAppTest {
                     .fetch()
                     .as(RestResponse.class)
                     .assertStatus(HttpURLConnection.HTTP_SEE_OTHER);
+                new JdkRequest(String.format("%s/shutdown", home))
+                    .fetch()
+                    .as(RestResponse.class)
+                    .assertBody(Matchers.equalTo("true"));
             }
         );
     }
@@ -88,6 +93,7 @@ public final class TkAppTest {
                 new HmRsStatus(HttpURLConnection.HTTP_OK)
             ).affirm();
         }
+        app.act(new RqFake("GET", "/shutdown"));
     }
 
 }
