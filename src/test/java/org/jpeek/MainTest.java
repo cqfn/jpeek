@@ -29,6 +29,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.cactoos.Scalar;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -42,6 +43,12 @@ import org.llorllale.cactoos.matchers.Throws;
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class MainTest {
+
+    @Test
+    @Disabled
+    public void printsHelp() throws IOException {
+        Main.main("--help");
+    }
 
     @Test
     public void createsXmlReports(@TempDir final Path temp) throws IOException {

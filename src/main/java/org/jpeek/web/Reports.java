@@ -26,6 +26,9 @@ package org.jpeek.web;
 import com.jcabi.xml.XMLDocument;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -95,7 +98,7 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
         final String version = new XMLDocument(
             new UncheckedText(
                 new TextOf(
-                    new URL(
+                    Reports.toUrl(
                         String.format(
                             // @checkstyle LineLength (1 line)
                             "https://repo1.maven.org/maven2/%s/%s/maven-metadata.xml",
@@ -109,7 +112,7 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
         new IoChecked<>(
             new LengthOf(
                 new TeeInput(
-                    new URL(
+                    Reports.toUrl(
                         String.format(
                             "https://repo1.maven.org/maven2/%s/%s/%s/%s",
                             grp, artifact, version, name
@@ -173,6 +176,19 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
                 .sorted(Comparator.reverseOrder())
                 .map(Path::toFile)
                 .forEach(File::delete);
+        }
+    }
+
+    /**
+     * String to URL.
+     * @param uri The URL
+     * @return URL
+     */
+    private static URL toUrl(final String uri) {
+        try {
+            return new URI(uri).toURL();
+        } catch (final MalformedURLException | URISyntaxException ex) {
+            throw new IllegalArgumentException(ex);
         }
     }
 

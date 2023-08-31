@@ -27,7 +27,7 @@ import com.jcabi.log.Logger;
 import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.URI;
 import org.cactoos.BiFunc;
 import org.cactoos.Func;
 import org.cactoos.text.TextOf;
@@ -49,7 +49,7 @@ public final class ReportsTest {
     @BeforeEach
     public void weAreOnline() throws Exception {
         try {
-            new TextOf(new URL("https://www.jpeek.org/")).asString();
+            new TextOf(new URI("https://www.jpeek.org/").toURL()).asString();
         } catch (final IOException ex) {
             Logger.debug(this, "We are not online: %s", ex.getMessage());
             Assumptions.assumeTrue(false);
