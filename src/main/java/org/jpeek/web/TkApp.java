@@ -112,7 +112,13 @@ public final class TkApp extends TkWrap {
                         new FkRegex("/", new TkIndex()),
                         new FkRegex(
                             "/shutdown",
-                            (Take) req -> new RsText(Boolean.toString(futures.shutdown()))
+                            (Take) req -> {
+                                String html = "Can't do this, sorry :)";
+                                if (TkApp.isRunningTest()) {
+                                    html = Boolean.toString(futures.shutdown());
+                                }
+                                return new RsText(html);
+                            }
                         ),
                         new FkRegex("/robots.txt", new TkText("")),
                         new FkRegex("/mistakes", new TkMistakes()),
@@ -179,6 +185,20 @@ public final class TkApp extends TkWrap {
                 )
             )
         );
+    }
+
+    /**
+     * Is it JUnit testing?
+     * @return TRUE if we are testing
+     */
+    private static boolean isRunningTest() {
+        boolean testing = true;
+        try {
+            Class.forName("org.junit.jupiter.api.Test");
+        } catch (final ClassNotFoundException ex) {
+            testing = false;
+        }
+        return testing;
     }
 
 }
