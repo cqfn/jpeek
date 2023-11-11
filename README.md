@@ -112,14 +112,7 @@ _Revisiting Class Cohesion: An empirical investigation on several systems_,<br/>
 Journal of Object Technology, vol.7, no.6, 2008,
 [PDF](http://www.jot.fm/issues/issue_2008_07/article1.pdf).
 
-### Here is a list of metrics we have already implemented:
-
-[`bansiya99`]
-Cohesion Among Methods of Classes (**CAMC**).<br/>
-Jagdish Bansiya et al.,<br/>
-_A class cohesion metric for object-oriented designs_,<br/>
-Journal of Object-Oriented Programming, vol. 11, no. 8, 1999,
-[PDF](papers/bansiya99_CAMC.pdf).
+### Here is a list of metrics we have already implemented (in order or their appearance):
 
 [`chidamber94`]
 Lack of Cohesion in Methods (**LCOM**).<br/>
@@ -128,61 +121,12 @@ _A metrics suite for object oriented design_,<br/>
 IEEE Transactions on Software Engineering, vol.20, no.6, 1994,
 [PDF](papers/chidamber94_LCOM.pdf).
 
-[`aman04`]
-Optimistic Class Cohesion (**OCC**) and Pessimistic Class Cohesion (**PCC**).<br/>
-Hirohisa Aman et al.,<br/>
-_A proposal of class cohesion metrics using sizes of cohesive parts_,<br/>
-Proc. of Fifth Joint Conference on Knowledge-based Software Engineering, 2002,
-[PDF](papers/aman04_OCC_PCC.pdf).
-
-[`dallal07`]
-Method-Method through Attributes Cohesion (**MMAC**).<br/>
-Jehad Al Dallal,<br/>
-_A Design-Based Cohesion Metric for Object-Oriented Classes_,<br/>
-World Academy of Science, Engineering and Technology International Journal of Computer and Information Engineering Vol:1, No:10, 2007,
-[PDF](papers/dallal07_MMAC.pdf).
-
-[`counsell06`]
-Normalized Hamming Distance (**NHD**).<br/>
-Steve Counsell et al.,<br/>
-_The interpretation and utility of three cohesion metrics for object-oriented design_,<br/>
-ACM TOSEM, April 2006,
-[PDF](papers/counsell06_NHD.pdf).
-
-[`sellers96`]
-Lack of Cohesion in Methods 2-3 (**LCOM 2, 3 and 5**).<br/>
-B. Henderson-Sellers et al.,<br/>
-_Coupling and cohesion (towards a valid metrics suite for object-oriented analysis and design)_,<br/>
-Object Oriented Systems 3, 1996,
-[PDF](papers/sellers96_LCOM2_LCOM3_LCOM5.pdf).
-
-[`wasiq01`]
-Class Connection Metric (**CCM**).<br/>
-M. Wasiq<br/>
-_Measuring Class Cohesion in Object-Oriented Systems_,<br/>
-Master Thesis at the King Fahd University of Petroleum & Minerals, 2001,
-[PDF](papers/wasiq01_CCM.pdf).
-
-[`fernandez06`]
-A Sensitive Metric of Class Cohesion (**SCOM**).<br/>
-Luis Fernández et al.,<br/>
-_[A] new metric [...] yielding meaningful values [...] more sensitive than those previously reported_,<br/>
-International Journal "Information Theories & Applications", Volume 13, 2006,
-[PDF](papers/fernandez06_SCOM.pdf).
-
 [`bieman95`]
 Tight Class Cohesion (**TCC**) and Loose Class Cohesion (**LCC**).<br/>
 James M. Bieman et al.,<br/>
 _Cohesion and Reuse in an Object-Oriented System_,<br/>
 Department of Computer Science, Colorado State University, 1995,
 [PDF](papers/bieman95_TCC.pdf).
-
-[`dallal11`]
-Transitive Lack of Cohesion in Methods (**TLCOM**).<br/>
-Jehad Al Dallal,<br/>
-_Transitive-based object-oriented lack-of-cohesion metric_,<br/>
-Department of Information Science, Kuwait University, 2011,
-[PDF](papers/dallal11_TLCOM.pdf).
 
 [`hitz95`]
 Lack of Cohesion in Methods 4 (**LCOM4**).<br/>
@@ -191,12 +135,68 @@ _Measuring Coupling and Cohesion In Object-Oriented Systems_,<br/>
 Institute of Applied Computer Science and Systems Analysis, University of Vienna, 1995,
 [PDF](papers/hitz95_LCOM4.pdf).
 
+[`sellers96`]
+Lack of Cohesion in Methods 2-3 (**LCOM 2, 3 and 5**).<br/>
+B. Henderson-Sellers et al.,<br/>
+_Coupling and cohesion (towards a valid metrics suite for object-oriented analysis and design)_,<br/>
+Object Oriented Systems 3, 1996,
+[PDF](papers/sellers96_LCOM2_LCOM3_LCOM5.pdf).
+
+[`bansiya99`]
+Cohesion Among Methods of Classes (**CAMC**).<br/>
+Jagdish Bansiya et al.,<br/>
+_A class cohesion metric for object-oriented designs_,<br/>
+Journal of Object-Oriented Programming, vol. 11, no. 8, 1999,
+[PDF](papers/bansiya99_CAMC.pdf).
+
+[`etzkorn00`]
+LOgical Relatedness of Methods (**LORM**).<br/>
+L. Etzkorn and H. Delugach,<br/>
+_Towards a semantic metrics suite for object-oriented design_,<br/>
+Technology of Object-Oriented Languages and Systems, 2000. TOOLS 34. Proceedings. 34th International Conference on. IEEE, 2000, pp. 71–80,
+[PDF](papers/etzkorn00_LORM.pdf)
+
+[`wasiq01`]
+Class Connection Metric (**CCM**).<br/>
+M. Wasiq<br/>
+_Measuring Class Cohesion in Object-Oriented Systems_,<br/>
+Master Thesis at the King Fahd University of Petroleum & Minerals, 2001,
+[PDF](papers/wasiq01_CCM.pdf).
+
+[`aman04`]
+Optimistic Class Cohesion (**OCC**) and Pessimistic Class Cohesion (**PCC**).<br/>
+Hirohisa Aman et al.,<br/>
+_A proposal of class cohesion metrics using sizes of cohesive parts_,<br/>
+Proc. of Fifth Joint Conference on Knowledge-based Software Engineering, 2002,
+[PDF](papers/aman04_OCC_PCC.pdf).
+
 [`marcus05`]
 Conceptual Cohesion of Classes (**C3**).<br/>
 A. Marcus and D. Poshyvanyk,<br/>
 _The conceptual cohesion of classes_,<br/>
 21st IEEE International Conference on Software Maintenance (ICSM'05), Budapest, Hungary, 2005, pp. 133-142,
 [PDF](papers/marcus05_C3.pdf)
+
+[`counsell06`]
+Normalized Hamming Distance (**NHD**).<br/>
+Steve Counsell et al.,<br/>
+_The interpretation and utility of three cohesion metrics for object-oriented design_,<br/>
+ACM TOSEM, April 2006,
+[PDF](papers/counsell06_NHD.pdf).
+
+[`fernandez06`]
+A Sensitive Metric of Class Cohesion (**SCOM**).<br/>
+Luis Fernández et al.,<br/>
+_[A] new metric [...] yielding meaningful values [...] more sensitive than those previously reported_,<br/>
+International Journal "Information Theories & Applications", Volume 13, 2006,
+[PDF](papers/fernandez06_SCOM.pdf).
+
+[`dallal07`]
+Method-Method through Attributes Cohesion (**MMAC**).<br/>
+Jehad Al Dallal,<br/>
+_A Design-Based Cohesion Metric for Object-Oriented Classes_,<br/>
+World Academy of Science, Engineering and Technology International Journal of Computer and Information Engineering Vol:1, No:10, 2007,
+[PDF](papers/dallal07_MMAC.pdf).
 
 [`liu09`]
 Maximal Weighted Entropy (**MWE**).<br/>
@@ -205,12 +205,12 @@ _Modeling class cohesion as mixtures of latent topics_,<br/>
 Software Maintenance, 2009. ICSM 2009. IEEE International Conference on. IEEE, 2009, pp. 233–242,
 [PDF](papers/liu09_MWE.pdf)
 
-[`etzkorn00`]
-LOgical Relatedness of Methods (**LORM**).<br/>
-L. Etzkorn and H. Delugach,<br/>
-_Towards a semantic metrics suite for object-oriented design_,<br/>
-Technology of Object-Oriented Languages and Systems, 2000. TOOLS 34. Proceedings. 34th International Conference on. IEEE, 2000, pp. 71–80,
-[PDF](papers/etzkorn00_LORM.pdf)
+[`dallal11`]
+Transitive Lack of Cohesion in Methods (**TLCOM**).<br/>
+Jehad Al Dallal,<br/>
+_Transitive-based object-oriented lack-of-cohesion metric_,<br/>
+Department of Information Science, Kuwait University, 2011,
+[PDF](papers/dallal11_TLCOM.pdf).
 
 ## How it works?
 
