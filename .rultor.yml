@@ -2,6 +2,7 @@ docker:
   image: yegor256/rultor-image:1.21.0
 assets:
   settings.xml: yegor256/cqfn-secrets#jpeek-settings.xml
+  settings-heroku.xml: yegor256/cqfn-secrets#jpeek-settings-heroku.xml
   pubring.gpg: yegor256/cqfn-secrets#pubring.gpg
   secring.gpg: yegor256/cqfn-secrets#secring.gpg
   id_rsa: yegor256/cqfn-secrets#dokku-id_rsa
@@ -25,7 +26,7 @@ release:
     mvn versions:set "-DnewVersion=${tag}"
     git commit -am "${tag}"
     mvn clean deploy -Pjpeek -Psonar -Pqulice -Psonatype --errors --settings ../settings.xml
-    cp ../settings.xml settings.xml
+    cp ../settings-heroku.xml settings.xml
     mvn clean package -Pqulice --errors --batch-mode
     rm -rf ~/.ssh
     mkdir ~/.ssh
