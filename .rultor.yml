@@ -1,3 +1,5 @@
+readers:
+  - "urn:github:526301"
 docker:
   image: yegor256/rultor-image:1.21.0
 assets:
@@ -18,6 +20,7 @@ release:
     - id_rsa
     - id_rsa.pub
     - settings.xml
+    - settings-heroku.xml
   script: |-
     export GPG_TTY=$(tty)
     gpg --import /home/r/pubring.gpg
