@@ -40,15 +40,25 @@ and then:
 ```bash
 $ java -jar jpeek-jar-with-dependencies.jar --sources . --target ./jpeek
 ```
-<!--
-@todo #452:30min Improve how to use section on README.md
- How to Use section must be improved; we need to explain the many parameters
- that jpeek jar accepts and the default values for each parameter.
--->
-
 
 jPeek will analyze Java files in the current directory.
 XML reports will be generated in the `./jpeek` directory. Enjoy.
+
+<details>
+<summary>Available CLI options</summary>
+
+| Option                      | Description                                                                        |
+|-----------------------------|------------------------------------------------------------------------------------|
+| `-s, --sources <path>`      | **Required.** Path to directory with the class files                               |
+| `-t, --target <path>`       | **Required.** Path to directory where the reports will be generated                |
+| `--include-ctors`           | Include constructors into all formulas                                             |
+| `--include-static-methods`  | Include static methods into all formulas                                           |
+| `--include-private-methods` | Include private methods into all formulas                                          |
+| `--metrics <metrics>`       | Comma-separated list of metrics to include (default: `"LCOM5,NHD,MMAC,SCOM,CAMC"`) |
+| `--overwrite`               | Overwrite the target directory, if it exists, or exit with error                   |
+| `--quiet`                   | Turn off logging                                                                   |
+| `--help`                    | Display help message                                                               |
+</details>
 
 You can also deploy it as a web service to your own platform. Just compile it
 with `mvn clean package --settings settings.xml` and then run, as `Procfile` suggests.
