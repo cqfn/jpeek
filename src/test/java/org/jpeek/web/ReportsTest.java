@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2023 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -44,10 +44,10 @@ import org.takes.facets.hamcrest.HmRsStatus;
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ReportsTest {
+final class ReportsTest {
 
     @BeforeEach
-    public void weAreOnline() throws Exception {
+    void weAreOnline() throws Exception {
         try {
             new TextOf(new URI("https://www.jpeek.org/").toURL()).asString();
         } catch (final IOException ex) {
@@ -57,7 +57,7 @@ public final class ReportsTest {
     }
 
     @Test
-    public void rendersOneReport(@TempDir final File folder) throws Exception {
+    void rendersOneReport(@TempDir final File folder) throws Exception {
         final BiFunc<String, String, Func<String, Response>> reports = new Reports(folder.toPath());
         new Assertion<>(
             "Must return HTTP 200 OK status",

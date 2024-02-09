@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2023 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -38,10 +38,10 @@ import org.takes.rs.RsPrint;
  * @since 0.23
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class TkReportTest {
+final class TkReportTest {
 
     @Test
-    public void rendersEmptySvgBadge(@TempDir final File folder)
+    void rendersEmptySvgBadge(@TempDir final File folder)
         throws IOException, InterruptedException {
         final Futures futures = new Futures(
             new Reports(folder.toPath())

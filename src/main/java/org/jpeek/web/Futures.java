@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2023 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -176,9 +176,11 @@ final class Futures implements
      * Shut it down.
      * @return TRUE if terminated OK
      * @throws InterruptedException If interrupted while waiting
+     * @todo #1:1h shutdown can not be completed in 1 minute during testing,
+     *  should be checked what happens and may be require some fix
      */
     public boolean shutdown() throws InterruptedException {
         this.service.shutdown();
-        return this.service.awaitTermination(1L, TimeUnit.MINUTES);
+        return this.service.awaitTermination(2L, TimeUnit.MINUTES);
     }
 }

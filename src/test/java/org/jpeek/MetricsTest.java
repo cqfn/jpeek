@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2023 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -63,11 +63,11 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ParameterNumberCheck (500 lines)
  */
-public final class MetricsTest {
+final class MetricsTest {
 
     @ParameterizedTest
     @CsvFileSource(resources = "/org/jpeek/metricstest-params.csv")
-    public void testsTarget(final String target, final String metric, final double value,
+    void testsTarget(final String target, final String metric, final double value,
         @TempDir final Path output)
         throws Exception {
         new XslReport(

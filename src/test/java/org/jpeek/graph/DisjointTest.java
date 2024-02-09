@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2023 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,11 +34,11 @@ import org.llorllale.cactoos.matchers.HasValuesMatching;
  * Test case for {@link Disjoint}.
  * @since 0.30.9
  */
-public final class DisjointTest {
+final class DisjointTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void calculatesDisjointSets() throws Exception {
+    void calculatesDisjointSets() throws Exception {
         final Node one = new Node.Simple("one");
         final Node two = new Node.Simple("two");
         final Node three = new Node.Simple("three");
@@ -75,7 +75,7 @@ public final class DisjointTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void calculatesDisjointSetsForUnconnected() throws Exception {
+    void calculatesDisjointSetsForUnconnected() throws Exception {
         final Node one = new Node.Simple("1");
         final Node two = new Node.Simple("2");
         final Node three = new Node.Simple("3");

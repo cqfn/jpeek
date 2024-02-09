@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2023 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,10 +36,10 @@ import org.takes.rs.xe.XeAppend;
  * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class FuturesTest {
+final class FuturesTest {
 
     @Test
-    public void testSimpleScenario() throws Exception {
+    void testSimpleScenario() throws Exception {
         new Assertion<>(
             "Futures returns Response",
             new Futures(
@@ -57,7 +57,7 @@ public final class FuturesTest {
     }
 
     @Test
-    public void testIgnoresCrashes() throws Exception {
+    void testIgnoresCrashes() throws Exception {
         new Assertion<>(
             "Futures don't crash",
             new Futures(

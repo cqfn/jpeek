@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2023 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -41,15 +41,15 @@ import org.llorllale.cactoos.matchers.Throws;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class MainTest {
+final class MainTest {
 
     @Test
-    public void printsHelp() throws IOException {
+    void printsHelp() throws IOException {
         Main.main("--help");
     }
 
     @Test
-    public void createsXmlReports(@TempDir final Path temp) throws IOException {
+    void createsXmlReports(@TempDir final Path temp) throws IOException {
         final Path output = temp.resolve("x3");
         final Path input = Paths.get(".");
         Main.main("--sources", input.toString(), "--target", output.toString());
@@ -61,7 +61,7 @@ public final class MainTest {
     }
 
     @Test
-    public void crashesIfInvalidInput() {
+    void crashesIfInvalidInput() {
         new Assertion<>(
             "Must throw an exception if parameter is invalid",
             () -> {
@@ -72,7 +72,7 @@ public final class MainTest {
     }
 
     @Test
-    public void crashesIfNoOverwriteAndTargetExists(@TempDir final Path target) {
+    void crashesIfNoOverwriteAndTargetExists(@TempDir final Path target) {
         new Assertion<>(
             "Must throw an exception if target exists and no overwrite",
             () -> {
@@ -87,7 +87,7 @@ public final class MainTest {
 
     @Test
     @SuppressWarnings({"unchecked", "rawtypes"})
-    public void crashesIfOverwriteAndSourceEqualsToTarget(@TempDir final Path source) {
+    void crashesIfOverwriteAndSourceEqualsToTarget(@TempDir final Path source) {
         new Assertion(
             "Must throw an exception",
             (Scalar<Boolean>) () -> {
@@ -107,7 +107,7 @@ public final class MainTest {
 
     @Test
     @SuppressWarnings({"unchecked", "rawtypes"})
-    public void crashesIfMetricsHaveInvalidNames(@TempDir final Path target) {
+    void crashesIfMetricsHaveInvalidNames(@TempDir final Path target) {
         new Assertion(
             "Must throw an exception",
             (Scalar<Boolean>) () -> {
@@ -126,7 +126,7 @@ public final class MainTest {
     }
 
     @Test
-    public void createsXmlReportsIfOverwriteAndTargetExists(@TempDir final Path target)
+    void createsXmlReportsIfOverwriteAndTargetExists(@TempDir final Path target)
         throws IOException {
         Main.main(
             "--sources", Paths.get(".").toString(),

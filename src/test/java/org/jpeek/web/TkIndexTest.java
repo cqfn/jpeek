@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2023 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,10 +35,10 @@ import org.takes.rs.RsPrint;
  * @since 0.11
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class TkIndexTest {
+final class TkIndexTest {
 
     @Test
-    public void rendersIndexPage() throws IOException {
+    void rendersIndexPage() throws IOException {
         new Assertion<>(
             "Must print body",
             XhtmlMatchers.xhtml(

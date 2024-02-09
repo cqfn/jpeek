@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2023 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,10 +34,10 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 0.23
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class SkeletonTest {
+final class SkeletonTest {
 
     @Test
-    public void createsXml() {
+    void createsXml() {
         new Assertion<>(
             "Must overload bar's methods",
             XhtmlMatchers.xhtml(
@@ -61,7 +61,7 @@ public final class SkeletonTest {
     }
 
     @Test
-    public void skeletonShouldReflectExactOverloadedCalledMethod() {
+    void skeletonShouldReflectExactOverloadedCalledMethod() {
         new Assertion<>(
             "Must find arguments of overloaded method",
             XhtmlMatchers.xhtml(
@@ -79,7 +79,7 @@ public final class SkeletonTest {
     }
 
     @Test
-    public void findsMethodsAndArgs() {
+    void findsMethodsAndArgs() {
         new Assertion<>(
             "Must find methods with diff param types",
             XhtmlMatchers.xhtml(
@@ -100,7 +100,7 @@ public final class SkeletonTest {
     }
 
     @Test
-    public void findsMethodCalls() {
+    void findsMethodCalls() {
         new Assertion<>(
             "Must call methods",
             XhtmlMatchers.xhtml(
@@ -121,7 +121,7 @@ public final class SkeletonTest {
     }
 
     @Test
-    public void createsOnlyOneMethodIgnoresSynthetic() {
+    void createsOnlyOneMethodIgnoresSynthetic() {
         new Assertion<>(
             "Must create only one method",
             XhtmlMatchers.xhtml(
@@ -137,7 +137,7 @@ public final class SkeletonTest {
     }
 
     @Test
-    public void findFieldWithQualifiedName() {
+    void findFieldWithQualifiedName() {
         new Assertion<>(
             "Must find field with qualified name",
             XhtmlMatchers.xhtml(
@@ -158,7 +158,7 @@ public final class SkeletonTest {
     }
 
     @Test
-    public void findSchemaOfSkeleton() {
+    void findSchemaOfSkeleton() {
         new Assertion<>(
             "Must find schema of skeleton",
             XhtmlMatchers.xhtml(
@@ -175,7 +175,7 @@ public final class SkeletonTest {
     }
 
     @Test
-    public void recognizesPublicMethods() {
+    void recognizesPublicMethods() {
         new Assertion<>(
             "Must recognize public methods",
             XhtmlMatchers.xhtml(
@@ -197,7 +197,7 @@ public final class SkeletonTest {
     }
 
     @Test
-    public void acceptsSimilarClassNamesInDifferentPackages() {
+    void acceptsSimilarClassNamesInDifferentPackages() {
         new Assertion<>(
             "Must not conflict when class names are identical",
             XhtmlMatchers.xhtml(

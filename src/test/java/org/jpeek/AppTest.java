@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2023 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -48,9 +48,9 @@ import org.llorllale.cactoos.matchers.IsTrue;
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class AppTest {
+final class AppTest {
     @Test
-    public void createsXmlReports(@TempDir final Path output) throws IOException {
+    void createsXmlReports(@TempDir final Path output) throws IOException {
         final Path input = Paths.get(".");
         new App(input, output).analyze();
         new Assertion<>(
@@ -71,7 +71,7 @@ public final class AppTest {
     }
 
     @Test
-    public void canIncludePrivateMethods(@TempDir final Path output) throws Exception {
+    void canIncludePrivateMethods(@TempDir final Path output) throws Exception {
         final Path input = Paths.get(".");
         final Map<String, Object> args = new HashMap<>();
         args.put("include-private-methods", 1);
@@ -88,7 +88,7 @@ public final class AppTest {
     }
 
     @Test
-    public void createsIndexHtml(@TempDir final Path output) throws IOException {
+    void createsIndexHtml(@TempDir final Path output) throws IOException {
         final Path input = Paths.get(".");
         new App(input, output).analyze();
         new Assertion<>(
@@ -99,7 +99,7 @@ public final class AppTest {
     }
 
     @Test
-    public void createsIndexXml(@TempDir final Path output) throws Exception {
+    void createsIndexXml(@TempDir final Path output) throws Exception {
         final Path input = Paths.get(".");
         new App(input, output).analyze();
         new Assertion<>(
@@ -118,7 +118,7 @@ public final class AppTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
-    public void isXsdDocumented() throws IOException {
+    void isXsdDocumented() throws IOException {
         final List<XML> elements = new XMLDocument(
             AppTest.class.getResourceAsStream("xsd/metric.xsd")
         ).nodes("//node()[@name]");

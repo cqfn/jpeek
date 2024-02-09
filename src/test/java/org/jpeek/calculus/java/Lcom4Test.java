@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2023 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -41,11 +41,11 @@ import org.llorllale.cactoos.matchers.HasValue;
  * Test case for {@link Lcom4}.
  * @since 0.30.9
  */
-public final class Lcom4Test {
+final class Lcom4Test {
 
     @Test
     @Disabled
-    public void createsXmlCalculusWithXpaths() throws IOException {
+    void createsXmlCalculusWithXpaths() throws IOException {
         final XML result = new Lcom4().node(
             "LCOM", new HashMap<>(0), new Skeleton(
                 new FakeBase(
@@ -68,7 +68,7 @@ public final class Lcom4Test {
     @ParameterizedTest
     @Disabled
     @CsvFileSource(resources = "/org/jpeek/calculus/java/lcom4-params.csv")
-    public void calculatesValue(final String file, final String value) throws Exception {
+    void calculatesValue(final String file, final String value) throws Exception {
         final XML result = new Lcom4().node(
             "", new HashMap<>(0), new Skeleton(
                 new FakeBase(file)

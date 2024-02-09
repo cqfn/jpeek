@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2023 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -43,10 +43,10 @@ import org.takes.rs.RsPrint;
  * @since 0.5
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class TkAppTest {
+final class TkAppTest {
 
     @Test
-    public void rendersOneReport(@TempDir final Path temp) throws Exception {
+    void rendersOneReport(@TempDir final Path temp) throws Exception {
         final Take app = new TkApp(temp);
         new FtRemote(app).exec(
             home -> {
@@ -75,7 +75,7 @@ public final class TkAppTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
-    public void pingsSimplePages(@TempDir final Path temp) throws Exception {
+    void pingsSimplePages(@TempDir final Path temp) throws Exception {
         final String[] pages = {
             "/org/jpeek/web/layout.xsl",
             "/org/jpeek/web/index.xsl",

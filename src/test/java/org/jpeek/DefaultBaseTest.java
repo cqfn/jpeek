@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2023 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -37,10 +37,10 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class DefaultBaseTest {
+final class DefaultBaseTest {
 
     @Test
-    public void listsFiles(@TempDir final Path temp) throws IOException {
+    void listsFiles(@TempDir final Path temp) throws IOException {
         temp.resolve("a/b/c").toFile().mkdirs();
         Files.write(
             temp.resolve("a/b/c/x.java"), "Hello".getBytes(),
