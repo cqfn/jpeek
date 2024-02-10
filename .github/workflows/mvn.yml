@@ -11,9 +11,8 @@ jobs:
   maven-build:
     runs-on: ${{ matrix.os }}
     strategy:
-      fail-fast: false
       matrix:
-        os: [ubuntu-22.04] # , windows-latest, macos-12]
+        os: [ubuntu-22.04, windows-latest, macos-latest]
         java: [11, 17, 21]
     steps:
       - uses: actions/checkout@v4
