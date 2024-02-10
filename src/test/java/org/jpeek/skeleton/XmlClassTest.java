@@ -67,7 +67,7 @@ final class XmlClassTest {
             "Must parse record class",
             XhtmlMatchers.xhtml(new ClassAsXml("BarRecord").value()),
             XhtmlMatchers.hasXPaths(
-                "/class/methods[count(method) = 1]",
+                "/class/methods[count(method) = 5]",
                 "/class/attributes[count(attribute) = 1]"
             )
         ).affirm();
