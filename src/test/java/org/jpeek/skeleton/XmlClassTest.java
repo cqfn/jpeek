@@ -47,6 +47,18 @@ final class XmlClassTest {
     }
 
     @Test
+    void parsesDeprecatedClass() {
+        new Assertion<>(
+            "Must parse deprecated class",
+            XhtmlMatchers.xhtml(new ClassAsXml("BarDeprecated").value()),
+            XhtmlMatchers.hasXPaths(
+                "/class/methods[count(method) = 5]",
+                "/class/attributes[count(attribute) = 4]"
+            )
+        ).affirm();
+    }
+
+    @Test
     void parsesMethodVisibility() {
         new Assertion<>(
             "Must parse method visibility",
