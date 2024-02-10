@@ -25,6 +25,8 @@ package org.jpeek.skeleton;
 
 import com.jcabi.matchers.XhtmlMatchers;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledForJreRange;
+import org.junit.jupiter.api.condition.JRE;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
@@ -59,14 +61,15 @@ final class XmlClassTest {
     }
 
     @Test
+    @DisabledForJreRange(min = JRE.JAVA_8, max = JRE.JAVA_13)
     void parsesRecordClass() {
         new Assertion<>(
-                "Must parse record class",
-                XhtmlMatchers.xhtml(new ClassAsXml("BarRecord").value()),
-                XhtmlMatchers.hasXPaths(
-                        "/class/methods[count(method) = 1]",
-                        "/class/attributes[count(attribute) = 1]"
-                )
+            "Must parse record class",
+            XhtmlMatchers.xhtml(new ClassAsXml("BarRecord").value()),
+            XhtmlMatchers.hasXPaths(
+                "/class/methods[count(method) = 1]",
+                "/class/attributes[count(attribute) = 1]"
+            )
         ).affirm();
     }
 
