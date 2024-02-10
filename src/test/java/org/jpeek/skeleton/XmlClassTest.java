@@ -53,8 +53,20 @@ final class XmlClassTest {
             XhtmlMatchers.xhtml(new ClassAsXml("BarDeprecated").value()),
             XhtmlMatchers.hasXPaths(
                 "/class/methods[count(method) = 5]",
-                "/class/attributes[count(attribute) = 4]"
+                "/class/attributes[count(attribute) = 5]"
             )
+        ).affirm();
+    }
+
+    @Test
+    void parsesRecordClass() {
+        new Assertion<>(
+                "Must parse record class",
+                XhtmlMatchers.xhtml(new ClassAsXml("BarRecord").value()),
+                XhtmlMatchers.hasXPaths(
+                        "/class/methods[count(method) = 1]",
+                        "/class/attributes[count(attribute) = 1]"
+                )
         ).affirm();
     }
 
