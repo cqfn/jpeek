@@ -176,11 +176,14 @@ final class Futures implements
      * Shut it down.
      * @return TRUE if terminated OK
      * @throws InterruptedException If interrupted while waiting
-     * @todo #1:1h shutdown can not be completed in 1 minute during testing,
-     *  should be checked what happens and may be require some fix
      */
     public boolean shutdown() throws InterruptedException {
-        this.service.shutdown();
-        return this.service.awaitTermination(2L, TimeUnit.MINUTES);
+        this.service.shutdownNow();
+        final boolean stopped =
+            this.service.awaitTermination(1L, TimeUnit.MINUTES);
+        if (!stopped) {
+            Logger.info(this, "Shutdown is not completed after 1min");
+        }
+        return stopped;
     }
 }
