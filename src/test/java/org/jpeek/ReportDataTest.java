@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2023 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -37,10 +37,10 @@ import org.llorllale.cactoos.matchers.Throws;
  * Tests for {@link ReportData}.
  * @since 0.30.9
  */
-public final class ReportDataTest {
+final class ReportDataTest {
 
     @Test
-    public void reportsName() {
+    void reportsName() {
         final String name = "whatever";
         final ReportData data = new ReportData(name);
         new Assertion<>(
@@ -51,7 +51,7 @@ public final class ReportDataTest {
     }
 
     @Test
-    public void reportsMean() {
+    void reportsMean() {
         final String name = "whats";
         final double mean = 0;
         final double sigma = 1;
@@ -64,7 +64,7 @@ public final class ReportDataTest {
     }
 
     @Test
-    public void reportsSigma() {
+    void reportsSigma() {
         final String name = "whatevermetric";
         final double mean = 0;
         final double sigma = 1;
@@ -77,7 +77,7 @@ public final class ReportDataTest {
     }
 
     @Test
-    public void reportsParams() {
+    void reportsParams() {
         final String name = "name";
         final Map<String, Object> sample = ReportDataTest.args();
         final ReportData data = new ReportData(name, sample);
@@ -89,7 +89,7 @@ public final class ReportDataTest {
     }
 
     @Test
-    public void shouldBeImmutableWhenModifyingPassedParams() {
+    void shouldBeImmutableWhenModifyingPassedParams() {
         final String name = "metric";
         final Map<String, Object> sample = ReportDataTest.args();
         final Map<String, Object> params = new HashMap<>(sample);
@@ -103,7 +103,7 @@ public final class ReportDataTest {
     }
 
     @Test
-    public void throwsExceptionWhenTryingToModifyParams() {
+    void throwsExceptionWhenTryingToModifyParams() {
         final String name = "metrics";
         final ReportData data = new ReportData(name, new HashMap<>(ReportDataTest.args()));
         new Assertion<>(

@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2023 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,10 +36,10 @@ import org.takes.rs.RsPrint;
  * @since 0.14
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class TkMistakesTest {
+final class TkMistakesTest {
 
     @Test
-    public void rendersMistakesPage() throws IOException {
+    void rendersMistakesPage() throws IOException {
         new Assertion<>(
             "Must print body on mistakes page",
             XhtmlMatchers.xhtml(
@@ -50,7 +50,7 @@ public final class TkMistakesTest {
     }
 
     @Test
-    public void rendersMistakesPageInXml() throws IOException {
+    void rendersMistakesPageInXml() throws IOException {
         new Assertion<>(
             "Must render mistake page in xml",
             XhtmlMatchers.xhtml(

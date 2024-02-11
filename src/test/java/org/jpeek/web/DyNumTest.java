@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2023 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,10 +34,10 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 0.31
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class DyNumTest {
+final class DyNumTest {
 
     @Test
-    public void testConstructDyNumFromString() {
+    void testConstructDyNumFromString() {
         final double number = 2.0d;
         new Assertion<>(
             "Double values should be equal",
@@ -49,7 +49,7 @@ public final class DyNumTest {
     }
 
     @Test
-    public void testConstructDyNumFromLong() {
+    void testConstructDyNumFromLong() {
         final long number = 2L;
         new Assertion<>(
             "Long values should be equal",
@@ -59,7 +59,7 @@ public final class DyNumTest {
     }
 
     @Test
-    public void testConstructDyNumFromLongCompareToInt() {
+    void testConstructDyNumFromLongCompareToInt() {
         final Double number = 2.0d;
         new Assertion<>(
             "Integer values should be equal",
@@ -69,7 +69,7 @@ public final class DyNumTest {
     }
 
     @Test
-    public void testConstructDyNumFromLongCompareToFloat() {
+    void testConstructDyNumFromLongCompareToFloat() {
         final float number = 2.0f;
         new Assertion<>(
             "Float values should be equal",
@@ -79,7 +79,7 @@ public final class DyNumTest {
     }
 
     @Test
-    public void testConstructDyNumFromDouble() {
+    void testConstructDyNumFromDouble() {
         final double number = 2.0d;
         new Assertion<>(
             "Double values should be equal.",
@@ -89,7 +89,7 @@ public final class DyNumTest {
     }
 
     @Test
-    public void testUpdateDyNum() {
+    void testUpdateDyNum() {
         new Assertion<>(
             "Result should not be null",
             new DyNum(2.0d).update(),

@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2023 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -44,10 +44,10 @@ import org.xembly.Xembler;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class XslReportTest {
+final class XslReportTest {
 
     @Test
-    public void createsXmlReport(@TempDir final Path output) throws IOException {
+    void createsXmlReport(@TempDir final Path output) throws IOException {
         new XslReport(
             new Skeleton(new FakeBase()).xml(), new XslCalculus(), new ReportData("LCOM")
         ).save(output);
@@ -64,7 +64,7 @@ public final class XslReportTest {
     }
 
     @Test
-    public void createsXmlReportWithXpaths(@TempDir final Path output) throws Exception {
+    void createsXmlReportWithXpaths(@TempDir final Path output) throws Exception {
         new XslReport(
             new Skeleton(
                 new FakeBase(
@@ -86,7 +86,7 @@ public final class XslReportTest {
     }
 
     @Test
-    public void createsXmlReportWithEmptyProject(@TempDir final Path output) throws Exception {
+    void createsXmlReportWithEmptyProject(@TempDir final Path output) throws Exception {
         new XslReport(
             new Skeleton(new FakeBase()).xml(), new XslCalculus(), new ReportData("LCOM")
         ).save(output);
@@ -102,7 +102,7 @@ public final class XslReportTest {
     }
 
     @Test
-    public void createsFullXmlReport(@TempDir final Path output) throws Exception {
+    void createsFullXmlReport(@TempDir final Path output) throws Exception {
         new XslReport(
             new XMLDocument(
                 new Xembler(
@@ -137,7 +137,7 @@ public final class XslReportTest {
     }
 
     @Test
-    public void setsCorrectSchemaLocation(@TempDir final Path output) throws Exception {
+    void setsCorrectSchemaLocation(@TempDir final Path output) throws Exception {
         new XslReport(
             new Skeleton(new FakeBase()).xml(), new XslCalculus(), new ReportData("LCOM")
         ).save(output);

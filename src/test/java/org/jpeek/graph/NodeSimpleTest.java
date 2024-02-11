@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2023 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,10 +32,10 @@ import org.llorllale.cactoos.matchers.Assertion;
  * Test case for {@link Node.Simple}.
  * @since 0.30.9
  */
-public final class NodeSimpleTest {
+final class NodeSimpleTest {
 
     @Test
-    public void givesName() throws IOException {
+    void givesName() throws IOException {
         final String name = "name";
         final Node.Simple node = new Node.Simple(name);
         new Assertion<>(

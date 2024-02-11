@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2023 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,10 +32,10 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 0.27
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class XmlClassTest {
+final class XmlClassTest {
 
     @Test
-    public void parsesClass() {
+    void parsesClass() {
         new Assertion<>(
             "Must parse class",
             XhtmlMatchers.xhtml(new ClassAsXml("Bar").value()),
@@ -47,7 +47,7 @@ public final class XmlClassTest {
     }
 
     @Test
-    public void parsesMethodVisibility() {
+    void parsesMethodVisibility() {
         new Assertion<>(
             "Must parse method visibility",
             XhtmlMatchers.xhtml(
@@ -63,7 +63,7 @@ public final class XmlClassTest {
     }
 
     @Test
-    public void thereIsNoAttributePublic() {
+    void thereIsNoAttributePublic() {
         new Assertion<>(
             "attribute public does not exists",
             XhtmlMatchers.xhtml(

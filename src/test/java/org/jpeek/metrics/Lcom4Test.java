@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2023 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -37,7 +37,7 @@ import org.junit.jupiter.api.Test;
  * @since 0.28
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class Lcom4Test {
+final class Lcom4Test {
 
     /**
      * Variable from the report.
@@ -76,7 +76,7 @@ public final class Lcom4Test {
      */
     @Test
     @Disabled
-    public void methodMethodCalls() throws Exception {
+    void methodMethodCalls() throws Exception {
         final MetricBase.Report report = new MetricBase(
             Lcom4Test.XSL
         ).transform(
@@ -104,7 +104,7 @@ public final class Lcom4Test {
      * This is an ideal LCOM4 value = 1
      */
     @Test
-    public void oneCommonAttribute() throws Exception {
+    void oneCommonAttribute() throws Exception {
         final MetricBase.Report report = new MetricBase(
             Lcom4Test.XSL
         ).transform(
@@ -131,7 +131,7 @@ public final class Lcom4Test {
      * So the value is 2.0
      */
     @Test
-    public void notCommonAttributes() throws Exception {
+    void notCommonAttributes() throws Exception {
         final MetricBase.Report report = new MetricBase(
             Lcom4Test.XSL
         ).transform(
@@ -147,7 +147,7 @@ public final class Lcom4Test {
      * since constructors are not methods and should be ignored
      */
     @Test
-    public void notCommonAttributesWithAllArgsConstructor() throws Exception {
+    void notCommonAttributesWithAllArgsConstructor() throws Exception {
         final MetricBase.Report report = new MetricBase(
             Lcom4Test.XSL
         ).transform(
