@@ -129,17 +129,17 @@ SOFTWARE.
     <dependency>
       <groupId>com.jcabi</groupId>
       <artifactId>jcabi-dynamo</artifactId>
-      <version>0.22.2</version>
+      <version>0.22.4</version>
     </dependency>
     <dependency>
       <groupId>org.javassist</groupId>
       <artifactId>javassist</artifactId>
-      <version>3.29.0-GA</version>
+      <version>3.30.2-GA</version>
     </dependency>
     <dependency>
       <groupId>org.ow2.asm</groupId>
       <artifactId>asm</artifactId>
-      <version>9.3</version>
+      <version>9.6</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>

@@ -38,7 +38,6 @@ import org.cactoos.scalar.LengthOf;
 /**
  * Fake base for tests.
  * @since 0.2
- * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class FakeBase implements Base {
