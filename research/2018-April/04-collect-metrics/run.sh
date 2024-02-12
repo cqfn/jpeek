@@ -28,12 +28,12 @@ home=$(pwd)
 jar=~/.m2/repository/org/jpeek/jpeek/1.0-SNAPSHOT/jpeek-1.0-SNAPSHOT-jar-with-dependencies.jar
 if [ ! -e "${jar}" ]; then
   echo "${jar} doesn't exist, please run 'mvn clean install' first"
-  exit -1
+  exit 1
 fi
 
 rm -f "${home}/metrics.txt"
 
-while read line
+while read -r line
 do
   IFS=',' read -ra parts <<< "${line}"
   echo "${parts[0]}..."
