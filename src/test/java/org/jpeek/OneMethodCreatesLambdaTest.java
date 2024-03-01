@@ -1,7 +1,10 @@
-import static org.junit.jupiter.api.Assertions.*;
+package org.jpeek;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Arrays;
 import java.util.List;
 
+import org.jpeek.samples.OneMethodCreatesLambda;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
