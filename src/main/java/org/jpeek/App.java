@@ -92,7 +92,6 @@ public final class App {
 
     /**
      * Ctor.
-     *
      * @param source Source directory
      * @param target Target dir
      */
