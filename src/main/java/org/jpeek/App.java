@@ -165,7 +165,6 @@ public final class App {
             layers.add(App.xsl("layers/no-private-methods.xsl"));
             Logger.debug(this, "Private methods will be ignored");
         }
-
         final Collection<Report> reports = new LinkedList<>();
         buildReport(layers, reports);
         new IoChecked<>(
@@ -238,7 +237,6 @@ public final class App {
     }
     /**
      * Create report.
-     *
      * @param layers collection of layers
      * @param reports resulting report
      * @throws IOException If fails
@@ -274,7 +272,6 @@ public final class App {
 
     /**
      * Copy resource.
-     *
      * @param name The name of resource
      * @throws IOException If fails
      */
@@ -291,7 +288,6 @@ public final class App {
 
     /**
      * Copy XSL.
-     *
      * @param name The name of resource
      * @return TRUE if copied
      * @throws IOException If fails
@@ -303,7 +299,6 @@ public final class App {
 
     /**
      * Copy XSL.
-     *
      * @param name The name of resource
      * @return TRUE if copied
      * @throws IOException If fails
@@ -315,7 +310,6 @@ public final class App {
 
     /**
      * Save file.
-     *
      * @param data Content
      * @param name The name of destination file
      * @throws IOException If fails
@@ -333,7 +327,6 @@ public final class App {
 
     /**
      * Make XSL.
-     *
      * @param name The name of XSL file
      * @return XSL document
      */
