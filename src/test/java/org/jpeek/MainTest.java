@@ -126,6 +126,7 @@ final class MainTest {
     }
 
     @Test
+
     void createsXmlReportsIfOverwriteAndTargetExists(@TempDir final Path target)
         throws IOException {
         Main.main(
