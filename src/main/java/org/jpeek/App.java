@@ -38,6 +38,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Objects;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.io.TeeInput;
 import org.cactoos.list.ListOf;
@@ -58,13 +59,13 @@ import org.xembly.Xembler;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @since 0.1
  * @checkstyle ClassFanOutComplexityCheck (500 lines)
  * @checkstyle ExecutableStatementCountCheck (500 lines)
  * @checkstyle NPathComplexityCheck (500 lines)
  * @checkstyle CyclomaticComplexityCheck (500 lines)
  * @checkstyle MethodLengthCheck (500 lines)
  * @checkstyle JavaNCSSCheck (500 lines)
+ * @since 0.1
  */
 @SuppressWarnings({
     "PMD.AvoidDuplicateLiterals",
@@ -92,6 +93,7 @@ public final class App {
 
     /**
      * Ctor.
+     *
      * @param source Source directory
      * @param target Target dir
      */
@@ -119,6 +121,7 @@ public final class App {
 
     /**
      * Ctor.
+     *
      * @param source Source directory
      * @param target Target dir
      * @param args XSL params
@@ -132,6 +135,7 @@ public final class App {
 
     /**
      * Analyze sources.
+     *
      * @throws IOException If fails
      * @todo #452:30min Extract report building
      *  Analyze method is too big. We need to extract report building from
@@ -165,7 +169,7 @@ public final class App {
             Logger.debug(this, "Private methods will be ignored");
         }
         final Collection<Report> reports = new LinkedList<>();
-        buildReport(layers, reports);
+        this.buildReport(layers, reports);
         new IoChecked<>(
             new AndInThreads(
                 report -> report.save(this.output),
@@ -234,59 +238,78 @@ public final class App {
             )
         ).value();
     }
+
     /**
      * Create report.
-     * @param layers collection of layers
-     * @param reports resulting report
+     *
+     * @param layers Collection of layers
+     * @param reports Resulting report
      * @throws IOException If fails
      */
-    private void buildReport(final Collection<XSL> layers, final Collection<Report> reports) throws IOException {
+    private void buildReport(final Collection<XSL> layers, final Collection<Report> reports)
+        throws IOException {
         final Base base = new DefaultBase(this.input);
         final XML skeleton = new Skeleton(base).xml();
         final XSL chain = new XSLChain(layers);
         final Calculus xsl = new XslCalculus();
         this.save(skeleton.toString(), "skeleton.xml");
-
         Arrays.stream(Metrics.values())
-                .filter(metric -> this.params.containsKey(metric.name()))
-                .forEach(metric -> {
-                    if (metric.sigma != null) {
+            .filter(
+                metric -> this.params.containsKey(metric.name())
+            )
+            .forEach(
+                metric -> {
+                    if (Objects.nonNull(metric.getSigma())) {
                         reports.add(
-                                new XslReport(
-                                        chain.transform(skeleton), xsl,
-                                        new ReportData(metric.name(), this.params, metric.mean, metric.sigma)));
-                    } else if (metric.shouldIncludeParams) {
+                            new XslReport(
+                                chain.transform(skeleton), xsl,
+                                new ReportData(
+                                    metric.name(),
+                                    this.params,
+                                    metric.getMean(),
+                                    metric.getSigma()
+                                )
+                            )
+                        );
+                    } else if (metric.isIncludeParams()) {
                         reports.add(
-                                new XslReport(
-                                        chain.transform(skeleton), xsl,
-                                        new ReportData(metric.name(), this.params)));
+                            new XslReport(
+                                chain.transform(skeleton), xsl,
+                                new ReportData(metric.name(), this.params)
+                            )
+                        );
                     } else {
                         reports.add(
-                                new XslReport(
-                                        chain.transform(skeleton), xsl,
-                                        new ReportData(metric.name())));
+                            new XslReport(
+                                chain.transform(skeleton), xsl,
+                                new ReportData(metric.name())
+                            )
+                        );
                     }
-                });
+                }
+            );
     }
 
     /**
      * Copy resource.
+     *
      * @param name The name of resource
      * @throws IOException If fails
      */
     private void copy(final String name) throws IOException {
         new IoChecked<>(
-                new LengthOf(
-                        new TeeInput(
-                                new ResourceOf(String.format("org/jpeek/%s", name)),
-                                this.output.resolve(name)
-                        )
+            new LengthOf(
+                new TeeInput(
+                    new ResourceOf(String.format("org/jpeek/%s", name)),
+                    this.output.resolve(name)
                 )
+            )
         ).value();
     }
 
     /**
      * Copy XSL.
+     *
      * @param name The name of resource
      * @return TRUE if copied
      * @throws IOException If fails
@@ -298,6 +321,7 @@ public final class App {
 
     /**
      * Copy XSL.
+     *
      * @param name The name of resource
      * @return TRUE if copied
      * @throws IOException If fails
@@ -309,29 +333,31 @@ public final class App {
 
     /**
      * Save file.
+     *
      * @param data Content
      * @param name The name of destination file
      * @throws IOException If fails
      */
     private void save(final String data, final String name) throws IOException {
         new IoChecked<>(
-                new LengthOf(
-                        new TeeInput(
-                                data,
-                                this.output.resolve(name)
-                        )
+            new LengthOf(
+                new TeeInput(
+                    data,
+                    this.output.resolve(name)
                 )
+            )
         ).value();
     }
 
     /**
      * Make XSL.
+     *
      * @param name The name of XSL file
      * @return XSL document
      */
     private static XSL xsl(final String name) {
         return new XSLDocument(
-                App.class.getResourceAsStream(String.format("xsl/%s", name))
+            App.class.getResourceAsStream(String.format("xsl/%s", name))
         ).with(new ClasspathSources());
     }
 
