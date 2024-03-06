@@ -34,9 +34,11 @@ import com.jcabi.xml.XSLChain;
 import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Objects;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.io.TeeInput;
 import org.cactoos.list.ListOf;
@@ -91,6 +93,7 @@ public final class App {
 
     /**
      * Ctor.
+
      * @param source Source directory
      * @param target Target dir
      */
@@ -118,6 +121,7 @@ public final class App {
 
     /**
      * Ctor.
+
      * @param source Source directory
      * @param target Target dir
      * @param args XSL params
@@ -131,6 +135,7 @@ public final class App {
 
     /**
      * Analyze sources.
+
      * @throws IOException If fails
      * @todo #452:30min Extract report building
      *  Analyze method is too big. We need to extract report building from
@@ -144,8 +149,6 @@ public final class App {
     })
     public void analyze() throws IOException {
         final long start = System.currentTimeMillis();
-        final Base base = new DefaultBase(this.input);
-        final XML skeleton = new Skeleton(base).xml();
         final Collection<XSL> layers = new LinkedList<>();
         if (this.params.containsKey("include-ctors")) {
             Logger.debug(this, "Constructors will be included");
@@ -165,130 +168,8 @@ public final class App {
             layers.add(App.xsl("layers/no-private-methods.xsl"));
             Logger.debug(this, "Private methods will be ignored");
         }
-        final XSL chain = new XSLChain(layers);
-        this.save(skeleton.toString(), "skeleton.xml");
         final Collection<Report> reports = new LinkedList<>();
-        final Calculus xsl = new XslCalculus();
-        if (this.params.containsKey("LCOM")) {
-            reports.add(
-                new XslReport(
-                    chain.transform(skeleton), xsl,
-                    new ReportData("LCOM", this.params, 10.0d, -5.0d)
-                )
-            );
-        }
-        if (this.params.containsKey("CAMC")) {
-            reports.add(
-                new XslReport(
-                    chain.transform(skeleton), xsl,
-                    new ReportData("CAMC", this.params)
-                )
-            );
-        }
-        if (this.params.containsKey("MMAC")) {
-            reports.add(
-                new XslReport(
-                    chain.transform(skeleton), xsl,
-                    new ReportData("MMAC", this.params, 0.5d, 0.1d)
-                )
-            );
-        }
-        if (this.params.containsKey("LCOM5")) {
-            reports.add(
-                new XslReport(
-                    chain.transform(skeleton), xsl,
-                    new ReportData("LCOM5", this.params, 0.5d, -0.1d)
-                )
-            );
-        }
-        if (this.params.containsKey("LCOM4")) {
-            reports.add(
-                new XslReport(
-                    chain.transform(skeleton), xsl,
-                    new ReportData("LCOM4", this.params, 0.5d, -0.1d)
-                )
-            );
-        }
-        if (this.params.containsKey("NHD")) {
-            reports.add(
-                new XslReport(
-                    chain.transform(skeleton), xsl,
-                    new ReportData("NHD")
-                )
-            );
-        }
-        if (this.params.containsKey("LCOM2")) {
-            reports.add(
-                new XslReport(
-                    chain.transform(skeleton), xsl,
-                    new ReportData("LCOM2", this.params)
-                )
-            );
-        }
-        if (this.params.containsKey("LCOM3")) {
-            reports.add(
-                new XslReport(
-                    chain.transform(skeleton), xsl,
-                    new ReportData("LCOM3", this.params)
-                )
-            );
-        }
-        if (this.params.containsKey("SCOM")) {
-            reports.add(
-                new XslReport(
-                    chain.transform(skeleton), xsl,
-                    new ReportData("SCOM", this.params)
-                )
-            );
-        }
-        if (this.params.containsKey("OCC")) {
-            reports.add(
-                new XslReport(
-                    chain.transform(skeleton), xsl,
-                    new ReportData("OCC", this.params)
-                )
-            );
-        }
-        if (this.params.containsKey("PCC")) {
-            reports.add(
-                new XslReport(
-                    chain.transform(skeleton), xsl,
-                    new ReportData("PCC")
-                )
-            );
-        }
-        if (this.params.containsKey("TCC")) {
-            reports.add(
-                new XslReport(
-                    chain.transform(skeleton), xsl,
-                    new ReportData("TCC")
-                )
-            );
-        }
-        if (this.params.containsKey("LCC")) {
-            reports.add(
-                new XslReport(
-                    chain.transform(skeleton), xsl,
-                    new ReportData("LCC")
-                )
-            );
-        }
-        if (this.params.containsKey("CCM")) {
-            reports.add(
-                new XslReport(
-                    chain.transform(skeleton), xsl,
-                    new ReportData("CCM")
-                )
-            );
-        }
-        if (this.params.containsKey("MWE")) {
-            reports.add(
-                new XslReport(
-                    chain.transform(skeleton), xsl,
-                    new ReportData("MWE")
-                )
-            );
-        }
+        this.buildReport(layers, reports);
         new IoChecked<>(
             new AndInThreads(
                 report -> report.save(this.output),
@@ -359,7 +240,59 @@ public final class App {
     }
 
     /**
+     * Create report.
+
+     * @param layers Collection of layers
+     * @param reports Resulting report
+     * @throws IOException If fails
+     */
+    private void buildReport(final Collection<XSL> layers, final Collection<Report> reports)
+        throws IOException {
+        final Base base = new DefaultBase(this.input);
+        final XML skeleton = new Skeleton(base).xml();
+        final XSL chain = new XSLChain(layers);
+        final Calculus xsl = new XslCalculus();
+        this.save(skeleton.toString(), "skeleton.xml");
+        Arrays.stream(Metrics.values())
+            .filter(
+                metric -> this.params.containsKey(metric.name())
+            )
+            .forEach(
+                metric -> {
+                    if (Objects.nonNull(metric.getSigma())) {
+                        reports.add(
+                            new XslReport(
+                                chain.transform(skeleton), xsl,
+                                new ReportData(
+                                    metric.name(),
+                                    this.params,
+                                    metric.getMean(),
+                                    metric.getSigma()
+                                )
+                            )
+                        );
+                    } else if (metric.isIncludeParams()) {
+                        reports.add(
+                            new XslReport(
+                                chain.transform(skeleton), xsl,
+                                new ReportData(metric.name(), this.params)
+                            )
+                        );
+                    } else {
+                        reports.add(
+                            new XslReport(
+                                chain.transform(skeleton), xsl,
+                                new ReportData(metric.name())
+                            )
+                        );
+                    }
+                }
+            );
+    }
+
+    /**
      * Copy resource.
+
      * @param name The name of resource
      * @throws IOException If fails
      */
@@ -376,6 +309,7 @@ public final class App {
 
     /**
      * Copy XSL.
+
      * @param name The name of resource
      * @return TRUE if copied
      * @throws IOException If fails
@@ -387,6 +321,7 @@ public final class App {
 
     /**
      * Copy XSL.
+
      * @param name The name of resource
      * @return TRUE if copied
      * @throws IOException If fails
@@ -398,6 +333,7 @@ public final class App {
 
     /**
      * Save file.
+
      * @param data Content
      * @param name The name of destination file
      * @throws IOException If fails
@@ -415,6 +351,7 @@ public final class App {
 
     /**
      * Make XSL.
+
      * @param name The name of XSL file
      * @return XSL document
      */
