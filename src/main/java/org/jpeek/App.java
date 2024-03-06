@@ -59,13 +59,13 @@ import org.xembly.Xembler;
  *
  * <p>There is no thread-safety guarantee.
  *
+ * @since 0.1
  * @checkstyle ClassFanOutComplexityCheck (500 lines)
  * @checkstyle ExecutableStatementCountCheck (500 lines)
  * @checkstyle NPathComplexityCheck (500 lines)
  * @checkstyle CyclomaticComplexityCheck (500 lines)
  * @checkstyle MethodLengthCheck (500 lines)
  * @checkstyle JavaNCSSCheck (500 lines)
- * @since 0.1
  */
 @SuppressWarnings({
     "PMD.AvoidDuplicateLiterals",
@@ -93,7 +93,7 @@ public final class App {
 
     /**
      * Ctor.
-     *
+
      * @param source Source directory
      * @param target Target dir
      */
@@ -121,7 +121,7 @@ public final class App {
 
     /**
      * Ctor.
-     *
+
      * @param source Source directory
      * @param target Target dir
      * @param args XSL params
@@ -135,7 +135,7 @@ public final class App {
 
     /**
      * Analyze sources.
-     *
+
      * @throws IOException If fails
      * @todo #452:30min Extract report building
      *  Analyze method is too big. We need to extract report building from
@@ -241,7 +241,7 @@ public final class App {
 
     /**
      * Create report.
-     *
+
      * @param layers Collection of layers
      * @param reports Resulting report
      * @throws IOException If fails
@@ -292,7 +292,7 @@ public final class App {
 
     /**
      * Copy resource.
-     *
+
      * @param name The name of resource
      * @throws IOException If fails
      */
@@ -309,7 +309,7 @@ public final class App {
 
     /**
      * Copy XSL.
-     *
+
      * @param name The name of resource
      * @return TRUE if copied
      * @throws IOException If fails
@@ -321,7 +321,7 @@ public final class App {
 
     /**
      * Copy XSL.
-     *
+
      * @param name The name of resource
      * @return TRUE if copied
      * @throws IOException If fails
@@ -333,7 +333,7 @@ public final class App {
 
     /**
      * Save file.
-     *
+
      * @param data Content
      * @param name The name of destination file
      * @throws IOException If fails
@@ -351,7 +351,7 @@ public final class App {
 
     /**
      * Make XSL.
-     *
+
      * @param name The name of XSL file
      * @return XSL document
      */
