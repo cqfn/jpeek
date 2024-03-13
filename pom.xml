@@ -420,8 +420,8 @@ SOFTWARE.
                 <goals>
                   <goal>sign</goal>
                 </goals>
-                <configuration combine.self="override">
-                  <gpgArguments>
+                <configuration >
+                  <gpgArguments combine.self="override">
                     <arg>--pinentry-mode</arg>
                     <arg>loopback</arg>
                   </gpgArguments>
