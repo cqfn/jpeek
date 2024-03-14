@@ -92,8 +92,8 @@ final class SkeletonTest {
                 "//class/methods[count(method)=7]",
                 "//method[@name='methodSix']/args[count(arg)=1]",
                 "//method[@name='methodSix']/args/arg[@type='Ljava/sql/Timestamp']",
-                "//method[@name='methodSix' and return='Ljava/util/Date']",
-                "//method[@name='methodTwo' and return='V']",
+                "//method[@name='methodSix' and child::return='Ljava/util/Date']",
+                "//method[@name='methodTwo' and child::return='V']",
                 "//method[@name='methodOne']/args/arg[@type='Ljava/lang/Object']"
             )
         ).affirm();

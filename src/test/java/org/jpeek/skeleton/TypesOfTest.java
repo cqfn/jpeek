@@ -50,7 +50,7 @@ final class TypesOfTest {
             XhtmlMatchers.hasXPaths(
                 "/method/args[count(arg) = 2]",
                 "/method/args/arg[@type = 'Ljava/lang/String']",
-                "/method[return='Z']"
+                "/method[child::return='Z']"
             )
         ).affirm();
     }
