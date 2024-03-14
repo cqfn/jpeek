@@ -22,11 +22,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
-<!--
-@todo #134:30min Matrix.xsd: add `xsd:documentation` tags as per issue #134. We need to
- document the schemas in src/resources/org/jpeek/xsd so that the semantics of
- the generated XML documents is transparent for maintainers.
--->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:element name="matrix">
     <xs:complexType>
@@ -37,26 +32,81 @@ SOFTWARE.
               <xs:element name="class" minOccurs="0" maxOccurs="unbounded">
                 <xs:complexType>
                   <xs:sequence>
+                    <xs:annotation>
+                      <xs:documentation>
+                        Matrix of metrics for each class. Rows are classes and columns are cohesion metrics
+                        (CAMC, LCOM5, MMAC, NHD, SCOM)
+                      </xs:documentation>
+                    </xs:annotation>
                     <xs:element name="metric" minOccurs="1" maxOccurs="unbounded">
                       <xs:complexType>
-                        <xs:attribute name="name" use="required" type="xs:string"/>
-                        <xs:attribute name="color" use="required" type="xs:string"/>
-                        <xs:attribute name="rank" use="required" type="xs:float"/>
+                        <xs:attribute name="name" use="required" type="xs:string">
+                          <xs:annotation>
+                            <xs:documentation>
+                              Metric name
+                            </xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="color" use="required" type="xs:string">
+                          <xs:annotation>
+                            <xs:documentation>
+                              Represents rank for each metric. Order is green, yellow, red.
+                            </xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="rank" use="required" type="xs:float">
+                          <xs:annotation>
+                            <xs:documentation>
+                              Rank of a metric. Used to find out the color.
+                            </xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
                       </xs:complexType>
                     </xs:element>
                   </xs:sequence>
-                  <xs:attribute name="id" use="required" type="xs:string"/>
-                  <xs:attribute name="short_id" use="required" type="xs:string"/>
-                  <xs:attribute name="rank" use="required" type="xs:float"/>
-                  <xs:attribute name="trust" use="required" type="xs:float"/>
+                  <xs:attribute name="id" use="required" type="xs:string">
+                    <xs:annotation>
+                      <xs:documentation>The fully qualified java class name.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="short_id" use="required" type="xs:string">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The shorten java class name, where each dot separated package is shortened
+                        to it's first letter.
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="rank" use="required" type="xs:float">
+                    <xs:annotation>
+                      <xs:documentation>
+                        An average value of all metrics rank, scaled down into range [0,1].
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="trust" use="required" type="xs:float">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The reciprocal of amount of different colors of metrics.
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
                 </xs:complexType>
               </xs:element>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
       </xs:all>
-      <xs:attribute name="date" use="required" type="xs:dateTime"/>
-      <xs:attribute name="version" use="required" type="xs:string"/>
+      <xs:attribute name="date" use="required" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>Date when the skeleton was generated.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="version" use="required" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Version of jpeek when the skeleton was generated.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
     </xs:complexType>
   </xs:element>
 </xs:schema>
