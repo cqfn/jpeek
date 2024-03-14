@@ -421,7 +421,7 @@ SOFTWARE.
                   <goal>sign</goal>
                 </goals>
                 <configuration>
-+                  <gpgArguments combine.self="override">
+                  <gpgArguments combine.self="override">
                     <arg>--pinentry-mode</arg>
                     <arg>loopback</arg>
                   </gpgArguments>
