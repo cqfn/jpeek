@@ -64,7 +64,7 @@ SOFTWARE.
       <xsl:variable name="nc" select="count($edges/edge)"/>
       <!--
       @todo #522:15m/DEV ncc is already calculated during skeleton build. It has to be captured
-      from that skeleton and put into the corresponding variable
+        from that skeleton and put into the corresponding variable
       -->
       <xsl:variable name="ncc" select="count(distinct-values($edges/edge/method/text()))"/>
       <xsl:variable name="nmp" select="(count($methods) * (count($methods) - 1)) div 2"/>
