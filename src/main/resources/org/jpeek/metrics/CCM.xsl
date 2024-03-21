@@ -63,7 +63,7 @@ SOFTWARE.
     <xsl:copy>
       <xsl:variable name="nc" select="count($edges/edge)"/>
       <!--
-      @todo add capture ncc value from skeleton
+      @todo #522:15m/DEV add capture ncc value from skeleton
       -->
       <xsl:variable name="ncc" select="count(distinct-values($edges/edge/method/text()))"/>
       <xsl:variable name="nmp" select="(count($methods) * (count($methods) - 1)) div 2"/>
