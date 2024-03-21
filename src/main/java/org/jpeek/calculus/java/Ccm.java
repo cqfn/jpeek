@@ -197,8 +197,7 @@ public final class Ccm implements Calculus {
      * @param classes The node representing the class
      * @return The class tag element created in the XML document
      * @todo #522:30m/DEV Implement method that would build graph where methods are nodes and
-     * field references are edges and find connected components in that graph.
-     *
+     *  field references are edges and find connected components in that graph.
      */
     private static  Node createClassTag(final Document doc, final Node classes) {
         final NamedNodeMap map = classes.getAttributes();
