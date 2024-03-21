@@ -196,7 +196,7 @@ public final class Ccm implements Calculus {
      * @param doc The XML document to which the class tag will be added
      * @param classes The node representing the class
      * @return The class tag element created in the XML document
-     * @todo Implement method that would return connected components
+     * @todo #522:30m/DEV Implement method that would return connected components
      */
     private static  Node createClassTag(final Document doc, final Node classes) {
         final NamedNodeMap map = classes.getAttributes();
