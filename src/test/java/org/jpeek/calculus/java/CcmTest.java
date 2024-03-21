@@ -28,7 +28,6 @@ import com.jcabi.xml.XML;
 import java.io.IOException;
 import java.util.HashMap;
 import org.jpeek.FakeBase;
-import org.jpeek.calculus.xsl.CcmXslCalculus;
 import org.jpeek.skeleton.Skeleton;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -38,10 +37,10 @@ import org.llorllale.cactoos.matchers.IsTrue;
  * Test class for CCM calculus.
  * @since 0.30.9
  */
-final class CcmCalculusTest {
+final class CcmTest {
     @Test
     void createsSkeletonWithMeta() throws IOException {
-        final XML result = new CcmXslCalculus().node(
+        final XML result = new Ccm().node(
             "CCM", new HashMap<>(0), new Skeleton(
                 new FakeBase(
                     "Foo", "Bar"
@@ -59,6 +58,6 @@ final class CcmCalculusTest {
             "Must have 2 ncc vars",
             result.xpath("/metric/app/package/class/vars/var[@id=\'ncc\']/text()").size() == 2,
             new IsTrue()
-        );
+        ).affirm();
     }
 }
