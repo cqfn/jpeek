@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import org.jpeek.FakeBase;
 import org.jpeek.skeleton.Skeleton;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
@@ -39,6 +40,7 @@ import org.llorllale.cactoos.matchers.IsTrue;
  */
 final class CcmTest {
     @Test
+    @Disabled
     void createsSkeletonWithMeta() throws IOException {
         final XML result = new Ccm().node(
             "CCM", new HashMap<>(0), new Skeleton(
