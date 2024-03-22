@@ -37,6 +37,19 @@ import org.llorllale.cactoos.matchers.IsTrue;
 /**
  * Test class for CCM calculus.
  * @since 0.30.9
+ * @todo #522:15m/DEV Implement test with one CC it should find ncc as 1, and use it in further
+ *  calculation of ccm metric
+ * @todo #522:15m/DEV Implement test with several CC here more complicated graph: several methods
+ *  with references is such way that we would get edges between methods
+ * @todo #522:15m/DEV Implement test with only constructor test would be parametrized, depending
+ *  on parameter constructor may be ingored
+ * @todo #522:15m/DEV Implement test with constructor and several CC. Parametrized on constructor,
+ *  explore behavior when we have constructor and regular methods
+ * @todo #522:15m/DEV Implement test with variable shadowing. Whether calculus notices that no
+ *  edge between methods needed or it should just ignore it.
+ * @todo #522:15m/DEV Implement test with static methods check. Whether calculus notices that
+ *  method is static or not. I guess there is not big difference between static and non-static
+ *  methods, but i guess it is better to add such tests anyway
  */
 final class CcmTest {
     @Test
