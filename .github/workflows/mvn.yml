@@ -10,6 +10,7 @@ name: mvn
 jobs:
   maven-build:
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
     strategy:
       matrix:
         os: [ubuntu-22.04, windows-latest, macos-latest]
