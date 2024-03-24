@@ -52,6 +52,20 @@ final class CcmTest {
         report.assertValue(0.0f, 0.001f);
     }
 
+    @Test
+    void oneComponentInClassTest() throws Exception {
+        final MetricBase.Report report = new MetricBase(
+                "org/jpeek/metrics/CCM.xsl"
+        ).transform(
+                "CcmOneComp"
+        );
+        report.assertVariable("methods", 5);
+        report.assertVariable("nc", 10);
+        report.assertVariable("nmp", 10);
+        report.assertVariable("ncc", 1);
+        report.assertValue(1.0f, 0.001f);
+    }
+
     /**
      * Class with one method access one attribute and
      * Ctor with all attributes initialization have the same
@@ -70,20 +84,6 @@ final class CcmTest {
         report.assertVariable("nmp", 10);
         report.assertVariable("ncc", 5);
         report.assertValue(0.0f, 0.001f);
-    }
-
-    @Test
-    void oneComponentInClassTest() throws Exception {
-        final MetricBase.Report report = new MetricBase(
-            "org/jpeek/metrics/CCM.xsl"
-        ).transform(
-            "CcmOneComp"
-        );
-        report.assertVariable("methods", 5);
-        report.assertVariable("nc", 10);
-        report.assertVariable("nmp", 10);
-        report.assertVariable("ncc", 1);
-        report.assertValue(1.0f, 0.001f);
     }
 
     /**
