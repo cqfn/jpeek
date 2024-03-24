@@ -1,4 +1,4 @@
-public class CcmOneComponent {
+public class CcmOneComp {
 
     String name;
 
