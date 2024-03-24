@@ -301,6 +301,7 @@ SOFTWARE.
           <plugin>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.8.11</version>
             <configuration>
               <output>file</output>
             </configuration>
@@ -420,8 +421,8 @@ SOFTWARE.
                 <goals>
                   <goal>sign</goal>
                 </goals>
-                <configuration combine.self="override">
-                  <gpgArguments>
+                <configuration>
+                  <gpgArguments combine.self="override">
                     <arg>--pinentry-mode</arg>
                     <arg>loopback</arg>
                   </gpgArguments>
