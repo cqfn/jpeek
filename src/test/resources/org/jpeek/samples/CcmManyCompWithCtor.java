@@ -10,7 +10,7 @@ public class CcmManyCompWithCtor {
 
     String name5;
 
-    public CcmManyComponentWithCtor() {
+    public CcmManyCompWithCtor() {
         name1 = "one";
         name2 = "two";
         name3 = "three";
