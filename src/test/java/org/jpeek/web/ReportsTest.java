@@ -58,7 +58,6 @@ final class ReportsTest {
     }
 
     @Test
-    @Disabled
     void rendersOneReport(@TempDir final File folder) throws Exception {
         final BiFunc<String, String, Func<String, Response>> reports = new Reports(folder.toPath());
         new Assertion<>(
