@@ -33,6 +33,7 @@ import org.cactoos.Func;
 import org.cactoos.text.TextOf;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -57,6 +58,7 @@ final class ReportsTest {
     }
 
     @Test
+    @Disabled
     void rendersOneReport(@TempDir final File folder) throws Exception {
         final BiFunc<String, String, Func<String, Response>> reports = new Reports(folder.toPath());
         new Assertion<>(

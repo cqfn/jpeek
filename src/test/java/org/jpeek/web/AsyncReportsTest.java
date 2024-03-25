@@ -44,7 +44,6 @@ import org.takes.rs.RsText;
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@Disabled
 final class AsyncReportsTest {
 
     @Test
