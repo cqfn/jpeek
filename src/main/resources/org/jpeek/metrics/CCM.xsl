@@ -56,17 +56,69 @@ SOFTWARE.
                 <xsl:value-of select="$other/@name"/>
               </method>
             </edge>
+          <edge>
+              <method>
+                  <xsl:value-of select="$other/@name"/>
+              </method>
+              <method>
+                  <xsl:value-of select="$method/@name"/>
+              </method>
+          </edge>
           </xsl:if>
         </xsl:for-each>
       </xsl:for-each>
     </xsl:variable>
+
+      <xsl:variable name="graph">
+          <xsl:for-each select="$methods">
+              <xsl:variable name="method" select="."/>
+              <node id="{$method/@name}">
+                  <xsl:for-each select="$edges/edge[method[1]/text() = $method/@name]">
+                      <edge>
+                          <xsl:value-of select="method[2]/text()"/>
+                      </edge>
+                  </xsl:for-each>
+              </node>
+          </xsl:for-each>
+      </xsl:variable>
+
+    <xsl:variable name="result">
+      <xsl:for-each select="$graph/node">
+        <xsl:variable name="root" select="."/>
+        <xsl:variable name="id" select="$root/@id"/>
+        <xsl:element name="group">
+        <xsl:attribute name="id">
+          <xsl:value-of select="$id"/>
+        </xsl:attribute>
+        <xsl:call-template name="group">
+          <xsl:with-param name="x" select="$root"/>
+          <xsl:with-param name="seen" select="$id" />
+          <xsl:with-param name="graph" select="$graph"/>
+        </xsl:call-template>
+          <xsl:element name="edge">
+            <xsl:value-of select="$id"/>
+          </xsl:element>
+        </xsl:element>
+      </xsl:for-each>
+    </xsl:variable>
+
+    <xsl:variable name="counts">
+      <!-- Iterate over each group -->
+      <xsl:for-each-group select="$result/group" group-by="@id">
+        <xsl:variable name="groupId" select="current-grouping-key()"/>
+        <xsl:variable name="minValue">
+          <xsl:perform-sort select="current-group()/edge">
+            <xsl:sort select="./text()" order="ascending"/>
+          </xsl:perform-sort>
+        </xsl:variable>
+        <minValue><xsl:value-of select="$minValue/edge[1]/text()"/></minValue>
+      </xsl:for-each-group>
+    </xsl:variable>
+
     <xsl:copy>
-      <xsl:variable name="nc" select="count($edges/edge)"/>
-      <!--
-      @todo #522:15m/DEV ncc is already calculated during skeleton build. It has to be captured
-        from that skeleton and put into the corresponding variable
-      -->
-      <xsl:variable name="ncc" select="count(distinct-values($edges/edge/method/text()))"/>
+
+      <xsl:variable name="nc" select="count($edges/edge) div 2"/>
+      <xsl:variable name="ncc" select="count(distinct-values($counts/minValue/text()))"/>
       <xsl:variable name="nmp" select="(count($methods) * (count($methods) - 1)) div 2"/>
       <xsl:attribute name="value">
         <xsl:choose>
@@ -92,6 +144,7 @@ SOFTWARE.
         <var id="nmp">
           <xsl:value-of select="$nmp"/>
         </var>
+
       </vars>
     </xsl:copy>
   </xsl:template>
@@ -99,5 +152,23 @@ SOFTWARE.
     <xsl:copy>
       <xsl:apply-templates select="node()|@*"/>
     </xsl:copy>
+  </xsl:template>
+  <xsl:template name="group">
+    <xsl:param name="x" as="element()"/>
+    <xsl:param name="seen"/>
+    <xsl:param name="graph"/>
+      <xsl:for-each select="$x/edge">
+        <xsl:variable name="r" select="."/>
+        <xsl:if test="not(contains($seen, $r/text()))">
+          <xsl:element name="edge">
+            <xsl:value-of select="$r"/>
+          </xsl:element>
+          <xsl:call-template name="group">
+            <xsl:with-param name="seen" select="concat($seen, $r/text())"/>
+            <xsl:with-param name="x" select="$graph/node[@id=$r]"/>
+            <xsl:with-param name="graph" select="$graph"/>
+          </xsl:call-template>
+        </xsl:if>
+      </xsl:for-each>
   </xsl:template>
 </xsl:stylesheet>
