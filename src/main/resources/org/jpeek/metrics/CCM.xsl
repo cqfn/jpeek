@@ -90,7 +90,7 @@ SOFTWARE.
           </xsl:attribute>
           <xsl:call-template name="group">
             <xsl:with-param name="x" select="$root"/>
-            <xsl:with-param name="seen" select="$id"/>
+            <xsl:with-param name="seen" select="concat($id, ',')"/>
             <xsl:with-param name="graph" select="$graph"/>
           </xsl:call-template>
           <xsl:element name="edge">
@@ -151,10 +151,10 @@ SOFTWARE.
     <xsl:param name="x" as="element()"/>
     <xsl:param name="seen"/>
     <xsl:param name="graph"/>
-    <xsl:variable name="used" select="concat($seen, $x/@id)"/>
+    <xsl:variable name="used" select="concat($seen, concat($x/@id, ','))"/>
     <xsl:for-each select="$x/edge">
       <xsl:variable name="r" select="."/>
-      <xsl:if test="not(contains($used, $r/text()))">
+      <xsl:if test="not(contains($used, concat($r/text(), ',')))">
         <xsl:element name="edge">
           <xsl:value-of select="$r"/>
         </xsl:element>
