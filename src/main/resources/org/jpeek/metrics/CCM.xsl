@@ -151,14 +151,15 @@ SOFTWARE.
     <xsl:param name="x" as="element()"/>
     <xsl:param name="seen"/>
     <xsl:param name="graph"/>
+    <xsl:variable name="used" select="concat($seen, $x/@id)"/>
     <xsl:for-each select="$x/edge">
       <xsl:variable name="r" select="."/>
-      <xsl:if test="not(contains($seen, $r/text()))">
+      <xsl:if test="not(contains($used, $r/text()))">
         <xsl:element name="edge">
           <xsl:value-of select="$r"/>
         </xsl:element>
         <xsl:call-template name="group">
-          <xsl:with-param name="seen" select="concat($seen, $r/text())"/>
+          <xsl:with-param name="seen" select="$used"/>
           <xsl:with-param name="x" select="$graph/node[@id=$r][1]"/>
           <xsl:with-param name="graph" select="$graph"/>
         </xsl:call-template>
