@@ -56,14 +56,14 @@ SOFTWARE.
                 <xsl:value-of select="$other/@name"/>
               </method>
             </edge>
-          <edge>
+            <edge>
               <method>
-                  <xsl:value-of select="$other/@name"/>
+                <xsl:value-of select="$other/@name"/>
               </method>
               <method>
-                  <xsl:value-of select="$method/@name"/>
+                <xsl:value-of select="$method/@name"/>
               </method>
-          </edge>
+            </edge>
           </xsl:if>
         </xsl:for-each>
       </xsl:for-each>
