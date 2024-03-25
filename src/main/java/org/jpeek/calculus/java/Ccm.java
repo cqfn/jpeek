@@ -41,24 +41,24 @@ public final class Ccm implements Calculus {
 
     @Override
     public XML node(
-            final String metric,
-            final Map<String, Object> params,
-            final XML skeleton
+        final String metric,
+        final Map<String, Object> params,
+        final XML skeleton
     ) {
         if (!"ccm".equalsIgnoreCase(metric)) {
             throw new IllegalArgumentException(
-                    new FormattedText(
-                            "This metric is CCM, not %s.", metric
-                    ).toString()
+                new FormattedText(
+                    "This metric is CCM, not %s.", metric
+                ).toString()
             );
         }
         return Ccm.withFixedNcc(
-                new XSLDocument(
-                        new UncheckedInput(
-                                new ResourceOf("org/jpeek/metrics/CCM.xsl")
-                        ).stream()
-                ).transform(skeleton),
-                skeleton
+            new XSLDocument(
+                new UncheckedInput(
+                    new ResourceOf("org/jpeek/metrics/CCM.xsl")
+                ).stream()
+            ).transform(skeleton),
+            skeleton
         );
     }
 
@@ -97,12 +97,12 @@ public final class Ccm implements Calculus {
             final XML skeleton, final String pack, final XML clazz
     ) {
         throw new UnsupportedOperationException(
-                new Joined(
-                        "",
-                        skeleton.toString(),
-                        pack,
-                        clazz.toString()
-                ).toString()
+            new Joined(
+                "",
+                skeleton.toString(),
+                pack,
+                clazz.toString()
+            ).toString()
         );
     }
 }
