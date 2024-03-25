@@ -94,7 +94,7 @@ public final class Ccm implements Calculus {
      *  Update this `todo` accordingly.
      */
     private static void updateNcc(
-            final XML skeleton, final String pack, final XML clazz
+        final XML skeleton, final String pack, final XML clazz
     ) {
         throw new UnsupportedOperationException(
             new Joined(
