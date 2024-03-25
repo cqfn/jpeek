@@ -30,7 +30,6 @@ import org.junit.jupiter.api.Test;
  * Tests to check CCM metric in different links between attributes and methods.
  * @since 0.29
  */
-@Disabled
 final class CcmTest {
 
     /**
@@ -95,6 +94,7 @@ final class CcmTest {
      * @throws Exception
      */
     @Test
+    @Disabled
     void mixedCallsInClassTest() throws Exception {
         final MetricBase.Report report = new MetricBase(
             "org/jpeek/metrics/CCM.xsl"
