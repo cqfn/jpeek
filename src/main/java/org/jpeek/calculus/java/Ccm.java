@@ -23,26 +23,15 @@
  */
 package org.jpeek.calculus.java;
 
-import com.jcabi.xml.Sources;
 import com.jcabi.xml.XML;
-import com.jcabi.xml.XMLDocument;
 import com.jcabi.xml.XSLDocument;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import org.cactoos.io.ResourceOf;
+import org.cactoos.io.UncheckedInput;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.Joined;
-import org.cactoos.text.TextOf;
-import org.cactoos.text.UncheckedText;
 import org.jpeek.calculus.Calculus;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
 
 /**
  * CCM metric Java calculus.
@@ -52,30 +41,25 @@ public final class Ccm implements Calculus {
 
     @Override
     public XML node(
-        final String metric,
-        final Map<String, Object> params,
-        final XML skeleton
+            final String metric,
+            final Map<String, Object> params,
+            final XML skeleton
     ) {
         if (!"ccm".equalsIgnoreCase(metric)) {
             throw new IllegalArgumentException(
-                new FormattedText(
-                    "This metric is CCM, not %s.", metric
-                ).toString()
+                    new FormattedText(
+                            "This metric is CCM, not %s.", metric
+                    ).toString()
             );
         }
-        final XSLDocument doc = new XSLDocument(
-            new UncheckedText(
-                new TextOf(
-                    new ResourceOf(
-                        new FormattedText("org/jpeek/metrics/%s.xsl", metric)
-                    )
-                )
-            ).asString(),
-            Sources.DUMMY,
-            params
+        return Ccm.withFixedNcc(
+                new XSLDocument(
+                        new UncheckedInput(
+                                new ResourceOf("org/jpeek/metrics/CCM.xsl")
+                        ).stream()
+                ).transform(skeleton),
+                skeleton
         );
-        final XML meta = addMetaTag(skeleton);
-        return doc.transform(meta);
     }
 
     /**
@@ -84,7 +68,6 @@ public final class Ccm implements Calculus {
      * @param skeleton XML Skeleton
      * @return XML with fixed NCC.
      */
-    @SuppressWarnings("PMD.UnusedPrivateMethod")
     private static XML withFixedNcc(final XML transformed, final XML skeleton) {
         final List<XML> packages = transformed.nodes("//package");
         for (final XML elt : packages) {
@@ -111,103 +94,15 @@ public final class Ccm implements Calculus {
      *  Update this `todo` accordingly.
      */
     private static void updateNcc(
-        final XML skeleton, final String pack, final XML clazz
+            final XML skeleton, final String pack, final XML clazz
     ) {
         throw new UnsupportedOperationException(
-            new Joined(
-                "",
-                skeleton.toString(),
-                pack,
-                clazz.toString()
-            ).toString()
+                new Joined(
+                        "",
+                        skeleton.toString(),
+                        pack,
+                        clazz.toString()
+                ).toString()
         );
-    }
-
-    /**
-     * Adds a meta tag to the skeleton XML.
-     * @param skeleton The skeleton XML to which the meta tag will be added
-     * @return The modified XML with the meta tag added
-     */
-    private static XML addMetaTag(final XML skeleton) {
-        final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = null;
-        final Document doc;
-        try {
-            builder = factory.newDocumentBuilder();
-            doc = builder.newDocument();
-            final Element meta = doc.createElement("meta");
-            Node packages = skeleton.node().getFirstChild().getFirstChild().getNextSibling()
-                .getFirstChild();
-            while (Objects.nonNull(packages)) {
-                if (packages.getTextContent().matches("\\s*")) {
-                    packages = packages.getNextSibling();
-                    continue;
-                }
-                final Node child = createPackageTag(doc, packages);
-                meta.appendChild(child);
-                packages = packages.getNextSibling();
-            }
-            doc.appendChild(meta);
-        } catch (final ParserConfigurationException ex) {
-            throw new IllegalStateException(ex);
-        }
-        final Node repr = skeleton.node().getFirstChild();
-        final Node node = repr.getOwnerDocument()
-            .importNode(doc.getDocumentElement(), true);
-        repr.appendChild(node);
-        return new XMLDocument(repr);
-    }
-
-    /**
-     * Creates a package tag element in the XML document.
-     * @param doc The XML document to which the package tag will be added
-     * @param packages The node representing the package
-     * @return The package tag element created in the XML document
-     */
-    private static Node createPackageTag(final Document doc, final Node packages) {
-        final NamedNodeMap map = packages.getAttributes();
-        final Element root = doc.createElement("package");
-        final Node id = map.getNamedItem("id");
-        root.setAttribute("id", id.getNodeValue());
-        Node classes = packages.getFirstChild();
-        while (Objects.nonNull(classes)) {
-            if (classes.getTextContent().matches("\\s*")) {
-                classes = classes.getNextSibling();
-                continue;
-            }
-            final Node child = createClassTag(doc, classes);
-            root.appendChild(child);
-            classes = classes.getNextSibling();
-        }
-        return root;
-    }
-
-    /**
-     * Creates a class tag element in the XML document.
-     *
-     * This method constructs a class tag element in the XML document based on the
-     * information provided by the given node representing a class. It traverses
-     * through the attributes of the class node to extract necessary information
-     * and constructs the class tag element accordingly.
-     *
-     * Additionally, this method adds a child element representing a metric called
-     * "ncc" to the class tag.
-     *
-     * @param doc The XML document to which the class tag will be added
-     * @param classes The node representing the class
-     * @return The class tag element created in the XML document
-     * @todo #522:30m/DEV Implement method that would build graph where methods are nodes and
-     *  field references are edges and find connected components in that graph.
-     */
-    private static  Node createClassTag(final Document doc, final Node classes) {
-        final NamedNodeMap map = classes.getAttributes();
-        final Element root = doc.createElement("class");
-        final Node id = map.getNamedItem("id");
-        root.setAttribute("id", id.getNodeValue());
-        final Integer value = 1;
-        final Element ncc = doc.createElement("ncc");
-        ncc.setTextContent(value.toString());
-        root.appendChild(ncc);
-        return root;
     }
 }
