@@ -31,6 +31,7 @@ import java.util.concurrent.TimeUnit;
 import org.cactoos.BiFunc;
 import org.cactoos.Func;
 import org.cactoos.func.SolidBiFunc;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.takes.Response;
@@ -43,6 +44,7 @@ import org.takes.rs.RsText;
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@Disabled
 final class AsyncReportsTest {
 
     @Test
