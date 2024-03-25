@@ -68,18 +68,18 @@ SOFTWARE.
         </xsl:for-each>
       </xsl:for-each>
     </xsl:variable>
-    <xsl:variable name="graph">
-      <xsl:for-each select="$methods">
-        <xsl:variable name="method" select="."/>
-          <node id="{$method/@name}">
-            <xsl:for-each select="$edges/edge[method[1]/text() = $method/@name]">
-              <edge>
-                <xsl:value-of select="method[2]/text()"/>
-              </edge>
-            </xsl:for-each>
-          </node>
-      </xsl:for-each>
-    </xsl:variable>
+      <xsl:variable name="graph">
+          <xsl:for-each select="$methods">
+              <xsl:variable name="method" select="."/>
+              <node id="{$method/@name}">
+                  <xsl:for-each select="$edges/edge[method[1]/text() = $method/@name]">
+                      <edge>
+                          <xsl:value-of select="method[2]/text()"/>
+                      </edge>
+                  </xsl:for-each>
+              </node>
+          </xsl:for-each>
+      </xsl:variable>
     <xsl:variable name="result">
         <xsl:for-each select="$graph/node">
             <xsl:variable name="root" select="."/>
