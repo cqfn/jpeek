@@ -31,7 +31,6 @@ import java.util.concurrent.TimeUnit;
 import org.cactoos.BiFunc;
 import org.cactoos.Func;
 import org.cactoos.func.SolidBiFunc;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.takes.Response;
