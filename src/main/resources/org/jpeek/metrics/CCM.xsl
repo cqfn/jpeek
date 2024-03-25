@@ -68,7 +68,6 @@ SOFTWARE.
         </xsl:for-each>
       </xsl:for-each>
     </xsl:variable>
-
       <xsl:variable name="graph">
           <xsl:for-each select="$methods">
               <xsl:variable name="method" select="."/>
@@ -81,7 +80,6 @@ SOFTWARE.
               </node>
           </xsl:for-each>
       </xsl:variable>
-
     <xsl:variable name="result">
       <xsl:for-each select="$graph/node">
         <xsl:variable name="root" select="."/>
@@ -101,22 +99,19 @@ SOFTWARE.
         </xsl:element>
       </xsl:for-each>
     </xsl:variable>
-
     <xsl:variable name="counts">
-      <!-- Iterate over each group -->
       <xsl:for-each-group select="$result/group" group-by="@id">
-        <xsl:variable name="groupId" select="current-grouping-key()"/>
         <xsl:variable name="minValue">
           <xsl:perform-sort select="current-group()/edge">
-            <xsl:sort select="./text()" order="ascending"/>
+            <xsl:sort select="./text()"/>
           </xsl:perform-sort>
         </xsl:variable>
-        <minValue><xsl:value-of select="$minValue/edge[1]/text()"/></minValue>
+        <minValue>
+            <xsl:value-of select="$minValue/edge[1]/text()"/>
+        </minValue>
       </xsl:for-each-group>
     </xsl:variable>
-
     <xsl:copy>
-
       <xsl:variable name="nc" select="count($edges/edge) div 2"/>
       <xsl:variable name="ncc" select="count(distinct-values($counts/minValue/text()))"/>
       <xsl:variable name="nmp" select="(count($methods) * (count($methods) - 1)) div 2"/>
@@ -144,7 +139,6 @@ SOFTWARE.
         <var id="nmp">
           <xsl:value-of select="$nmp"/>
         </var>
-
       </vars>
     </xsl:copy>
   </xsl:template>
