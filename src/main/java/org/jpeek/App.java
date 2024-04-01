@@ -49,6 +49,7 @@ import org.cactoos.scalar.AndInThreads;
 import org.cactoos.scalar.IoChecked;
 import org.cactoos.scalar.LengthOf;
 import org.jpeek.calculus.Calculus;
+import org.jpeek.calculus.java.Ccm;
 import org.jpeek.calculus.xsl.XslCalculus;
 import org.jpeek.skeleton.Skeleton;
 import org.xembly.Directives;
@@ -250,7 +251,6 @@ public final class App {
         final Base base = new DefaultBase(this.input);
         final XML skeleton = new Skeleton(base).xml();
         final XSL chain = new XSLChain(layers);
-        final Calculus xsl = new XslCalculus();
         this.save(skeleton.toString(), "skeleton.xml");
         Arrays.stream(Metrics.values())
             .filter(
@@ -258,6 +258,12 @@ public final class App {
             )
             .forEach(
                 metric -> {
+                    final Calculus xsl;
+                    if (metric == Metrics.CCM) {
+                        xsl = new Ccm();
+                    } else {
+                        xsl = new XslCalculus();
+                    }
                     if (Objects.nonNull(metric.getSigma())) {
                         reports.add(
                             new XslReport(

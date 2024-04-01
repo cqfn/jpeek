@@ -23,6 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
+  <xsl:template match="skeleton/meta"/>
   <xsl:template match="skeleton">
     <metric>
       <xsl:apply-templates select="@*"/>
@@ -40,7 +41,11 @@ SOFTWARE.
       <xsl:apply-templates select="node()"/>
     </metric>
   </xsl:template>
+  <xsl:variable name="met" select="/skeleton/meta"/>
   <xsl:template match="class">
+    <xsl:variable name="currentClassId" select="@id"/>
+    <xsl:variable name="currentPackageId" select="../@id"/>
+    <xsl:variable name="currentClassNcc" select="$met/package[@id = $currentPackageId]/class[@id = $currentClassId]/ncc"/>
     <xsl:variable name="methods" select="methods/method[@ctor='false']"/>
     <xsl:variable name="edges">
       <xsl:for-each select="$methods">
@@ -68,52 +73,9 @@ SOFTWARE.
         </xsl:for-each>
       </xsl:for-each>
     </xsl:variable>
-    <xsl:variable name="graph">
-      <xsl:for-each select="$methods">
-        <xsl:variable name="method" select="."/>
-        <node id="{$method/@name}">
-          <xsl:for-each select="$edges/edge[method[1]/text() = $method/@name]">
-            <edge>
-              <xsl:value-of select="method[2]/text()"/>
-            </edge>
-          </xsl:for-each>
-        </node>
-      </xsl:for-each>
-    </xsl:variable>
-    <xsl:variable name="result">
-      <xsl:for-each select="$graph/node">
-        <xsl:variable name="root" select="."/>
-        <xsl:variable name="id" select="$root/@id"/>
-        <xsl:element name="group">
-          <xsl:attribute name="id">
-            <xsl:value-of select="$id"/>
-          </xsl:attribute>
-          <xsl:call-template name="group">
-            <xsl:with-param name="x" select="$root"/>
-            <xsl:with-param name="seen" select="concat($id, ',')"/>
-            <xsl:with-param name="graph" select="$graph"/>
-          </xsl:call-template>
-          <xsl:element name="edge">
-            <xsl:value-of select="$id"/>
-          </xsl:element>
-        </xsl:element>
-      </xsl:for-each>
-    </xsl:variable>
-    <xsl:variable name="counts">
-      <xsl:for-each-group select="$result/group" group-by="@id">
-        <xsl:variable name="minValue">
-          <xsl:perform-sort select="current-group()/edge">
-            <xsl:sort select="./text()"/>
-          </xsl:perform-sort>
-        </xsl:variable>
-        <minValue>
-          <xsl:value-of select="$minValue/edge[1]/text()"/>
-        </minValue>
-      </xsl:for-each-group>
-    </xsl:variable>
     <xsl:copy>
       <xsl:variable name="nc" select="count($edges/edge) div 2"/>
-      <xsl:variable name="ncc" select="count(distinct-values($counts/minValue/text()))"/>
+      <xsl:variable name="ncc" select="$currentClassNcc"/>
       <xsl:variable name="nmp" select="(count($methods) * (count($methods) - 1)) div 2"/>
       <xsl:attribute name="value">
         <xsl:choose>
@@ -146,24 +108,5 @@ SOFTWARE.
     <xsl:copy>
       <xsl:apply-templates select="node()|@*"/>
     </xsl:copy>
-  </xsl:template>
-  <xsl:template name="group">
-    <xsl:param name="x" as="element()"/>
-    <xsl:param name="seen"/>
-    <xsl:param name="graph"/>
-    <xsl:variable name="used" select="concat($seen, concat($x/@id, ','))"/>
-    <xsl:for-each select="$x/edge">
-      <xsl:variable name="r" select="."/>
-      <xsl:if test="not(contains($used, concat($r/text(), ',')))">
-        <xsl:element name="edge">
-          <xsl:value-of select="$r"/>
-        </xsl:element>
-        <xsl:call-template name="group">
-          <xsl:with-param name="seen" select="$used"/>
-          <xsl:with-param name="x" select="$graph/node[@id=$r][1]"/>
-          <xsl:with-param name="graph" select="$graph"/>
-        </xsl:call-template>
-      </xsl:if>
-    </xsl:for-each>
   </xsl:template>
 </xsl:stylesheet>
