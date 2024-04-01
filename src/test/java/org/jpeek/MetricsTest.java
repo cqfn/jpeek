@@ -72,16 +72,15 @@ final class MetricsTest {
     void testsTarget(final String target, final String metric, final double value,
         @TempDir final Path output)
         throws Exception {
-        Calculus calculus;
+        final Calculus calculus;
         if (metric.equals("CCM")) {
             calculus = new Ccm();
-        }
-        else {
+        } else {
             calculus = new XslCalculus();
         }
         new XslReport(
-                new Skeleton(new FakeBase(target)).xml(), calculus,
-                new ReportData(metric)
+            new Skeleton(new FakeBase(target)).xml(), calculus,
+            new ReportData(metric)
         ).save(output);
         final String xpath;
         if (Double.isNaN(value)) {
