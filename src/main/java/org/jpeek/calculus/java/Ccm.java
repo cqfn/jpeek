@@ -242,6 +242,7 @@ public final class Ccm implements Calculus {
             while (!parents.get(ancestor).equals(ancestor)) {
                 ancestor = parents.get(ancestor);
             }
+            parents.put(node, ancestor);
             return ancestor;
         }
 
