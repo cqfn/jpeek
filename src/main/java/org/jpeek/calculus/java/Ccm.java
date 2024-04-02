@@ -24,17 +24,21 @@
 package org.jpeek.calculus.java;
 
 import com.jcabi.xml.XML;
-import com.jcabi.xml.XMLDocument;
+import com.jcabi.xml.XSL;
 import com.jcabi.xml.XSLDocument;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.io.UncheckedInput;
 import org.cactoos.text.FormattedText;
+import org.jpeek.XslReport;
 import org.jpeek.calculus.Calculus;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -47,7 +51,6 @@ import org.w3c.dom.Node;
  * @since 0.30.25
  */
 public final class Ccm implements Calculus {
-
     @Override
     public XML node(
         final String metric,
@@ -101,14 +104,12 @@ public final class Ccm implements Calculus {
                 }
                 meta.appendChild(tag);
             }
-            final Node repr = skeleton.node();
-            final Node text = repr.getFirstChild().getOwnerDocument()
-                .importNode(doc.createTextNode("\n"), true);
-            final Node node = repr.getFirstChild().getOwnerDocument()
-                .importNode(meta, true);
-            repr.getFirstChild().appendChild(text);
-            repr.getFirstChild().appendChild(node);
-            return new XMLDocument(repr);
+            final XSL modifier = new XSLDocument(
+                XslReport.class.getResourceAsStream(
+                    "xsl/meta-info.xsl"
+                )
+            ).with("meta", meta);
+            return modifier.transform(skeleton);
         } catch (final ParserConfigurationException ex) {
             throw new IllegalStateException(ex);
         }
@@ -142,82 +143,97 @@ public final class Ccm implements Calculus {
         final Map<String, String> parents = new HashMap<>();
         for (final XML method : clazz.nodes("methods/method")) {
             if (!params.containsKey("include-static-methods")
-                && method.node().getAttributes().getNamedItem("static").getNodeValue()
-                    .equals("true")) {
+                && method.xpath("@static").get(0).equals("true")) {
                 continue;
             }
-            final String name = method.node().getAttributes().getNamedItem("name").getNodeValue();
+            final String name = method.xpath("@name").get(0);
             if (!params.containsKey("include-ctors") && name.equals("<init>")) {
                 continue;
             }
             parents.put(name, name);
             final List<XML> ops = method.nodes("ops/op");
             for (final XML operation : ops) {
-                final String var = operation.node().getTextContent();
-                if (connections.containsKey(var)) {
-                    connections.get(var).add(name);
+                final String code = operation.xpath("@code").get(0);
+                if (code.equals("call")) {
+                    final String classpath = operation.nodes("name").get(0).node().getTextContent();
+                    final List<String> splits = Arrays.asList(classpath.split("\\."));
+                    parents.put(name, splits.get(splits.size() - 1));
                 } else {
-                    final List<String> init = new ArrayList<>(0);
-                    init.add(name);
-                    connections.put(var, init);
+                    final String var = operation.node().getTextContent();
+                    if (connections.containsKey(var)) {
+                        connections.get(var).add(name);
+                    } else {
+                        final List<String> init = new ArrayList<>(0);
+                        init.add(name);
+                        connections.put(var, init);
+                    }
                 }
             }
         }
-        return unionFind(parents, connections);
+        return UnionFind.runUnionFind(parents, connections);
     }
 
     /**
-     * Performs the Union-Find algorithm to calculate the number of components.
-     * This method implements the Union-Find algorithm to calculate the number of components.
-     * @param parents The map representing the parent relationship.
-     * @param connections The map representing the connections between variables and methods.
-     * @return The number of components.
+     * Utility class implementing the Union-Find algorithm.
+     * The UnionFind class provides methods to perform the Union-Find algorithm,
+     * which is used to calculate the number of components in a given structure.
+     * @since 0.30.25
      */
-    private static Integer unionFind(final Map<String, String> parents,
-        final Map<String, List<String>> connections
-    ) {
-        int answer = parents.size();
-        for (final List<String> conns : connections.values()) {
-            final String initial = conns.get(0);
-            for (final String connectable : conns) {
-                if (!parents.get(initial).equals(parents.get(connectable))) {
-                    answer -= 1;
+    private static class UnionFind {
+        /**
+         * Performs the Union-Find algorithm to calculate the number of components.
+         * This method implements the Union-Find algorithm to calculate the number of components.
+         * @param parents The map representing the parent relationship.
+         * @param connections The map representing the connections between variables and methods.
+         * @return The number of components.
+         */
+        private static Integer runUnionFind(final Map<String, String> parents,
+            final Map<String, List<String>> connections
+        ) {
+            final Set<String> unique = new HashSet<>(parents.values());
+            int answer = unique.size();
+            for (final List<String> conns : connections.values()) {
+                final String initial = conns.get(0);
+                for (final String connectable : conns) {
+                    if (!parents.get(initial).equals(parents.get(connectable))) {
+                        answer -= 1;
+                    }
+                    unite(initial, connectable, parents);
                 }
-                unite(initial, connectable, parents);
             }
+            return answer;
         }
-        return answer;
-    }
 
-    /**
-     * Gets the parent of a node using the Union-Find algorithm.
-     * This method retrieves the parent of a node using the Union-Find algorithm.
-     * @param node The node whose parent is to be found.
-     * @param parents The map representing the parent relationship.
-     * @return The parent of the node.
-     */
-    private static String getParent(final String node, final Map<String, String> parents) {
-        String ancestor = node;
-        while (!parents.get(ancestor).equals(ancestor)) {
-            ancestor = parents.get(ancestor);
+        /**
+         * Gets the parent of a node using the Union-Find algorithm.
+         * This method retrieves the parent of a node using the Union-Find algorithm.
+         * @param node The node whose parent is to be found.
+         * @param parents The map representing the parent relationship.
+         * @return The parent of the node.
+         */
+        private static String getParent(final String node, final Map<String, String> parents) {
+            String ancestor = node;
+            while (!parents.get(ancestor).equals(ancestor)) {
+                ancestor = parents.get(ancestor);
+            }
+            return ancestor;
         }
-        return ancestor;
-    }
 
-    /**
-     * Unites two nodes using the Union-Find algorithm.
-     * This method unites two nodes using the Union-Find algorithm.
-     * @param node The first node.
-     * @param son The second node.
-     * @param parents The map representing the parent relationship.
-     */
-    private static void unite(final String node, final String son,
-        final Map<String, String> parents
-    ) {
-        final String root = getParent(node, parents);
-        final String attachable = getParent(son, parents);
-        if (!root.equals(attachable)) {
-            parents.put(attachable, root);
+        /**
+         * Unites two nodes using the Union-Find algorithm.
+         * This method unites two nodes using the Union-Find algorithm.
+         * @param node The first node.
+         * @param son The second node.
+         * @param parents The map representing the parent relationship.
+         */
+        private static void unite(final String node, final String son,
+            final Map<String, String> parents
+        ) {
+            final String root = getParent(node, parents);
+            final String attachable = getParent(son, parents);
+            if (!root.equals(attachable)) {
+                parents.put(attachable, root);
+            }
         }
     }
 }
