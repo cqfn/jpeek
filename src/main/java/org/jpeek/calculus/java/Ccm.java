@@ -239,10 +239,10 @@ public final class Ccm implements Calculus {
          */
         private static String getParent(final String node, final Map<String, String> parents) {
             String ancestor = node;
-            while (!parents.get(ancestor).equals(ancestor)) {
-                ancestor = parents.get(ancestor);
+            if (!parents.get(ancestor).equals(ancestor)) {
+                ancestor = getParent(parents.get(ancestor), parents);
+                parents.put(node, ancestor);
             }
-            parents.put(node, ancestor);
             return ancestor;
         }
 
