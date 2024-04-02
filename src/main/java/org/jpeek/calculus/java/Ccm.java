@@ -159,7 +159,7 @@ public final class Ccm implements Calculus {
                     final String classpath = operation.nodes("name").get(0).node().getTextContent();
                     final List<String> splits = Arrays.asList(classpath.split("\\."));
                     if (parents.keySet().contains(splits.get(splits.size() - 1))) {
-                        parents.put(name, splits.get(splits.size() - 1));
+                        UnionFind.unite(name, splits.get(splits.size() - 1), parents);
                     }
                 } else {
                     final String var = operation.node().getTextContent();
@@ -239,9 +239,14 @@ public final class Ccm implements Calculus {
          */
         private static String getParent(final String node, final Map<String, String> parents) {
             String ancestor = node;
-            if (!parents.get(ancestor).equals(ancestor)) {
-                ancestor = getParent(parents.get(ancestor), parents);
-                parents.put(node, ancestor);
+            while (!parents.get(ancestor).equals(ancestor)) {
+                ancestor = parents.get(ancestor);
+            }
+            String current = node;
+            while (!parents.get(current).equals(current)) {
+                final String temp = parents.get(current);
+                parents.put(current, ancestor);
+                current = temp;
             }
             return ancestor;
         }
