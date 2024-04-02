@@ -141,23 +141,26 @@ public final class Ccm implements Calculus {
     private static Integer calculateComponents(final XML clazz, final Map<String, Object> params) {
         final Map<String, List<String>> connections = new HashMap<>();
         final Map<String, String> parents = new HashMap<>();
+        final List<XML> allowed = new ArrayList<>(0);
         for (final XML method : clazz.nodes("methods/method")) {
-            if (!params.containsKey("include-static-methods")
-                && method.xpath("@static").get(0).equals("true")) {
-                continue;
-            }
             final String name = method.xpath("@name").get(0);
-            if (!params.containsKey("include-ctors") && name.equals("<init>")) {
+            if (isConstructorExcluded(params, method) || isStaticMethodExcluded(params, method)) {
                 continue;
             }
+            allowed.add(method);
             parents.put(name, name);
+        }
+        for (final XML method : allowed) {
+            final String name = method.xpath("@name").get(0);
             final List<XML> ops = method.nodes("ops/op");
             for (final XML operation : ops) {
                 final String code = operation.xpath("@code").get(0);
                 if (code.equals("call")) {
                     final String classpath = operation.nodes("name").get(0).node().getTextContent();
                     final List<String> splits = Arrays.asList(classpath.split("\\."));
-                    parents.put(name, splits.get(splits.size() - 1));
+                    if (parents.keySet().contains(splits.get(splits.size() - 1))) {
+                        parents.put(name, splits.get(splits.size() - 1));
+                    }
                 } else {
                     final String var = operation.node().getTextContent();
                     if (connections.containsKey(var)) {
@@ -171,6 +174,29 @@ public final class Ccm implements Calculus {
             }
         }
         return UnionFind.runUnionFind(parents, connections);
+    }
+
+    /**
+     * Checks if a static method should be excluded based on parameters.
+     * @param params Parameters for filtering.
+     * @param method The method XML node.
+     * @return True if the method should be excluded, false otherwise.
+     */
+    private static boolean isStaticMethodExcluded(final Map<String, Object> params,
+        final XML method) {
+        return !params.containsKey("include-static-methods") && method.xpath("@static").get(0)
+            .equals("true");
+    }
+
+    /**
+     * Checks if a constructor should be excluded based on parameters.
+     * @param params Parameters for filtering.
+     * @param method The method XML node.
+     * @return True if the constructor should be excluded, false otherwise.
+     */
+    private static boolean isConstructorExcluded(final Map<String, Object> params,
+        final XML method) {
+        return !params.containsKey("include-ctors") && method.xpath("@ctor").get(0).equals("true");
     }
 
     /**
