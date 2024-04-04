@@ -92,7 +92,7 @@ public class UnionFind<T> {
      */
     private T getParent(final T node) {
         if (!this.parents.containsKey(node)) {
-            throw new IllegalStateException("some of the nodes are not from the initial set");
+            throw new IllegalStateException("node is not from the initial set");
         }
         T ancestor = node;
         while (!this.parents.get(ancestor).equals(ancestor)) {
