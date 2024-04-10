@@ -60,7 +60,7 @@ public final class FileTarget implements Target {
     @Override
     public Path toPath() throws IOException {
         if (this.target.exists()) {
-            if (this.overwrite) {
+            if (Boolean.TRUE.equals(this.overwrite)) {
                 deleteDir(this.target);
             } else {
                 throw new IllegalStateException(
