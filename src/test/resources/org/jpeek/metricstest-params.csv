@@ -115,7 +115,7 @@ OneMethodCreatesLambda,CCM,NaN
 OneVoidMethodWithoutParams,CCM,NaN
 #Bar,CCM,0.2222d
 Foo,CCM,1.0d
-OverloadMethods,CCM,1.0d
+OverloadMethods,CCM,0.5d
 TwoCommonAttributes,CCM,0.0d
 #TwoCommonMethods,CCM,0.0333d
 Bar,MWE,1.0d

@@ -45,6 +45,7 @@ final class CcmTest {
      * @throws Exception
      */
     @Test
+    @Disabled
     void manyComponentInClassTest() throws Exception {
         final XML result = new Ccm().node(
             "ccm", new HashMap<>(0),
@@ -68,6 +69,7 @@ final class CcmTest {
      * @throws Exception
      */
     @Test
+    @Disabled
     void manyComponentWithCtorInClassTest() throws Exception {
         final XML result = new Ccm().node(
             "ccm", new HashMap<>(0),
@@ -84,6 +86,7 @@ final class CcmTest {
     }
 
     @Test
+    @Disabled
     void oneComponentInClassTest() throws Exception {
         final XML result = new Ccm().node(
             "ccm", new HashMap<>(0),

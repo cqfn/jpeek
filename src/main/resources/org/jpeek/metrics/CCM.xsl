@@ -61,20 +61,12 @@ SOFTWARE.
                 <xsl:value-of select="$other/@name"/>
               </method>
             </edge>
-            <edge>
-              <method>
-                <xsl:value-of select="$other/@name"/>
-              </method>
-              <method>
-                <xsl:value-of select="$method/@name"/>
-              </method>
-            </edge>
           </xsl:if>
         </xsl:for-each>
       </xsl:for-each>
     </xsl:variable>
     <xsl:copy>
-      <xsl:variable name="nc" select="count($edges/edge) div 2"/>
+      <xsl:variable name="nc" select="count($edges/edge)"/>
       <xsl:variable name="ncc" select="$currentClassNcc"/>
       <xsl:variable name="nmp" select="(count($methods) * (count($methods) - 1)) div 2"/>
       <xsl:attribute name="value">
