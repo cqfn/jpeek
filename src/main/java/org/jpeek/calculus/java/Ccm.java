@@ -108,7 +108,7 @@ public final class Ccm implements Calculus {
                 .with("package", pack.xpath("@id").get(0))
                 .with("class", clazz.xpath("@id").get(0))
                 .with("value", size)
-                .transform(meta);
+                .transform(result);
         }
         return new XSLDocument(
             XslReport.class.getResourceAsStream(
