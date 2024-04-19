@@ -121,7 +121,7 @@ public final class Ccm implements Calculus {
      * Adds an XSL filter to the list of layers.
      *
      * @param layers The list of XSL filters
-     * @param name The name of the XSL file to add
+     * @param name The name of the XSL file to append
      * @return The updated list of XSL filters
      */
     private static List<XSL> addXslFilter(final List<XSL> layers, final String name) {
