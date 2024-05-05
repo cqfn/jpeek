@@ -98,6 +98,7 @@ OnlyOneMethodWithParams,TLCOM,0.0d
 OverloadMethods,TLCOM,0.0d
 #TwoCommonAttributes,TLCOM,4.0d
 WithoutAttributes,TLCOM,1.0d
+OneMethodCreatesLambda,TLCOM,1.0d
 Bar,LCC,0.0d
 Foo,LCC,1.0d
 MethodMethodCalls,LCC,0.1d
