@@ -82,10 +82,6 @@ SOFTWARE.
            connected to m3. It will miss connections in longer chains. After fixing this, maybe we can add it to
            the standard metrics in App.
           -->
-          <!--
-          @todo #65:15min TLCOM: add test for OneMethodCreatesLambda after #171 is fixed. The extra synthetic
-           method introduced by the compiler distorts this metric's result.
-          -->
           <xsl:choose>
             <xsl:when test="$left_attrs[. = $right_attrs]">
               <Q/>
