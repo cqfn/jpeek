@@ -111,6 +111,12 @@ public enum Metrics {
     CCM(false, null, null),
 
     /**
+     * Class Connection Metric (CCM) metric.
+     * Measuring Class Cohesion in Object-Oriented Systems version 3
+     */
+    CCM_V3(false, null, null),
+
+    /**
      * Maximal Weighted Entropy metric. Modeling class cohesion as mixtures of latent topics
      */
     MWE(false, null, null);
