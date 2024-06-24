@@ -24,8 +24,9 @@
 package org.jpeek.graph;
 
 import com.jcabi.xml.XML;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
+
 import org.cactoos.list.ListOf;
 import org.cactoos.map.MapOf;
 import org.cactoos.scalar.Sticky;
@@ -74,47 +75,32 @@ public final class XmlGraph implements Graph {
      * @param cname Class in the skeleton this graph is for
      * @return List of nodes
      */
-    private static List<Node> build(final Skeleton skeleton, final String pname,
-        final String cname) {
-        final Map<XML, Node> byxml = new MapOf<>(
-            method -> method,
-            method -> new Node.Simple(
-                new XmlMethodSignature(
-                    skeleton.xml()
-                        .nodes(
-                            new FormattedText(
-                                "//package[@id='%s']", pname
-                            ).toString()
-                        ).get(0)
-                        .nodes(
-                            new FormattedText(
-                                "//class[@id='%s']", cname
-                            ).toString()
-                        ).get(0),
-                    method
-                ).asString()
-            ),
-            skeleton.xml().nodes(
-                "//methods/method[@ctor='false' and @abstract='false']"
-            )
-        );
-        final Map<String, Node> byname = new MapOf<>(
-            Node::name,
-            node -> node,
-            byxml.values()
-        );
-        for (final Map.Entry<XML, Node> entry : byxml.entrySet()) {
-            final List<XML> calls = entry.getKey().nodes("ops/op[@code='call']");
-            final Node caller = entry.getValue();
-            for (final XML call : calls) {
-                final String name = new XmlMethodCall(call).toString();
-                if (byname.containsKey(name)) {
-                    final Node callee = byname.get(name);
+    private static List<Node> build(final Skeleton skeleton, final String pname, final String cname) throws Exception {
+        final Map<XML, Node> byxml = new HashMap<>();
+        final Set<String> visitedNames = new HashSet<>();
+        for (XML methodXml : skeleton.xml().nodes("//methods/method[@ctor='false' and @abstract='false']")) {
+            String methodName = new XmlMethodSignature(skeleton.xml().nodes(new FormattedText("//package[@id='%s']", pname).toString())
+                    .get(0)
+                    .nodes(new FormattedText("//class[@id='%s']", cname).toString())
+                    .get(0), methodXml).asString();
+            if (!visitedNames.contains(methodName)) {
+                Node.Simple node = new Node.Simple(methodName);
+                byxml.put(methodXml, node);
+                visitedNames.add(methodName);
+            }
+        }
+        for (Map.Entry<XML, Node> entry : byxml.entrySet()) {
+            XML methodXml = entry.getKey();
+            Node caller = entry.getValue();
+            for (XML call : methodXml.nodes("ops/op[@code='call']")) {
+                String calleeName = new XmlMethodCall(call).toString();
+                if (visitedNames.contains(calleeName)) {
+                    Node callee = byxml.get(call); // assuming they exist in byxml
                     caller.connections().add(callee);
                     callee.connections().add(caller);
                 }
             }
         }
-        return new ListOf<>(byxml.values());
+        return new ArrayList<>(byxml.values());
     }
 }
