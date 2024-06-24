@@ -146,47 +146,38 @@ final class XmlClass extends ClassVisitor implements Iterable<Directive> {
         }
     )
     public MethodVisitor visitMethod(final int access,
-        final String mtd, final String desc,
-        final String signature, final String[] exceptions) {
+                                     final String mtd, final String desc,
+                                     final String signature, final String[] exceptions) {
         final Directives dirs = new Directives();
         if ((access & Opcodes.ACC_SYNTHETIC) != Opcodes.ACC_SYNTHETIC) {
             String visibility = "default";
             if ((access & Opcodes.ACC_PUBLIC) == Opcodes.ACC_PUBLIC) {
                 visibility = "public";
-            } else if (
-                (access & Opcodes.ACC_PROTECTED) == Opcodes.ACC_PROTECTED) {
+            } else if ((access & Opcodes.ACC_PROTECTED) == Opcodes.ACC_PROTECTED) {
                 visibility = "protected";
             } else if ((access & Opcodes.ACC_PRIVATE) == Opcodes.ACC_PRIVATE) {
                 visibility = "private";
             }
+
+            // Извлечение имени переменной из описания метода
+            String[] parts = desc.split("\\)");
+            String[] methodParts = parts[0].split("\\(");
+            String methodName = methodParts[0];
+            String[] variables = methodParts[1].split(",");
+            String variableName = variables[0]; // Предполагаем, что первая переменная - это та, к которой применен вызов метода
+
             dirs.add("method")
-                .attr("name", mtd)
-                .attr("desc", desc)
-                .attr(
-                "ctor",
-                "<init>".equals(mtd) || "<clinit>".equals(mtd)
-                )
-                .attr(
-                "static",
-                (access & Opcodes.ACC_STATIC) == Opcodes.ACC_STATIC
-                )
-                .attr(
-                "abstract",
-                (access & Opcodes.ACC_ABSTRACT) == Opcodes.ACC_ABSTRACT
-                )
-                .attr(
-                "visibility",
-                visibility
-                )
-                .attr(
-                "bridge",
-                (access & Opcodes.ACC_BRIDGE) == Opcodes.ACC_BRIDGE
-                )
-                .append(new TypesOf(desc));
+                    .attr("name", mtd)
+                    .attr("variableName", variableName)
+                    .attr("desc", desc)
+                    .attr("ctor", "<init>".equals(mtd) || "<clinit>".equals(mtd))
+                    .attr("static", (access & Opcodes.ACC_STATIC) == Opcodes.ACC_STATIC)
+                    .attr("abstract", (access & Opcodes.ACC_ABSTRACT) == Opcodes.ACC_ABSTRACT)
+                    .attr("visibility", visibility)
+                    .attr("bridge", (access & Opcodes.ACC_BRIDGE) == Opcodes.ACC_BRIDGE)
+                    .append(new TypesOf(desc));
             this.methods.add(dirs);
         }
-        return new OpsOf(
-            dirs, super.visitMethod(access, mtd, desc, signature, exceptions)
-        );
+        return new OpsOf(dirs, super.visitMethod(access, mtd, desc, signature, exceptions));
     }
 }
