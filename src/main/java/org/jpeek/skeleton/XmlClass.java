@@ -27,10 +27,12 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
+
 import javassist.CannotCompileException;
 import javassist.CtClass;
 import org.cactoos.iterable.Joined;
 import org.cactoos.iterable.Mapped;
+import org.jetbrains.annotations.NotNull;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.FieldVisitor;
@@ -44,9 +46,9 @@ import org.xembly.Directives;
  *
  * <p>There is no thread-safety guarantee.</p>
  *
+ * @checkstyle ParameterNumberCheck (500 lines)
  * @see <a href="http://www.pitt.edu/~ckemerer/CK%20research%20papers/MetricForOOD_ChidamberKemerer94.pdf">A packages suite for object oriented design</a>
  * @since 0.27
- * @checkstyle ParameterNumberCheck (500 lines)
  */
 final class XmlClass extends ClassVisitor implements Iterable<Directive> {
 
@@ -67,6 +69,7 @@ final class XmlClass extends ClassVisitor implements Iterable<Directive> {
 
     /**
      * Ctor.
+     *
      * @param src The source
      */
     XmlClass(final CtClass src) {
@@ -77,6 +80,7 @@ final class XmlClass extends ClassVisitor implements Iterable<Directive> {
     }
 
     @Override
+    @NotNull
     public Iterator<Directive> iterator() {
         final ClassReader reader;
         try {
@@ -87,42 +91,42 @@ final class XmlClass extends ClassVisitor implements Iterable<Directive> {
         this.attrs.add("attributes");
         reader.accept(this, 0);
         return new Directives()
-            .append(this.attrs)
-            .up()
-            .add("methods")
-            .append(
-                new Joined<>(
-                    new Mapped<>(
-                        dirs -> new Directives().append(dirs).up(),
-                        this.methods
-                    )
+                .append(this.attrs)
+                .up()
+                .add("methods")
+                .append(
+                        new Joined<>(
+                                new Mapped<>(
+                                        dirs -> new Directives().append(dirs).up(),
+                                        this.methods
+                                )
+                        )
                 )
-            )
-            .up()
-            .iterator();
+                .up()
+                .iterator();
     }
 
     @Override
     public FieldVisitor visitField(final int access,
-        final String name, final String desc,
-        final String signature, final Object value) {
+                                   final String name, final String desc,
+                                   final String signature, final Object value) {
         this.attrs
-            .add("attribute")
-            .set(name)
-            .attr("type", desc.replaceAll(";$", ""))
-            .attr(
-                "public",
-                (access & Opcodes.ACC_PUBLIC) == Opcodes.ACC_PUBLIC
-            )
-            .attr(
-                "final",
-                (access & Opcodes.ACC_FINAL) == Opcodes.ACC_FINAL
-            )
-            .attr(
-                "static",
-                (access & Opcodes.ACC_STATIC) == Opcodes.ACC_STATIC
-            )
-            .up();
+                .add("attribute")
+                .set(name)
+                .attr("type", desc.replaceAll(";$", ""))
+                .attr(
+                        "public",
+                        (access & Opcodes.ACC_PUBLIC) == Opcodes.ACC_PUBLIC
+                )
+                .attr(
+                        "final",
+                        (access & Opcodes.ACC_FINAL) == Opcodes.ACC_FINAL
+                )
+                .attr(
+                        "static",
+                        (access & Opcodes.ACC_STATIC) == Opcodes.ACC_STATIC
+                )
+                .up();
         return super.visitField(access, name, desc, signature, value);
     }
 
@@ -140,10 +144,10 @@ final class XmlClass extends ClassVisitor implements Iterable<Directive> {
     //  - the `visitMethodInsn` arguments.
     @Override
     @SuppressWarnings(
-        {
-            "PMD.UseVarargs",
-            "PMD.UseObjectForClearerAPI"
-        }
+            {
+                    "PMD.UseVarargs",
+                    "PMD.UseObjectForClearerAPI"
+            }
     )
     public MethodVisitor visitMethod(final int access,
                                      final String mtd, final String desc,
