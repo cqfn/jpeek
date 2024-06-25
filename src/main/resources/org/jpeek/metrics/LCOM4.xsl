@@ -60,18 +60,6 @@ SOFTWARE.
     </xsl:variable>
     <xsl:variable name="A" select="$attrs_fqn/*/text()"/>
     <xsl:variable name="a" select="count($A)"/>
-    <!-- Считаем только методы (не конструкторы) -->
-    <xsl:variable name="M" select="methods/method[not(@ctor='true')]" />
-    <xsl:variable name="m" select="count($M)" />
-
-    <!-- Пересчитываем количество соединений методов без конструкторов -->
-    <xsl:variable name="E">
-      <xsl:for-each select="$M">
-        <xsl:variable name="this" select="."/>
-        <xsl:variable name="this_fullname" select="concat($class_fqn, '.', $this/@name)"/>
-        <!-- Остальной код остается неизменным -->
-      </xsl:for-each>
-    </xsl:variable>
     <!-- Ctors are not methods -->
     <xsl:variable name="M" select="methods/method[@ctor='false']"/>
     <xsl:variable name="m" select="count($M)"/>
