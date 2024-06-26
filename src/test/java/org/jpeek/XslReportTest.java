@@ -136,6 +136,7 @@ final class XslReportTest {
         ).affirm();
     }
 
+
     @Test
     void setsCorrectSchemaLocation(@TempDir final Path output) throws Exception {
         new XslReport(
