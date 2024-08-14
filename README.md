@@ -36,7 +36,7 @@ Load the latest `jar-with-dependencies.jar` file from
 and then:
 
 ```bash
-$ java -jar jpeek-jar-with-dependencies.jar --sources . --target ./jpeek
+java -jar jpeek-jar-with-dependencies.jar --sources . --target ./jpeek
 ```
 
 jPeek will analyze Java files in the current directory.
