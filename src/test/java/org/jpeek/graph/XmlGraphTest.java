@@ -76,7 +76,7 @@ final class XmlGraphTest {
     @Test
     void buildsMethodsAsNodes() {
         final List<Node> nodes = new XmlGraph(
-            new Skeleton(new FakeBase(XmlGraphTest.CLASS_NAME)),
+            new Skeleton(new FakeBase(XmlGraphTest.CLASS_NAME)).xml(),
             "", XmlGraphTest.CLASS_NAME
         ).nodes();
         new Assertion<>(
@@ -110,7 +110,7 @@ final class XmlGraphTest {
             Node::name,
             node -> node,
             new XmlGraph(
-                new Skeleton(new FakeBase(XmlGraphTest.CLASS_NAME)),
+                new Skeleton(new FakeBase(XmlGraphTest.CLASS_NAME)).xml(),
                 "", XmlGraphTest.CLASS_NAME
             ).nodes()
         );
