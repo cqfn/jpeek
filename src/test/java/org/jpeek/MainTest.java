@@ -24,11 +24,13 @@
 package org.jpeek;
 
 import com.beust.jcommander.ParameterException;
+import com.jcabi.matchers.XhtmlMatchers;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.cactoos.Scalar;
+import org.cactoos.text.TextOf;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -137,6 +139,29 @@ final class MainTest {
             "Must exists LCOM5.xml",
             Files.exists(target.resolve("LCOM5.xml")),
             new IsTrue()
+        ).affirm();
+    }
+
+    @Test
+    void supportsIncludeFilters(@TempDir final Path temp) throws Exception {
+        final Path input = Paths.get(".");
+        final Path output = temp.resolve("include");
+        Main.main(
+            "--sources", input.toString(),
+            "--target", output.toString(),
+            "--include-ctors",
+            "--include-static-methods",
+            "--include-private-methods"
+        );
+        final String skeleton = new TextOf(output.resolve("skeleton.xml")).asString();
+        new Assertion<>(
+            "Must contain included methods",
+            XhtmlMatchers.xhtml(skeleton),
+            XhtmlMatchers.hasXPaths(
+                "//method[@ctor='true']",
+                "//method[@static='true']",
+                "//method[@visibility='private']"
+            )
         ).affirm();
     }
 }
