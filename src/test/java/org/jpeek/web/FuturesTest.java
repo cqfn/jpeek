@@ -28,6 +28,7 @@ import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.IsBlank;
 import org.takes.rq.RqFake;
 import org.takes.rs.xe.XeAppend;
 
@@ -69,4 +70,23 @@ final class FuturesTest {
         ).affirm();
     }
 
+    @Test
+    void testAsString() throws Exception {
+        final Futures futures = new Futures(
+            (group, artifact) -> input -> new RsPage(
+                new RqFake(),
+                "",
+                () -> new IterableOf<>(
+                    new XeAppend("group", group),
+                    new XeAppend("artifact", artifact)
+                )
+            )
+        );
+        futures.apply("g", "a").get();
+        new Assertion<>(
+            "Resulting string shouldn't be blank",
+            futures.asString(),
+            new IsNot<>(new IsBlank())
+        ).affirm();
+    }
 }
