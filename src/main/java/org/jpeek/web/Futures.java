@@ -116,7 +116,7 @@ final class Futures implements
                         );
                         Logger.info(
                             this, "Finished processing of %s:%s",
-                            artifact, group
+                            group, artifact
                         );
                     // @checkstyle IllegalCatchCheck (4 lines)
                     // @checkstyle AvoidCatchingGenericException (4 lines)
