@@ -44,7 +44,7 @@ final class FuturesTest {
         new Assertion<>(
             "Futures returns Response",
             new Futures(
-                (artifact, group) -> input -> new RsPage(
+                (group, artifact) -> input -> new RsPage(
                     new RqFake(),
                     "wait",
                     () -> new IterableOf<>(
@@ -52,7 +52,7 @@ final class FuturesTest {
                         new XeAppend("artifact", artifact)
                     )
                 )
-            ).apply("a", "g").get().apply("test"),
+            ).apply("g", "a").get().apply("test"),
             new IsNot<>(new IsEqual<>(null))
         ).affirm();
     }
@@ -62,10 +62,10 @@ final class FuturesTest {
         new Assertion<>(
             "Futures don't crash",
             new Futures(
-                (artifact, group) -> {
+                (group, artifact) -> {
                     throw new UnsupportedOperationException("intended");
                 }
-            ).apply("a1", "g1").get().apply("test-2"),
+            ).apply("g1", "a1").get().apply("test-2"),
             new IsNot<>(new IsEqual<>(null))
         ).affirm();
     }
