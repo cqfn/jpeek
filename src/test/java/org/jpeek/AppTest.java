@@ -79,7 +79,7 @@ final class AppTest {
         args.put("include-private-methods", 1);
         new App(input, output, args).analyze();
         new Assertion<>(
-            "Must contain all types of methods",
+            "Must contain all included methods",
             XhtmlMatchers.xhtml(
                 new TextOf(output.resolve("skeleton.xml")).asString()
             ),
