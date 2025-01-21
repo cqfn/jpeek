@@ -71,17 +71,21 @@ final class AppTest {
     }
 
     @Test
-    void canIncludePrivateMethods(@TempDir final Path output) throws Exception {
+    void canIncludeAllMethods(@TempDir final Path output) throws Exception {
         final Path input = Paths.get(".");
         final Map<String, Object> args = new HashMap<>();
+        args.put("include-ctors", 1);
+        args.put("include-static-methods", 1);
         args.put("include-private-methods", 1);
         new App(input, output, args).analyze();
         new Assertion<>(
-            "Must contain private method",
+            "Must contain all types of methods",
             XhtmlMatchers.xhtml(
                 new TextOf(output.resolve("skeleton.xml")).asString()
             ),
             XhtmlMatchers.hasXPaths(
+                "//method[@ctor='true']",
+                "//method[@static='true']",
                 "//method[@visibility='private']"
             )
         ).affirm();
