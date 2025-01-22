@@ -71,22 +71,52 @@ final class AppTest {
     }
 
     @Test
-    void canIncludeAllMethods(@TempDir final Path output) throws Exception {
+    void canIncludePrivateMethods(@TempDir final Path output) throws Exception {
         final Path input = Paths.get(".");
         final Map<String, Object> args = new HashMap<>();
-        args.put("include-ctors", 1);
-        args.put("include-static-methods", 1);
         args.put("include-private-methods", 1);
         new App(input, output, args).analyze();
         new Assertion<>(
-            "Must contain all included methods",
+            "Must contain private method",
             XhtmlMatchers.xhtml(
                 new TextOf(output.resolve("skeleton.xml")).asString()
             ),
             XhtmlMatchers.hasXPaths(
-                "//method[@ctor='true']",
-                "//method[@static='true']",
                 "//method[@visibility='private']"
+            )
+        ).affirm();
+    }
+
+    @Test
+    void canIncludeConstructors(@TempDir final Path output) throws Exception {
+        final Path input = Paths.get(".");
+        final Map<String, Object> args = new HashMap<>();
+        args.put("include-ctors", 1);
+        new App(input, output, args).analyze();
+        new Assertion<>(
+            "Must contain constructor",
+            XhtmlMatchers.xhtml(
+                new TextOf(output.resolve("skeleton.xml")).asString()
+            ),
+            XhtmlMatchers.hasXPaths(
+                "//method[@ctor='true']"
+            )
+        ).affirm();
+    }
+
+    @Test
+    void canIncludeStaticMethods(@TempDir final Path output) throws Exception {
+        final Path input = Paths.get(".");
+        final Map<String, Object> args = new HashMap<>();
+        args.put("include-static-methods", 1);
+        new App(input, output, args).analyze();
+        new Assertion<>(
+            "Must contain static method",
+            XhtmlMatchers.xhtml(
+                new TextOf(output.resolve("skeleton.xml")).asString()
+            ),
+            XhtmlMatchers.hasXPaths(
+                "//method[@static='true']"
             )
         ).affirm();
     }
