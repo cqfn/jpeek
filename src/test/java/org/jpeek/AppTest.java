@@ -88,6 +88,40 @@ final class AppTest {
     }
 
     @Test
+    void canIncludeConstructors(@TempDir final Path output) throws Exception {
+        final Path input = Paths.get(".");
+        final Map<String, Object> args = new HashMap<>();
+        args.put("include-ctors", 1);
+        new App(input, output, args).analyze();
+        new Assertion<>(
+            "Must contain constructor",
+            XhtmlMatchers.xhtml(
+                new TextOf(output.resolve("skeleton.xml")).asString()
+            ),
+            XhtmlMatchers.hasXPaths(
+                "//method[@ctor='true']"
+            )
+        ).affirm();
+    }
+
+    @Test
+    void canIncludeStaticMethods(@TempDir final Path output) throws Exception {
+        final Path input = Paths.get(".");
+        final Map<String, Object> args = new HashMap<>();
+        args.put("include-static-methods", 1);
+        new App(input, output, args).analyze();
+        new Assertion<>(
+            "Must contain static method",
+            XhtmlMatchers.xhtml(
+                new TextOf(output.resolve("skeleton.xml")).asString()
+            ),
+            XhtmlMatchers.hasXPaths(
+                "//method[@static='true']"
+            )
+        ).affirm();
+    }
+
+    @Test
     void createsIndexHtml(@TempDir final Path output) throws IOException {
         final Path input = Paths.get(".");
         new App(input, output).analyze();
