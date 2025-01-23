@@ -1,6 +1,6 @@
 ---
 name: shellcheck
-on:
+'on':
   push:
     branches:
       - master
