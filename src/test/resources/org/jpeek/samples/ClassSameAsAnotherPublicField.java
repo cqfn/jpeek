@@ -6,7 +6,7 @@ public final class ClassSameAsAnotherPublicField {
     public void test() {
         ClassWithPublicField.NAME = "test";
     }
-    
+
     public void foo() {
         this.NAME = "test";
     }

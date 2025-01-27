@@ -32,4 +32,3 @@ end
 
 File.write(File.join(dir,'graph-immutable.tex'), draw(immutable))
 File.write(File.join(dir,'graph-mutable.tex'), draw(mutable))
-

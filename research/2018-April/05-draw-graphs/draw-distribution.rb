@@ -26,4 +26,3 @@ def draw(probs)
 end
 
 File.write(File.join(dir,'graph-distribution.tex'), draw(probs))
-
