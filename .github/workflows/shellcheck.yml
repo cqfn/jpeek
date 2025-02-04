@@ -9,7 +9,6 @@ name: shellcheck
       - master
 jobs:
   shellcheck:
-    name: shellcheck
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
