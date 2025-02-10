@@ -23,6 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
+  <xsl:template match="skeleton/meta"/>
   <xsl:template match="skeleton">
     <metric>
       <xsl:apply-templates select="@*"/>
@@ -40,7 +41,11 @@ SOFTWARE.
       <xsl:apply-templates select="node()"/>
     </metric>
   </xsl:template>
+  <xsl:variable name="met" select="/skeleton/meta"/>
   <xsl:template match="class">
+    <xsl:variable name="currentClassId" select="@id"/>
+    <xsl:variable name="currentPackageId" select="../@id"/>
+    <xsl:variable name="currentClassNcc" select="$met/package[@id = $currentPackageId]/class[@id = $currentClassId]/ncc"/>
     <xsl:variable name="methods" select="methods/method[@ctor='false']"/>
     <xsl:variable name="edges">
       <xsl:for-each select="$methods">
@@ -62,7 +67,7 @@ SOFTWARE.
     </xsl:variable>
     <xsl:copy>
       <xsl:variable name="nc" select="count($edges/edge)"/>
-      <xsl:variable name="ncc" select="count(distinct-values($edges/edge/method/text()))"/>
+      <xsl:variable name="ncc" select="$currentClassNcc"/>
       <xsl:variable name="nmp" select="(count($methods) * (count($methods) - 1)) div 2"/>
       <xsl:attribute name="value">
         <xsl:choose>
