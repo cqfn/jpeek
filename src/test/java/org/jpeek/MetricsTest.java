@@ -8,6 +8,8 @@ import com.jcabi.matchers.XhtmlMatchers;
 import java.nio.file.Path;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.TextOf;
+import org.jpeek.calculus.Calculus;
+import org.jpeek.calculus.java.Ccm;
 import org.jpeek.calculus.xsl.XslCalculus;
 import org.jpeek.skeleton.Skeleton;
 import org.junit.jupiter.api.io.TempDir;
@@ -51,8 +53,14 @@ final class MetricsTest {
     void testsTarget(final String target, final String metric, final double value,
         @TempDir final Path output)
         throws Exception {
+        final Calculus calculus;
+        if (metric.equals("CCM")) {
+            calculus = new Ccm();
+        } else {
+            calculus = new XslCalculus();
+        }
         new XslReport(
-            new Skeleton(new FakeBase(target)).xml(), new XslCalculus(),
+            new Skeleton(new FakeBase(target)).xml(), calculus,
             new ReportData(metric)
         ).save(output);
         final String xpath;

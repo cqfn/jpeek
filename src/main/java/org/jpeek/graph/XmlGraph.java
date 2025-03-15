@@ -12,7 +12,6 @@ import org.cactoos.map.MapOf;
 import org.cactoos.scalar.Sticky;
 import org.cactoos.scalar.Unchecked;
 import org.cactoos.text.FormattedText;
-import org.jpeek.skeleton.Skeleton;
 
 /**
  * Graph implementation built on skeleton.
@@ -35,7 +34,7 @@ public final class XmlGraph implements Graph {
      * @param pname Package of the class this graph is for
      * @param cname Class in the skeleton this graph is for
      */
-    public XmlGraph(final Skeleton skeleton, final String pname, final String cname) {
+    public XmlGraph(final XML skeleton, final String pname, final String cname) {
         this.nds = new Unchecked<>(
             new Sticky<>(
                 () -> XmlGraph.build(skeleton, pname, cname)
@@ -55,13 +54,13 @@ public final class XmlGraph implements Graph {
      * @param cname Class in the skeleton this graph is for
      * @return List of nodes
      */
-    private static List<Node> build(final Skeleton skeleton, final String pname,
+    private static List<Node> build(final XML skeleton, final String pname,
         final String cname) {
         final Map<XML, Node> byxml = new MapOf<>(
             method -> method,
             method -> new Node.Simple(
                 new XmlMethodSignature(
-                    skeleton.xml()
+                    skeleton
                         .nodes(
                             new FormattedText(
                                 "//package[@id='%s']", pname
@@ -75,7 +74,7 @@ public final class XmlGraph implements Graph {
                     method
                 ).asString()
             ),
-            skeleton.xml().nodes(
+            skeleton.nodes(
                 "//methods/method[@ctor='false' and @abstract='false']"
             )
         );

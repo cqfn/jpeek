@@ -30,7 +30,7 @@ public final class Disjoint implements Scalar<List<Set<Node>>> {
     }
 
     @Override
-    public List<Set<Node>> value() throws Exception {
+    public List<Set<Node>> value() {
         final Set<Node> unvisited = new HashSet<>(this.graph.nodes());
         final List<Set<Node>> result = new ArrayList<>(unvisited.size());
         while (!unvisited.isEmpty()) {
