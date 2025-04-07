@@ -5,7 +5,7 @@
 [![We recommend IntelliJ IDEA](https://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
 
 [![mvn](https://github.com/cqfn/jpeek/actions/workflows/mvn.yml/badge.svg)](https://github.com/cqfn/jpeek/actions/workflows/mvn.yml)
-[![Javadoc](http://www.javadoc.io/badge/org.jpeek/jpeek.svg)](http://www.javadoc.io/doc/org.jpeek/jpeek)
+[![Javadoc](https://www.javadoc.io/badge/org.jpeek/jpeek.svg)](https://www.javadoc.io/doc/org.jpeek/jpeek)
 [![PDD status](https://www.0pdd.com/svg?name=cqfn/jpeek)](https://www.0pdd.com/p?name=cqfn/jpeek)
 [![Maven Central](https://img.shields.io/maven-central/v/org.jpeek/jpeek.svg)](https://maven-badges.herokuapp.com/maven-central/org.jpeek/jpeek)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/cqfn/jpeek/blob/master/LICENSE.txt)
