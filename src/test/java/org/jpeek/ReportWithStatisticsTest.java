@@ -40,7 +40,7 @@ final class ReportWithStatisticsTest {
         latch.countDown();
         service.shutdown();
         new Assertion<>(
-            "Must create report with statics",
+            "Must create report with statistics",
             XhtmlMatchers.xhtml(
                 xml.toString()
             ),
