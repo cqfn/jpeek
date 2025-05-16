@@ -18,7 +18,7 @@ import org.llorllale.cactoos.matchers.Assertion;
 final class XmlMethodArgsTest {
 
     @Test
-    void returnsEmptyStringWhenNoArgsSpecificied() throws Exception {
+    void returnsEmptyStringWhenNoArgsSpecified() throws Exception {
         final XML method = new Skeleton(new FakeBase("MethodMethodCalls")).xml().nodes(
             "//method[@name='methodOne']"
         ).get(0);

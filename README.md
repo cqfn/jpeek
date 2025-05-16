@@ -260,7 +260,7 @@ Then, we have a collection of XSL stylesheets, one per each metric. For example,
   <title>MMAC</title>
   <app>
     <class id='InstantiatorProvider' value='1'/>
-    <class id='InstantationException' value='0'/>
+    <class id='InstantiationException' value='0'/>
     <class id='AnswersValidator' value='0.0583'/>
     <class id='ClassNode' value='0.25'/>
     [... skipped ...]
