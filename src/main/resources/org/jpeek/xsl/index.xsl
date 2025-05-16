@@ -51,7 +51,7 @@
           </th>
           <th>
             <a href="https://en.wikipedia.org/wiki/Mean">
-              <xsl:text>&#x3BC;</xsl:text>
+              <xsl:text>μ</xsl:text>
             </a>
             <a href="#3">
               <sup>
@@ -61,7 +61,7 @@
           </th>
           <th>
             <a href="https://en.wikipedia.org/wiki/Standard_deviation">
-              <xsl:text>&#x3C3;</xsl:text>
+              <xsl:text>σ</xsl:text>
             </a>
             <a href="#3">
               <sup>
