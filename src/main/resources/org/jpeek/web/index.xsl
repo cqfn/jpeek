@@ -70,7 +70,7 @@
       <thead>
         <tr>
           <th>
-            <xsl:text>&#xA0;</xsl:text>
+            <xsl:text> </xsl:text>
           </th>
           <th>
             <xsl:text>Artifact</xsl:text>
