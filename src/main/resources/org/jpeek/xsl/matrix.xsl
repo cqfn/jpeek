@@ -15,7 +15,7 @@
         <link rel="shortcut icon" href="https://www.jpeek.org/logo.png"/>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/yegor256/tacit@gh-pages/tacit-css.min.css"/>
         <link rel="stylesheet" href="jpeek.css"/>
-        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/sortable/0.8.0/js/sortable.min.js">&#xA0;</script>
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/sortable/0.8.0/js/sortable.min.js"> </script>
         <title>
           <xsl:text>matrix</xsl:text>
         </title>
@@ -122,7 +122,7 @@
         </xsl:choose>
         <xsl:text>;</xsl:text>
       </xsl:attribute>
-      <xsl:text>&#xA0;</xsl:text>
+      <xsl:text> </xsl:text>
     </td>
   </xsl:template>
 </xsl:stylesheet>

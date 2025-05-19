@@ -17,7 +17,7 @@
         <link rel="shortcut icon" href="https://www.jpeek.org/logo.png"/>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/yegor256/tacit@gh-pages/tacit-css.min.css"/>
         <link rel="stylesheet" href="jpeek.css"/>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sortable/0.8.0/js/sortable.min.js">&#xA0;</script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sortable/0.8.0/js/sortable.min.js"> </script>
         <title>
           <xsl:value-of select="$title"/>
         </title>

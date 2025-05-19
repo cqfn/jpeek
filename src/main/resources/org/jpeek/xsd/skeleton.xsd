@@ -165,7 +165,7 @@
                                 <xs:attribute name="p" use="required" type="xs:double">
                                   <xs:annotation>
                                     <xs:documentation>
-                                      Probability of the topic's occurence in the method.
+                                      Probability of the topic's occurrence in the method.
                                       A decimal number between 0 and 1.
                                     </xs:documentation>
                                   </xs:annotation>

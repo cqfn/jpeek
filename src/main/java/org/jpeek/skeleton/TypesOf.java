@@ -38,7 +38,7 @@ final class TypesOf extends SignatureVisitor implements Iterable<Directive> {
     /**
      * Method signature.
      */
-    private final String singature;
+    private final String signature;
 
     /**
      * Is it return type?
@@ -52,14 +52,14 @@ final class TypesOf extends SignatureVisitor implements Iterable<Directive> {
     TypesOf(final String sign) {
         super(Opcodes.ASM6);
         this.types = new LinkedList<>();
-        this.singature = sign;
+        this.signature = sign;
         this.rtype = new AtomicReference<>();
         this.ret = new AtomicBoolean();
     }
 
     @Override
     public Iterator<Directive> iterator() {
-        new SignatureReader(this.singature).accept(this);
+        new SignatureReader(this.signature).accept(this);
         final Directives dirs = new Directives().add("args");
         for (final String type : this.types) {
             dirs.add("arg").set("?").attr("type", type).up();

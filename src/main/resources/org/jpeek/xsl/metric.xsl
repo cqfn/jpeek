@@ -71,13 +71,13 @@
       <xsl:value-of select="elements"/>
       <xsl:text>, </xsl:text>
       <a href="https://en.wikipedia.org/wiki/Mean">
-        <xsl:text>&#x3BC;</xsl:text>
+        <xsl:text>μ</xsl:text>
       </a>
       <xsl:text>: </xsl:text>
       <xsl:value-of select="format-number(mean, '0.0000')"/>
       <xsl:text>, </xsl:text>
       <a href="https://en.wikipedia.org/wiki/Standard_deviation">
-        <xsl:text>&#x3C3;</xsl:text>
+        <xsl:text>σ</xsl:text>
       </a>
       <xsl:text>: </xsl:text>
       <xsl:value-of select="format-number(sigma, '0.0000')"/>
