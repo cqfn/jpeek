@@ -66,7 +66,7 @@
           </th>
           <th style="text-align:right;">
             <a href="https://en.wikipedia.org/wiki/Mean">
-              <xsl:text>&#x3BC;</xsl:text>
+              <xsl:text>μ</xsl:text>
             </a>
             <a href="#4">
               <sup>
@@ -76,7 +76,7 @@
           </th>
           <th style="text-align:right;">
             <a href="https://en.wikipedia.org/wiki/Standard_deviation">
-              <xsl:text>&#x3C3;</xsl:text>
+              <xsl:text>σ</xsl:text>
             </a>
             <a href="#4">
               <sup>
@@ -127,19 +127,19 @@
       <sup id="4">
         <xsl:text>4</xsl:text>
       </sup>
-      <xsl:text>&#x3BC; and &#x3C3; are taken from the projects where
+      <xsl:text>μ and σ are taken from the projects where
         the amount of defects is less than 10% and the amount of
         classes is more than 200.</xsl:text>
       <sup id="5">
         <xsl:text>5</xsl:text>
       </sup>
       <xsl:text>"Artifact" is the name of the artifact where
-        the best &#x3BC; and &#x3C3; were found.</xsl:text>
+        the best μ and σ were found.</xsl:text>
       <sup id="6">
         <xsl:text>6</xsl:text>
       </sup>
       <xsl:text>"Champions" is the amount of projects we've tried
-        in order to select the best &#x3BC; and &#x3C3;.</xsl:text>
+        in order to select the best μ and σ.</xsl:text>
     </p>
   </xsl:template>
   <xsl:template match="metric">

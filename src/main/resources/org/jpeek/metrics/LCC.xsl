@@ -46,7 +46,7 @@
      The key sentence is "The indirect connection relation is the **transitive closure** of direct connection relation".
      See https://en.wikipedia.org/wiki/Transitive_closure for more info on what is a Transitive Closure.
      We need to apply a Transitive Closure Algorithm on a graph of `directly-related-pairs`.
-     A simpliest Transitive Closure algorithms has O(V³) time complexity and involves a mutable V×V table (V is amount of vertices).
+     A simplest Transitive Closure algorithms has O(V³) time complexity and involves a mutable V×V table (V is amount of vertices).
      See https://www.geeksforgeeks.org/transitive-closure-of-a-graph/ for an example.
     -->
     <!--<xsl:variable name="indirectly-related-pairs">

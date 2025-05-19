@@ -12,7 +12,7 @@
         <xsl:text>
           "Transitive Lack of Cohesion in Methods" (TLCOM) expands upon
           the original definition for LCOM by extending the criteria for
-          estabilishing relations between method pairs by also including cases
+          establishing relations between method pairs by also including cases
           when a m1 calls m2 and m2 happens to use attribute a2 of the class. This
           then means that m1 transitively uses a2 via m2.
           The chain of calls can have more than one hop: if m1 calls m2 which calls
