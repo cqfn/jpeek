@@ -28,17 +28,17 @@ final class ReportData {
     /**
      * The metric.
      */
-    private final String metr;
+    private final String metric;
 
     /**
      * Mean.
      */
-    private final double man;
+    private final double mean;
 
     /**
      * Sigma.
      */
-    private final double sig;
+    private final double sigma;
 
     /**
      * XSL params.
@@ -76,10 +76,10 @@ final class ReportData {
      */
     ReportData(final String name, final Map<String, Object> args, final double mean,
         final double sigma) {
-        this.metr = name;
+        this.metric = name;
         this.args = new MapOf<String, Object>(new HashMap<>(args));
-        this.man = mean;
-        this.sig = sigma;
+        this.mean = mean;
+        this.sigma = sigma;
     }
 
     /**
@@ -87,7 +87,7 @@ final class ReportData {
      * @return The metric
      */
     public String metric() {
-        return this.metr;
+        return this.metric;
     }
 
     /**
@@ -95,7 +95,7 @@ final class ReportData {
      * @return The mean
      */
     public double mean() {
-        return this.man;
+        return this.mean;
     }
 
     /**
@@ -103,7 +103,7 @@ final class ReportData {
      * @return Sigma
      */
     public double sigma() {
-        return this.sig;
+        return this.sigma;
     }
 
     /**
