@@ -32,7 +32,7 @@ import org.xembly.Xembler;
  *
  * @since 0.1
  */
-final class XslReport implements Report {
+public final class XslReport implements Report {
 
     /**
      * Location to the schema file.
