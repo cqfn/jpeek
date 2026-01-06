@@ -94,7 +94,12 @@ public enum Metrics {
     /**
      * Maximal Weighted Entropy metric. Modeling class cohesion as mixtures of latent topics
      */
-    MWE(false, null, null);
+    MWE(false, null, null),
+
+    /**
+     * Distance of Coupling metric
+     */
+    DOC(true, null, null);
 
     /**
      * Indicates whether parameters should be included for this metric.
