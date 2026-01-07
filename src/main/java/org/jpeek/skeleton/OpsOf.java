@@ -4,6 +4,8 @@
  */
 package org.jpeek.skeleton;
 
+import java.util.Arrays;
+import java.util.List;
 import org.cactoos.Text;
 import org.cactoos.text.Split;
 import org.cactoos.text.Sub;
@@ -11,9 +13,6 @@ import org.cactoos.text.TextOf;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import org.xembly.Directives;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Operators of the method.
@@ -92,23 +91,23 @@ final class OpsOf extends MethodVisitor {
     @Override
     public void visitVarInsn(final int opcode, final int var) {
         super.visitVarInsn(opcode, var);
-        final List<Integer> loadOpcodes = Arrays.asList(
-                Opcodes.ILOAD,
-                Opcodes.LLOAD,
-                Opcodes.FLOAD,
-                Opcodes.DLOAD,
-                Opcodes.ALOAD
+        final List<Integer> loads = Arrays.asList(
+            Opcodes.ILOAD,
+            Opcodes.LLOAD,
+            Opcodes.FLOAD,
+            Opcodes.DLOAD,
+            Opcodes.ALOAD
         );
-        final List<Integer> storeOpcodes = Arrays.asList(
-                Opcodes.ISTORE,
-                Opcodes.LSTORE,
-                Opcodes.FSTORE,
-                Opcodes.DSTORE,
-                Opcodes.ASTORE
+        final List<Integer> stores = Arrays.asList(
+            Opcodes.ISTORE,
+            Opcodes.LSTORE,
+            Opcodes.FSTORE,
+            Opcodes.DSTORE,
+            Opcodes.ASTORE
         );
-        if (loadOpcodes.contains(opcode)) {
+        if (loads.contains(opcode)) {
             this.local(opcode, var, "load");
-        } else if (storeOpcodes.contains(opcode)) {
+        } else if (stores.contains(opcode)) {
             this.local(opcode, var, "store");
         }
     }
@@ -120,20 +119,20 @@ final class OpsOf extends MethodVisitor {
      * @param code Op code label
      */
     private void local(
-            final int opcode,
-            final int var,
-            final String code
+        final int opcode,
+        final int var,
+        final String code
     ) {
         this.target
-                .strict(1)
-                .addIf("locals")
-                .add("var");
+            .strict(1)
+            .addIf("locals")
+            .add("var");
         this.target
-                .attr("code", code)
-                .attr("var", var)
-                .attr("opcode", opcode)
-                .set(var)
-                .up()
-                .up();
+            .attr("code", code)
+            .attr("var", var)
+            .attr("opcode", opcode)
+            .set(var)
+            .up()
+            .up();
     }
 }

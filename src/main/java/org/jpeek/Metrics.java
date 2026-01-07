@@ -97,7 +97,7 @@ public enum Metrics {
     MWE(false, null, null),
 
     /**
-     * Distance of Coupling metric
+     * Distance of Coupling metric.
      */
     DOC(true, null, null);
 

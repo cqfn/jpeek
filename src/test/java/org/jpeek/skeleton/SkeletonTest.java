@@ -44,19 +44,19 @@ final class SkeletonTest {
     @Test
     void capturesLocalVariableOps() {
         new Assertion<>(
-                "Must capture local variable ops with indexes",
-                XhtmlMatchers.xhtml(
-                        new Skeleton(
-                                new FakeBase("DocDistance")
-                        ).xml().toString()
-                ),
-                XhtmlMatchers.hasXPaths(
-                        // @checkstyle LineLength (4 lines)
-                        "//class[@id='DocDistance']//method[@name='docThree']/locals/var[@code='store' and @var='1']",
-                        "//class[@id='DocDistance']//method[@name='docThree']/locals/var[@code='store' and @var='2']",
-                        "//class[@id='DocDistance']//method[@name='docThree']/locals/var[@code='store' and @var='3']",
-                        "//class[@id='DocDistance']//method[@name='docThree']/locals/var[@code='store' and @var='4']"
-                )
+            "Must capture local variable ops with indexes",
+            XhtmlMatchers.xhtml(
+                new Skeleton(
+                    new FakeBase("DocDistance")
+                ).xml().toString()
+            ),
+            XhtmlMatchers.hasXPaths(
+                // @checkstyle LineLength (4 lines)
+                "//class[@id='DocDistance']//method[@name='docThree']/locals/var[@code='store' and @var='1']",
+                "//class[@id='DocDistance']//method[@name='docThree']/locals/var[@code='store' and @var='2']",
+                "//class[@id='DocDistance']//method[@name='docThree']/locals/var[@code='store' and @var='3']",
+                "//class[@id='DocDistance']//method[@name='docThree']/locals/var[@code='store' and @var='4']"
+            )
         ).affirm();
     }
 
