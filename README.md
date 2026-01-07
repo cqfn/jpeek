@@ -220,6 +220,12 @@ _Transitive-based object-oriented lack-of-cohesion metric_,<br/>
 Department of Information Science, Kuwait University, 2011,
 [PDF](papers/dallal11_TLCOM.pdf).
 
+[`yegor256`]
+Distance of Coupling (**DOC**).<br/>
+Yegor Bugayenko,<br/>
+_Distance of Coupling_,<br/>
+[Blog](https://www.yegor256.com/2020/10/27/distance-of-coupling.html).
+
 ## How it works?
 
 First, `Skeleton` parses Java bytecode using Javaassit and ASM, in order to produce
