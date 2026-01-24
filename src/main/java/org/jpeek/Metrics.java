@@ -100,10 +100,12 @@ public enum Metrics {
      * Indicates whether parameters should be included for this metric.
      */
     private final boolean parameters;
+
     /**
      * Mean value for the metric, if applicable.
      */
     private final Double mean;
+
     /**
      * Standard deviation for the metric, if applicable.
      */

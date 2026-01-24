@@ -69,11 +69,11 @@ final class CcmTest {
 
     /**
      * Check ccm metric for mixed usage: attribute usage, methods calls.
+     * @throws Exception
      * @todo #522:30min there is a 4th step for incorrect calculation: nc
      *  in case of calling one method from another because of
      *  `xsl:if test="$method/ops/op/text()[. = $other/ops/op/text()]"`
      *  method name is not used for creating edge.
-     * @throws Exception
      */
     @Test
     void mixedCallsInClassTest() throws Exception {

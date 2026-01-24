@@ -266,8 +266,9 @@
           <plugin>
             <groupId>com.qulice</groupId>
             <artifactId>qulice-maven-plugin</artifactId>
-            <version>0.22.0</version>
+            <version>0.24.0</version>
             <configuration>
+              <license>file:${basedir}/LICENSE.txt</license>
               <excludes combine.children="append">
                 <exclude>checkstyle:/src/site/resources/.*</exclude>
                 <exclude>checkstyle:/src/test/resources/.*</exclude>
