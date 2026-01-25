@@ -27,6 +27,7 @@ import org.takes.rs.RsText;
 final class AsyncReportsTest {
 
     @Test
+    @SuppressWarnings("PMD.CloseResource")
     void rendersOneReport() throws Exception {
         final ExecutorService service = Executors.newSingleThreadExecutor();
         final BiFunc<String, String, Func<String, Response>> bifunc = new AsyncReports(
@@ -54,5 +55,4 @@ final class AsyncReportsTest {
         ).affirm();
         service.shutdownNow();
     }
-
 }
