@@ -66,19 +66,19 @@ final class XmlGraphTest {
             new AllOf<Iterable<Node>>(
                 new ListOf<>(
                     new HasValuesMatching<>(
-                        node -> node.name().equals(XmlGraphTest.METHOD_ONE)
+                        node -> XmlGraphTest.METHOD_ONE.equals(node.name())
                     ),
                     new HasValuesMatching<>(
-                        node -> node.name().equals(XmlGraphTest.METHOD_TWO)
+                        node -> XmlGraphTest.METHOD_TWO.equals(node.name())
                     ),
                     new HasValuesMatching<>(
-                        node -> node.name().equals(XmlGraphTest.METHOD_THREE)
+                        node -> XmlGraphTest.METHOD_THREE.equals(node.name())
                     ),
                     new HasValuesMatching<>(
-                        node -> node.name().equals(XmlGraphTest.METHOD_FOUR)
+                        node -> XmlGraphTest.METHOD_FOUR.equals(node.name())
                     ),
                     new HasValuesMatching<>(
-                        node -> node.name().equals(XmlGraphTest.METHOD_FIVE)
+                        node -> XmlGraphTest.METHOD_FIVE.equals(node.name())
                     )
                 )
             )

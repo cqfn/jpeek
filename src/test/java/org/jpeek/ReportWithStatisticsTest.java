@@ -21,6 +21,7 @@ import org.llorllale.cactoos.matchers.Assertion;
 final class ReportWithStatisticsTest {
 
     @Test
+    @SuppressWarnings("PMD.CloseResource")
     void createsXml() {
         final XML xml = new ReportWithStatistics(
             new XMLDocument("<metric/>")
@@ -47,5 +48,4 @@ final class ReportWithStatisticsTest {
             XhtmlMatchers.hasXPaths("/metric/statistics[total='0']")
         ).affirm();
     }
-
 }
