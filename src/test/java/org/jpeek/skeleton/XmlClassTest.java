@@ -42,6 +42,7 @@ final class XmlClassTest {
     }
 
     @Test
+    @SuppressWarnings("removal")
     @DisabledForJreRange(min = JRE.JAVA_8, max = JRE.JAVA_13)
     void parsesRecordClass() {
         new Assertion<>(
