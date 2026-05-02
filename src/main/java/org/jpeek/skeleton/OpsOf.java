@@ -4,6 +4,8 @@
  */
 package org.jpeek.skeleton;
 
+import java.util.Arrays;
+import java.util.List;
 import org.cactoos.Text;
 import org.cactoos.text.Split;
 import org.cactoos.text.Sub;
@@ -84,5 +86,53 @@ final class OpsOf extends MethodVisitor {
             this.target.add("arg").attr("type", arg).set("?").up();
         }
         this.target.up().up().up();
+    }
+
+    @Override
+    public void visitVarInsn(final int opcode, final int var) {
+        super.visitVarInsn(opcode, var);
+        final List<Integer> loads = Arrays.asList(
+            Opcodes.ILOAD,
+            Opcodes.LLOAD,
+            Opcodes.FLOAD,
+            Opcodes.DLOAD,
+            Opcodes.ALOAD
+        );
+        final List<Integer> stores = Arrays.asList(
+            Opcodes.ISTORE,
+            Opcodes.LSTORE,
+            Opcodes.FSTORE,
+            Opcodes.DSTORE,
+            Opcodes.ASTORE
+        );
+        if (loads.contains(opcode)) {
+            this.local(opcode, var, "load");
+        } else if (stores.contains(opcode)) {
+            this.local(opcode, var, "store");
+        }
+    }
+
+    /**
+     * Record local variable instruction.
+     * @param opcode Opcode
+     * @param var Local variable index
+     * @param code Op code label
+     */
+    private void local(
+        final int opcode,
+        final int var,
+        final String code
+    ) {
+        this.target
+            .strict(1)
+            .addIf("locals")
+            .add("var");
+        this.target
+            .attr("code", code)
+            .attr("var", var)
+            .attr("opcode", opcode)
+            .set(var)
+            .up()
+            .up();
     }
 }
