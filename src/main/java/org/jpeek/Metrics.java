@@ -7,7 +7,7 @@ package org.jpeek;
 /**
  * Metrics
 
- * <p>Enumeration representing various metrics along with their configuration.
+ * <p>Enumeration representing various metrics along with their configuration.</p>
  */
 public enum Metrics {
 
@@ -34,7 +34,7 @@ public enum Metrics {
     LCOM5(true, 0.5d, -0.1d),
 
     /**
-     * Lack of Cohesion in Methods 4  metric. Measuring Coupling and Cohesion In
+     * Lack of Cohesion in Methods 4 metric. Measuring Coupling and Cohesion In
      * Object-Oriented Systems
      */
     LCOM4(true, 0.5d, -0.1d),
@@ -60,7 +60,7 @@ public enum Metrics {
     /**
      * A Sensitive Metric of Class Cohesion metric.
      * [A] new metric [...] yielding meaningful values [...] more sensitive than those previously
-     * reported,
+     * reported
      */
     SCOM(true, null, null),
 
