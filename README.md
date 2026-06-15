@@ -177,6 +177,9 @@ These papers provide a pretty good summary of cohesion metrics:
   Jehad Al Dallal, _Transitive-based object-oriented lack-of-cohesion metric_,
   Department of Information Science, Kuwait University, 2011.
   [PDF](papers/dallal11_TLCOM.pdf).
+* `yegor256`: Distance of Coupling (**DOC**).
+  Yegor Bugayenko, _Distance of Coupling_,
+  [Blog](https://www.yegor256.com/2020/10/27/distance-of-coupling.html).
 
 ## How it works?
 

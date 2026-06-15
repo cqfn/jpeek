@@ -141,6 +141,46 @@
                       </xs:sequence>
                     </xs:complexType>
                   </xs:element>
+                  <xs:element name="locals" minOccurs="0" maxOccurs="1">
+                    <xs:annotation>
+                      <xs:documentation>
+                        Local variable operations inside the method. These
+                        entries are separate from &lt;ops&gt; to avoid impacting
+                        existing metrics that rely on field access and calls.
+                      </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="var" minOccurs="0" maxOccurs="unbounded">
+                          <xs:complexType mixed="true">
+                            <xs:attribute name="code" use="required" type="xs:string">
+                              <xs:annotation>
+                                <xs:documentation>
+                                  Value depends on what the instruction is doing. Currently:
+                                  - "load": if a local variable is loaded
+                                  - "store": if a local variable is stored
+                                </xs:documentation>
+                              </xs:annotation>
+                            </xs:attribute>
+                            <xs:attribute name="var" type="xs:int" use="required">
+                              <xs:annotation>
+                                <xs:documentation>
+                                  Index of the local variable used by the instruction.
+                                </xs:documentation>
+                              </xs:annotation>
+                            </xs:attribute>
+                            <xs:attribute name="opcode" type="xs:int" use="required">
+                              <xs:annotation>
+                                <xs:documentation>
+                                  Raw JVM opcode integer for the instruction.
+                                </xs:documentation>
+                              </xs:annotation>
+                            </xs:attribute>
+                          </xs:complexType>
+                        </xs:element>
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
                   <xs:element name="topics" minOccurs="0" maxOccurs="1">
                     <xs:annotation>
                       <xs:documentation>
