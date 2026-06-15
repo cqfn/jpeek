@@ -8,10 +8,12 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
+
 import javassist.CannotCompileException;
 import javassist.CtClass;
 import org.cactoos.iterable.Joined;
 import org.cactoos.iterable.Mapped;
+import org.jetbrains.annotations.NotNull;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.FieldVisitor;
@@ -25,9 +27,9 @@ import org.xembly.Directives;
  *
  * <p>There is no thread-safety guarantee.</p>
  *
+ * @checkstyle ParameterNumberCheck (500 lines)
  * @see <a href="http://www.pitt.edu/~ckemerer/CK%20research%20papers/MetricForOOD_ChidamberKemerer94.pdf">A packages suite for object oriented design</a>
  * @since 0.27
- * @checkstyle ParameterNumberCheck (500 lines)
  */
 final class XmlClass extends ClassVisitor implements Iterable<Directive> {
 
@@ -48,6 +50,7 @@ final class XmlClass extends ClassVisitor implements Iterable<Directive> {
 
     /**
      * Ctor.
+     *
      * @param src The source
      */
     XmlClass(final CtClass src) {
@@ -58,6 +61,7 @@ final class XmlClass extends ClassVisitor implements Iterable<Directive> {
     }
 
     @Override
+    @NotNull
     public Iterator<Directive> iterator() {
         final ClassReader reader;
         try {
@@ -68,42 +72,42 @@ final class XmlClass extends ClassVisitor implements Iterable<Directive> {
         this.attrs.add("attributes");
         reader.accept(this, 0);
         return new Directives()
-            .append(this.attrs)
-            .up()
-            .add("methods")
-            .append(
-                new Joined<>(
-                    new Mapped<>(
-                        dirs -> new Directives().append(dirs).up(),
-                        this.methods
-                    )
+                .append(this.attrs)
+                .up()
+                .add("methods")
+                .append(
+                        new Joined<>(
+                                new Mapped<>(
+                                        dirs -> new Directives().append(dirs).up(),
+                                        this.methods
+                                )
+                        )
                 )
-            )
-            .up()
-            .iterator();
+                .up()
+                .iterator();
     }
 
     @Override
     public FieldVisitor visitField(final int access,
-        final String name, final String desc,
-        final String signature, final Object value) {
+                                   final String name, final String desc,
+                                   final String signature, final Object value) {
         this.attrs
-            .add("attribute")
-            .set(name)
-            .attr("type", desc.replaceAll(";$", ""))
-            .attr(
-                "public",
-                (access & Opcodes.ACC_PUBLIC) == Opcodes.ACC_PUBLIC
-            )
-            .attr(
-                "final",
-                (access & Opcodes.ACC_FINAL) == Opcodes.ACC_FINAL
-            )
-            .attr(
-                "static",
-                (access & Opcodes.ACC_STATIC) == Opcodes.ACC_STATIC
-            )
-            .up();
+                .add("attribute")
+                .set(name)
+                .attr("type", desc.replaceAll(";$", ""))
+                .attr(
+                        "public",
+                        (access & Opcodes.ACC_PUBLIC) == Opcodes.ACC_PUBLIC
+                )
+                .attr(
+                        "final",
+                        (access & Opcodes.ACC_FINAL) == Opcodes.ACC_FINAL
+                )
+                .attr(
+                        "static",
+                        (access & Opcodes.ACC_STATIC) == Opcodes.ACC_STATIC
+                )
+                .up();
         return super.visitField(access, name, desc, signature, value);
     }
 
@@ -121,53 +125,44 @@ final class XmlClass extends ClassVisitor implements Iterable<Directive> {
     //  - the `visitMethodInsn` arguments.
     @Override
     @SuppressWarnings(
-        {
-            "PMD.UseVarargs",
-            "PMD.UseObjectForClearerAPI"
-        }
+            {
+                    "PMD.UseVarargs",
+                    "PMD.UseObjectForClearerAPI"
+            }
     )
     public MethodVisitor visitMethod(final int access,
-        final String mtd, final String desc,
-        final String signature, final String[] exceptions) {
+                                     final String mtd, final String desc,
+                                     final String signature, final String[] exceptions) {
         final Directives dirs = new Directives();
         if ((access & Opcodes.ACC_SYNTHETIC) != Opcodes.ACC_SYNTHETIC) {
             String visibility = "default";
             if ((access & Opcodes.ACC_PUBLIC) == Opcodes.ACC_PUBLIC) {
                 visibility = "public";
-            } else if (
-                (access & Opcodes.ACC_PROTECTED) == Opcodes.ACC_PROTECTED) {
+            } else if ((access & Opcodes.ACC_PROTECTED) == Opcodes.ACC_PROTECTED) {
                 visibility = "protected";
             } else if ((access & Opcodes.ACC_PRIVATE) == Opcodes.ACC_PRIVATE) {
                 visibility = "private";
             }
+
+            // Извлечение имени переменной из описания метода
+            String[] parts = desc.split("\\)");
+            String[] methodParts = parts[0].split("\\(");
+            String methodName = methodParts[0];
+            String[] variables = methodParts[1].split(",");
+            String variableName = variables[0]; // Предполагаем, что первая переменная - это та, к которой применен вызов метода
+
             dirs.add("method")
-                .attr("name", mtd)
-                .attr("desc", desc)
-                .attr(
-                "ctor",
-                "<init>".equals(mtd) || "<clinit>".equals(mtd)
-                )
-                .attr(
-                "static",
-                (access & Opcodes.ACC_STATIC) == Opcodes.ACC_STATIC
-                )
-                .attr(
-                "abstract",
-                (access & Opcodes.ACC_ABSTRACT) == Opcodes.ACC_ABSTRACT
-                )
-                .attr(
-                "visibility",
-                visibility
-                )
-                .attr(
-                "bridge",
-                (access & Opcodes.ACC_BRIDGE) == Opcodes.ACC_BRIDGE
-                )
-                .append(new TypesOf(desc));
+                    .attr("name", mtd)
+                    .attr("variableName", variableName)
+                    .attr("desc", desc)
+                    .attr("ctor", "<init>".equals(mtd) || "<clinit>".equals(mtd))
+                    .attr("static", (access & Opcodes.ACC_STATIC) == Opcodes.ACC_STATIC)
+                    .attr("abstract", (access & Opcodes.ACC_ABSTRACT) == Opcodes.ACC_ABSTRACT)
+                    .attr("visibility", visibility)
+                    .attr("bridge", (access & Opcodes.ACC_BRIDGE) == Opcodes.ACC_BRIDGE)
+                    .append(new TypesOf(desc));
             this.methods.add(dirs);
         }
-        return new OpsOf(
-            dirs, super.visitMethod(access, mtd, desc, signature, exceptions)
-        );
+        return new OpsOf(dirs, super.visitMethod(access, mtd, desc, signature, exceptions));
     }
 }
