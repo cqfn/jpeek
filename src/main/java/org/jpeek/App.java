@@ -119,7 +119,7 @@ public final class App {
 
      * @throws IOException If fails
      *  Analyze method is too big. We need to extract report building from
-     *  here and use a map instead of if statements se we can make
+     *  here and use a map instead of if statements so we can make
      *  easier to add and remove metrics from execution.
      */
     @SuppressWarnings({
@@ -300,7 +300,7 @@ public final class App {
     }
 
     /**
-     * Copy XSL.
+     * Copy XSD.
 
      * @param name The name of resource
      * @return TRUE if copied
