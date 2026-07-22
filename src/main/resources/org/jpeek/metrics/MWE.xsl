@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
- * SPDX-License-Identifier: MIT
+* SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
+* SPDX-License-Identifier: MIT
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:math="http://www.w3.org/2005/xpath-functions/math" version="2.0">
   <xsl:template match="skeleton">
@@ -58,7 +58,7 @@
       </xsl:for-each>
     </xsl:variable>
     <xsl:copy>
-      <!--xsl:attribute name="value" select="max($OiDi/oidi/@v)"/-->
+      <!-- xsl:attribute name="value" select="max($OiDi/oidi/@v)"/ -->
       <xsl:attribute name="value" select="format-number(1.0, '0.####')"/>
       <xsl:apply-templates select="@*"/>
     </xsl:copy>

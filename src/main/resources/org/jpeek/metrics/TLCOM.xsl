@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
- * SPDX-License-Identifier: MIT
+* SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
+* SPDX-License-Identifier: MIT
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
   <xsl:template match="skeleton">
@@ -30,8 +30,8 @@
   <xsl:template match="class">
     <!--
     @todo #65:30min TLCOM: we are including access to ALL fields here. After #156 is fixed,
-     come back and refactor xpath for $Ms_that_use_attrs, $left_attrs, and $right_attrs
-     in order to avoid including access to fields belonging to other classes.
+    come back and refactor xpath for $Ms_that_use_attrs, $left_attrs, and $right_attrs
+    in order to avoid including access to fields belonging to other classes.
     -->
     <xsl:variable name="class_fqn" select="replace(string-join(../@id | @id, '.'), '^\.', '')"/>
     <xsl:variable name="A" select="attributes/attribute"/>
@@ -58,10 +58,10 @@
           <xsl:variable name="right_calls" select="$right/ops/op[@code = 'call' and matches(., concat('^', $class_fqn, '\.[^\.]+$'))]"/>
           <!--
           @todo #65:30min TLCOM: need to establish transitive connections between methods with arbitrarily long
-           chains of method calls between them. Right now, this code can establish transitive connections to a
-           max depth of 3 levels, ie up to something like this: m1 calls m2 calls m3 which uses a3 therefore m1 is
-           connected to m3. It will miss connections in longer chains. After fixing this, maybe we can add it to
-           the standard metrics in App.
+          chains of method calls between them. Right now, this code can establish transitive connections to a
+          max depth of 3 levels, ie up to something like this: m1 calls m2 calls m3 which uses a3 therefore m1 is
+          connected to m3. It will miss connections in longer chains. After fixing this, maybe we can add it to
+          the standard metrics in App.
           -->
           <xsl:choose>
             <xsl:when test="$left_attrs[. = $right_attrs]">

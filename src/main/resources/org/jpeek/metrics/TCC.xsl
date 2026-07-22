@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
- * SPDX-License-Identifier: MIT
+* SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
+* SPDX-License-Identifier: MIT
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
   <xsl:template match="skeleton">
@@ -21,13 +21,13 @@
   <xsl:template match="class">
     <!--
     @todo #120:30min TCC: inclusion of inherited attributes and methods in the analysis
-     should be configurable. Come back here after #187 is fixed and adjust the xpath
-     for `attrs` and `methods` accordingly.
+    should be configurable. Come back here after #187 is fixed and adjust the xpath
+    for `attrs` and `methods` accordingly.
     -->
     <xsl:variable name="attrs" select="attributes/attribute[@static='false']/text()"/>
     <!--
     @todo #120:30min TCC: this metric needs to exclude private methods from the analysis.
-     Adjust the xpath for `methods` accordingly after #188 is fixed.
+    Adjust the xpath for `methods` accordingly after #188 is fixed.
     -->
     <xsl:variable name="methods" select="methods/method[@abstract='false' and @ctor='false']"/>
     <xsl:variable name="methods_count" select="count($methods)"/>

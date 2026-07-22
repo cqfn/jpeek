@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
- * SPDX-License-Identifier: MIT
+* SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
+* SPDX-License-Identifier: MIT
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
   <xsl:template match="skeleton">
@@ -46,10 +46,10 @@
     <xsl:variable name="m" select="count($M)"/>
     <!--
     @todo #216:30min LCOM4: "NotCommonAttributesWithAllArgsConstructor" test now fails.
-     Constructor with all attributes parameters should not affect LCOM4 metric.
-     So LCOM4.xsl needs to be fixed in order to avoid constructors affection to the metric values.
-     "NotCommonAttributesWithAllArgsConstructor" test case must be added into collection
-     returning by the targets() in the MetricsTest.java when this puzzle done.
+    Constructor with all attributes parameters should not affect LCOM4 metric.
+    So LCOM4.xsl needs to be fixed in order to avoid constructors affection to the metric values.
+    "NotCommonAttributesWithAllArgsConstructor" test case must be added into collection
+    returning by the targets() in the MetricsTest.java when this puzzle done.
     -->
     <xsl:variable name="E">
       <xsl:for-each select="$M">
@@ -69,7 +69,7 @@
       </xsl:for-each>
     </xsl:variable>
     <xsl:copy>
-      <!-- LCOM4 is the number of connected components of G.-->
+      <!-- LCOM4 is the number of connected components of G. -->
       <xsl:attribute name="value">
         <xsl:choose>
           <xsl:when test="$m &lt; 2 or $a = 0">

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
- * SPDX-License-Identifier: MIT
+* SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
+* SPDX-License-Identifier: MIT
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
   <xsl:template match="skeleton">
@@ -42,14 +42,15 @@
     </xsl:variable>
     <!--
     @todo #119:30min `indirectly-related-pairs` are pairs of methods, which are connected through `directly-related-pairs`.
-     See section 3.1 of https://pdfs.semanticscholar.org/672e/de6e3e600eafd84036a0b983b88e481ac626.pdf
-     The key sentence is "The indirect connection relation is the **transitive closure** of direct connection relation".
-     See https://en.wikipedia.org/wiki/Transitive_closure for more info on what is a Transitive Closure.
-     We need to apply a Transitive Closure Algorithm on a graph of `directly-related-pairs`.
-     A simplest Transitive Closure algorithms has O(V³) time complexity and involves a mutable V×V table (V is amount of vertices).
-     See https://www.geeksforgeeks.org/transitive-closure-of-a-graph/ for an example.
+    See section 3.1 of https://pdfs.semanticscholar.org/672e/de6e3e600eafd84036a0b983b88e481ac626.pdf
+    The key sentence is "The indirect connection relation is the **transitive closure** of direct connection relation".
+    See https://en.wikipedia.org/wiki/Transitive_closure for more info on what is a Transitive Closure.
+    We need to apply a Transitive Closure Algorithm on a graph of `directly-related-pairs`.
+    A simplest Transitive Closure algorithms has O(V³) time complexity and involves a mutable V×V table (V is amount of vertices).
+    See https://www.geeksforgeeks.org/transitive-closure-of-a-graph/ for an example.
     -->
-    <!--<xsl:variable name="indirectly-related-pairs">
+    <!--
+    <xsl:variable name="indirectly-related-pairs">
     </xsl:variable>
     <xsl:variable name="NIC" select="count($indirectly-related-pairs)"/>
     -->

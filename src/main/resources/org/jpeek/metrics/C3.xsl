@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
- * SPDX-License-Identifier: MIT
+* SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
+* SPDX-License-Identifier: MIT
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
   <xsl:param name="ctors" select="0"/>
@@ -45,9 +45,9 @@
     </xsl:variable>
     <!--
     @todo #64:30min Implement the C3 method according to the description above.
-     The variable names and comments have to be extracted into a set of words.
-     JPeek core will have to provide all comments for each method so words
-     can be extracted and LSI calculated for each method.
+    The variable names and comments have to be extracted into a set of words.
+    JPeek core will have to provide all comments for each method so words
+    can be extracted and LSI calculated for each method.
     -->
   </xsl:template>
   <xsl:template match="node()|@*">
