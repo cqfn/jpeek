@@ -46,20 +46,15 @@ final class Index implements Iterable<Directive> {
         return new Directives()
             .add("index")
             .attr("artifact", "unknown")
-            .append(new Header())
-            .append(
-                () -> new Directives()
-                    .attr(
-                        "xmlns:xsi",
-                        "http://www.w3.org/2001/XMLSchema-instance"
-                        )
-                    .attr(
+            .append(new Header()).append(
+                () -> new Directives().attr(
+                    "xmlns:xsi",
+                    "http://www.w3.org/2001/XMLSchema-instance"
+                ).attr(
                     "xsi:noNamespaceSchemaLocation",
                     "xsd/index.xsd"
-                    )
-                    .iterator()
-            )
-            .append(
+                ).iterator()
+            ).append(
                 new Joined<>(
                     new Mapped<>(
                         Index::metric,
@@ -94,21 +89,19 @@ final class Index implements Iterable<Directive> {
                 )
             )
         );
-        final double green = (double) xml.nodes(
+        final double green = xml.nodes(
             "//*[@element='true' and @color='green']"
         ).size();
-        final double yellow = (double) xml.nodes(
+        final double yellow = xml.nodes(
             "//*[@element='true' and @color='yellow']"
         ).size();
-        final double red = (double) xml.nodes(
+        final double red = xml.nodes(
             "//*[@element='true' and @color='red']"
         ).size();
         double all = green + yellow + red;
         if (all == 0.0d) {
             all = 1.0d;
         }
-        final double score = 10.0d
-            * (green + yellow * 0.25d + red * 0.05d) / all;
         final Directives dirs = new Directives()
             .add("metric")
             .attr("name", name)
@@ -119,9 +112,10 @@ final class Index implements Iterable<Directive> {
             .add("green").set((int) green).up()
             .add("yellow").set((int) yellow).up()
             .add("red").set((int) red).up()
-            .add("score").set(score).up()
-            .add("reverse")
-            .set(
+            .add("score").set(
+                10.0d * (green + yellow * 0.25d + red * 0.05d) / all
+            ).up()
+            .add("reverse").set(
                 Boolean.toString(
                     Double.parseDouble(xml.xpath("/metric/colors/@high").get(0))
                     > Double.parseDouble(
@@ -147,5 +141,4 @@ final class Index implements Iterable<Directive> {
         }
         return dirs.up();
     }
-
 }

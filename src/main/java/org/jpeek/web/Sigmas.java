@@ -54,7 +54,7 @@ final class Sigmas {
      * @param dir Directory with files
      * @throws IOException If fails
      */
-    public void add(final Path dir) throws IOException {
+    void add(final Path dir) throws IOException {
         final XML index = new XMLDocument(
             dir.resolve("index.xml").toFile()
         );
@@ -78,11 +78,10 @@ final class Sigmas {
      */
     private void add(final XML metric) throws IOException {
         final Item item;
-        final Iterator<Item> items = this.table.frame()
-            .through(
-                new QueryValve()
-                    .withLimit(1)
-                    .withSelect(Select.ALL_ATTRIBUTES)
+        final Iterator<Item> items = this.table.frame().through(
+            new QueryValve()
+                .withLimit(1)
+                .withSelect(Select.ALL_ATTRIBUTES)
             )
             .where("metric", metric.xpath("@name").get(0))
             .where("version", new Version().value())
@@ -116,8 +115,7 @@ final class Sigmas {
             || mean > mbefore && !reverse) {
             item.put(
                 new AttributeUpdates()
-                    .with("artifact", metric.xpath("/index/@artifact").get(0))
-                    .with(
+                    .with("artifact", metric.xpath("/index/@artifact").get(0)).with(
                         "champions",
                         new AttributeValueUpdate()
                             .withValue(new AttributeValue().withN("1"))
@@ -128,5 +126,4 @@ final class Sigmas {
             );
         }
     }
-
 }

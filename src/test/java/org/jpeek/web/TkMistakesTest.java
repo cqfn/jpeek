@@ -15,7 +15,6 @@ import org.takes.rs.RsPrint;
 /**
  * Test case for {@link TkMistakes}.
  * @since 0.14
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class TkMistakesTest {
 
@@ -47,5 +46,4 @@ final class TkMistakesTest {
             XhtmlMatchers.hasXPath("/page/worst")
         ).affirm();
     }
-
 }

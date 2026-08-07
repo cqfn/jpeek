@@ -64,17 +64,29 @@ final class Futures implements
      * @param func Original bi-function
      */
     Futures(final BiFunc<String, String, Func<String, Response>> func) {
-        this.origin = func;
-        this.service = Executors.newFixedThreadPool(
-            Math.min(Runtime.getRuntime().availableProcessors(), 4),
-            new VerboseThreads(Futures.class)
+        this(
+            func,
+            Executors.newFixedThreadPool(
+                Math.min(Runtime.getRuntime().availableProcessors(), 4),
+                new VerboseThreads(Futures.class)
+            )
         );
+    }
+
+    /**
+     * Ctor.
+     * @param func Original bi-function
+     * @param exec Executor service
+     */
+    private Futures(final BiFunc<String, String, Func<String, Response>> func,
+        final ExecutorService exec) {
+        this.origin = func;
+        this.service = exec;
         this.queue = new ConcurrentSkipListMap<>();
         this.times = new CopyOnWriteArrayList<>();
     }
 
     @Override
-    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public Future<Func<String, Response>> apply(final String group,
         final String artifact) {
         final String target = String.format("%s:%s", group, artifact);
@@ -84,45 +96,7 @@ final class Futures implements
         }
         return this.service.submit(
             new VerboseCallable<>(
-                () -> {
-                    Func<String, Response> front;
-                    try {
-                        Logger.info(
-                            this, "Started processing of %s:%s...",
-                            group, artifact
-                        );
-                        front = this.origin.apply(group, artifact);
-                        this.times.add(
-                            System.currentTimeMillis() - this.queue.remove(target)
-                        );
-                        Logger.info(
-                            this, "Finished processing of %s:%s",
-                            group, artifact
-                        );
-                    // @checkstyle IllegalCatchCheck (4 lines)
-                    // @checkstyle AvoidCatchingGenericException (4 lines)
-                    } catch (final Exception ex) {
-                        Logger.error(
-                            this, "Failure in %s:%s: %s",
-                            group, artifact, ex.getMessage()
-                        );
-                        front = input -> new RsPage(
-                            new RqFake(),
-                            "exception",
-                            () -> new IterableOf<>(
-                                new XeAppend("group", group),
-                                new XeAppend("artifact", artifact),
-                                new XeAppend(
-                                    "stacktrace",
-                                    new UncheckedText(
-                                        new TextOf(new InputOf(ex))
-                                    ).asString()
-                                )
-                            )
-                        );
-                    }
-                    return front;
-                },
+                () -> this.process(group, artifact, target),
                 true, true
             )
         );
@@ -131,8 +105,7 @@ final class Futures implements
     @Override
     public String asString() throws Exception {
         return Logger.format(
-            // @checkstyle LineLength (1 line)
-            "Artifacts=%d, processors=%d, threads=%d, freeMemory=%dM, maxMemory=%dM, totalMemory=%dM, ETA=%[ms]s:\n%s\n\nThreads: %s",
+            "Artifacts=%d, processors=%d, threads=%d, freeMemory=%dM, maxMemory=%dM, totalMemory=%dM, ETA=%[ms]s:%n%s%n%nThreads: %s",
             this.queue.size(),
             Runtime.getRuntime().availableProcessors(),
             Thread.getAllStackTraces().keySet().size(),
@@ -140,8 +113,8 @@ final class Futures implements
             Runtime.getRuntime().maxMemory() / (1024L << 10),
             Runtime.getRuntime().totalMemory() / (1024L << 10),
             new AvgOf(
-                this.times.toArray(new Long[this.times.size()])
-            ).longValue() * (long) this.queue.size(),
+                this.times.toArray(new Long[0])
+            ).longValue() * this.queue.size(),
             new Joined(", ", this.queue.keySet()).asString(),
             new Joined(
                 ", ",
@@ -158,7 +131,7 @@ final class Futures implements
      * @return TRUE if terminated OK
      * @throws InterruptedException If interrupted while waiting
      */
-    public boolean shutdown() throws InterruptedException {
+    boolean shutdown() throws InterruptedException {
         this.service.shutdownNow();
         final boolean stopped =
             this.service.awaitTermination(1L, TimeUnit.MINUTES);
@@ -166,5 +139,53 @@ final class Futures implements
             Logger.info(this, "Shutdown is not completed after 1min");
         }
         return stopped;
+    }
+
+    /**
+     * Process one artifact.
+     * @param group Group
+     * @param artifact Artifact
+     * @param target Queue key
+     * @return Response builder
+     */
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
+    private Func<String, Response> process(final String group, final String artifact,
+        final String target) {
+        Func<String, Response> front;
+        try {
+            Logger.info(
+                this, "Started processing of %s:%s...",
+                group, artifact
+            );
+            front = this.origin.apply(group, artifact);
+            this.times.add(
+                System.currentTimeMillis() - this.queue.remove(target)
+            );
+            Logger.info(
+                this, "Finished processing of %s:%s",
+                group, artifact
+            );
+        // @checkstyle IllegalCatchCheck (4 lines)
+        } catch (final Exception ex) {
+            Logger.error(
+                this, "Failure in %s:%s: %s",
+                group, artifact, ex.getMessage()
+            );
+            front = input -> new RsPage(
+                new RqFake(),
+                "exception",
+                () -> new IterableOf<>(
+                    new XeAppend("group", group),
+                    new XeAppend("artifact", artifact),
+                    new XeAppend(
+                        "stacktrace",
+                        new UncheckedText(
+                            new TextOf(new InputOf(ex))
+                        ).asString()
+                    )
+                )
+            );
+        }
+        return front;
     }
 }

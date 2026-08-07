@@ -36,51 +36,7 @@ final class ReportWithStatistics implements XML {
      */
     ReportWithStatistics(final XML xml) {
         this.output = new Unchecked<>(
-            new Solid<>(
-                () -> {
-                    final Iterable<Double> values = new Mapped<>(
-                        Double::parseDouble,
-                        xml.xpath(
-                            // @checkstyle LineLength (1 line)
-                            "//class[@value<=/metric/max and @value>=/metric/min]/@value"
-                        )
-                    );
-                    final double total = (double) new ListOf<>(values).size();
-                    double sum = 0.0d;
-                    for (final Double value : values) {
-                        sum += value;
-                    }
-                    final double mean = sum / total;
-                    double squares = 0.0d;
-                    for (final Double value : values) {
-                        squares += Math.pow(value - mean, 2.0d);
-                    }
-                    final double variance = squares / total;
-                    final double sigma = Math.sqrt(variance);
-                    double defects = 0.0d;
-                    for (final Double value : values) {
-                        if (value < mean - sigma || value > mean + sigma) {
-                            ++defects;
-                        }
-                    }
-                    return new XMLDocument(
-                        new Xembler(
-                            new Directives()
-                                .xpath("/metric")
-                                .add("statistics")
-                                .add("total").set(xml.nodes("//class").size())
-                                .up()
-                                .add("elements").set((long) total).up()
-                                .add("mean").set(Double.toString(mean)).up()
-                                .add("sigma").set(Double.toString(sigma)).up()
-                                .add("variance").set(Double.toString(variance))
-                                .up()
-                                .add("defects")
-                                .set(Double.toString(defects / total)).up()
-                        ).applyQuietly(xml.node())
-                    );
-                }
-            )
+            new Solid<>(() -> ReportWithStatistics.statistics(xml))
         );
     }
 
@@ -112,5 +68,54 @@ final class ReportWithStatistics implements XML {
     @Override
     public Node node() {
         return this.output.value().node();
+    }
+
+    /**
+     * Calculate statistics.
+     * @param xml The XML
+     * @return XML with statistics
+     */
+    private static XML statistics(final XML xml) {
+        final Iterable<Double> values = new Mapped<>(
+            Double::parseDouble,
+            xml.xpath(
+                // @checkstyle LineLength (1 line)
+                "//class[@value<=/metric/max and @value>=/metric/min]/@value"
+            )
+        );
+        final double total = new ListOf<>(values).size();
+        double sum = 0.0d;
+        for (final Double value : values) {
+            sum += value;
+        }
+        final double mean = sum / total;
+        double squares = 0.0d;
+        for (final Double value : values) {
+            squares += Math.pow(value - mean, 2.0d);
+        }
+        final double variance = squares / total;
+        final double sigma = Math.sqrt(variance);
+        double defects = 0.0d;
+        for (final Double value : values) {
+            if (value < mean - sigma || value > mean + sigma) {
+                ++defects;
+            }
+        }
+        return new XMLDocument(
+            new Xembler(
+                new Directives()
+                    .xpath("/metric")
+                    .add("statistics")
+                    .add("total").set(xml.nodes("//class").size())
+                    .up()
+                    .add("elements").set((long) total).up()
+                    .add("mean").set(Double.toString(mean)).up()
+                    .add("sigma").set(Double.toString(sigma)).up()
+                    .add("variance").set(Double.toString(variance))
+                    .up()
+                    .add("defects")
+                    .set(Double.toString(defects / total)).up()
+            ).applyQuietly(xml.node())
+        );
     }
 }

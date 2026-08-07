@@ -59,21 +59,19 @@ final class Dynamo implements Region {
             );
         } else {
             reg = new MkRegion(
-                new H2Data()
-                    .with(
-                        "jpeek-results",
-                        new String[] {"artifact"},
-                        "score", "diff", "ttl", "version", "added",
-                        "rank", "good", "classes", "defects", "elements"
-                    )
-                    .with(
-                        "jpeek-mistakes",
-                        new String[] {"metric"},
-                        "ttl", "avg", "version",
-                        "pos", "psum", "pavg",
-                        "neg", "nsum", "navg",
-                        "champions", "artifact", "mean", "sigma"
-                    )
+                new H2Data().with(
+                    "jpeek-results",
+                    new String[] {"artifact"},
+                    "score", "diff", "ttl", "version", "added",
+                    "rank", "good", "classes", "defects", "elements"
+                ).with(
+                    "jpeek-mistakes",
+                    new String[] {"metric"},
+                    "ttl", "avg", "version",
+                    "pos", "psum", "pavg",
+                    "neg", "nsum", "navg",
+                    "champions", "artifact", "mean", "sigma"
+                )
             );
         }
         return reg;
@@ -91,5 +89,4 @@ final class Dynamo implements Region {
             )
         ).value();
     }
-
 }

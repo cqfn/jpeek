@@ -17,7 +17,7 @@ final class CcmTest {
     /**
      * Class with one method access one attribute have
      * ncc metric = methods count.
-     * @throws Exception
+     * @throws Exception If fails
      */
     @Test
     void manyComponentInClassTest() throws Exception {
@@ -37,7 +37,7 @@ final class CcmTest {
      * Class with one method access one attribute and
      * Ctor with all attributes initialization have the same
      * metric as without Ctor.
-     * @throws Exception
+     * @throws Exception If fails
      */
     @Test
     void manyComponentWithCtorInClassTest() throws Exception {
@@ -69,7 +69,7 @@ final class CcmTest {
 
     /**
      * Check ccm metric for mixed usage: attribute usage, methods calls.
-     * @throws Exception
+     * @throws Exception If fails
      * @todo #522:30min there is a 4th step for incorrect calculation: nc
      *  in case of calling one method from another because of
      *  `xsl:if test="$method/ops/op/text()[. = $other/ops/op/text()]"`

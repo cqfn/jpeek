@@ -40,8 +40,6 @@ import org.llorllale.cactoos.matchers.Assertion;
  *  Bar,CCM,0.2222d
  *  TwoCommonMethods,CCM,0.0333d
  *  TwoCommonMethods,LORM,0.26667d
- * @checkstyle JavadocTagsCheck (500 lines)
- * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ParameterNumberCheck (500 lines)
  */
 final class MetricsTest {

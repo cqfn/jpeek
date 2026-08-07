@@ -65,7 +65,7 @@ public final class Skeleton {
 
     /**
      * As XML.
-     * @return XML structure.
+     * @return XML structure
      */
     public XML xml() {
         final long start = System.currentTimeMillis();
@@ -74,15 +74,13 @@ public final class Skeleton {
                 new Xembler(
                     new Directives()
                         .add("skeleton")
-                        .append(new Header())
-                        .append(
+                        .append(new Header()).append(
                             () -> new Directives()
                                 .attr("schema", Skeleton.SKELETON_XSD)
                                 .iterator()
                         )
                         .add("app")
-                        .attr("id", this.base)
-                        .append(
+                        .attr("id", this.base).append(
                             new Joined<>(
                                 new Mapped<>(
                                     ent -> new Directives()
@@ -115,10 +113,6 @@ public final class Skeleton {
      * Calculate Xembly for all packages.
      * @return XML for all packages (one by one)
      */
-    @SuppressWarnings({
-        "PMD.AvoidInstantiatingObjectsInLoops",
-        "PMD.GuardLogStatement"
-    })
     private Iterable<Map.Entry<String, Directives>> packages() {
         final long start = System.currentTimeMillis();
         final Collection<Map.Entry<String, Directives>> all =
@@ -157,8 +151,7 @@ public final class Skeleton {
         return new MapEntry<>(
             pkg,
             new Directives()
-                .add("class")
-                .comment(
+                .add("class").comment(
                     Xembler.escape(
                         String.format(
                             "Package: %s; name: %s; file: %s",
@@ -173,5 +166,4 @@ public final class Skeleton {
                 .up()
         );
     }
-
 }

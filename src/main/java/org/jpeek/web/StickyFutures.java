@@ -7,6 +7,7 @@ package org.jpeek.web;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
+import java.util.concurrent.locks.ReentrantLock;
 import org.cactoos.BiFunc;
 import org.cactoos.Func;
 import org.takes.Response;
@@ -37,6 +38,11 @@ final class StickyFutures
     private final int max;
 
     /**
+     * Lock guarding the cache.
+     */
+    private final ReentrantLock lock;
+
+    /**
      * Ctor.
      * @param func Original bi-function
      * @param size Max size of cache before full clean up
@@ -46,13 +52,15 @@ final class StickyFutures
         this.origin = func;
         this.cache = new ConcurrentHashMap<>(0);
         this.max = size;
+        this.lock = new ReentrantLock();
     }
 
     @Override
     public Future<Func<String, Response>> apply(
         final String group, final String artifact)
         throws Exception {
-        synchronized (this.cache) {
+        this.lock.lock();
+        try {
             if (this.cache.size() > this.max) {
                 this.cache.clear();
             }
@@ -62,7 +70,8 @@ final class StickyFutures
                 this.cache.put(target, this.origin.apply(group, artifact));
             }
             return this.cache.get(target);
+        } finally {
+            this.lock.unlock();
         }
     }
-
 }

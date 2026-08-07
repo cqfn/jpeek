@@ -72,20 +72,16 @@ final class Matrix implements Iterable<Directive> {
         ).value();
         return new Directives()
             .add("matrix")
-            .append(new Header())
-            .append(
-                () -> new Directives()
-                    .attr(
-                        "xmlns:xsi",
-                        "http://www.w3.org/2001/XMLSchema-instance"
-                    )
-                    .attr(
-                        "xsi:noNamespaceSchemaLocation",
-                        "xsd/matrix.xsd"
-                    )
-                    .iterator())
-            .add("classes")
-            .append(
+            .append(new Header()).append(
+                () -> new Directives().attr(
+                    "xmlns:xsi",
+                    "http://www.w3.org/2001/XMLSchema-instance"
+                ).attr(
+                    "xsi:noNamespaceSchemaLocation",
+                    "xsd/matrix.xsd"
+                ).iterator()
+            )
+            .add("classes").append(
                 new Joined<>(
                     new Mapped<>(
                         ent -> new Directives().add("class").append(
@@ -94,8 +90,7 @@ final class Matrix implements Iterable<Directive> {
                                     mtd -> new Directives()
                                         .add("metric")
                                         .attr("name", mtd.getKey())
-                                        .attr("color", mtd.getValue())
-                                        .attr(
+                                        .attr("color", mtd.getValue()).attr(
                                             "rank",
                                             Matrix.rank(mtd.getValue())
                                         )
@@ -127,5 +122,4 @@ final class Matrix implements Iterable<Directive> {
         }
         return rank;
     }
-
 }

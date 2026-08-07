@@ -19,9 +19,7 @@ import org.xembly.Directives;
  *
  * @see <a href="http://www.pitt.edu/~ckemerer/CK%20research%20papers/MetricForOOD_ChidamberKemerer94.pdf">A packages suite for object oriented design</a>
  * @since 0.27
- * @checkstyle ParameterNumberCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class OpsOf extends MethodVisitor {
 
     /**

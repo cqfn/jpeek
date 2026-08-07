@@ -10,14 +10,12 @@ import org.cactoos.text.TextEnvelope;
 
 /**
  * Serialize method arguments to a string.
- *
  * @since 1.0
  */
 public final class XmlMethodArgs extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param method Method as XML
      */
     XmlMethodArgs(final XML method) {

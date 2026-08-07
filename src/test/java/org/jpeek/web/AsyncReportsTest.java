@@ -22,7 +22,6 @@ import org.takes.rs.RsText;
 /**
  * Test case for {@link AsyncReports}.
  * @since 0.8
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class AsyncReportsTest {
 

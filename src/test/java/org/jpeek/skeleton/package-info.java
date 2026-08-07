@@ -5,7 +5,6 @@
 
 /**
  * Skeleton, tests.
- *
  * @since 0.27
  */
 package org.jpeek.skeleton;

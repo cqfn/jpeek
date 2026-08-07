@@ -13,7 +13,6 @@ import org.llorllale.cactoos.matchers.Assertion;
 /**
  * Test case for {@link XmlClass}.
  * @since 0.27
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class XmlClassTest {
 

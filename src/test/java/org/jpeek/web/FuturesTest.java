@@ -16,12 +16,11 @@ import org.takes.rs.xe.XeAppend;
 /**
  * Test case for {@link Futures}.
  * @since 0.32
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class FuturesTest {
 
     @Test
-    void testSimpleScenario() throws Exception {
+    void returnsResponseInSimpleScenario() throws Exception {
         new Assertion<>(
             "Futures returns Response",
             new Futures(
@@ -39,7 +38,7 @@ final class FuturesTest {
     }
 
     @Test
-    void testIgnoresCrashes() throws Exception {
+    void ignoresCrashes() throws Exception {
         new Assertion<>(
             "Futures don't crash",
             new Futures(
@@ -52,7 +51,7 @@ final class FuturesTest {
     }
 
     @Test
-    void testAsString() throws Exception {
+    void printsAsString() throws Exception {
         final Futures futures = new Futures(
             (group, artifact) -> input -> new RsPage(
                 new RqFake(),

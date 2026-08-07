@@ -5,7 +5,6 @@
 
 /**
  * JPeek graphs.
- *
  * @since 0.30.9
  */
 package org.jpeek.graph;

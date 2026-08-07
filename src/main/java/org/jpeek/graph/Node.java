@@ -21,7 +21,7 @@ public interface Node {
 
     /**
      * Calculates ingoing and outgoing connected nodes.
-     * @return List of nodes connected to this node.
+     * @return List of nodes connected to this node
      */
     Set<Node> connections();
 
@@ -46,7 +46,7 @@ public interface Node {
          */
         public Simple(final String name) {
             this.name = name;
-            this.connect = new HashSet<Node>(1);
+            this.connect = new HashSet<>(1);
         }
 
         @Override

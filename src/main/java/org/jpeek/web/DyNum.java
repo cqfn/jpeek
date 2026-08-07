@@ -47,7 +47,7 @@ final class DyNum extends Number {
      * @param num The number
      */
     DyNum(final long num) {
-        this((double) num / DyNum.MULTIPLIER);
+        this(num / DyNum.MULTIPLIER);
     }
 
     /**
@@ -69,29 +69,6 @@ final class DyNum extends Number {
         this.number = num;
     }
 
-    /**
-     * Make an update.
-     * @return The update
-     */
-    public AttributeValueUpdate update() {
-        return this.update(AttributeAction.PUT);
-    }
-
-    /**
-     * Make an update.
-     * @param action The action
-     * @return The update
-     */
-    public AttributeValueUpdate update(final AttributeAction action) {
-        return new AttributeValueUpdate()
-            .withAction(action)
-            .withValue(
-                new AttributeValue().withN(
-                    Long.toString(this.longValue())
-                )
-            );
-    }
-
     @Override
     public int intValue() {
         return (int) this.number;
@@ -110,5 +87,27 @@ final class DyNum extends Number {
     @Override
     public double doubleValue() {
         return this.number;
+    }
+
+    /**
+     * Make an update.
+     * @return The update
+     */
+    AttributeValueUpdate update() {
+        return this.update(AttributeAction.PUT);
+    }
+
+    /**
+     * Make an update.
+     * @param action The action
+     * @return The update
+     */
+    AttributeValueUpdate update(final AttributeAction action) {
+        return new AttributeValueUpdate()
+            .withAction(action).withValue(
+                new AttributeValue().withN(
+                    Long.toString(this.longValue())
+                )
+            );
     }
 }

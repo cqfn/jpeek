@@ -94,5 +94,4 @@ final class TkReport implements TkRegex {
         }
         return response;
     }
-
 }

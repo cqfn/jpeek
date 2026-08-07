@@ -25,5 +25,4 @@ final class NodeSimpleTest {
             new IsEqual<>(name)
         ).affirm();
     }
-
 }

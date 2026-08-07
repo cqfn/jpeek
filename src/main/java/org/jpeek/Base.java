@@ -16,6 +16,7 @@ import org.cactoos.iterable.Joined;
  * @since 0.1
  * @checkstyle JavadocTagsCheck (500 lines)
  */
+@FunctionalInterface
 public interface Base {
 
     /**
@@ -54,5 +55,4 @@ public interface Base {
             return new Joined<Path>(this.left.files(), this.right.files());
         }
     }
-
 }

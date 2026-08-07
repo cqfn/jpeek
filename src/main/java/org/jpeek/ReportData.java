@@ -11,7 +11,6 @@ import org.cactoos.map.MapOf;
 
 /**
  * Report data holder.
- *
  * @since 0.30.9
  */
 final class ReportData {
@@ -72,12 +71,11 @@ final class ReportData {
      * @param args Params for XSL
      * @param mean Mean
      * @param sigma Sigma
-     * @checkstyle ParameterNumberCheck (10 lines)
      */
     ReportData(final String name, final Map<String, Object> args, final double mean,
         final double sigma) {
         this.metr = name;
-        this.args = new MapOf<String, Object>(new HashMap<>(args));
+        this.args = new MapOf<>(new HashMap<>(args));
         this.man = mean;
         this.sig = sigma;
     }
@@ -86,7 +84,7 @@ final class ReportData {
      * Metric name accessor.
      * @return The metric
      */
-    public String metric() {
+    String metric() {
         return this.metr;
     }
 
@@ -94,7 +92,7 @@ final class ReportData {
      * Mean accessor.
      * @return The mean
      */
-    public double mean() {
+    double mean() {
         return this.man;
     }
 
@@ -102,7 +100,7 @@ final class ReportData {
      * Sigma accessor.
      * @return Sigma
      */
-    public double sigma() {
+    double sigma() {
         return this.sig;
     }
 
@@ -110,7 +108,7 @@ final class ReportData {
      * Params accessor.
      * @return Params
      */
-    public Map<String, Object> params() {
+    Map<String, Object> params() {
         return Collections.unmodifiableMap(this.args);
     }
 }

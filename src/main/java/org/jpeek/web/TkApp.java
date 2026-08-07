@@ -43,7 +43,6 @@ import org.takes.tk.TkWrap;
  * @since 0.5
  * @checkstyle ClassFanOutComplexityCheck (500 lines)
  */
-@SuppressWarnings("PMD.UseUtilityClass")
 public final class TkApp extends TkWrap {
 
     /**
@@ -181,5 +180,4 @@ public final class TkApp extends TkWrap {
         }
         return testing;
     }
-
 }

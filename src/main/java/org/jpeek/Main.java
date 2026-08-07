@@ -62,7 +62,8 @@ public final class Main {
 
     @Parameter(
         names = "--include-private-methods",
-        description = "Include private methods into all formulas")
+        description = "Include private methods into all formulas"
+    )
     private boolean privates;
 
     @SuppressWarnings("PMD.ImmutableField")
@@ -74,7 +75,6 @@ public final class Main {
 
     @Parameter(
         names = "--overwrite",
-        // @checkstyle LineLength (1 line)
         description = "Overwrite the target directory if it exists (otherwise an error is raised)"
     )
     private boolean overwrite;
@@ -121,8 +121,8 @@ public final class Main {
                 "Invalid paths - can't be equal if overwrite option is set."
             );
         }
-        final ConsoleAppender console = this.buildConsoleAppender();
         final Map<String, Object> params = this.buildParameters();
+        final ConsoleAppender console = this.buildConsoleAppender();
         new App(
             this.sources.toPath(),
             new FileTarget(
@@ -138,7 +138,7 @@ public final class Main {
 
     /**
      * Prepare application parameters based on configuration and metrics.
-     * @return A {@link Map} filled with parameters.
+     * @return A {@link Map} filled with parameters
      */
     private Map<String, Object> buildParameters() {
         final Map<String, Object> params = new HashMap<>(0);
@@ -164,7 +164,7 @@ public final class Main {
 
     /**
      * Prepare {@link ConsoleAppender} based on configuration.
-     * @return Configured {@link ConsoleAppender}.
+     * @return Configured {@link ConsoleAppender}
      */
     private ConsoleAppender buildConsoleAppender() {
         final ConsoleAppender console = new ConsoleAppender();

@@ -15,6 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.Enumeration;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import org.cactoos.BiFunc;
@@ -51,6 +52,11 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
     private final Path target;
 
     /**
+     * Lock guarding the shared results/mistakes/sigmas files.
+     */
+    private final ReentrantLock lock;
+
+    /**
      * Ctor.
      * @param home Home dir
      */
@@ -66,10 +72,9 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
     Reports(final Path input, final Path output) {
         this.sources = input;
         this.target = output;
+        this.lock = new ReentrantLock();
     }
 
-    // @checkstyle ExecutableStatementCountCheck (100 lines)
-    @SuppressWarnings("PMD.CyclomaticComplexity")
     @Override
     public Func<String, Response> apply(final String group,
         final String artifact) throws IOException {
@@ -81,7 +86,6 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
                 new TextOf(
                     Reports.toUrl(
                         String.format(
-                            // @checkstyle LineLength (1 line)
                             "https://repo1.maven.org/maven2/%s/%s/maven-metadata.xml",
                             grp, artifact
                         )
@@ -107,10 +111,13 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
         final Path output = this.target.resolve(grp).resolve(artifact);
         Reports.deleteIfPresent(output);
         new App(input, output).analyze();
-        synchronized (this.sources) {
+        this.lock.lock();
+        try {
             new Results().add(String.format("%s:%s", group, artifact), output);
             new Mistakes().add(output);
             new Sigmas().add(output);
+        } finally {
+            this.lock.unlock();
         }
         return new TypedPages(new Pages(output));
     }
@@ -172,5 +179,4 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
             throw new IllegalArgumentException(ex);
         }
     }
-
 }

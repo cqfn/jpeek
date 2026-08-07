@@ -38,7 +38,7 @@ final class RsPage extends RsWrap {
      * @param xsl XSL stylesheet
      */
     RsPage(final Request req, final String xsl) {
-        super(RsPage.make(req, xsl, IterableOf::new));
+        this(req, xsl, IterableOf::new);
     }
 
     /**
@@ -90,5 +90,4 @@ final class RsPage extends RsWrap {
             new FkTypes("*/*", raw)
         );
     }
-
 }

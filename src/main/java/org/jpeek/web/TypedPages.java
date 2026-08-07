@@ -46,5 +46,4 @@ final class TypedPages implements Func<String, Response> {
             new IoCheckedFunc<>(this.origin).apply(path), type
         );
     }
-
 }

@@ -45,9 +45,9 @@ public final class Ccm implements Calculus {
 
     /**
      * Updates the transformed xml with proper NCC value.
-     * @param transformed The transformed XML skeleton.
+     * @param transformed The transformed XML skeleton
      * @param skeleton XML Skeleton
-     * @return XML with fixed NCC.
+     * @return XML with fixed NCC
      */
     private static XML withFixedNcc(final XML transformed, final XML skeleton) {
         final List<XML> packages = transformed.nodes("//package");

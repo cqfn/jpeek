@@ -31,7 +31,6 @@ import org.xembly.Directives;
  *
  * @since 0.8
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class Mistakes {
 
     /**
@@ -59,7 +58,7 @@ final class Mistakes {
      * @param dir Directory with files
      * @throws IOException If fails
      */
-    public void add(final Path dir) throws IOException {
+    void add(final Path dir) throws IOException {
         final XML index = new XMLDocument(
             dir.resolve("index.xml").toFile()
         );
@@ -76,7 +75,7 @@ final class Mistakes {
      * @return List of them
      * @throws IOException If fails
      */
-    public Iterable<Iterable<? extends Directive>> worst() throws IOException {
+    Iterable<Iterable<? extends Directive>> worst() throws IOException {
         return new Mapped<>(
             item -> new Directives()
                 .add("metric")
@@ -94,8 +93,7 @@ final class Mistakes {
                 .add("sigma").set(new DyNum(item, "sigma").doubleValue()).up()
                 .up(),
             this.table.frame()
-                .where("version", new Version().value())
-                .through(
+                .where("version", new Version().value()).through(
                     new QueryValve()
                         .withScanIndexForward(false)
                         .withIndexName("mistakes")
@@ -112,14 +110,12 @@ final class Mistakes {
      * @param diff The diff from XML
      * @throws IOException If fails
      */
-    @SuppressWarnings("PMD.ExcessiveMethodLength")
     private void add(final String name, final double diff) throws IOException {
         final String version = new Version().value();
-        final Iterator<Item> items = this.table.frame()
-            .through(
-                new QueryValve()
-                    .withLimit(1)
-                    .withSelect(Select.ALL_ATTRIBUTES)
+        final Iterator<Item> items = this.table.frame().through(
+            new QueryValve()
+                .withLimit(1)
+                .withSelect(Select.ALL_ATTRIBUTES)
             )
             .where("metric", name)
             .where("version", version)
@@ -131,8 +127,7 @@ final class Mistakes {
             before = this.table.put(
                 new Attributes()
                     .with("metric", name)
-                    .with("version", version)
-                    .with(
+                    .with("version", version).with(
                         "ttl",
                         System.currentTimeMillis()
                             / TimeUnit.SECONDS.toMillis(1L)
@@ -153,76 +148,67 @@ final class Mistakes {
         }
         if (diff > 0.0d) {
             before.put(
-                new AttributeUpdates()
-                    .with(
-                        "pos",
-                        new AttributeValueUpdate()
-                            .withValue(new AttributeValue().withN("1"))
-                            .withAction(AttributeAction.ADD)
-                    )
-                    .with("psum", new DyNum(diff).update(AttributeAction.ADD))
+                new AttributeUpdates().with(
+                    "pos",
+                    new AttributeValueUpdate()
+                        .withValue(new AttributeValue().withN("1"))
+                        .withAction(AttributeAction.ADD)
+                ).with("psum", new DyNum(diff).update(AttributeAction.ADD))
             );
         } else {
             before.put(
-                new AttributeUpdates()
-                    .with(
-                        "neg",
-                        new AttributeValueUpdate()
-                            .withValue(new AttributeValue().withN("1"))
-                            .withAction(AttributeAction.ADD)
-                    )
-                    .with("nsum", new DyNum(-diff).update(AttributeAction.ADD))
+                new AttributeUpdates().with(
+                    "neg",
+                    new AttributeValueUpdate()
+                        .withValue(new AttributeValue().withN("1"))
+                        .withAction(AttributeAction.ADD)
+                ).with("nsum", new DyNum(-diff).update(AttributeAction.ADD))
             );
         }
-        final Item after = this.table.frame()
-            .through(
-                new QueryValve()
-                    .withLimit(1)
-                    .withSelect(Select.ALL_ATTRIBUTES)
+        final Item after = this.table.frame().through(
+            new QueryValve()
+                .withLimit(1)
+                .withSelect(Select.ALL_ATTRIBUTES)
             )
             .where("metric", name)
             .where("version", version)
             .iterator()
             .next();
         after.put(
-            new AttributeUpdates()
-                .with(
-                    "navg",
-                    new DyNum(
-                        Mistakes.div(
-                            Long.parseLong(after.get("nsum").getN()),
-                            Long.parseLong(after.get("neg").getN())
-                        )
-                    ).update()
-                )
-                .with(
-                    "pavg",
-                    new DyNum(
-                        Mistakes.div(
-                            Long.parseLong(after.get("psum").getN()),
-                            Long.parseLong(after.get("pos").getN())
-                        )
-                    ).update()
-                )
+            new AttributeUpdates().with(
+                "navg",
+                new DyNum(
+                    Mistakes.div(
+                        Long.parseLong(after.get("nsum").getN()),
+                        Long.parseLong(after.get("neg").getN())
+                    )
+                ).update()
+            ).with(
+                "pavg",
+                new DyNum(
+                    Mistakes.div(
+                        Long.parseLong(after.get("psum").getN()),
+                        Long.parseLong(after.get("pos").getN())
+                    )
+                ).update()
+            )
         );
-        final Item fin = this.table.frame()
-            .through(
-                new QueryValve()
-                    .withLimit(1)
-                    .withSelect(Select.ALL_ATTRIBUTES)
+        final Item fin = this.table.frame().through(
+            new QueryValve()
+                .withLimit(1)
+                .withSelect(Select.ALL_ATTRIBUTES)
             )
             .where("metric", name)
             .where("version", version)
             .iterator()
             .next();
-        final double pos = (double) Long.parseLong(fin.get("pos").getN());
-        final double neg = (double) Long.parseLong(fin.get("neg").getN());
+        final double pos = Long.parseLong(fin.get("pos").getN());
+        final double neg = Long.parseLong(fin.get("neg").getN());
         fin.put(
             new AttributeUpdates().with(
                 "avg",
                 new DyNum(
                     (new DyNum(fin, "pavg").doubleValue() * pos
-                    // @checkstyle StringLiteralsConcatenationCheck (1 line)
                     + new DyNum(fin, "navg").doubleValue() * neg)
                     / (pos + neg)
                 ).update()
@@ -245,5 +231,4 @@ final class Mistakes {
         }
         return res;
     }
-
 }

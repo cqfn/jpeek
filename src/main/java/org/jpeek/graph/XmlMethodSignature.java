@@ -17,8 +17,8 @@ public final class XmlMethodSignature extends TextEnvelope {
 
     /**
      * Ctor.
-     * @param clazz The class element of XML skeleton.
-     * @param method The method element of XML skeleton.
+     * @param clazz The class element of XML skeleton
+     * @param method The method element of XML skeleton
      */
     public XmlMethodSignature(final XML clazz, final XML method) {
         super(

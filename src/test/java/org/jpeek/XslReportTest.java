@@ -22,9 +22,7 @@ import org.xembly.Xembler;
 /**
  * Test case for {@link XslReport}.
  * @since 0.4
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class XslReportTest {
 
     @Test
@@ -128,7 +126,6 @@ final class XslReportTest {
                 new TextOf(output.resolve("LCOM.xml")).asString()
             ),
             XhtmlMatchers.hasXPaths(
-                // @checkstyle LineLength (1 line)
                 "/metric[@xsi:noNamespaceSchemaLocation = 'xsd/metric.xsd']"
             )
         ).affirm();

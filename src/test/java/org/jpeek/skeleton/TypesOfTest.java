@@ -13,7 +13,6 @@ import org.xembly.Xembler;
 /**
  * Test case for {@link TypesOf}.
  * @since 0.27
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class TypesOfTest {
 
@@ -35,5 +34,4 @@ final class TypesOfTest {
             )
         ).affirm();
     }
-
 }

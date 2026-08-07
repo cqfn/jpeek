@@ -26,5 +26,4 @@ public final class Version implements Scalar<String> {
             )
         ).value().getProperty("org.jpeek.version");
     }
-
 }

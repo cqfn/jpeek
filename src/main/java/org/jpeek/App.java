@@ -19,7 +19,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.Objects;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.io.TeeInput;
 import org.cactoos.list.ListOf;
@@ -29,7 +28,6 @@ import org.cactoos.scalar.And;
 import org.cactoos.scalar.AndInThreads;
 import org.cactoos.scalar.IoChecked;
 import org.cactoos.scalar.LengthOf;
-import org.jpeek.calculus.Calculus;
 import org.jpeek.calculus.xsl.XslCalculus;
 import org.jpeek.skeleton.Skeleton;
 import org.xembly.Directives;
@@ -41,20 +39,7 @@ import org.xembly.Xembler;
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.1
- * @checkstyle ClassFanOutComplexityCheck (500 lines)
- * @checkstyle ExecutableStatementCountCheck (500 lines)
- * @checkstyle NPathComplexityCheck (500 lines)
- * @checkstyle CyclomaticComplexityCheck (500 lines)
- * @checkstyle MethodLengthCheck (500 lines)
- * @checkstyle JavaNCSSCheck (500 lines)
  */
-@SuppressWarnings({
-    "PMD.AvoidDuplicateLiterals",
-    "PMD.NPathComplexity",
-    "PMD.CyclomaticComplexity",
-    "PMD.StdCyclomaticComplexity",
-    "PMD.ModifiedCyclomaticComplexity"
-})
 public final class App {
 
     /**
@@ -74,14 +59,13 @@ public final class App {
 
     /**
      * Ctor.
-
      * @param source Source directory
      * @param target Target dir
      */
     public App(final Path source, final Path target) {
         this(
             source, target,
-            new MapOf<String, Object>(
+            new MapOf<>(
                 new MapEntry<>("LCOM", true),
                 new MapEntry<>("LCOM2", true),
                 new MapEntry<>("LCOM3", true),
@@ -102,7 +86,6 @@ public final class App {
 
     /**
      * Ctor.
-
      * @param source Source directory
      * @param target Target dir
      * @param args XSL params
@@ -116,17 +99,11 @@ public final class App {
 
     /**
      * Analyze sources.
-
      * @throws IOException If fails
      *  Analyze method is too big. We need to extract report building from
      *  here and use a map instead of if statements se we can make
      *  easier to add and remove metrics from execution.
      */
-    @SuppressWarnings({
-        "PMD.ExcessiveMethodLength",
-        "PMD.NcssCount",
-        "PMD.GuardLogStatement"
-    })
     public void analyze() throws IOException {
         final long start = System.currentTimeMillis();
         final Collection<XSL> layers = new LinkedList<>();
@@ -221,58 +198,24 @@ public final class App {
 
     /**
      * Create report.
-
      * @param layers Collection of layers
      * @param reports Resulting report
      * @throws IOException If fails
      */
     private void buildReport(final Collection<XSL> layers, final Collection<Report> reports)
         throws IOException {
-        final Base base = new DefaultBase(this.input);
-        final XML skeleton = new Skeleton(base).xml();
-        final XSL chain = new XSLChain(layers);
-        final Calculus xsl = new XslCalculus();
+        final XML skeleton = new Skeleton(new DefaultBase(this.input)).xml();
+        final ReportBuilder builder = new ReportBuilder(
+            new XSLChain(layers), new XslCalculus(), skeleton, this.params
+        );
         this.save(skeleton.toString(), "skeleton.xml");
         Arrays.stream(Metrics.values())
-            .filter(
-                metric -> this.params.containsKey(metric.name())
-            )
-            .forEach(
-                metric -> {
-                    if (Objects.nonNull(metric.getSigma())) {
-                        reports.add(
-                            new XslReport(
-                                chain.transform(skeleton), xsl,
-                                new ReportData(
-                                    metric.name(),
-                                    this.params,
-                                    metric.getMean(),
-                                    metric.getSigma()
-                                )
-                            )
-                        );
-                    } else if (metric.isIncludeParams()) {
-                        reports.add(
-                            new XslReport(
-                                chain.transform(skeleton), xsl,
-                                new ReportData(metric.name(), this.params)
-                            )
-                        );
-                    } else {
-                        reports.add(
-                            new XslReport(
-                                chain.transform(skeleton), xsl,
-                                new ReportData(metric.name())
-                            )
-                        );
-                    }
-                }
-            );
+            .filter(metric -> this.params.containsKey(metric.name()))
+            .forEach(metric -> builder.add(metric, reports));
     }
 
     /**
      * Copy resource.
-
      * @param name The name of resource
      * @throws IOException If fails
      */
@@ -289,7 +232,6 @@ public final class App {
 
     /**
      * Copy XSL.
-
      * @param name The name of resource
      * @return TRUE if copied
      * @throws IOException If fails
@@ -301,7 +243,6 @@ public final class App {
 
     /**
      * Copy XSL.
-
      * @param name The name of resource
      * @return TRUE if copied
      * @throws IOException If fails
@@ -313,7 +254,6 @@ public final class App {
 
     /**
      * Save file.
-
      * @param data Content
      * @param name The name of destination file
      * @throws IOException If fails
@@ -331,7 +271,6 @@ public final class App {
 
     /**
      * Make XSL.
-
      * @param name The name of XSL file
      * @return XSL document
      */
@@ -340,5 +279,4 @@ public final class App {
             App.class.getResourceAsStream(String.format("xsl/%s", name))
         ).with(new ClasspathSources());
     }
-
 }

@@ -51,10 +51,6 @@ final class Classes implements Iterable<CtClass> {
     }
 
     @Override
-    @SuppressWarnings({
-        "PMD.PrematureDeclaration",
-        "PMD.GuardLogStatement"
-    })
     public Iterator<CtClass> iterator() {
         final Iterable<CtClass> classes;
         final long start = System.currentTimeMillis();
@@ -92,5 +88,4 @@ final class Classes implements Iterable<CtClass> {
         );
         return unique.iterator();
     }
-
 }

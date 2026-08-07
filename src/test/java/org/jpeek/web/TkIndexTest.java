@@ -14,7 +14,6 @@ import org.takes.rs.RsPrint;
 /**
  * Test case for {@link TkIndex}.
  * @since 0.11
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class TkIndexTest {
 
@@ -28,5 +27,4 @@ final class TkIndexTest {
             XhtmlMatchers.hasXPath("//xhtml:body")
         ).affirm();
     }
-
 }

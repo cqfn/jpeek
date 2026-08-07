@@ -27,7 +27,6 @@ import org.xembly.Directives;
  *
  * @see <a href="http://www.pitt.edu/~ckemerer/CK%20research%20papers/MetricForOOD_ChidamberKemerer94.pdf">A packages suite for object oriented design</a>
  * @since 0.27
- * @checkstyle ParameterNumberCheck (500 lines)
  */
 final class XmlClass extends ClassVisitor implements Iterable<Directive> {
 
@@ -70,8 +69,7 @@ final class XmlClass extends ClassVisitor implements Iterable<Directive> {
         return new Directives()
             .append(this.attrs)
             .up()
-            .add("methods")
-            .append(
+            .add("methods").append(
                 new Joined<>(
                     new Mapped<>(
                         dirs -> new Directives().append(dirs).up(),
@@ -90,16 +88,13 @@ final class XmlClass extends ClassVisitor implements Iterable<Directive> {
         this.attrs
             .add("attribute")
             .set(name)
-            .attr("type", desc.replaceAll(";$", ""))
-            .attr(
+            .attr("type", desc.replaceAll(";$", "")).attr(
                 "public",
                 (access & Opcodes.ACC_PUBLIC) == Opcodes.ACC_PUBLIC
-            )
-            .attr(
+            ).attr(
                 "final",
                 (access & Opcodes.ACC_FINAL) == Opcodes.ACC_FINAL
-            )
-            .attr(
+            ).attr(
                 "static",
                 (access & Opcodes.ACC_STATIC) == Opcodes.ACC_STATIC
             )
@@ -120,12 +115,6 @@ final class XmlClass extends ClassVisitor implements Iterable<Directive> {
     //  - param `name` but the word `src` itself is not included in any of
     //  - the `visitMethodInsn` arguments.
     @Override
-    @SuppressWarnings(
-        {
-            "PMD.UseVarargs",
-            "PMD.UseObjectForClearerAPI"
-        }
-    )
     public MethodVisitor visitMethod(final int access,
         final String mtd, final String desc,
         final String signature, final String[] exceptions) {
@@ -142,26 +131,21 @@ final class XmlClass extends ClassVisitor implements Iterable<Directive> {
             }
             dirs.add("method")
                 .attr("name", mtd)
-                .attr("desc", desc)
-                .attr(
-                "ctor",
-                "<init>".equals(mtd) || "<clinit>".equals(mtd)
-                )
-                .attr(
-                "static",
-                (access & Opcodes.ACC_STATIC) == Opcodes.ACC_STATIC
-                )
-                .attr(
-                "abstract",
-                (access & Opcodes.ACC_ABSTRACT) == Opcodes.ACC_ABSTRACT
-                )
-                .attr(
-                "visibility",
-                visibility
-                )
-                .attr(
-                "bridge",
-                (access & Opcodes.ACC_BRIDGE) == Opcodes.ACC_BRIDGE
+                .attr("desc", desc).attr(
+                    "ctor",
+                    "<init>".equals(mtd) || "<clinit>".equals(mtd)
+                ).attr(
+                    "static",
+                    (access & Opcodes.ACC_STATIC) == Opcodes.ACC_STATIC
+                ).attr(
+                    "abstract",
+                    (access & Opcodes.ACC_ABSTRACT) == Opcodes.ACC_ABSTRACT
+                ).attr(
+                    "visibility",
+                    visibility
+                ).attr(
+                    "bridge",
+                    (access & Opcodes.ACC_BRIDGE) == Opcodes.ACC_BRIDGE
                 )
                 .append(new TypesOf(desc));
             this.methods.add(dirs);

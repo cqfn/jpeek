@@ -23,58 +23,50 @@ final class ReportDataTest {
     @Test
     void reportsName() {
         final String name = "whatever";
-        final ReportData data = new ReportData(name);
         new Assertion<>(
             "Must returns name",
-            data.metric(),
+            new ReportData(name).metric(),
             new IsEqual<>(name)
         ).affirm();
     }
 
     @Test
     void reportsMean() {
-        final String name = "whats";
         final double mean = 0;
-        final double sigma = 1;
-        final ReportData data = new ReportData(name, ReportDataTest.args(), mean, sigma);
         new Assertion<>(
             "Must returns mean",
-            data.mean(),
+            new ReportData("whats", ReportDataTest.args(), mean, 1).mean(),
             new IsEqual<>(mean)
         ).affirm();
     }
 
     @Test
     void reportsSigma() {
-        final String name = "whatevermetric";
-        final double mean = 0;
         final double sigma = 1;
-        final ReportData data = new ReportData(name, ReportDataTest.args(), mean, sigma);
         new Assertion<>(
             "Must returns sigma",
-            data.sigma(),
+            new ReportData(
+                "whatevermetric", ReportDataTest.args(), 0, sigma
+            ).sigma(),
             new IsEqual<>(sigma)
         ).affirm();
     }
 
     @Test
     void reportsParams() {
-        final String name = "name";
         final Map<String, Object> sample = ReportDataTest.args();
-        final ReportData data = new ReportData(name, sample);
         new Assertion<>(
             "Must returns args",
-            data.params().entrySet(),
+            new ReportData("name", sample).params().entrySet(),
             new HasValues<>(sample.entrySet())
         ).affirm();
     }
 
     @Test
-    void shouldBeImmutableWhenModifyingPassedParams() {
-        final String name = "metric";
+    void remainsImmutableWhenModifyingPassedParams() {
         final Map<String, Object> sample = ReportDataTest.args();
         final Map<String, Object> params = new HashMap<>(sample);
-        final ReportData data = new ReportData(name, params);
+        final ReportData data = new ReportData("metric", params);
         params.clear();
         new Assertion<>(
             "Must be immutable",
@@ -85,8 +77,9 @@ final class ReportDataTest {
 
     @Test
     void throwsExceptionWhenTryingToModifyParams() {
-        final String name = "metrics";
-        final ReportData data = new ReportData(name, new HashMap<>(ReportDataTest.args()));
+        final ReportData data = new ReportData(
+            "metrics", new HashMap<>(ReportDataTest.args())
+        );
         new Assertion<>(
             "Must throw an exception if retrieved is modified",
             () -> {

@@ -27,7 +27,6 @@ import org.llorllale.cactoos.matchers.IsTrue;
 /**
  * Test case for {@link App}.
  * @since 0.1
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class AppTest {
     @Test
@@ -41,11 +40,9 @@ final class AppTest {
         ).affirm();
         new Assertion<>(
             "Must create LCOM report",
-            XSLDocument
-                .make(
-                    AppTest.class.getResourceAsStream("xsl/metric.xsl")
-                )
-                .with(new ClasspathSources())
+            XSLDocument.make(
+                AppTest.class.getResourceAsStream("xsl/metric.xsl")
+            ).with(new ClasspathSources())
                 .applyTo(new XMLDocument(output.resolve("LCOM.xml").toFile())),
             XhtmlMatchers.hasXPath("//xhtml:body")
         ).affirm();
@@ -132,7 +129,6 @@ final class AppTest {
     }
 
     @Test
-    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
     void isXsdDocumented() throws IOException {
         final List<XML> elements = new XMLDocument(
             AppTest.class.getResourceAsStream("xsd/metric.xsd")

@@ -23,18 +23,12 @@ public final class Header implements Iterable<Directive> {
     @Override
     public Iterator<Directive> iterator() {
         try {
-            return new Directives()
-                .attr(
-                    "date",
-                    ZonedDateTime.now().format(
-                        DateTimeFormatter.ISO_INSTANT
-                    )
-                )
-                .attr("version", new Version().value())
-                .iterator();
+            return new Directives().attr(
+                "date",
+                ZonedDateTime.now().format(DateTimeFormatter.ISO_INSTANT)
+            ).attr("version", new Version().value()).iterator();
         } catch (final IOException ex) {
             throw new IllegalStateException(ex);
         }
     }
-
 }

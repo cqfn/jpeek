@@ -16,24 +16,23 @@ import org.junit.jupiter.api.Test;
  * I.e. it answers the the following question:
  * "Into how many independent classes can you split this class?"
  * @since 0.28
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class Lcom4Test {
 
     /**
      * Variable from the report.
      */
-    public static final String PAIRS = "pairs";
+    private static final String PAIRS = "pairs";
 
     /**
      * Variable from the report.
      */
-    public static final String ATTRIBUTES = "attributes";
+    private static final String ATTRIBUTES = "attributes";
 
     /**
      * Variable from the report.
      */
-    public static final String METHODS = "methods";
+    private static final String METHODS = "methods";
 
     /**
      * Path to XSL.

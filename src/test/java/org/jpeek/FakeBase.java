@@ -19,7 +19,6 @@ import org.cactoos.scalar.LengthOf;
 /**
  * Fake base for tests.
  * @since 0.2
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class FakeBase implements Base {
 
@@ -74,8 +73,7 @@ public final class FakeBase implements Base {
                     .redirectOutput(ProcessBuilder.Redirect.INHERIT)
                     .redirectInput(ProcessBuilder.Redirect.INHERIT)
                     .redirectError(ProcessBuilder.Redirect.INHERIT)
-                    .directory(temp.toFile())
-                    .command(
+                    .directory(temp.toFile()).command(
                         new ListOf<>(
                             new Joined<String>(
                                 new ListOf<>("javac"),
@@ -97,5 +95,4 @@ public final class FakeBase implements Base {
         }
         return new DefaultBase(temp).files();
     }
-
 }

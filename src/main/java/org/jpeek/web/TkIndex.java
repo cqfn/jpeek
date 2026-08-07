@@ -4,6 +4,7 @@
  */
 package org.jpeek.web;
 
+import java.io.IOException;
 import org.cactoos.iterable.HeadOf;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Joined;
@@ -12,6 +13,7 @@ import org.takes.Response;
 import org.takes.Take;
 import org.takes.rs.xe.XeAppend;
 import org.takes.rs.xe.XeDirectives;
+import org.takes.rs.xe.XeSource;
 
 /**
  * Index page.
@@ -24,31 +26,36 @@ final class TkIndex implements Take {
 
     @Override
     public Response act(final Request req) {
-        return new RsPage(
-            req, "index",
-            () -> new IterableOf<>(
-                new XeAppend(
-                    "best",
-                    new XeDirectives(
-                        new Joined<>(
-                            new HeadOf<>(
-                                20, new Results().best()
-                            )
+        return new RsPage(req, "index", TkIndex::sources);
+    }
+
+    /**
+     * Build page sources.
+     * @return Sources
+     * @throws IOException If fails
+     */
+    private static Iterable<XeSource> sources() throws IOException {
+        return new IterableOf<>(
+            new XeAppend(
+                "best",
+                new XeDirectives(
+                    new Joined<>(
+                        new HeadOf<>(
+                            20, new Results().best()
                         )
                     )
-                ),
-                new XeAppend(
-                    "recent",
-                    new XeDirectives(
-                        new Joined<>(
-                            new HeadOf<>(
-                                25, new Results().recent()
-                            )
+                )
+            ),
+            new XeAppend(
+                "recent",
+                new XeDirectives(
+                    new Joined<>(
+                        new HeadOf<>(
+                            25, new Results().recent()
                         )
                     )
                 )
             )
         );
     }
-
 }

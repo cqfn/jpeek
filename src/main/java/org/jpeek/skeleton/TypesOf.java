@@ -95,5 +95,4 @@ final class TypesOf extends SignatureVisitor implements Iterable<Directive> {
             this.types.add(type);
         }
     }
-
 }

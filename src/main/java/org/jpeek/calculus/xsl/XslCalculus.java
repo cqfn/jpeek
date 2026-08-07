@@ -37,5 +37,4 @@ public final class XslCalculus implements Calculus {
             params
         ).transform(skeleton);
     }
-
 }

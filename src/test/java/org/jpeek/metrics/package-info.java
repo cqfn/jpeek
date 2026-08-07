@@ -5,7 +5,6 @@
 
 /**
  * Individual metrics tests.
- *
  * @since 0.28
  */
 package org.jpeek.metrics;

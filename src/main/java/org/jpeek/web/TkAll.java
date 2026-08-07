@@ -37,5 +37,4 @@ final class TkAll implements Take {
             )
         );
     }
-
 }

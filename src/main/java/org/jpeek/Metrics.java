@@ -5,8 +5,8 @@
 package org.jpeek;
 
 /**
- * Metrics
-
+ * Metrics.
+ *
  * <p>Enumeration representing various metrics along with their configuration.
  */
 public enum Metrics {
@@ -113,7 +113,6 @@ public enum Metrics {
 
     /**
      * Constructor for Metrics enum.
-
      * @param args Indicates whether parameters should be included for this metric
      * @param avg Mean value for the metric, if applicable
      * @param deviation Standard deviation for the metric, if applicable
@@ -126,7 +125,6 @@ public enum Metrics {
 
     /**
      * Gets whether parameters should be included for this metric.
-
      * @return True if parameters should be included, false otherwise
      */
     public boolean isIncludeParams() {
@@ -135,7 +133,6 @@ public enum Metrics {
 
     /**
      * Gets the mean value for the metric.
-
      * @return The mean value, or null if not applicable
      */
     public Double getMean() {
@@ -144,7 +141,6 @@ public enum Metrics {
 
     /**
      * Gets the standard deviation for the metric.
-
      * @return The standard deviation, or null if not applicable
      */
     public Double getSigma() {

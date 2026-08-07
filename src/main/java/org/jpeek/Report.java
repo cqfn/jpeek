@@ -11,6 +11,7 @@ import java.nio.file.Path;
  * Report interface.
  * @since 0.1
  */
+@FunctionalInterface
 public interface Report {
 
     /**
@@ -20,5 +21,4 @@ public interface Report {
      * @throws IOException If fails
      */
     boolean save(Path target) throws IOException;
-
 }

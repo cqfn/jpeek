@@ -23,7 +23,6 @@ import org.takes.facets.hamcrest.HmRsStatus;
 /**
  * Test case for {@link Reports}.
  * @since 0.8
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class ReportsTest {
 

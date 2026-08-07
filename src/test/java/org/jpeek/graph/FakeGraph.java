@@ -30,5 +30,4 @@ public final class FakeGraph implements Graph {
     public List<Node> nodes() {
         return this.nds;
     }
-
 }

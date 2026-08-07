@@ -13,12 +13,11 @@ import org.llorllale.cactoos.matchers.Assertion;
 /**
  * Test case for {@link DyNum}.
  * @since 0.31
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class DyNumTest {
 
     @Test
-    void testConstructDyNumFromString() {
+    void constructsDyNumFromString() {
         final double number = 2.0d;
         new Assertion<>(
             "Double values should be equal",
@@ -30,7 +29,7 @@ final class DyNumTest {
     }
 
     @Test
-    void testConstructDyNumFromLong() {
+    void constructsDyNumFromLong() {
         final long number = 2L;
         new Assertion<>(
             "Long values should be equal",
@@ -40,7 +39,7 @@ final class DyNumTest {
     }
 
     @Test
-    void testConstructDyNumFromLongCompareToInt() {
+    void comparesDyNumFromLongToInt() {
         final Double number = 2.0d;
         new Assertion<>(
             "Integer values should be equal",
@@ -50,7 +49,7 @@ final class DyNumTest {
     }
 
     @Test
-    void testConstructDyNumFromLongCompareToFloat() {
+    void comparesDyNumFromLongToFloat() {
         final float number = 2.0f;
         new Assertion<>(
             "Float values should be equal",
@@ -60,7 +59,7 @@ final class DyNumTest {
     }
 
     @Test
-    void testConstructDyNumFromDouble() {
+    void constructsDyNumFromDouble() {
         final double number = 2.0d;
         new Assertion<>(
             "Double values should be equal.",
@@ -70,7 +69,7 @@ final class DyNumTest {
     }
 
     @Test
-    void testUpdateDyNum() {
+    void updatesDyNum() {
         new Assertion<>(
             "Result should not be null",
             new DyNum(2.0d).update(),

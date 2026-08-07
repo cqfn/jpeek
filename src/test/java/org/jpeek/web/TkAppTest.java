@@ -24,7 +24,6 @@ import org.takes.rs.RsPrint;
  * @todo #535:1h renderOneReport is not stable on checking /shutdown endpoint
  *  Increasing timeout does not help, problem should be investigated and
  *  response validation returned back
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class TkAppTest {
 
@@ -54,7 +53,6 @@ final class TkAppTest {
     }
 
     @Test
-    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
     void pingsSimplePages(@TempDir final Path temp) throws Exception {
         final String[] pages = {
             "/org/jpeek/web/layout.xsl",
@@ -75,5 +73,4 @@ final class TkAppTest {
         }
         app.act(new RqFake("GET", "/shutdown"));
     }
-
 }

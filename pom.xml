@@ -303,7 +303,7 @@
           <plugin>
             <groupId>com.qulice</groupId>
             <artifactId>qulice-maven-plugin</artifactId>
-            <version>0.24.0</version>
+            <version>0.30.3</version>
             <configuration>
               <license>file:${basedir}/LICENSE.txt</license>
               <excludes combine.children="append">
@@ -312,6 +312,27 @@
                 <exclude>checkstyle:/src/it/.*</exclude>
                 <exclude>pmd:/src/it/.*</exclude>
                 <exclude>pmd:/src/test/resources/.*</exclude>
+                <!-- UnnecessaryLocalRule's intervening-call guard does not
+                     cover constructor-call initializers, so it misses that
+                     `data` here must stay a local (the assertion reads it
+                     after `params.clear()`): https://github.com/yegor256/qulice/issues/1699 -->
+                <exclude>pmd:.*/src/test/java/org/jpeek/ReportDataTest\.java</exclude>
+                <!-- UnnecessaryLocalRule's interveningCall misses the
+                     side effect of buildConsoleAppender() intervening
+                     across the nested if-block below it:
+                     https://github.com/yegor256/qulice/issues/1700 -->
+                <exclude>pmd:.*/src/main/java/org/jpeek/Main\.java</exclude>
+                <!-- UnnecessaryJavaLang matches the substring 'java.lang.'
+                     inside string literals, not just type references; these
+                     XPath assertions must name the fully-qualified call
+                     target that the bytecode analyzer actually emits:
+                     https://github.com/yegor256/qulice/issues/1703 -->
+                <exclude>checkstyle:.*/src/test/java/org/jpeek/skeleton/SkeletonTest\.java</exclude>
+                <!-- UseDiamondOperator suggests a diamond on an anonymous
+                     SimpleFileVisitor subclass, which only compiles at
+                     source level 9+; this project targets -source 8:
+                     https://github.com/yegor256/qulice/issues/1690 -->
+                <exclude>pmd:.*/src/main/java/org/jpeek/FileTarget\.java</exclude>
                 <exclude>findbugs:.*</exclude>
                 <exclude>duplicatefinder:.*</exclude>
               </excludes>

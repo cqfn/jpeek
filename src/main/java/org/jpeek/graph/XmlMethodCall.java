@@ -10,15 +10,13 @@ import org.cactoos.text.TextEnvelope;
 
 /**
  * Serialize method call to a string.
- *
  * @since 1.0
  */
 public final class XmlMethodCall extends TextEnvelope {
 
     /**
      * Ctor.
-     *
-     * @param call Call operation as XML.
+     * @param call Call operation as XML
      */
     XmlMethodCall(final XML call) {
         super(

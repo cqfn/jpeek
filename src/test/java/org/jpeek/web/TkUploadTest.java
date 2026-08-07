@@ -16,7 +16,6 @@ import org.takes.rs.RsPrint;
 /**
  * Test case for {@link TkUpload}.
  * @since 0.32
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class TkUploadTest {
 
@@ -38,5 +37,4 @@ final class TkUploadTest {
             Matchers.startsWith("Uploaded ")
         ).affirm();
     }
-
 }

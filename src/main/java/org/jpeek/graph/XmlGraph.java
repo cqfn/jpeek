@@ -62,16 +62,10 @@ public final class XmlGraph implements Graph {
             method -> new Node.Simple(
                 new XmlMethodSignature(
                     skeleton.xml()
-                        .nodes(
-                            new FormattedText(
-                                "//package[@id='%s']", pname
-                            ).toString()
-                        ).get(0)
-                        .nodes(
-                            new FormattedText(
-                                "//class[@id='%s']", cname
-                            ).toString()
-                        ).get(0),
+                        .nodes(new FormattedText("//package[@id='%s']", pname).toString())
+                        .get(0)
+                        .nodes(new FormattedText("//class[@id='%s']", cname).toString())
+                        .get(0),
                     method
                 ).asString()
             ),

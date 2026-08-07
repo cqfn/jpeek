@@ -30,6 +30,7 @@ import java.util.Map;
  *  Chain Of Responsibility pattern. Decide on the best way to integrate Java
  *  based Calculus with XSL based Calculus in `XslReport` and implement it.
  */
+@FunctionalInterface
 public interface Calculus {
 
     /**
@@ -42,5 +43,4 @@ public interface Calculus {
      */
     XML node(String metric, Map<String, Object> params, XML skeleton)
         throws IOException;
-
 }

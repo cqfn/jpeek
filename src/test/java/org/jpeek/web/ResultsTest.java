@@ -19,7 +19,6 @@ import org.xembly.Xembler;
 /**
  * Test case for {@link Results}.
  * @since 0.16
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class ResultsTest {
 
@@ -42,5 +41,4 @@ final class ResultsTest {
             XhtmlMatchers.hasXPath("/repos")
         ).affirm();
     }
-
 }

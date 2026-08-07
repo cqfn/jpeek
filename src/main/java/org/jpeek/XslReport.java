@@ -83,42 +83,32 @@ final class XslReport implements Report {
      * @param xml Skeleton
      * @param calc Calculus
      * @param data Report data
-     * @checkstyle ParameterNumberCheck (10 lines)
      */
     XslReport(final XML xml, final Calculus calc, final ReportData data) {
-        this.skeleton = xml;
-        this.metric = data.metric();
-        this.params = data.params();
-        this.calculus = calc;
-        this.post = new XSLChain(
-            new ListOf<>(
-                new XSLDocument(
-                    XslReport.class.getResourceAsStream(
-                        "xsl/metric-post-colors.xsl"
-                    )
-                ).with("low", data.mean() - data.sigma())
-                .with("high", data.mean() + data.sigma()),
-                new XSLDocument(
-                    XslReport.class.getResourceAsStream(
-                        "xsl/metric-post-range.xsl"
-                    )
-                ),
-                new XSLDocument(
-                    XslReport.class.getResourceAsStream(
-                        "xsl/metric-post-bars.xsl"
-                    )
-                )
-            )
+        this(
+            xml, calc, data.metric(), data.params(),
+            XslReport.postprocessing(data)
         );
     }
 
     /**
-     * Save report.
-     * @param target Target dir
-     * @return TRUE if saved
-     * @throws IOException If fails
+     * Ctor.
+     * @param xml Skeleton
+     * @param calc Calculus
+     * @param mtc Metric name
+     * @param prms Report params
+     * @param pst Post processing XSLs
      */
-    @SuppressWarnings("PMD.GuardLogStatement")
+    private XslReport(final XML xml, final Calculus calc, final String mtc,
+        final Map<String, Object> prms, final XSL pst) {
+        this.skeleton = xml;
+        this.metric = mtc;
+        this.params = prms;
+        this.calculus = calc;
+        this.post = pst;
+    }
+
+    @Override
     public boolean save(final Path target) throws IOException {
         final long start = System.currentTimeMillis();
         final XML xml = new StrictXML(
@@ -169,12 +159,10 @@ final class XslReport implements Report {
         return new XMLDocument(
             new Xembler(
                 new Directives()
-                    .xpath("/metric")
-                    .attr(
+                    .xpath("/metric").attr(
                         "xmlns:xsi",
                         "http://www.w3.org/2001/XMLSchema-instance"
-                    )
-                    .attr(
+                    ).attr(
                         "xsi:noNamespaceSchemaLocation",
                         XslReport.SCHEMA_FILE
                     )
@@ -186,4 +174,31 @@ final class XslReport implements Report {
         );
     }
 
+    /**
+     * Build post-processing XSLs.
+     * @param data Report data
+     * @return Post processing XSLs
+     */
+    private static XSL postprocessing(final ReportData data) {
+        return new XSLChain(
+            new ListOf<>(
+                new XSLDocument(
+                    XslReport.class.getResourceAsStream(
+                        "xsl/metric-post-colors.xsl"
+                    )
+                ).with("low", data.mean() - data.sigma())
+                .with("high", data.mean() + data.sigma()),
+                new XSLDocument(
+                    XslReport.class.getResourceAsStream(
+                        "xsl/metric-post-range.xsl"
+                    )
+                ),
+                new XSLDocument(
+                    XslReport.class.getResourceAsStream(
+                        "xsl/metric-post-bars.xsl"
+                    )
+                )
+            )
+        );
+    }
 }

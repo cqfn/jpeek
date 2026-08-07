@@ -8,7 +8,6 @@ import com.jcabi.matchers.XhtmlMatchers;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.cactoos.text.TextOf;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -16,38 +15,26 @@ import org.llorllale.cactoos.matchers.Assertion;
 /**
  * Test case for {@link Index}.
  * @since 0.6
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class IndexTest {
-    /**
-     * Xml file content as a string.
-     */
-    private String xml;
-
-    @BeforeEach
-    void setUp(@TempDir final Path output) throws Exception {
-        final Path input = Paths.get(".");
-        new App(input, output).analyze();
-        this.xml = new TextOf(output.resolve("index.xml")).asString();
-    }
 
     @Test
-    void createsIndexXml() {
+    void createsIndexXml(@TempDir final Path output) throws Exception {
         new Assertion<>(
             "Must create index.xml",
             XhtmlMatchers.xhtml(
-                this.xml
+                IndexTest.xml(output)
             ),
             XhtmlMatchers.hasXPaths("/index/metric")
         ).affirm();
     }
 
     @Test
-    void xmlHasSchema() {
+    void xmlHasSchema(@TempDir final Path output) throws Exception {
         new Assertion<>(
             "The XML Schema is invalid",
             XhtmlMatchers.xhtml(
-                this.xml
+                IndexTest.xml(output)
             ),
             XhtmlMatchers.hasXPaths(
                 "/index[@xsi:noNamespaceSchemaLocation='xsd/index.xsd']"
@@ -55,4 +42,15 @@ final class IndexTest {
         ).affirm();
     }
 
+    /**
+     * Build index.xml content.
+     * @param output Output dir
+     * @return XML as string
+     * @throws Exception If fails
+     */
+    private static String xml(final Path output) throws Exception {
+        final Path input = Paths.get(".");
+        new App(input, output).analyze();
+        return new TextOf(output.resolve("index.xml")).asString();
+    }
 }

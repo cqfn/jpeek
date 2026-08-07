@@ -33,7 +33,6 @@ import org.xembly.Directives;
  *
  * @since 0.8
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class Results {
 
     /**
@@ -60,7 +59,7 @@ final class Results {
      * Delete them all.
      * @return How many were deleted
      */
-    public int flush() {
+    int flush() {
         final Iterator<Item> items = this.table.frame().iterator();
         int total = 0;
         while (items.hasNext()) {
@@ -77,8 +76,7 @@ final class Results {
      * @param dir Directory with files
      * @throws IOException If fails
      */
-    public void add(final String artifact, final Path dir)
-        throws IOException {
+    void add(final String artifact, final Path dir) throws IOException {
         final XML index = new XMLDocument(
             dir.resolve("index.xml").toFile()
         );
@@ -89,7 +87,7 @@ final class Results {
         final long score = new DyNum(
             index.xpath("/index/@score").get(0)
         ).longValue();
-        final long rank = (long) ((double) score * (1.0d - diff.doubleValue()));
+        final long rank = (long) (score * (1.0d - diff.doubleValue()));
         if (elements < 100) {
             Logger.info(
                 this, "%d elements NOT saved for %s by %s, rank=%d, score=%d, metrics=%d",
@@ -103,15 +101,13 @@ final class Results {
                     .with("artifact", artifact)
                     .with("rank", rank)
                     .with("score", score)
-                    .with("diff", diff.longValue())
-                    .with(
+                    .with("diff", diff.longValue()).with(
                         "defects",
                         new DyNum(
                             index.xpath("/index/@defects").get(0)
                         ).longValue()
                     )
-                    .with("elements", elements)
-                    .with(
+                    .with("elements", elements).with(
                         "classes",
                         Integer.parseInt(
                             index.xpath(
@@ -120,8 +116,7 @@ final class Results {
                         )
                     )
                     .with("version", new Version().value())
-                    .with("added", System.currentTimeMillis())
-                    .with(
+                    .with("added", System.currentTimeMillis()).with(
                         "ttl",
                         System.currentTimeMillis()
                             / TimeUnit.SECONDS.toMillis(1L)
@@ -140,7 +135,7 @@ final class Results {
      * @param artifact The artifact, e.g. "org.jpeek:jpeek"
      * @return TRUE if it exists
      */
-    public boolean exists(final String artifact) {
+    boolean exists(final String artifact) {
         return !this.table.frame()
             .where("good", "true")
             .where("artifact", artifact)
@@ -153,20 +148,22 @@ final class Results {
      * @return The score
      * @throws IOException If fails
      */
-    public double score(final String artifact) throws IOException {
-        final Item item = this.table.frame()
-            .where("good", "true")
-            .where("artifact", artifact)
-            .iterator()
-            .next();
-        return new DyNum(item, "score").doubleValue();
+    double score(final String artifact) throws IOException {
+        return new DyNum(
+            this.table.frame()
+                .where("good", "true")
+                .where("artifact", artifact)
+                .iterator()
+                .next(),
+            "score"
+        ).doubleValue();
     }
 
     /**
      * Recent artifacts..
      * @return List of them
      */
-    public Iterable<Iterable<? extends Directive>> recent() {
+    Iterable<Iterable<? extends Directive>> recent() {
         return new Mapped<>(
             item -> {
                 final String[] parts = item.get("artifact").getS().split(":");
@@ -177,8 +174,7 @@ final class Results {
                     .up();
             },
             this.table.frame()
-                .where("good", "true")
-                .through(
+                .where("good", "true").through(
                     new QueryValve()
                         .withScanIndexForward(false)
                         .withIndexName("recent")
@@ -193,59 +189,21 @@ final class Results {
      * All of them.
      * @return List of them
      */
-    public Iterable<Iterable<? extends Directive>> all() {
+    Iterable<Iterable<? extends Directive>> all() {
         return new Mapped<>(
-            item -> {
-                final String[] parts = item.get("artifact").getS().split(":");
-                return new Directives()
-                    .add("repo")
-                    .add("version").set(item.get("version").getS()).up()
-                    .add("added")
-                    .set(
-                        Instant.ofEpochMilli(
-                            Long.parseLong(item.get("added").getN())
-                        )
-                        .atZone(ZoneOffset.UTC)
-                        .toLocalDateTime()
-                        .toString()
+            Results::toAllDirectives,
+            this.table.frame().where(
+                "elements",
+                new Condition()
+                    .withAttributeValueList(new AttributeValue().withN("99"))
+                    .withComparisonOperator(ComparisonOperator.GT)
+            ).through(
+                new ScanValve()
+                    .withLimit(1000).withAttributeToGet(
+                        "artifact", "classes", "defects", "version",
+                        "rank", "score", "elements", "added"
                     )
-                    .up()
-                    .add("group").set(parts[0]).up()
-                    .add("artifact").set(parts[1]).up()
-                    .add("rank")
-                    .set(new DyNum(item, "rank").doubleValue())
-                    .up()
-                    .add("score")
-                    .set(new DyNum(item, "score").doubleValue())
-                    .up()
-                    .add("defects")
-                    .set(new DyNum(item, "defects").doubleValue())
-                    .up()
-                    .add("classes")
-                    .set(Integer.parseInt(item.get("classes").getN()))
-                    .up()
-                    .add("elements")
-                    .set(Integer.parseInt(item.get("elements").getN()))
-                    .up()
-                    .up();
-            },
-            this.table.frame()
-                .where(
-                    "elements",
-                    new Condition()
-                        .withAttributeValueList(
-                            new AttributeValue().withN("99")
-                        )
-                        .withComparisonOperator(ComparisonOperator.GT)
-                )
-                .through(
-                    new ScanValve()
-                        .withLimit(1000)
-                        .withAttributeToGet(
-                            "artifact", "classes", "defects", "version",
-                            "rank", "score", "elements", "added"
-                        )
-                )
+            )
         );
     }
 
@@ -254,43 +212,16 @@ final class Results {
      * @return List of them
      * @throws IOException If fails
      */
-    public Iterable<Iterable<Directive>> best() throws IOException {
+    Iterable<Iterable<Directive>> best() throws IOException {
         return new Mapped<>(
-            item -> {
-                final String[] parts = item.get("artifact").getS().split(":");
-                return new Directives()
-                    .add("repo")
-                    .add("group").set(parts[0]).up()
-                    .add("artifact").set(parts[1]).up()
-                    .add("rank")
-                    .set(new DyNum(item, "rank").doubleValue())
-                    .up()
-                    .add("score")
-                    .set(new DyNum(item, "score").doubleValue())
-                    .up()
-                    .add("diff")
-                    .set(new DyNum(item, "diff").doubleValue())
-                    .up()
-                    .add("defects")
-                    .set(new DyNum(item, "defects").doubleValue())
-                    .up()
-                    .add("classes")
-                    .set(Integer.parseInt(item.get("classes").getN()))
-                    .up()
-                    .add("elements")
-                    .set(Integer.parseInt(item.get("elements").getN()))
-                    .up()
-                    .up();
-            },
+            Results::toBestDirectives,
             this.table.frame()
-                .where("version", new Version().value())
-                .through(
+                .where("version", new Version().value()).through(
                     new QueryValve()
                         .withScanIndexForward(false)
                         .withIndexName("ranks")
                         .withConsistentRead(false)
-                        .withLimit(20)
-                        .withAttributesToGet(
+                        .withLimit(20).withAttributesToGet(
                             "artifact", "score", "diff", "defects",
                             "classes", "elements", "rank"
                         )
@@ -298,4 +229,76 @@ final class Results {
         );
     }
 
+    /**
+     * Convert an item into directives for {@link #all()}.
+     * @param item DynamoDB item
+     * @return Directives
+     * @throws IOException If fails
+     */
+    private static Directives toAllDirectives(final Item item) throws IOException {
+        final String[] parts = item.get("artifact").getS().split(":");
+        return new Directives()
+            .add("repo")
+            .add("version").set(item.get("version").getS()).up()
+            .add("added").set(
+                Instant.ofEpochMilli(
+                    Long.parseLong(item.get("added").getN())
+                )
+                .atZone(ZoneOffset.UTC)
+                .toLocalDateTime()
+                .toString()
+            )
+            .up()
+            .add("group").set(parts[0]).up()
+            .add("artifact").set(parts[1]).up()
+            .add("rank")
+            .set(new DyNum(item, "rank").doubleValue())
+            .up()
+            .add("score")
+            .set(new DyNum(item, "score").doubleValue())
+            .up()
+            .add("defects")
+            .set(new DyNum(item, "defects").doubleValue())
+            .up()
+            .add("classes")
+            .set(Integer.parseInt(item.get("classes").getN()))
+            .up()
+            .add("elements")
+            .set(Integer.parseInt(item.get("elements").getN()))
+            .up()
+            .up();
+    }
+
+    /**
+     * Convert an item into directives for {@link #best()}.
+     * @param item DynamoDB item
+     * @return Directives
+     * @throws IOException If fails
+     */
+    private static Directives toBestDirectives(final Item item) throws IOException {
+        final String[] parts = item.get("artifact").getS().split(":");
+        return new Directives()
+            .add("repo")
+            .add("group").set(parts[0]).up()
+            .add("artifact").set(parts[1]).up()
+            .add("rank")
+            .set(new DyNum(item, "rank").doubleValue())
+            .up()
+            .add("score")
+            .set(new DyNum(item, "score").doubleValue())
+            .up()
+            .add("diff")
+            .set(new DyNum(item, "diff").doubleValue())
+            .up()
+            .add("defects")
+            .set(new DyNum(item, "defects").doubleValue())
+            .up()
+            .add("classes")
+            .set(Integer.parseInt(item.get("classes").getN()))
+            .up()
+            .add("elements")
+            .set(Integer.parseInt(item.get("elements").getN()))
+            .up()
+            .up();
+    }
 }

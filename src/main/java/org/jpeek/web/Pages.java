@@ -44,5 +44,4 @@ final class Pages implements Func<String, Response> {
             ).asString()
         );
     }
-
 }

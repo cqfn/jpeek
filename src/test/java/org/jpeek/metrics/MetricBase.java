@@ -6,6 +6,7 @@ package org.jpeek.metrics;
 
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XSLDocument;
+import java.io.InputStream;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.TextOf;
@@ -33,11 +34,15 @@ public final class MetricBase {
      * @throws Exception If file not found.
      */
     public MetricBase(final String path) throws Exception {
-        this.xsl = new XSLDocument(
-            new ResourceOf(
-                path
-            ).stream()
-        );
+        this(new ResourceOf(path).stream());
+    }
+
+    /**
+     * Ctor.
+     * @param input XSL input stream
+     */
+    private MetricBase(final InputStream input) {
+        this.xsl = new XSLDocument(input);
     }
 
     /**
@@ -46,7 +51,7 @@ public final class MetricBase {
      * @return Xml result of the transformation
      */
     public Report transform(final String name) {
-        return new Report(
+        return new MetricBase.Report(
             name,
             this.xsl.transform(
                 new Skeleton(
@@ -72,8 +77,8 @@ public final class MetricBase {
 
         /**
          * Ctor.
-         * @param name Class name.
-         * @param xml Resulting xml.
+         * @param name Class name
+         * @param xml Resulting xml
          */
         public Report(final String name, final XML xml) {
             this.name = name;

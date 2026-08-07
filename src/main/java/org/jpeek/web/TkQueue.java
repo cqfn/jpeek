@@ -45,5 +45,4 @@ final class TkQueue implements Take {
             throw new IOException(exception);
         }
     }
-
 }

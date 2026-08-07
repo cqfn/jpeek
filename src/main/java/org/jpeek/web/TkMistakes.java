@@ -40,5 +40,4 @@ final class TkMistakes implements Take {
             )
         );
     }
-
 }

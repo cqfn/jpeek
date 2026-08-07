@@ -59,5 +59,4 @@ public final class Lcom4 implements Calculus {
             ).asString()
         );
     }
-
 }

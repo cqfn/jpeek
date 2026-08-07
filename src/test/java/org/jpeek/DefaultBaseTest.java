@@ -5,6 +5,7 @@
 package org.jpeek;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
@@ -16,7 +17,6 @@ import org.llorllale.cactoos.matchers.Assertion;
 /**
  * Test case for {@link DefaultBase}.
  * @since 0.1
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class DefaultBaseTest {
 
@@ -24,11 +24,13 @@ final class DefaultBaseTest {
     void listsFiles(@TempDir final Path temp) throws IOException {
         temp.resolve("a/b/c").toFile().mkdirs();
         Files.write(
-            temp.resolve("a/b/c/x.java"), "Hello".getBytes(),
+            temp.resolve("a/b/c/x.java"),
+            "Hello".getBytes(StandardCharsets.UTF_8),
             StandardOpenOption.CREATE_NEW
         );
         Files.write(
-            temp.resolve("a/z.class"), "".getBytes(),
+            temp.resolve("a/z.class"),
+            "".getBytes(StandardCharsets.UTF_8),
             StandardOpenOption.CREATE_NEW
         );
         new Assertion<>(
@@ -37,5 +39,4 @@ final class DefaultBaseTest {
             Matchers.iterableWithSize(Matchers.greaterThan(2))
         ).affirm();
     }
-
 }

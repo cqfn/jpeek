@@ -8,7 +8,6 @@ import com.jcabi.matchers.XhtmlMatchers;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.cactoos.text.TextOf;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -16,38 +15,26 @@ import org.llorllale.cactoos.matchers.Assertion;
 /**
  * Test case for {@link Matrix}.
  * @since 0.8
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class MatrixTest {
-    /**
-     * Xml file content as a string.
-     */
-    private String xml;
-
-    @BeforeEach
-    void setUp(@TempDir final Path output) throws Exception {
-        final Path input = Paths.get(".");
-        new App(input, output).analyze();
-        this.xml = new TextOf(output.resolve("matrix.xml")).asString();
-    }
 
     @Test
-    void createsMatrixXml() {
+    void createsMatrixXml(@TempDir final Path output) throws Exception {
         new Assertion<>(
             "Must create matrix.xml",
             XhtmlMatchers.xhtml(
-                this.xml
+                MatrixTest.xml(output)
             ),
             XhtmlMatchers.hasXPaths("/matrix/classes")
         ).affirm();
     }
 
     @Test
-    void xmlHasSchema() {
+    void xmlHasSchema(@TempDir final Path output) throws Exception {
         new Assertion<>(
             "The XML Schema is invalid",
             XhtmlMatchers.xhtml(
-                this.xml
+                MatrixTest.xml(output)
             ),
             XhtmlMatchers.hasXPaths(
                 "/matrix[@xsi:noNamespaceSchemaLocation='xsd/matrix.xsd']"
@@ -55,4 +42,15 @@ final class MatrixTest {
         ).affirm();
     }
 
+    /**
+     * Build matrix.xml content.
+     * @param output Output dir
+     * @return XML as string
+     * @throws Exception If fails
+     */
+    private static String xml(final Path output) throws Exception {
+        final Path input = Paths.get(".");
+        new App(input, output).analyze();
+        return new TextOf(output.resolve("matrix.xml")).asString();
+    }
 }

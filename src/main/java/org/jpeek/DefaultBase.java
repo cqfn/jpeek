@@ -47,5 +47,4 @@ public final class DefaultBase implements Base {
             return files;
         }
     }
-
 }

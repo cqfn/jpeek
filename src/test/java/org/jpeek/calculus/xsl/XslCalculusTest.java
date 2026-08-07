@@ -53,5 +53,4 @@ final class XslCalculusTest {
             )
         ).affirm();
     }
-
 }

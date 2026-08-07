@@ -14,7 +14,6 @@ import org.takes.rs.RsPrint;
 /**
  * Test case for {@link TkAll}.
  * @since 0.11
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class TkAllTest {
 
@@ -28,5 +27,4 @@ final class TkAllTest {
             XhtmlMatchers.hasXPath("//xhtml:body")
         ).affirm();
     }
-
 }

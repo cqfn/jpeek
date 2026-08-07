@@ -9,9 +9,9 @@ import java.nio.file.Path;
 
 /**
  * File Target.
- *
  * @since 0.26.4
  */
+@FunctionalInterface
 public interface Target {
 
     /**
