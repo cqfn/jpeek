@@ -30,6 +30,7 @@ public interface Base {
      * Concat.
      */
     final class Concat implements Base {
+
         /**
          * Left Base.
          */

@@ -303,7 +303,7 @@
           <plugin>
             <groupId>com.qulice</groupId>
             <artifactId>qulice-maven-plugin</artifactId>
-            <version>0.30.3</version>
+            <version>0.30.5</version>
             <configuration>
               <license>file:${basedir}/LICENSE.txt</license>
               <excludes combine.children="append">
@@ -328,11 +328,45 @@
                      target that the bytecode analyzer actually emits:
                      https://github.com/yegor256/qulice/issues/1703 -->
                 <exclude>checkstyle:.*/src/test/java/org/jpeek/skeleton/SkeletonTest\.java</exclude>
-                <!-- UseDiamondOperator suggests a diamond on an anonymous
-                     SimpleFileVisitor subclass, which only compiles at
-                     source level 9+; this project targets -source 8:
-                     https://github.com/yegor256/qulice/issues/1690 -->
-                <exclude>pmd:.*/src/main/java/org/jpeek/FileTarget\.java</exclude>
+                <!-- UnitTestShouldIncludeAssert does not recognize
+                     cactoos-matchers' Assertion#affirm() as an assertion,
+                     and separately does not trace into a private helper
+                     method that performs the assertion, so it misses the
+                     real assertions these tests make:
+                     https://github.com/yegor256/qulice/issues/1698
+                     https://github.com/yegor256/qulice/issues/1706 -->
+                <exclude>pmd:.*/src/test/java/org/jpeek/AppTest\.java</exclude>
+                <exclude>pmd:.*/src/test/java/org/jpeek/calculus/java/Lcom4Test\.java</exclude>
+                <exclude>pmd:.*/src/test/java/org/jpeek/calculus/xsl/XslCalculusTest\.java</exclude>
+                <exclude>pmd:.*/src/test/java/org/jpeek/DefaultBaseTest\.java</exclude>
+                <exclude>pmd:.*/src/test/java/org/jpeek/graph/DisjointTest\.java</exclude>
+                <exclude>pmd:.*/src/test/java/org/jpeek/graph/NodeSimpleTest\.java</exclude>
+                <exclude>pmd:.*/src/test/java/org/jpeek/graph/XmlGraphTest\.java</exclude>
+                <exclude>pmd:.*/src/test/java/org/jpeek/graph/XmlMethodArgsTest\.java</exclude>
+                <exclude>pmd:.*/src/test/java/org/jpeek/graph/XmlMethodCallTest\.java</exclude>
+                <exclude>pmd:.*/src/test/java/org/jpeek/graph/XmlMethodSignatureTest\.java</exclude>
+                <exclude>pmd:.*/src/test/java/org/jpeek/IndexTest\.java</exclude>
+                <exclude>pmd:.*/src/test/java/org/jpeek/MainTest\.java</exclude>
+                <exclude>pmd:.*/src/test/java/org/jpeek/MatrixTest\.java</exclude>
+                <exclude>pmd:.*/src/test/java/org/jpeek/MetricsTest\.java</exclude>
+                <exclude>pmd:.*/src/test/java/org/jpeek/ReportWithStatisticsTest\.java</exclude>
+                <exclude>pmd:.*/src/test/java/org/jpeek/skeleton/SkeletonTest\.java</exclude>
+                <exclude>pmd:.*/src/test/java/org/jpeek/skeleton/TypesOfTest\.java</exclude>
+                <exclude>pmd:.*/src/test/java/org/jpeek/skeleton/XmlClassTest\.java</exclude>
+                <exclude>pmd:.*/src/test/java/org/jpeek/web/AsyncReportsTest\.java</exclude>
+                <exclude>pmd:.*/src/test/java/org/jpeek/web/DyNumTest\.java</exclude>
+                <exclude>pmd:.*/src/test/java/org/jpeek/web/FuturesTest\.java</exclude>
+                <exclude>pmd:.*/src/test/java/org/jpeek/web/MistakesTest\.java</exclude>
+                <exclude>pmd:.*/src/test/java/org/jpeek/web/PagesTest\.java</exclude>
+                <exclude>pmd:.*/src/test/java/org/jpeek/web/ReportsTest\.java</exclude>
+                <exclude>pmd:.*/src/test/java/org/jpeek/web/ResultsTest\.java</exclude>
+                <exclude>pmd:.*/src/test/java/org/jpeek/web/TkAllTest\.java</exclude>
+                <exclude>pmd:.*/src/test/java/org/jpeek/web/TkAppTest\.java</exclude>
+                <exclude>pmd:.*/src/test/java/org/jpeek/web/TkIndexTest\.java</exclude>
+                <exclude>pmd:.*/src/test/java/org/jpeek/web/TkMistakesTest\.java</exclude>
+                <exclude>pmd:.*/src/test/java/org/jpeek/web/TkReportTest\.java</exclude>
+                <exclude>pmd:.*/src/test/java/org/jpeek/web/TkUploadTest\.java</exclude>
+                <exclude>pmd:.*/src/test/java/org/jpeek/XslReportTest\.java</exclude>
                 <exclude>findbugs:.*</exclude>
                 <exclude>duplicatefinder:.*</exclude>
               </excludes>

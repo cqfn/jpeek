@@ -31,12 +31,13 @@ final class DisjointTest {
         three.connections().add(two);
         four.connections().add(five);
         five.connections().add(four);
-        final Graph graph = new FakeGraph(
-            new ListOf<>(one, two, three, four, five, six)
-        );
         new Assertion<>(
             "Must build disjoint sets correctly",
-            new Disjoint(graph).value(),
+            new Disjoint(
+                new FakeGraph(
+                    new ListOf<>(one, two, three, four, five, six)
+                )
+            ).value(),
             new AllOf<Iterable<Set<Node>>>(
                 new ListOf<>(
                     new HasValuesMatching<>(
@@ -61,12 +62,13 @@ final class DisjointTest {
         final Node two = new Node.Simple("2");
         final Node three = new Node.Simple("3");
         final Node four = new Node.Simple("4");
-        final Graph graph = new FakeGraph(
-            new ListOf<>(one, two, three, four)
-        );
         new Assertion<>(
             "Must build disjoint sets for unconnected graph",
-            new Disjoint(graph).value(),
+            new Disjoint(
+                new FakeGraph(
+                    new ListOf<>(one, two, three, four)
+                )
+            ).value(),
             new AllOf<Iterable<Set<Node>>>(
                 new ListOf<>(
                     new HasValuesMatching<>(

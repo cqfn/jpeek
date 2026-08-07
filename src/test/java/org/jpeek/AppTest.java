@@ -29,10 +29,10 @@ import org.llorllale.cactoos.matchers.IsTrue;
  * @since 0.1
  */
 final class AppTest {
+
     @Test
     void createsXmlReports(@TempDir final Path output) throws IOException {
-        final Path input = Paths.get(".");
-        new App(input, output).analyze();
+        new App(Paths.get("."), output).analyze();
         new Assertion<>(
             "Must LCOM.xml file exists",
             Files.exists(output.resolve("LCOM.xml")),
@@ -101,8 +101,7 @@ final class AppTest {
 
     @Test
     void createsIndexHtml(@TempDir final Path output) throws IOException {
-        final Path input = Paths.get(".");
-        new App(input, output).analyze();
+        new App(Paths.get("."), output).analyze();
         new Assertion<>(
             "Must index.html file exists",
             Files.exists(output.resolve("index.html")),
@@ -112,8 +111,7 @@ final class AppTest {
 
     @Test
     void createsIndexXml(@TempDir final Path output) throws Exception {
-        final Path input = Paths.get(".");
-        new App(input, output).analyze();
+        new App(Paths.get("."), output).analyze();
         new Assertion<>(
             "Must have some metrics",
             XhtmlMatchers.xhtml(

@@ -41,14 +41,14 @@ final class Lcom4Test {
 
     /**
      * Tests the deep dependencies methodFour() -> methodTwo() -> methodOne().
-     *  MethodMethodCalls.java
-     *  - methodOne uses 'num' directly
-     *  - methodTwo uses 'num' indirectly via methodOne
-     *  - methodThree uses 'num' directly
-     *  - methodFour uses 'num' indirectly via methodTwo and methodOne
-     *  - methodFive does not use 'num' (this is an orphan method, ignored)
-     *  Therefore the number of disjoint sets (LCOM4) should be 1
-     *  since all the methods use the same num field.
+     * MethodMethodCalls.java
+     * - methodOne uses 'num' directly
+     * - methodTwo uses 'num' indirectly via methodOne
+     * - methodThree uses 'num' directly
+     * - methodFour uses 'num' indirectly via methodTwo and methodOne
+     * - methodFive does not use 'num' (this is an orphan method, ignored)
+     * Therefore the number of disjoint sets (LCOM4) should be 1
+     * since all the methods use the same num field.
      * @todo #415:30min LCOM4: Graph algorithm to determine disjoint sets.
      *  Disjoint sets calculus is now implemented. We should continue calculating
      *  LCOM4 metrics (probably you should wait for #413, #403.

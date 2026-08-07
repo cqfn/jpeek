@@ -25,8 +25,7 @@ final class MistakesTest {
     @Test
     @Disabled
     void acceptsAndRenders(@TempDir final Path output) throws Exception {
-        final Path input = Paths.get(".");
-        new App(input, output).analyze();
+        new App(Paths.get("."), output).analyze();
         final Mistakes mistakes = new Mistakes();
         mistakes.add(output);
         new Assertion<>(

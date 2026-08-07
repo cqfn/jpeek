@@ -18,10 +18,9 @@ final class NodeSimpleTest {
     @Test
     void givesName() throws IOException {
         final String name = "name";
-        final Node.Simple node = new Node.Simple(name);
         new Assertion<>(
             "Must returns name",
-            node.name(),
+            new Node.Simple(name).name(),
             new IsEqual<>(name)
         ).affirm();
     }

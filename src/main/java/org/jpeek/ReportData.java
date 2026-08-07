@@ -14,6 +14,7 @@ import org.cactoos.map.MapOf;
  * @since 0.30.9
  */
 final class ReportData {
+
     /**
      * Default mean.
      */

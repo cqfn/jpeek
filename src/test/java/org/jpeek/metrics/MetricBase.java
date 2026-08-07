@@ -23,6 +23,7 @@ import org.llorllale.cactoos.matchers.IsText;
  * @checkstyle JavadocTagsCheck (500 lines)
  */
 public final class MetricBase {
+
     /**
      * XSL document.
      */
@@ -65,6 +66,7 @@ public final class MetricBase {
      * Assertion helper for xml.
      */
     public static final class Report {
+
         /**
          * Copy of the transformation xml.
          */

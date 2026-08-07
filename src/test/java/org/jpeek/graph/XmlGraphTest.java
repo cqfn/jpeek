@@ -4,7 +4,6 @@
  */
 package org.jpeek.graph;
 
-import java.util.List;
 import java.util.Map;
 import org.cactoos.list.ListOf;
 import org.cactoos.map.MapOf;
@@ -56,13 +55,12 @@ final class XmlGraphTest {
     @SuppressWarnings("unchecked")
     @Test
     void buildsMethodsAsNodes() {
-        final List<Node> nodes = new XmlGraph(
-            new Skeleton(new FakeBase(XmlGraphTest.CLASS_NAME)),
-            "", XmlGraphTest.CLASS_NAME
-        ).nodes();
         new Assertion<>(
             "Must build nodes representing methods",
-            nodes,
+            new XmlGraph(
+                new Skeleton(new FakeBase(XmlGraphTest.CLASS_NAME)),
+                "", XmlGraphTest.CLASS_NAME
+            ).nodes(),
             new AllOf<Iterable<Node>>(
                 new ListOf<>(
                     new HasValuesMatching<>(

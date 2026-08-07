@@ -21,9 +21,10 @@ import org.llorllale.cactoos.matchers.Assertion;
 //  OneMethodCreatesLambda.
 /**
  * Tests for all metrics.
- * <p>
- * In some cases to run this test in IDE,
+ *
+ * <p>In some cases to run this test in IDE,
  * you have to set up VM options: -Duser.language=en -Duser.country=US
+ *
  * @since 0.23
  * @todo #118:30min Add test for LCC with "IndirectlyRelatedPairs" and others.
  *  In "IndirectlyRelatedPairs" all methods exist in one transitive closure, so

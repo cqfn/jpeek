@@ -79,7 +79,6 @@ final class ReportWithStatistics implements XML {
         final Iterable<Double> values = new Mapped<>(
             Double::parseDouble,
             xml.xpath(
-                // @checkstyle LineLength (1 line)
                 "//class[@value<=/metric/max and @value>=/metric/min]/@value"
             )
         );

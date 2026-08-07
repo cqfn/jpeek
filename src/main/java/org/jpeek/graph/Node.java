@@ -30,6 +30,7 @@ public interface Node {
      * @since 0.30.9
      */
     final class Simple implements Node {
+
         /**
          * Node name.
          */

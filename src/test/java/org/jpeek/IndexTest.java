@@ -49,8 +49,7 @@ final class IndexTest {
      * @throws Exception If fails
      */
     private static String xml(final Path output) throws Exception {
-        final Path input = Paths.get(".");
-        new App(input, output).analyze();
+        new App(Paths.get("."), output).analyze();
         return new TextOf(output.resolve("index.xml")).asString();
     }
 }

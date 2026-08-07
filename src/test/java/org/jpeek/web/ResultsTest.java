@@ -25,8 +25,7 @@ final class ResultsTest {
     @Test
     @Disabled
     void acceptsAndRenders(@TempDir final Path output) throws Exception {
-        final Path input = Paths.get(".");
-        new App(input, output).analyze();
+        new App(Paths.get("."), output).analyze();
         final Results results = new Results();
         results.add("org.takes:takes", output);
         new Assertion<>(

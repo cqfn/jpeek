@@ -5,7 +5,6 @@
 package org.jpeek.calculus.xsl;
 
 import com.jcabi.matchers.XhtmlMatchers;
-import com.jcabi.xml.XML;
 import java.io.IOException;
 import java.util.HashMap;
 import org.jpeek.FakeBase;
@@ -21,17 +20,16 @@ final class XslCalculusTest {
 
     @Test
     void createsXmlCalculusWithXpaths() throws IOException {
-        final XML result = new XslCalculus().node(
-            "LCOM", new HashMap<>(0), new Skeleton(
-                new FakeBase(
-                    "NoMethods", "Bar", "OverloadMethods",
-                    "OnlyOneMethodWithParams", "WithoutAttributes"
-                )
-            ).xml()
-        );
         new Assertion<>(
             "Must create LCOM report",
-            result.toString(),
+            new XslCalculus().node(
+                "LCOM", new HashMap<>(0), new Skeleton(
+                    new FakeBase(
+                        "NoMethods", "Bar", "OverloadMethods",
+                        "OnlyOneMethodWithParams", "WithoutAttributes"
+                    )
+                ).xml()
+            ).toString(),
             XhtmlMatchers.hasXPaths(
                 "/metric/app/package/class/vars",
                 "/metric/app/package/class/vars/var",
@@ -42,12 +40,11 @@ final class XslCalculusTest {
 
     @Test
     void createsXmlCalculusWithEmptyProject() throws IOException {
-        final XML result = new XslCalculus().node(
-            "LCOM2", new HashMap<>(0), new Skeleton(new FakeBase()).xml()
-        );
         new Assertion<>(
             "Report for empty project created",
-            result.toString(),
+            new XslCalculus().node(
+                "LCOM2", new HashMap<>(0), new Skeleton(new FakeBase()).xml()
+            ).toString(),
             XhtmlMatchers.hasXPaths(
                 "/metric[title='LCOM2']/app[@id]"
             )

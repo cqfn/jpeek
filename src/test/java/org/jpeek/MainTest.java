@@ -32,8 +32,7 @@ final class MainTest {
     @Test
     void createsXmlReports(@TempDir final Path temp) throws IOException {
         final Path output = temp.resolve("x3");
-        final Path input = Paths.get(".");
-        Main.main("--sources", input.toString(), "--target", output.toString());
+        Main.main("--sources", Paths.get(".").toString(), "--target", output.toString());
         new Assertion<>(
             "Must create LCOM5 report",
             Files.exists(output.resolve("LCOM5.xml")),
@@ -132,10 +131,9 @@ final class MainTest {
             "--include-static-methods",
             "--include-private-methods"
         );
-        final String skeleton = new TextOf(output.resolve("skeleton.xml")).asString();
         new Assertion<>(
             "Must contain included methods",
-            XhtmlMatchers.xhtml(skeleton),
+            XhtmlMatchers.xhtml(new TextOf(output.resolve("skeleton.xml")).asString()),
             XhtmlMatchers.hasXPaths(
                 "//method[@ctor='true']",
                 "//method[@static='true']",
