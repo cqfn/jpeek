@@ -5,6 +5,7 @@
 package org.jpeek;
 
 import java.io.IOException;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
@@ -25,7 +26,7 @@ public final class Header implements Iterable<Directive> {
         try {
             return new Directives().attr(
                 "date",
-                ZonedDateTime.now().format(DateTimeFormatter.ISO_INSTANT)
+                ZonedDateTime.now(ZoneOffset.UTC).format(DateTimeFormatter.ISO_INSTANT)
             ).attr("version", new Version().value()).iterator();
         } catch (final IOException ex) {
             throw new IllegalStateException(ex);

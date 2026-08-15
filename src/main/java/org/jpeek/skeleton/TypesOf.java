@@ -4,9 +4,9 @@
  */
 package org.jpeek.skeleton;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 import org.objectweb.asm.Opcodes;
@@ -51,7 +51,7 @@ final class TypesOf extends SignatureVisitor implements Iterable<Directive> {
      */
     TypesOf(final String sign) {
         super(Opcodes.ASM6);
-        this.types = new LinkedList<>();
+        this.types = new ArrayList<>(0);
         this.signature = sign;
         this.rtype = new AtomicReference<>();
         this.ret = new AtomicBoolean();

@@ -15,9 +15,9 @@ import com.jcabi.xml.XSLChain;
 import com.jcabi.xml.XSLDocument;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.Map;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.io.TeeInput;
@@ -106,7 +106,7 @@ public final class App {
      */
     public void analyze() throws IOException {
         final long start = System.currentTimeMillis();
-        final Collection<XSL> layers = new LinkedList<>();
+        final Collection<XSL> layers = new ArrayList<>(3);
         if (this.params.containsKey("include-ctors")) {
             Logger.debug(this, "Constructors will be included");
         } else {
@@ -125,7 +125,7 @@ public final class App {
             layers.add(App.xsl("layers/no-private-methods.xsl"));
             Logger.debug(this, "Private methods will be ignored");
         }
-        final Collection<Report> reports = new LinkedList<>();
+        final Collection<Report> reports = new ArrayList<>(0);
         this.buildReport(layers, reports);
         new IoChecked<>(
             new AndInThreads(

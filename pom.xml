@@ -303,7 +303,7 @@
           <plugin>
             <groupId>com.qulice</groupId>
             <artifactId>qulice-maven-plugin</artifactId>
-            <version>0.30.7</version>
+            <version>0.30.11</version>
             <configuration>
               <license>file:${basedir}/LICENSE.txt</license>
               <excludes combine.children="append">
@@ -312,6 +312,7 @@
                 <exclude>checkstyle:/src/it/.*</exclude>
                 <exclude>pmd:/src/it/.*</exclude>
                 <exclude>pmd:/src/test/resources/.*</exclude>
+                <exclude>errorprone:/src/test/resources/.*</exclude>
                 <!-- UnnecessaryLocalRule's intervening-call guard does not
                      cover constructor-call initializers, so it misses that
                      `data` here must stay a local (the assertion reads it

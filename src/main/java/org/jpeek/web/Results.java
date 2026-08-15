@@ -166,7 +166,7 @@ final class Results {
     Iterable<Iterable<? extends Directive>> recent() {
         return new Mapped<>(
             item -> {
-                final String[] parts = item.get("artifact").getS().split(":");
+                final String[] parts = item.get("artifact").getS().split(":", -1);
                 return new Directives()
                     .add("repo")
                     .add("group").set(parts[0]).up()
@@ -236,7 +236,7 @@ final class Results {
      * @throws IOException If fails
      */
     private static Directives toAllDirectives(final Item item) throws IOException {
-        final String[] parts = item.get("artifact").getS().split(":");
+        final String[] parts = item.get("artifact").getS().split(":", -1);
         return new Directives()
             .add("repo")
             .add("version").set(item.get("version").getS()).up()
@@ -276,7 +276,7 @@ final class Results {
      * @throws IOException If fails
      */
     private static Directives toBestDirectives(final Item item) throws IOException {
-        final String[] parts = item.get("artifact").getS().split(":");
+        final String[] parts = item.get("artifact").getS().split(":", -1);
         return new Directives()
             .add("repo")
             .add("group").set(parts[0]).up()

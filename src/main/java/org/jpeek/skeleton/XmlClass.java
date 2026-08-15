@@ -5,9 +5,9 @@
 package org.jpeek.skeleton;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.LinkedList;
 import javassist.CannotCompileException;
 import javassist.CtClass;
 import org.cactoos.iterable.Joined;
@@ -53,7 +53,7 @@ final class XmlClass extends ClassVisitor implements Iterable<Directive> {
         super(Opcodes.ASM9);
         this.source = src;
         this.attrs = new Directives();
-        this.methods = new LinkedList<>();
+        this.methods = new ArrayList<>(0);
     }
 
     @Override

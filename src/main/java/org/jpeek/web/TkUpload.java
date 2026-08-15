@@ -42,7 +42,7 @@ final class TkUpload implements Take {
     public Response act(final Request req) throws IOException {
         final String[] items = new RqPrint(
             new RqMtSmart(new RqMtBase(req)).single("coordinates")
-        ).printBody().trim().split(System.lineSeparator());
+        ).printBody().trim().split(System.lineSeparator(), -1);
         int submitted = 0;
         for (final String item : items) {
             final String[] parts = item.trim().split(":", 2);

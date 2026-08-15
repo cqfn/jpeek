@@ -7,11 +7,14 @@ package org.jpeek;
 import com.jcabi.matchers.XhtmlMatchers;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
@@ -25,7 +28,7 @@ final class ReportWithStatisticsTest {
 
     @Test
     @SuppressWarnings("PMD.CloseResource")
-    void createsXml() throws InterruptedException {
+    void createsXml() throws ExecutionException, InterruptedException {
         final XML xml = new ReportWithStatistics(
             new XMLDocument("<metric/>")
         );
@@ -33,18 +36,24 @@ final class ReportWithStatisticsTest {
         final ExecutorService service = Executors.newFixedThreadPool(threads);
         final CountDownLatch latch = new CountDownLatch(1);
         final Collection<String> results = new ConcurrentSkipListSet<>();
+        final Collection<Future<?>> futures = new ArrayList<>(threads);
         for (int thread = 0; thread < threads; ++thread) {
-            service.submit(
-                () -> {
-                    latch.await();
-                    results.add(xml.toString());
-                    return null;
-                }
+            futures.add(
+                service.submit(
+                    () -> {
+                        latch.await();
+                        results.add(xml.toString());
+                        return null;
+                    }
+                )
             );
         }
         latch.countDown();
         service.shutdown();
         service.awaitTermination(1L, TimeUnit.MINUTES);
+        for (final Future<?> future : futures) {
+            future.get();
+        }
         new Assertion<>(
             "Must produce the same xml in every thread",
             results.size(),
