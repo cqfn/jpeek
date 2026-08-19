@@ -6,7 +6,10 @@ package org.jpeek;
 
 import com.beust.jcommander.ParameterException;
 import com.jcabi.matchers.XhtmlMatchers;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -25,8 +28,21 @@ import org.llorllale.cactoos.matchers.Throws;
 final class MainTest {
 
     @Test
+    @SuppressWarnings({"PMD.CloseResource", "PMD.UnnecessaryLocalRule"})
     void printsHelp() throws IOException {
-        Main.main("--help");
+        final PrintStream stdout = System.out;
+        final ByteArrayOutputStream captured = new ByteArrayOutputStream();
+        try (PrintStream redirect = new PrintStream(captured, false, StandardCharsets.UTF_8)) {
+            System.setOut(redirect);
+            Main.main("--help");
+        } finally {
+            System.setOut(stdout);
+        }
+        new Assertion<>(
+            "Must print usage instructions",
+            captured.toString(StandardCharsets.UTF_8),
+            org.hamcrest.core.StringContains.containsStringIgnoringCase("usage")
+        ).affirm();
     }
 
     @Test

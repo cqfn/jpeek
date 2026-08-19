@@ -142,7 +142,7 @@
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-log4j12</artifactId>
+      <artifactId>slf4j-reload4j</artifactId>
       <version>2.0.16</version>
       <scope>runtime</scope>
     </dependency>
@@ -153,9 +153,9 @@
       <scope>runtime</scope>
     </dependency>
     <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <version>1.2.17</version>
+      <groupId>ch.qos.reload4j</groupId>
+      <artifactId>reload4j</artifactId>
+      <version>1.2.22</version>
     </dependency>
     <dependency>
       <groupId>com.jcabi</groupId>
@@ -313,71 +313,6 @@
                 <exclude>pmd:/src/it/.*</exclude>
                 <exclude>pmd:/src/test/resources/.*</exclude>
                 <exclude>errorprone:/src/test/resources/.*</exclude>
-                <!--
-                UnnecessaryLocalRule's intervening-call guard does not
-                cover constructor-call initializers, so it misses that
-                `data` here must stay a local (the assertion reads it
-                after `params.clear()`): https://github.com/yegor256/qulice/issues/1699
-                -->
-                <exclude>pmd:.*/src/test/java/org/jpeek/ReportDataTest\.java</exclude>
-                <!--
-                UnnecessaryLocalRule's interveningCall misses the
-                side effect of buildConsoleAppender() intervening
-                across the nested if-block below it:
-                https://github.com/yegor256/qulice/issues/1700
-                -->
-                <exclude>pmd:.*/src/main/java/org/jpeek/Main\.java</exclude>
-                <!--
-                UnnecessaryJavaLang matches the substring 'java.lang.'
-                inside string literals, not just type references; these
-                XPath assertions must name the fully-qualified call
-                target that the bytecode analyzer actually emits:
-                https://github.com/yegor256/qulice/issues/1703
-                -->
-                <exclude>checkstyle:.*/src/test/java/org/jpeek/skeleton/SkeletonTest\.java</exclude>
-                <!--
-                UnitTestShouldIncludeAssert does not recognize
-                cactoos-matchers' Assertion#affirm() as an assertion,
-                and separately does not trace into a private helper
-                method that performs the assertion, so it misses the
-                real assertions these tests make:
-                https://github.com/yegor256/qulice/issues/1698
-                https://github.com/yegor256/qulice/issues/1706
-                -->
-                <exclude>pmd:.*/src/test/java/org/jpeek/AppTest\.java</exclude>
-                <exclude>pmd:.*/src/test/java/org/jpeek/calculus/java/Lcom4Test\.java</exclude>
-                <exclude>pmd:.*/src/test/java/org/jpeek/calculus/xsl/XslCalculusTest\.java</exclude>
-                <exclude>pmd:.*/src/test/java/org/jpeek/DefaultBaseTest\.java</exclude>
-                <exclude>pmd:.*/src/test/java/org/jpeek/graph/DisjointTest\.java</exclude>
-                <exclude>pmd:.*/src/test/java/org/jpeek/graph/NodeSimpleTest\.java</exclude>
-                <exclude>pmd:.*/src/test/java/org/jpeek/graph/XmlGraphTest\.java</exclude>
-                <exclude>pmd:.*/src/test/java/org/jpeek/graph/XmlMethodArgsTest\.java</exclude>
-                <exclude>pmd:.*/src/test/java/org/jpeek/graph/XmlMethodCallTest\.java</exclude>
-                <exclude>pmd:.*/src/test/java/org/jpeek/graph/XmlMethodSignatureTest\.java</exclude>
-                <exclude>pmd:.*/src/test/java/org/jpeek/IndexTest\.java</exclude>
-                <exclude>pmd:.*/src/test/java/org/jpeek/MainTest\.java</exclude>
-                <exclude>pmd:.*/src/test/java/org/jpeek/MatrixTest\.java</exclude>
-                <exclude>pmd:.*/src/test/java/org/jpeek/MetricsTest\.java</exclude>
-                <exclude>pmd:.*/src/test/java/org/jpeek/ReportWithStatisticsTest\.java</exclude>
-                <exclude>pmd:.*/src/test/java/org/jpeek/skeleton/SkeletonTest\.java</exclude>
-                <exclude>pmd:.*/src/test/java/org/jpeek/skeleton/TypesOfTest\.java</exclude>
-                <exclude>pmd:.*/src/test/java/org/jpeek/skeleton/XmlClassTest\.java</exclude>
-                <exclude>pmd:.*/src/test/java/org/jpeek/web/AsyncReportsTest\.java</exclude>
-                <exclude>pmd:.*/src/test/java/org/jpeek/web/DyNumTest\.java</exclude>
-                <exclude>pmd:.*/src/test/java/org/jpeek/web/FuturesTest\.java</exclude>
-                <exclude>pmd:.*/src/test/java/org/jpeek/web/MistakesTest\.java</exclude>
-                <exclude>pmd:.*/src/test/java/org/jpeek/web/PagesTest\.java</exclude>
-                <exclude>pmd:.*/src/test/java/org/jpeek/web/ReportsTest\.java</exclude>
-                <exclude>pmd:.*/src/test/java/org/jpeek/web/ResultsTest\.java</exclude>
-                <exclude>pmd:.*/src/test/java/org/jpeek/web/TkAllTest\.java</exclude>
-                <exclude>pmd:.*/src/test/java/org/jpeek/web/TkAppTest\.java</exclude>
-                <exclude>pmd:.*/src/test/java/org/jpeek/web/TkIndexTest\.java</exclude>
-                <exclude>pmd:.*/src/test/java/org/jpeek/web/TkMistakesTest\.java</exclude>
-                <exclude>pmd:.*/src/test/java/org/jpeek/web/TkReportTest\.java</exclude>
-                <exclude>pmd:.*/src/test/java/org/jpeek/web/TkUploadTest\.java</exclude>
-                <exclude>pmd:.*/src/test/java/org/jpeek/XslReportTest\.java</exclude>
-                <exclude>findbugs:.*</exclude>
-                <exclude>duplicatefinder:.*</exclude>
               </excludes>
             </configuration>
           </plugin>
