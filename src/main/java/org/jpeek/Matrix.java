@@ -106,11 +106,6 @@ final class Matrix implements Iterable<Directive> {
             .iterator();
     }
 
-    /**
-     * Rank of color.
-     * @param color The color
-     * @return Rank
-     */
     private static int rank(final String color) {
         final int rank;
         if ("red".equals(color)) {

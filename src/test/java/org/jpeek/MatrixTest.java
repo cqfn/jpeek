@@ -42,12 +42,6 @@ final class MatrixTest {
         ).affirm();
     }
 
-    /**
-     * Build matrix.xml content.
-     * @param output Output dir
-     * @return XML as string
-     * @throws Exception If fails
-     */
     private static String xml(final Path output) throws Exception {
         new App(Paths.get("."), output).analyze();
         return new TextOf(output.resolve("matrix.xml")).asString();

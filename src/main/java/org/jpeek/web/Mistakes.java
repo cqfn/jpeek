@@ -104,12 +104,6 @@ final class Mistakes {
         );
     }
 
-    /**
-     * Add one metric.
-     * @param name Metric name
-     * @param diff The diff from XML
-     * @throws IOException If fails
-     */
     private void add(final String name, final double diff) throws IOException {
         final String version = new Version().value();
         final Iterator<Item> items = this.table.frame().through(
@@ -216,12 +210,6 @@ final class Mistakes {
         );
     }
 
-    /**
-     * Zero safe division.
-     * @param head The head
-     * @param div The div
-     * @return Results in string
-     */
     private static long div(final long head, final long div) {
         final long res;
         if (div == 0L) {

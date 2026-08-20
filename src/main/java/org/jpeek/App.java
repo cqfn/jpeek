@@ -196,12 +196,6 @@ public final class App {
         ).value();
     }
 
-    /**
-     * Create report.
-     * @param layers Collection of layers
-     * @param reports Resulting report
-     * @throws IOException If fails
-     */
     private void buildReport(final Collection<XSL> layers, final Collection<Report> reports)
         throws IOException {
         final XML skeleton = new Skeleton(new DefaultBase(this.input)).xml();
@@ -214,11 +208,6 @@ public final class App {
             .forEach(metric -> builder.add(metric, reports));
     }
 
-    /**
-     * Copy resource.
-     * @param name The name of resource
-     * @throws IOException If fails
-     */
     private void copy(final String name) throws IOException {
         new IoChecked<>(
             new LengthOf(
@@ -230,34 +219,16 @@ public final class App {
         ).value();
     }
 
-    /**
-     * Copy XSL.
-     * @param name The name of resource
-     * @return TRUE if copied
-     * @throws IOException If fails
-     */
     private boolean copyXsl(final String name) throws IOException {
         this.copy(String.format("xsl/%s.xsl", name));
         return true;
     }
 
-    /**
-     * Copy XSL.
-     * @param name The name of resource
-     * @return TRUE if copied
-     * @throws IOException If fails
-     */
     private boolean copyXsd(final String name) throws IOException {
         this.copy(String.format("xsd/%s.xsd", name));
         return true;
     }
 
-    /**
-     * Save file.
-     * @param data Content
-     * @param name The name of destination file
-     * @throws IOException If fails
-     */
     private void save(final String data, final String name) throws IOException {
         new IoChecked<>(
             new LengthOf(
@@ -269,11 +240,6 @@ public final class App {
         ).value();
     }
 
-    /**
-     * Make XSL.
-     * @param name The name of XSL file
-     * @return XSL document
-     */
     private static XSL xsl(final String name) {
         return new XSLDocument(
             App.class.getResourceAsStream(String.format("xsl/%s", name))

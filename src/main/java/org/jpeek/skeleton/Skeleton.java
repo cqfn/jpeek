@@ -109,10 +109,6 @@ public final class Skeleton {
         return xml;
     }
 
-    /**
-     * Calculate Xembly for all packages.
-     * @return XML for all packages (one by one)
-     */
     private Iterable<Map.Entry<String, Directives>> packages() {
         final long start = System.currentTimeMillis();
         final Collection<Map.Entry<String, Directives>> all =
@@ -137,11 +133,6 @@ public final class Skeleton {
         return map.entrySet();
     }
 
-    /**
-     * Calculate Xembly for a single .class file.
-     * @param ctc The class
-     * @return Metrics
-     */
     private static Map.Entry<String, Directives> xembly(final CtClass ctc) {
         ctc.defrost();
         String pkg = ctc.getPackageName();

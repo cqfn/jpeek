@@ -48,13 +48,6 @@ public final class XmlGraph implements Graph {
         return this.nds.value();
     }
 
-    /**
-     * Builds the graph from the skeleton.
-     * @param skeleton XML representation on whiwh to build the graph
-     * @param pname Package of the class this graph is for
-     * @param cname Class in the skeleton this graph is for
-     * @return List of nodes
-     */
     private static List<Node> build(final Skeleton skeleton, final String pname,
         final String cname) {
         final Map<XML, Node> byxml = new MapOf<>(

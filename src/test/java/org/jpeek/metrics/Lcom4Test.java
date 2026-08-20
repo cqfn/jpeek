@@ -57,7 +57,7 @@ final class Lcom4Test {
     @Test
     @Disabled
     void methodMethodCalls() throws Exception {
-        final MetricBase.Report report = new MetricBase(
+        final MetricReport report = new MetricBase(
             Lcom4Test.XSL
         ).transform(
             "MethodMethodCalls"
@@ -85,7 +85,7 @@ final class Lcom4Test {
      */
     @Test
     void oneCommonAttribute() throws Exception {
-        final MetricBase.Report report = new MetricBase(
+        final MetricReport report = new MetricBase(
             Lcom4Test.XSL
         ).transform(
             "OneCommonAttribute"
@@ -112,7 +112,7 @@ final class Lcom4Test {
      */
     @Test
     void notCommonAttributes() throws Exception {
-        final MetricBase.Report report = new MetricBase(
+        final MetricReport report = new MetricBase(
             Lcom4Test.XSL
         ).transform(
             "NotCommonAttributes"
@@ -128,7 +128,7 @@ final class Lcom4Test {
      */
     @Test
     void notCommonAttributesWithAllArgsConstructor() throws Exception {
-        final MetricBase.Report report = new MetricBase(
+        final MetricReport report = new MetricBase(
             Lcom4Test.XSL
         ).transform(
             "NotCommonAttributesWithAllArgsConstructor"

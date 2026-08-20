@@ -45,13 +45,6 @@ public final class Lcom4 implements Calculus {
         return result;
     }
 
-    /**
-     * Updates the xml node of the class with the proper pair value and metric values.
-     * @param skeleton XML Skeleton
-     * @param pack Package name
-     * @param clazz Class node in the resulting xml
-     * @throws IOException If fails
-     */
     private void update(final XML skeleton, final String pack, final XML clazz) throws IOException {
         throw new UnsupportedOperationException(
             new UncheckedText(

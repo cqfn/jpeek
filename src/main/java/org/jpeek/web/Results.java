@@ -229,12 +229,6 @@ final class Results {
         );
     }
 
-    /**
-     * Convert an item into directives for {@link #all()}.
-     * @param item DynamoDB item
-     * @return Directives
-     * @throws IOException If fails
-     */
     private static Directives toAllDirectives(final Item item) throws IOException {
         final String[] parts = item.get("artifact").getS().split(":", -1);
         return new Directives()
@@ -269,12 +263,6 @@ final class Results {
             .up();
     }
 
-    /**
-     * Convert an item into directives for {@link #best()}.
-     * @param item DynamoDB item
-     * @return Directives
-     * @throws IOException If fails
-     */
     private static Directives toBestDirectives(final Item item) throws IOException {
         final String[] parts = item.get("artifact").getS().split(":", -1);
         return new Directives()

@@ -71,11 +71,6 @@ final class Sigmas {
         }
     }
 
-    /**
-     * Add one metric.
-     * @param metric XML with metric
-     * @throws IOException If fails
-     */
     private void add(final XML metric) throws IOException {
         final Item item;
         final Iterator<Item> items = this.table.frame().through(

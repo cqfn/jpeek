@@ -42,11 +42,6 @@ final class Dynamo implements Region {
         }
     }
 
-    /**
-     * Live DynamoDB table.
-     * @return Table
-     * @throws IOException If fails
-     */
     private static Region live() throws IOException {
         final Properties props = Dynamo.pros();
         final Region reg;
@@ -77,11 +72,6 @@ final class Dynamo implements Region {
         return reg;
     }
 
-    /**
-     * Properties.
-     * @return Props
-     * @throws IOException If fails
-     */
     private static Properties pros() throws IOException {
         return new PropertiesOf(
             new ResourceOf(

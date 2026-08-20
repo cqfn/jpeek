@@ -123,11 +123,6 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
         return new TypedPages(new Pages(output));
     }
 
-    /**
-     * Extract classes from passed Jar file.
-     * @param path Jar file path
-     * @throws IOException If fails
-     */
     private static void extractClasses(final Path path) throws IOException {
         try (JarFile jar = new JarFile(path.toFile())) {
             final Enumeration<JarEntry> entries = jar.entries();
@@ -154,11 +149,6 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
         }
     }
 
-    /**
-     * Delete this dir if it's present.
-     * @param dir The dir
-     * @throws IOException If fails
-     */
     private static void deleteIfPresent(final Path dir) throws IOException {
         if (Files.exists(dir)) {
             try (Stream<Path> walk = Files.walk(dir)) {
@@ -169,11 +159,6 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
         }
     }
 
-    /**
-     * String to URL.
-     * @param uri The URL
-     * @return URL
-     */
     private static URL toUrl(final String uri) {
         try {
             return new URI(uri).toURL();

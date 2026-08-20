@@ -17,7 +17,7 @@ final class LormTest {
 
     @Test
     void calculatesVariables() throws Exception {
-        final MetricBase.Report report = new MetricBase(
+        final MetricReport report = new MetricBase(
             "org/jpeek/metrics/LORM.xsl"
         ).transform(
             "TwoCommonMethods"

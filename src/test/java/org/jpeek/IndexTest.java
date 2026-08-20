@@ -42,12 +42,6 @@ final class IndexTest {
         ).affirm();
     }
 
-    /**
-     * Build index.xml content.
-     * @param output Output dir
-     * @return XML as string
-     * @throws Exception If fails
-     */
     private static String xml(final Path output) throws Exception {
         new App(Paths.get("."), output).analyze();
         return new TextOf(output.resolve("index.xml")).asString();

@@ -106,11 +106,6 @@ public final class Main {
         main.run(jcmd);
     }
 
-    /**
-     * Run it.
-     * @param jcmd The command line opts
-     * @throws IOException If fails
-     */
     private void run(final JCommander jcmd) throws IOException {
         if (this.help) {
             jcmd.usage();
@@ -136,10 +131,6 @@ public final class Main {
         }
     }
 
-    /**
-     * Prepare application parameters based on configuration and metrics.
-     * @return A {@link Map} filled with parameters
-     */
     private Map<String, Object> buildParameters() {
         final Map<String, Object> params = new HashMap<>(0);
         if (this.ctors) {
@@ -162,10 +153,6 @@ public final class Main {
         return params;
     }
 
-    /**
-     * Prepare {@link ConsoleAppender} based on configuration.
-     * @return Configured {@link ConsoleAppender}
-     */
     private ConsoleAppender buildConsoleAppender() {
         final ConsoleAppender console = new ConsoleAppender();
         if (!this.quiet) {

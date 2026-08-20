@@ -55,11 +55,6 @@ public final class FileTarget implements Target {
         return this.target.toPath();
     }
 
-    /**
-     * Deletes the directory recursively.
-     * @param dir The directory
-     * @throws IOException If an I/O error occurs
-     */
     private static void deleteDir(final File dir) throws IOException {
         Files.walkFileTree(
             dir.toPath(),

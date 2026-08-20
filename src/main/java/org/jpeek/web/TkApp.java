@@ -72,11 +72,6 @@ public final class TkApp extends TkWrap {
         ).start(Exit.NEVER);
     }
 
-    /**
-     * Ctor.
-     * @param home Home directory
-     * @return The take
-     */
     private static Take make(final Path home) {
         final Futures futures = new Futures(
             new Reports(home)
@@ -167,10 +162,6 @@ public final class TkApp extends TkWrap {
         );
     }
 
-    /**
-     * Is it JUnit testing?
-     * @return TRUE if we are testing
-     */
     private static boolean isRunningTest() {
         boolean testing = true;
         try {

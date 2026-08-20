@@ -29,11 +29,6 @@ final class TkIndex implements Take {
         return new RsPage(req, "index", TkIndex::sources);
     }
 
-    /**
-     * Build page sources.
-     * @return Sources
-     * @throws IOException If fails
-     */
     private static Iterable<XeSource> sources() throws IOException {
         return new IterableOf<>(
             new XeAppend(

@@ -70,12 +70,6 @@ final class Index implements Iterable<Directive> {
             .iterator();
     }
 
-    /**
-     * Metric to Xembly.
-     * @param file The XML file with metric report
-     * @return Xembly
-     * @throws FileNotFoundException If fails
-     */
     private static Iterable<Directive> metric(final Path file)
         throws FileNotFoundException {
         final String name = file.getFileName()

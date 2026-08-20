@@ -141,13 +141,6 @@ final class Futures implements
         return stopped;
     }
 
-    /**
-     * Process one artifact.
-     * @param group Group
-     * @param artifact Artifact
-     * @param target Queue key
-     * @return Response builder
-     */
     @SuppressWarnings("PMD.AvoidCatchingGenericException")
     private Func<String, Response> process(final String group, final String artifact,
         final String target) {

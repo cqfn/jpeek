@@ -70,11 +70,6 @@ final class ReportWithStatistics implements XML {
         return this.output.value().node();
     }
 
-    /**
-     * Calculate statistics.
-     * @param xml The XML
-     * @return XML with statistics
-     */
     private static XML statistics(final XML xml) {
         final Iterable<Double> values = new Mapped<>(
             Double::parseDouble,

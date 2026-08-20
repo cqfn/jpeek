@@ -144,17 +144,6 @@ final class XslReport implements Report {
         return true;
     }
 
-    /**
-     * Make XML.
-     * @return XML
-     * @throws IOException If fails
-     * @todo #227:30min Add a test to check whether passing params to
-     *  XSLDocument really works. Currently only C3 metric template
-     *  is known to use parameter named 'ctors'. However C3.xsl is a
-     *  work in progress and has impediments, see #175. In case the
-     *  parameter becomes obsolete, consider simplifying construction
-     *  of XSLDocument without params (see reviews to #326).
-     */
     private XML xml() throws IOException {
         return new XMLDocument(
             new Xembler(
@@ -174,11 +163,6 @@ final class XslReport implements Report {
         );
     }
 
-    /**
-     * Build post-processing XSLs.
-     * @param data Report data
-     * @return Post processing XSLs
-     */
     private static XSL postprocessing(final ReportData data) {
         return new XSLChain(
             new ListOf<>(

@@ -21,7 +21,7 @@ final class CcmTest {
      */
     @Test
     void manyComponentInClassTest() throws Exception {
-        final MetricBase.Report report = new MetricBase(
+        final MetricReport report = new MetricBase(
             "org/jpeek/metrics/CCM.xsl"
         ).transform(
             "CcmManyComp"
@@ -41,7 +41,7 @@ final class CcmTest {
      */
     @Test
     void manyComponentWithCtorInClassTest() throws Exception {
-        final MetricBase.Report report = new MetricBase(
+        final MetricReport report = new MetricBase(
             "org/jpeek/metrics/CCM.xsl"
         ).transform(
             "CcmManyCompWithCtor"
@@ -55,7 +55,7 @@ final class CcmTest {
 
     @Test
     void oneComponentInClassTest() throws Exception {
-        final MetricBase.Report report = new MetricBase(
+        final MetricReport report = new MetricBase(
             "org/jpeek/metrics/CCM.xsl"
         ).transform(
             "CcmOneComp"
@@ -77,7 +77,7 @@ final class CcmTest {
      */
     @Test
     void mixedCallsInClassTest() throws Exception {
-        final MetricBase.Report report = new MetricBase(
+        final MetricReport report = new MetricBase(
             "org/jpeek/metrics/CCM.xsl"
         ).transform(
             "CcmMixCallManyComp"
