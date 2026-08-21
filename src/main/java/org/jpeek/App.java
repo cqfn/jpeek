@@ -79,7 +79,8 @@ public final class App {
                 new MapEntry<>("TCC", true),
                 new MapEntry<>("LCC", true),
                 new MapEntry<>("CCM", true),
-                new MapEntry<>("MWE", true)
+                new MapEntry<>("MWE", true),
+                new MapEntry<>("DOC", true)
             )
         );
     }
