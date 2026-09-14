@@ -23,7 +23,7 @@ import org.jpeek.Version;
 /**
  * Mu and sigma for best metrics.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.17
  */
@@ -43,6 +43,7 @@ final class Sigmas {
 
     /**
      * Ctor.
+     *
      * @param tbl Table
      */
     Sigmas(final Table tbl) {
@@ -51,6 +52,7 @@ final class Sigmas {
 
     /**
      * Add result.
+     *
      * @param dir Directory with files
      * @throws IOException If fails
      */

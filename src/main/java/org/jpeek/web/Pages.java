@@ -15,7 +15,7 @@ import org.takes.rs.RsWithBody;
 /**
  * Pages in one report.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.8
  */
@@ -28,6 +28,7 @@ final class Pages implements Func<String, Response> {
 
     /**
      * Ctor.
+     *
      * @param dir Home dir
      */
     Pages(final Path dir) {

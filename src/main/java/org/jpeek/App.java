@@ -36,7 +36,7 @@ import org.xembly.Xembler;
 /**
  * Application.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.1
  */
@@ -59,6 +59,7 @@ public final class App {
 
     /**
      * Ctor.
+     *
      * @param source Source directory
      * @param target Target dir
      */
@@ -86,6 +87,7 @@ public final class App {
 
     /**
      * Ctor.
+     *
      * @param source Source directory
      * @param target Target dir
      * @param args XSL params
@@ -99,6 +101,7 @@ public final class App {
 
     /**
      * Analyze sources.
+     *
      * @throws IOException If fails
      *  Analyze method is too big. We need to extract report building from
      *  here and use a map instead of if statements se we can make

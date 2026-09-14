@@ -19,7 +19,7 @@ import org.xembly.Xembler;
 /**
  * Statistics.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.16
  */
@@ -32,6 +32,7 @@ final class ReportWithStatistics implements XML {
 
     /**
      * Ctor.
+     *
      * @param xml The XML
      */
     ReportWithStatistics(final XML xml) {

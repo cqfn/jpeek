@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * Graph containing list of nodes.
+ *
  * @since 0.30.9
  */
 @FunctionalInterface
@@ -15,6 +16,7 @@ public interface Graph {
 
     /**
      * Nodes composing this graph.
+     *
      * @return List of the nodes belonging to this graph
      */
     List<Node> nodes();

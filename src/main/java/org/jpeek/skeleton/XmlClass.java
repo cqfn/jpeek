@@ -47,6 +47,7 @@ final class XmlClass extends ClassVisitor implements Iterable<Directive> {
 
     /**
      * Ctor.
+     *
      * @param src The source
      */
     XmlClass(final CtClass src) {

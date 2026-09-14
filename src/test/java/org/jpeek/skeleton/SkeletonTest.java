@@ -12,6 +12,7 @@ import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Skeleton}.
+ *
  * @since 0.23
  */
 final class SkeletonTest {

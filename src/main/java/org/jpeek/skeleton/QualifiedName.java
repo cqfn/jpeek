@@ -12,12 +12,14 @@ import org.cactoos.text.UncheckedText;
  * A fully qualified name of a field, an unambiguous name
  * that specifies field without regard
  * to the context of the call.
+ *
  * @since 0.29
  */
 public final class QualifiedName extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param owner The class the attribute belongs to
      * @param attr The name of the field
      */

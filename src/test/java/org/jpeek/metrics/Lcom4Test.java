@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
  * Basically it's a graph disjoint set.
  * I.e. it answers the the following question:
  * "Into how many independent classes can you split this class?"
+ *
  * @since 0.28
  */
 final class Lcom4Test {
@@ -49,6 +50,7 @@ final class Lcom4Test {
      * - methodFive does not use 'num' (this is an orphan method, ignored)
      * Therefore the number of disjoint sets (LCOM4) should be 1
      * since all the methods use the same num field.
+     *
      * @todo #415:30min LCOM4: Graph algorithm to determine disjoint sets.
      *  Disjoint sets calculus is now implemented. We should continue calculating
      *  LCOM4 metrics (probably you should wait for #413, #403.

@@ -18,7 +18,7 @@ import org.apache.log4j.PatternLayout;
 /**
  * Main entry point.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.1
  * @checkstyle JavadocVariableCheck (500 lines)
@@ -94,6 +94,7 @@ public final class Main {
 
     /**
      * Main Java entry point.
+     *
      * @param args Command line args
      * @throws IOException If fails
      */

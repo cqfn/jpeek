@@ -11,7 +11,7 @@ import org.cactoos.iterable.Joined;
 /**
  * Source code base.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.1
  * @checkstyle JavadocTagsCheck (500 lines)
@@ -21,6 +21,7 @@ public interface Base {
 
     /**
      * Take all files from the base.
+     *
      * @return The iterable of files
      * @throws IOException If fails
      */
@@ -43,6 +44,7 @@ public interface Base {
 
         /**
          * Ctor.
+         *
          * @param one Left
          * @param two Right
          */

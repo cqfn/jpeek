@@ -9,6 +9,7 @@ import java.nio.file.Path;
 
 /**
  * Report interface.
+ *
  * @since 0.1
  */
 @FunctionalInterface
@@ -16,6 +17,7 @@ public interface Report {
 
     /**
      * Save report.
+     *
      * @param target Target dir
      * @return TRUE if everything was good
      * @throws IOException If fails

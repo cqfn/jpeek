@@ -11,6 +11,7 @@ import org.cactoos.map.MapOf;
 
 /**
  * Report data holder.
+ *
  * @since 0.30.9
  */
 final class ReportData {
@@ -47,6 +48,7 @@ final class ReportData {
 
     /**
      * Ctor.
+     *
      * @param name Name of the metric
      */
     ReportData(final String name) {
@@ -57,6 +59,7 @@ final class ReportData {
 
     /**
      * Ctor.
+     *
      * @param name Name of metric
      * @param args Params for XSL
      */
@@ -68,6 +71,7 @@ final class ReportData {
 
     /**
      * Ctor.
+     *
      * @param name Name of the metric
      * @param args Params for XSL
      * @param mean Mean
@@ -83,6 +87,7 @@ final class ReportData {
 
     /**
      * Metric name accessor.
+     *
      * @return The metric
      */
     String metric() {
@@ -91,6 +96,7 @@ final class ReportData {
 
     /**
      * Mean accessor.
+     *
      * @return The mean
      */
     double mean() {
@@ -99,6 +105,7 @@ final class ReportData {
 
     /**
      * Sigma accessor.
+     *
      * @return Sigma
      */
     double sigma() {
@@ -107,6 +114,7 @@ final class ReportData {
 
     /**
      * Params accessor.
+     *
      * @return Params
      */
     Map<String, Object> params() {

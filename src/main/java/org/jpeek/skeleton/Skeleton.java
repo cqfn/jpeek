@@ -57,6 +57,7 @@ public final class Skeleton {
 
     /**
      * Ctor.
+     *
      * @param bse The base
      */
     public Skeleton(final Base bse) {
@@ -65,6 +66,7 @@ public final class Skeleton {
 
     /**
      * As XML.
+     *
      * @return XML structure
      */
     public XML xml() {

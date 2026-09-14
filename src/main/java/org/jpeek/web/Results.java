@@ -29,7 +29,7 @@ import org.xembly.Directives;
 /**
  * Futures for {@link AsyncReports}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.8
  */
@@ -49,6 +49,7 @@ final class Results {
 
     /**
      * Ctor.
+     *
      * @param tbl Table
      */
     Results(final Table tbl) {
@@ -57,6 +58,7 @@ final class Results {
 
     /**
      * Delete them all.
+     *
      * @return How many were deleted
      */
     int flush() {
@@ -72,6 +74,7 @@ final class Results {
 
     /**
      * Add result.
+     *
      * @param artifact The artifact, like "org.jpeek:jpeek"
      * @param dir Directory with files
      * @throws IOException If fails
@@ -132,6 +135,7 @@ final class Results {
 
     /**
      * Has this artifact?
+     *
      * @param artifact The artifact, e.g. "org.jpeek:jpeek"
      * @return TRUE if it exists
      */
@@ -144,6 +148,7 @@ final class Results {
 
     /**
      * Get score of this.
+     *
      * @param artifact The artifact, e.g. "org.jpeek:jpeek"
      * @return The score
      * @throws IOException If fails
@@ -161,6 +166,7 @@ final class Results {
 
     /**
      * Recent artifacts..
+     *
      * @return List of them
      */
     Iterable<Iterable<? extends Directive>> recent() {
@@ -187,6 +193,7 @@ final class Results {
 
     /**
      * All of them.
+     *
      * @return List of them
      */
     Iterable<Iterable<? extends Directive>> all() {
@@ -209,6 +216,7 @@ final class Results {
 
     /**
      * Best artifacts.
+     *
      * @return List of them
      * @throws IOException If fails
      */

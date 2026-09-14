@@ -15,11 +15,18 @@ import org.xembly.Directives;
 /**
  * Xembly header for the report.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.8
  */
 public final class Header implements Iterable<Directive> {
+
+    /**
+     * Constructor.
+     */
+    public Header() {
+        // Nothing to initialize.
+    }
 
     @Override
     public Iterator<Directive> iterator() {

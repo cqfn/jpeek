@@ -14,6 +14,7 @@ import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Assertion helper for xml.
+ *
  * @since 0.28
  */
 public final class MetricReport {
@@ -30,6 +31,7 @@ public final class MetricReport {
 
     /**
      * Ctor.
+     *
      * @param name Class name
      * @param xml Resulting xml
      */
@@ -40,6 +42,7 @@ public final class MetricReport {
 
     /**
      * Asserts the variable produced.
+     *
      * @param variable Variable name
      * @param expected Expected value
      * @throws Exception String format exception
@@ -71,6 +74,7 @@ public final class MetricReport {
 
     /**
      * Asserts the main metric value.
+     *
      * @param value Expected value of the metric
      * @param error Rounding tolerance since the metric is float number
      */

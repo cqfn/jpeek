@@ -18,7 +18,7 @@ import org.takes.rs.xe.XeSource;
 /**
  * Index page.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.10
  */

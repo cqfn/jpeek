@@ -13,7 +13,7 @@ import org.takes.rs.RsWithType;
 /**
  * Typed pages.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.8
  */
@@ -26,6 +26,7 @@ final class TypedPages implements Func<String, Response> {
 
     /**
      * Ctor.
+     *
      * @param func The func
      */
     TypedPages(final Func<String, Response> func) {

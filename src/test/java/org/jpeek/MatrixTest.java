@@ -14,6 +14,7 @@ import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Matrix}.
+ *
  * @since 0.8
  */
 final class MatrixTest {

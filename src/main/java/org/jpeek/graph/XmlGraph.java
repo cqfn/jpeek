@@ -16,6 +16,7 @@ import org.jpeek.skeleton.Skeleton;
 
 /**
  * Graph implementation built on skeleton.
+ *
  * @since 0.30.9
  * @todo #473:30min Find a way to eliminate this
  *  ClassDataAbstractionCouplingCheck. The class probably needs to be split
@@ -31,6 +32,7 @@ public final class XmlGraph implements Graph {
 
     /**
      * Ctor.
+     *
      * @param skeleton XMl representation on whiwh to build the graph
      * @param pname Package of the class this graph is for
      * @param cname Class in the skeleton this graph is for

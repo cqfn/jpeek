@@ -22,6 +22,7 @@ import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link ReportWithStatistics}.
+ *
  * @since 0.19
  */
 final class ReportWithStatisticsTest {

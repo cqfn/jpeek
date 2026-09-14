@@ -18,6 +18,7 @@ import org.xembly.Xembler;
 
 /**
  * Test case for {@link Results}.
+ *
  * @since 0.16
  */
 final class ResultsTest {

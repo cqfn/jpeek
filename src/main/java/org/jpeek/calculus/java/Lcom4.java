@@ -18,9 +18,17 @@ import org.jpeek.calculus.Calculus;
 
 /**
  * LCOM4 Metrics java calculus.
+ *
  * @since 0.30.9
  */
 public final class Lcom4 implements Calculus {
+
+    /**
+     * Constructor.
+     */
+    public Lcom4() {
+        // Nothing to initialize.
+    }
 
     @Override
     public XML node(final String metric, final Map<String, Object> params,

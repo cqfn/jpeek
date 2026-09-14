@@ -12,6 +12,7 @@ import org.xembly.Xembler;
 
 /**
  * Test case for {@link TypesOf}.
+ *
  * @since 0.27
  */
 final class TypesOfTest {

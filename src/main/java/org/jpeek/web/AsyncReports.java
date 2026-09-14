@@ -23,7 +23,7 @@ import org.takes.rs.xe.XeAppend;
 /**
  * Async reports.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.8
  */
@@ -42,6 +42,7 @@ final class AsyncReports implements
 
     /**
      * Ctor.
+     *
      * @param func Original bi-function
      */
     AsyncReports(

@@ -16,9 +16,17 @@ import org.jpeek.calculus.Calculus;
 
 /**
  * CCM metric Java calculus.
+ *
  * @since 0.30.25
  */
 public final class Ccm implements Calculus {
+
+    /**
+     * Constructor.
+     */
+    public Ccm() {
+        // Nothing to initialize.
+    }
 
     @Override
     public XML node(

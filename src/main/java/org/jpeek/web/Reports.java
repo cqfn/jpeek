@@ -36,7 +36,7 @@ import org.takes.Response;
  *
  * <p>There is NO thread-safety guarantee. Moreover, this class is NOT
  * thread-safe. You have to decorate it with a thread-safe
- * {@link Futures}.
+ * {@link Futures}.</p>
  *
  * @since 0.7
  */
@@ -59,6 +59,7 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
 
     /**
      * Ctor.
+     *
      * @param home Home dir
      */
     Reports(final Path home) {
@@ -67,6 +68,7 @@ final class Reports implements BiFunc<String, String, Func<String, Response>> {
 
     /**
      * Ctor.
+     *
      * @param input Dir with sources
      * @param output Dir with reports
      */

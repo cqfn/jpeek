@@ -16,12 +16,14 @@ import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Pages}.
+ *
  * @since 0.31
  */
 final class PagesTest {
 
     /**
      * Simple test.
+     *
      * @param temp Temp directory
      */
     @Test

@@ -28,7 +28,7 @@ import org.xembly.Xembler;
 /**
  * Report page.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.5
  */
@@ -46,6 +46,7 @@ final class TkReport implements TkRegex {
 
     /**
      * Ctor.
+     *
      * @param rpts Reports
      * @param rslts Results
      */

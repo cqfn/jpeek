@@ -13,7 +13,7 @@ import java.io.IOException;
 /**
  * Number in Dynamo.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.17
  */
@@ -36,6 +36,7 @@ final class DyNum extends Number {
 
     /**
      * Ctor.
+     *
      * @param num The number
      */
     DyNum(final String num) {
@@ -44,6 +45,7 @@ final class DyNum extends Number {
 
     /**
      * Ctor.
+     *
      * @param num The number
      */
     DyNum(final long num) {
@@ -52,6 +54,7 @@ final class DyNum extends Number {
 
     /**
      * Ctor.
+     *
      * @param item The item
      * @param attr Attribute name
      * @throws IOException If fails
@@ -62,6 +65,7 @@ final class DyNum extends Number {
 
     /**
      * Ctor.
+     *
      * @param num The number
      */
     DyNum(final double num) {
@@ -91,6 +95,7 @@ final class DyNum extends Number {
 
     /**
      * Make an update.
+     *
      * @return The update
      */
     AttributeValueUpdate update() {
@@ -99,6 +104,7 @@ final class DyNum extends Number {
 
     /**
      * Make an update.
+     *
      * @param action The action
      * @return The update
      */

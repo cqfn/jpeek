@@ -38,7 +38,7 @@ import org.takes.tk.TkWrap;
 /**
  * Web application.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.5
  * @checkstyle ClassFanOutComplexityCheck (500 lines)
@@ -47,6 +47,7 @@ public final class TkApp extends TkWrap {
 
     /**
      * Ctor.
+     *
      * @param home Home directory
      */
     public TkApp(final Path home) {
@@ -55,6 +56,7 @@ public final class TkApp extends TkWrap {
 
     /**
      * Main Java entry point.
+     *
      * @param args Command line args
      * @throws IOException If fails
      */

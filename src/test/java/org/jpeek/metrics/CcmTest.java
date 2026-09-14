@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests to check CCM metric in different links between attributes and methods.
+ *
  * @since 0.29
  */
 @Disabled
@@ -17,6 +18,7 @@ final class CcmTest {
     /**
      * Class with one method access one attribute have
      * ncc metric = methods count.
+     *
      * @throws Exception If fails
      */
     @Test
@@ -37,6 +39,7 @@ final class CcmTest {
      * Class with one method access one attribute and
      * Ctor with all attributes initialization have the same
      * metric as without Ctor.
+     *
      * @throws Exception If fails
      */
     @Test
@@ -69,6 +72,7 @@ final class CcmTest {
 
     /**
      * Check ccm metric for mixed usage: attribute usage, methods calls.
+     *
      * @throws Exception If fails
      * @todo #522:30min there is a 4th step for incorrect calculation: nc
      *  in case of calling one method from another because of

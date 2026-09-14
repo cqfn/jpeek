@@ -10,6 +10,7 @@ import java.util.Map;
 
 /**
  * Metrics calculus interface.
+ *
  * @since 0.30.9
  * @todo #412:30min We start implementing LCOM4Calculus implementation. We should continue
  *  calculating real 'class@value' and 'class/vars/var[@id=pairs]/text' values and remove
@@ -35,6 +36,7 @@ public interface Calculus {
 
     /**
      * Produces {@link XML} representing metrics values.
+     *
      * @param metric Desired metric to calculate
      * @param params Params
      * @param skeleton Package input

@@ -11,6 +11,7 @@ import org.xembly.Xembler;
 
 /**
  * String XML representation for input class name.
+ *
  * @since 0.27
  */
 final class ClassAsXml implements Scalar<String> {
@@ -22,6 +23,7 @@ final class ClassAsXml implements Scalar<String> {
 
     /**
      * Ctor.
+     *
      * @param name Class name for conversion
      */
     ClassAsXml(final String name) {

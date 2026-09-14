@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * Fake Graph implementation for tests.
+ *
  * @since 0.30.9
  */
 public final class FakeGraph implements Graph {
@@ -20,6 +21,7 @@ public final class FakeGraph implements Graph {
 
     /**
      * Ctor.
+     *
      * @param nodes Nodes
      */
     public FakeGraph(final List<Node> nodes) {

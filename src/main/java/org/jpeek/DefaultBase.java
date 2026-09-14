@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 /**
  * Default base.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.1
  */
@@ -28,6 +28,7 @@ public final class DefaultBase implements Base {
 
     /**
      * Ctor.
+     *
      * @param path Path of the directory with files
      */
     public DefaultBase(final Path path) {

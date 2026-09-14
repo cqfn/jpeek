@@ -15,6 +15,7 @@ import org.takes.rs.xe.XeAppend;
 
 /**
  * Test case for {@link Futures}.
+ *
  * @since 0.32
  */
 final class FuturesTest {

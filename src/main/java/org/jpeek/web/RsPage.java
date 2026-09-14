@@ -26,7 +26,7 @@ import org.takes.rs.xe.XeStylesheet;
 /**
  * Ping them all.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.14
  */
@@ -34,6 +34,7 @@ final class RsPage extends RsWrap {
 
     /**
      * Ctor.
+     *
      * @param req Request
      * @param xsl XSL stylesheet
      */
@@ -43,6 +44,7 @@ final class RsPage extends RsWrap {
 
     /**
      * Ctor.
+     *
      * @param req Request
      * @param xsl XSL stylesheet
      * @param src Sources

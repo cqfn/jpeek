@@ -9,24 +9,28 @@ import java.util.Set;
 
 /**
  * Graph node description. It should at least provide its name and its neighbors.
+ *
  * @since 0.30.9
  */
 public interface Node {
 
     /**
      * Node name.
+     *
      * @return A identifier for the node
      */
     String name();
 
     /**
      * Calculates ingoing and outgoing connected nodes.
+     *
      * @return List of nodes connected to this node
      */
     Set<Node> connections();
 
     /**
      * Simple implementation.
+     *
      * @since 0.30.9
      */
     final class Simple implements Node {
@@ -43,6 +47,7 @@ public interface Node {
 
         /**
          * Ctor.
+         *
          * @param name Node name
          */
         public Simple(final String name) {

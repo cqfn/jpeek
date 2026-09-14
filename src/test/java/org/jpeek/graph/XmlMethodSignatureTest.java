@@ -13,6 +13,7 @@ import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link XmlMethodSignature}.
+ *
  * @since 0.30.9
  */
 final class XmlMethodSignatureTest {

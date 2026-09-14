@@ -13,6 +13,7 @@ import org.takes.rs.RsPrint;
 
 /**
  * Test case for {@link TkAll}.
+ *
  * @since 0.11
  */
 final class TkAllTest {

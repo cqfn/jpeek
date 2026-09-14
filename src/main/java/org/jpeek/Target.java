@@ -9,6 +9,7 @@ import java.nio.file.Path;
 
 /**
  * File Target.
+ *
  * @since 0.26.4
  */
 @FunctionalInterface
@@ -16,6 +17,7 @@ public interface Target {
 
     /**
      * Returns the Path of Target.
+     *
      * @return The Path of Target
      * @throws IOException If something goes wrong
      */

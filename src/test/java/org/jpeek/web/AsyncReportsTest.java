@@ -21,6 +21,7 @@ import org.takes.rs.RsText;
 
 /**
  * Test case for {@link AsyncReports}.
+ *
  * @since 0.8
  */
 final class AsyncReportsTest {

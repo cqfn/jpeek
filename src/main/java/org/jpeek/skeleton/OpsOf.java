@@ -29,6 +29,7 @@ final class OpsOf extends MethodVisitor {
 
     /**
      * Ctor.
+     *
      * @param dirs Directives
      * @param origin Original visitor
      */

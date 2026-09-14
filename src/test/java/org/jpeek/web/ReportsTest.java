@@ -22,6 +22,7 @@ import org.takes.facets.hamcrest.HmRsStatus;
 
 /**
  * Test case for {@link Reports}.
+ *
  * @since 0.8
  */
 final class ReportsTest {

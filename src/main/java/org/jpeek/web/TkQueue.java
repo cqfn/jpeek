@@ -14,7 +14,7 @@ import org.takes.rs.RsText;
 /**
  * All of them.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.18
  */
@@ -27,6 +27,7 @@ final class TkQueue implements Take {
 
     /**
      * Ctor.
+     *
      * @param frs Futures
      */
     TkQueue(final Text frs) {

@@ -12,6 +12,7 @@ import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link XmlMethodCall}.
+ *
  * @since 0.44
  */
 final class XmlMethodCallTest {

@@ -18,6 +18,7 @@ import org.llorllale.cactoos.matchers.HasValuesMatching;
 
 /**
  * Test case for {@link XmlGraph}.
+ *
  * @since 0.30.9
  */
 final class XmlGraphTest {

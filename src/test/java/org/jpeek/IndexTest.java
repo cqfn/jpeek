@@ -14,6 +14,7 @@ import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Index}.
+ *
  * @since 0.6
  */
 final class IndexTest {

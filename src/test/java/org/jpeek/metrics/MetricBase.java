@@ -12,6 +12,7 @@ import org.jpeek.skeleton.Skeleton;
 
 /**
  * Metric test helper.
+ *
  * @since 0.28
  */
 public final class MetricBase {
@@ -23,6 +24,7 @@ public final class MetricBase {
 
     /**
      * Ctor.
+     *
      * @param path Path to the xsl
      * @throws Exception If file not found.
      */
@@ -32,6 +34,7 @@ public final class MetricBase {
 
     /**
      * Ctor.
+     *
      * @param input XSL input stream
      */
     private MetricBase(final InputStream input) {
@@ -40,6 +43,7 @@ public final class MetricBase {
 
     /**
      * Transform a class to assertable xml.
+     *
      * @param name File name (without an extension) of a class to transform
      * @return Xml result of the transformation
      */

@@ -14,6 +14,7 @@ import org.takes.rs.RsPrint;
 
 /**
  * Test case for {@link TkMistakes}.
+ *
  * @since 0.14
  */
 final class TkMistakesTest {

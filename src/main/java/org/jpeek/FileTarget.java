@@ -4,6 +4,7 @@
  */
 package org.jpeek;
 
+import com.jcabi.log.Logger;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
@@ -14,6 +15,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 /**
  * File Target.
+ *
  * @since 0.26.4
  */
 public final class FileTarget implements Target {
@@ -30,6 +32,7 @@ public final class FileTarget implements Target {
 
     /**
      * Ctor.
+     *
      * @param target Target dir
      * @param overwrite Overwrite if exists
      */
@@ -76,6 +79,6 @@ public final class FileTarget implements Target {
                 }
             }
         );
-        com.jcabi.log.Logger.info(Main.class, "Directory %s deleted", dir);
+        Logger.info(Main.class, "Directory %s deleted", dir);
     }
 }

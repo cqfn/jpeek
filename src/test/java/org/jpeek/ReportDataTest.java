@@ -16,6 +16,7 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Tests for {@link ReportData}.
+ *
  * @since 0.30.9
  */
 final class ReportDataTest {

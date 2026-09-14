@@ -12,6 +12,7 @@ import org.cactoos.Scalar;
 
 /**
  * Disjoint graph node sets calculus implemented as scalar.
+ *
  * @since 0.30.9
  */
 public final class Disjoint implements Scalar<List<Set<Node>>> {
@@ -23,6 +24,7 @@ public final class Disjoint implements Scalar<List<Set<Node>>> {
 
     /**
      * Ctor.
+     *
      * @param graph Graph
      */
     public Disjoint(final Graph graph) {

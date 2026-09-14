@@ -15,6 +15,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.cactoos.Scalar;
 import org.cactoos.text.TextOf;
+import org.hamcrest.core.StringContains;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -23,6 +24,7 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Main}.
+ *
  * @since 0.1
  */
 final class MainTest {
@@ -41,7 +43,7 @@ final class MainTest {
         new Assertion<>(
             "Must print usage instructions",
             captured.toString(StandardCharsets.UTF_8),
-            org.hamcrest.core.StringContains.containsStringIgnoringCase("usage")
+            StringContains.containsStringIgnoringCase("usage")
         ).affirm();
     }
 

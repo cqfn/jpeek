@@ -27,7 +27,7 @@ import org.xembly.Directives;
 /**
  * Futures for {@link AsyncReports}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.8
  */
@@ -47,6 +47,7 @@ final class Mistakes {
 
     /**
      * Ctor.
+     *
      * @param tbl Table
      */
     Mistakes(final Table tbl) {
@@ -55,6 +56,7 @@ final class Mistakes {
 
     /**
      * Add result.
+     *
      * @param dir Directory with files
      * @throws IOException If fails
      */
@@ -72,6 +74,7 @@ final class Mistakes {
 
     /**
      * Worst metrics.
+     *
      * @return List of them
      * @throws IOException If fails
      */

@@ -16,6 +16,7 @@ import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link DefaultBase}.
+ *
  * @since 0.1
  */
 final class DefaultBaseTest {

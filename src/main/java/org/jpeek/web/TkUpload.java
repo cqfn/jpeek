@@ -19,7 +19,7 @@ import org.takes.rs.RsText;
 /**
  * Upload a list of artifacts (their coordinates).
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.32
  */
@@ -32,6 +32,7 @@ final class TkUpload implements Take {
 
     /**
      * Ctor.
+     *
      * @param rpts Reports
      */
     TkUpload(final BiFunc<String, String, Func<String, Response>> rpts) {

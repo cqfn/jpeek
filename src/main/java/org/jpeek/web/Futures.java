@@ -32,7 +32,7 @@ import org.takes.rs.xe.XeAppend;
 /**
  * Futures for {@link AsyncReports}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.8
  */
@@ -61,6 +61,7 @@ final class Futures implements
 
     /**
      * Ctor.
+     *
      * @param func Original bi-function
      */
     Futures(final BiFunc<String, String, Func<String, Response>> func) {
@@ -75,6 +76,7 @@ final class Futures implements
 
     /**
      * Ctor.
+     *
      * @param func Original bi-function
      * @param exec Executor service
      */
@@ -128,6 +130,7 @@ final class Futures implements
 
     /**
      * Shut it down.
+     *
      * @return TRUE if terminated OK
      * @throws InterruptedException If interrupted while waiting
      */

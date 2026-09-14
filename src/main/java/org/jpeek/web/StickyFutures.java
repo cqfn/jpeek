@@ -15,7 +15,7 @@ import org.takes.Response;
 /**
  * Futures for {@link AsyncReports}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.8
  */
@@ -44,6 +44,7 @@ final class StickyFutures
 
     /**
      * Ctor.
+     *
      * @param func Original bi-function
      * @param size Max size of cache before full clean up
      */

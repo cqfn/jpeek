@@ -12,11 +12,18 @@ import org.cactoos.scalar.PropertiesOf;
 /**
  * Version.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.11
  */
 public final class Version implements Scalar<String> {
+
+    /**
+     * Constructor.
+     */
+    public Version() {
+        // Nothing to initialize.
+    }
 
     @Override
     public String value() throws IOException {

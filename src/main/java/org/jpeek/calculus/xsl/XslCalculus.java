@@ -18,9 +18,17 @@ import org.jpeek.calculus.Calculus;
 /**
  * Metrics xsl calculus. Use an xsl sheet to transform the input skeleton into
  * the xml containing the calculation.
+ *
  * @since 0.30.9
  */
 public final class XslCalculus implements Calculus {
+
+    /**
+     * Constructor.
+     */
+    public XslCalculus() {
+        // Nothing to initialize.
+    }
 
     @Override
     public XML node(final String metric, final Map<String, Object> params,

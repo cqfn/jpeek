@@ -47,6 +47,7 @@ final class TypesOf extends SignatureVisitor implements Iterable<Directive> {
 
     /**
      * Ctor.
+     *
      * @param sign Method signature
      */
     TypesOf(final String sign) {

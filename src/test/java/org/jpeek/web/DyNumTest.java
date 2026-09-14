@@ -12,6 +12,7 @@ import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link DyNum}.
+ *
  * @since 0.31
  */
 final class DyNumTest {

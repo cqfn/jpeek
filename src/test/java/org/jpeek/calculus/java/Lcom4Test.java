@@ -19,6 +19,7 @@ import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link Lcom4}.
+ *
  * @since 0.30.9
  */
 final class Lcom4Test {

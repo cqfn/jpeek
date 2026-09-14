@@ -26,6 +26,7 @@ import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
  * Test case for {@link App}.
+ *
  * @since 0.1
  */
 final class AppTest {

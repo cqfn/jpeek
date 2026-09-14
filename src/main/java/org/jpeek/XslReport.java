@@ -28,7 +28,7 @@ import org.xembly.Xembler;
 /**
  * Single report.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.1
  */
@@ -80,6 +80,7 @@ final class XslReport implements Report {
 
     /**
      * Ctor.
+     *
      * @param xml Skeleton
      * @param calc Calculus
      * @param data Report data
@@ -93,6 +94,7 @@ final class XslReport implements Report {
 
     /**
      * Ctor.
+     *
      * @param xml Skeleton
      * @param calc Calculus
      * @param mtc Metric name

@@ -22,7 +22,7 @@ import org.xembly.Directives;
 /**
  * Matrix.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.6
  */
@@ -35,6 +35,7 @@ final class Matrix implements Iterable<Directive> {
 
     /**
      * Ctor.
+     *
      * @param target Target dir
      */
     Matrix(final Path target) {

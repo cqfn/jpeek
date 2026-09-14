@@ -20,6 +20,7 @@ import org.takes.rs.RsPrint;
 
 /**
  * Test case for {@link TkApp}.
+ *
  * @since 0.5
  * @todo #535:1h renderOneReport is not stable on checking /shutdown endpoint
  *  Increasing timeout does not help, problem should be investigated and

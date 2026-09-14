@@ -43,6 +43,7 @@ final class Classes implements Iterable<CtClass> {
 
     /**
      * Ctor.
+     *
      * @param bse The base
      */
     Classes(final Base bse) {

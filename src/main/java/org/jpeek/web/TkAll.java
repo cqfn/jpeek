@@ -15,7 +15,7 @@ import org.takes.rs.xe.XeDirectives;
 /**
  * All of them.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.17
  */

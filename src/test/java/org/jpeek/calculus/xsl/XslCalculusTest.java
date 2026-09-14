@@ -14,6 +14,7 @@ import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link XslCalculus}.
+ *
  * @since 0.30.9
  */
 final class XslCalculusTest {

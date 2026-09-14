@@ -14,7 +14,7 @@ import org.jpeek.calculus.Calculus;
 /**
  * Builds a {@link Report} for a single metric.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.72.0
  */
@@ -42,6 +42,7 @@ final class ReportBuilder {
 
     /**
      * Ctor.
+     *
      * @param chn XSL chain to apply to the skeleton
      * @param clc Calculus
      * @param skl Skeleton XML
@@ -57,6 +58,7 @@ final class ReportBuilder {
 
     /**
      * Build a report for one metric and add it to the collection.
+     *
      * @param metric Metric
      * @param reports Resulting report
      */

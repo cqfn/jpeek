@@ -18,6 +18,7 @@ import org.xembly.Xembler;
 
 /**
  * Test case for {@link Mistakes}.
+ *
  * @since 0.16
  */
 final class MistakesTest {

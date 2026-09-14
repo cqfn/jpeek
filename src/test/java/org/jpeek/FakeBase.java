@@ -18,6 +18,7 @@ import org.cactoos.scalar.LengthOf;
 
 /**
  * Fake base for tests.
+ *
  * @since 0.2
  */
 public final class FakeBase implements Base {
@@ -29,6 +30,7 @@ public final class FakeBase implements Base {
 
     /**
      * Ctor.
+     *
      * @param list List of file names
      */
     public FakeBase(final String... list) {
@@ -37,6 +39,7 @@ public final class FakeBase implements Base {
 
     /**
      * Ctor.
+     *
      * @param list List of file names
      */
     public FakeBase(final Iterable<String> list) {

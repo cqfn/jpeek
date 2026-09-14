@@ -16,6 +16,7 @@ import org.takes.rs.RsPrint;
 
 /**
  * Test case for {@link TkReport}.
+ *
  * @since 0.23
  */
 final class TkReportTest {
