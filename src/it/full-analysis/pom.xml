@@ -8,7 +8,7 @@
   <parent>
     <groupId>com.jcabi</groupId>
     <artifactId>parent</artifactId>
-    <version>0.60.0</version>
+    <version>0.73.5</version>
   </parent>
   <groupId>org.jpeek.test</groupId>
   <artifactId>full-analysis</artifactId>
